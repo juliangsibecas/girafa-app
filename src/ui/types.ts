@@ -20,7 +20,7 @@ export type UiKeys = Partial<{
   row: boolean;
   column: boolean;
 
-  bgColor: 'primary' | 'secondary' | 'background' | string;
+  bgColor: 'primary' | 'secondary' | 'background' | 'disabled' | string;
   borderRadius: number;
 
   vcenter: boolean;

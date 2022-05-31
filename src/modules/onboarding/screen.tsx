@@ -11,7 +11,7 @@ export const OnboardingScreen: React.FC = () => {
       <Text type="h1" textCenter>
         girafa
       </Text>
-      <Box flex flexGrow={1}>
+      <Box flex flexGrow={1} vcenter>
         <OnboardingSlider />
       </Box>
       <Box>

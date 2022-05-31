@@ -21,5 +21,5 @@ export enum ThemeMode {
 export type ThemeContextValues = {
   mode: ThemeMode;
   theme: Theme;
-  isLightMode: boolean
+  isLightMode: boolean;
 };

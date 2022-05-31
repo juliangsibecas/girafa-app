@@ -18,6 +18,9 @@ export const lightPalette: Palette = {
   error: {
     main: '#FF0000',
   },
+  disabled: {
+    main: '#F2F2F2',
+  },
   text: {
     primary: '#4F4F4F',
     secondary: '#B2B2B2',
@@ -44,6 +47,9 @@ export const darkPalette: Palette = {
   },
   error: {
     main: '#FF0000',
+  },
+  disabled: {
+    main: '#2C3966',
   },
   text: {
     primary: '#FFFFFF',

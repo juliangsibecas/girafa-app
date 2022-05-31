@@ -27,7 +27,7 @@ export const TextInput: React.FC<Props> = ({
 
   const style = useStyle({
     p: 2,
-    bgColor: isLightMode ? '#F2F2F2' : '#2C3966',
+    bgColor: 'disabled',
     color: isLightMode ? '#4F4F4F' : '#FFFFFF',
     borderRadius: 1,
     ...props,

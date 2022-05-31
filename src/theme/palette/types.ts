@@ -12,6 +12,7 @@ export type Palette = {
   success: Color;
   warning: Color;
   error: Color;
+  disabled: Color;
   text: {
     primary: string;
     secondary: string;

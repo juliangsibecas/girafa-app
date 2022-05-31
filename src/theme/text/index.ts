@@ -31,7 +31,11 @@ export const text = (palette: Palette) => {
       lineHeight: 26,
     }),
     h3: createFont({ fontSize: 32 }),
-    h4: createFont({ fontSize: 32 }),
+    h4: createFont({
+      fontFamily: FontFamily.MEDIUM,
+      fontSize: 18,
+      lineHeight: 20,
+    }),
     h5: createFont({ fontSize: 32 }),
     h6: createFont({ fontSize: 32 }),
 
