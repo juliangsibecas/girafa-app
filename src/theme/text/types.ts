@@ -1,14 +1,14 @@
-export enum FontWeight {
-  LIGHT = '300',
-  REGULAR = '400',
-  MEDIUM = '500',
-  BOLD = '600',
+export enum FontFamily {
+  LIGHT = 'PlusJakartaSans-Light',
+  REGULAR = 'PlusJakartaSans-Regular',
+  MEDIUM = 'PlusJakartaSans-Medium',
+  SEMIBOLD = 'PlusJakartaSans-SemiBold',
+  BOLD = 'PlusJakartaSans-Bold',
 }
 
 export type Font = {
-  fontFamily: string;
+  fontFamily: FontFamily;
   fontSize: number;
-  fontWeight: FontWeight;
   lineHeight: number;
   color: string;
 };
@@ -25,4 +25,6 @@ export type Text = {
   secondary: Font;
 
   button: Font;
+
+  hint: Font;
 };

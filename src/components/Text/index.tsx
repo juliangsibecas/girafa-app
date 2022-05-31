@@ -2,17 +2,21 @@ import React from 'react';
 import { Text as RNText } from 'react-native';
 import { useTheme } from '../../theme';
 import { Theme } from '../../theme/types';
-import { createStyle, UiKeys } from '../../ui';
+import { useStyle, UiKeys } from '../../ui';
 
 interface Props extends UiKeys {
   children: string;
 
-  type: keyof Theme['text'];
+  type?: keyof Theme['text'];
 }
 
-export const Text: React.FC<Props> = ({ type, children, ...props }) => {
-  const { text } = useTheme();
-  const style = createStyle(props);
+export const Text: React.FC<Props> = ({
+  type = 'primary',
+  children,
+  ...props
+}) => {
+  const theme = useTheme();
+  const style = useStyle(props, theme.text[type]);
 
-  return <RNText style={{ ...text[type], ...style }}>{children}</RNText>;
+  return <RNText style={style}>{children}</RNText>;
 };

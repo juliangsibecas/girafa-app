@@ -25,7 +25,7 @@ export const lightPalette: Palette = {
     disabled: '#B2B2B2',
   },
   background: {
-    default: '#000000',
+    main: '#FFFFFF',
     paper: '#000000',
   },
 };

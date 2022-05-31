@@ -1,0 +1,15 @@
+mutation signUp ($data: AuthSignUpInput!) {
+  signUp (data: $data) {
+    userId
+    accessToken
+    refreshToken
+  }
+}
+
+mutation signIn ($data: AuthSignInInput!) {
+  signIn (data: $data) {
+    userId
+    accessToken
+    refreshToken
+  }
+}

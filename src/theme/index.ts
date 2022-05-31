@@ -11,8 +11,9 @@ const theme: Theme = {
   text,
   spacing: (n) => n * DEFAULT_SPACING,
   shape: {
-    borderRadiues: 16,
+    borderRadiues: 8,
   },
 };
 
 export const { ThemeProvider, useTheme } = createTheming(theme);
+export { Theme };

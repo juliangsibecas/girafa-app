@@ -6,19 +6,20 @@ import { useEffect, useState } from 'react';
 export const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
-  // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
 
-        // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          'space-mono': require('../../assets/fonts/SpaceMono-Regular.ttf'),
+          'PlusJakartaSans-Light': require('../../assets/fonts/PlusJakartaSans-Light.ttf'),
+          'PlusJakartaSans-Regular': require('../../assets/fonts/PlusJakartaSans-Regular.ttf'),
+          'PlusJakartaSans-Medium': require('../../assets/fonts/PlusJakartaSans-Medium.ttf'),
+          'PlusJakartaSans-SemiBold': require('../../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
+          'PlusJakartaSans-Bold': require('../../assets/fonts/PlusJakartaSans-Bold.ttf'),
         });
       } catch (e) {
-        // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
         setLoadingComplete(true);

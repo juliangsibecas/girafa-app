@@ -1,9 +1,8 @@
 import { lightPalette } from '../palette';
-import { Font, FontWeight, Text } from './types';
+import { Font, FontFamily, Text } from './types';
 
 const defaultFont: Font = {
-  fontFamily: 'space-mono',
-  fontWeight: FontWeight.REGULAR,
+  fontFamily: FontFamily.REGULAR,
   fontSize: 14,
   color: lightPalette.text.primary,
   lineHeight: 16,
@@ -20,14 +19,35 @@ export const text: Text = {
     color: lightPalette.text.secondary,
   }),
 
-  h1: createFont({ fontSize: 32, lineHeight: 34, color: '#333333' }),
-  h2: createFont({ fontSize: 32, color: '#333333' }),
+  h1: createFont({
+    fontFamily: FontFamily.BOLD,
+    fontSize: 32,
+    lineHeight: 34,
+    color: '#333333',
+  }),
+  h2: createFont({
+    fontFamily: FontFamily.BOLD,
+    fontSize: 24,
+    lineHeight: 26,
+    color: '#333333',
+  }),
   h3: createFont({ fontSize: 32, color: '#333333' }),
   h4: createFont({ fontSize: 32, color: '#333333' }),
   h5: createFont({ fontSize: 32, color: '#333333' }),
   h6: createFont({ fontSize: 32, color: '#333333' }),
 
-  button: createFont({ fontSize: 32, color: '#333333' }),
+  button: createFont({
+    fontFamily: FontFamily.SEMIBOLD,
+    fontSize: 18,
+    lineHeight: 20,
+    color: '#FFFFFF',
+  }),
+
+  hint: createFont({
+    fontFamily: FontFamily.REGULAR,
+    fontSize: 10,
+    lineHeight: 11,
+  }),
 };
 
 export { Text };
