@@ -12,3 +12,14 @@ export type Theme = {
 
   text: Text;
 };
+
+export enum ThemeMode {
+  LIGHT = 'LIGHT',
+  DARK = 'DARK',
+}
+
+export type ThemeContextValues = {
+  mode: ThemeMode;
+  theme: Theme;
+  isLightMode: boolean
+};

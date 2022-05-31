@@ -26,7 +26,7 @@ export const Button: React.FC<Props> = ({
   isLoading,
   ...props
 }) => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const type = secondary ? 'secondary' : 'primary';
   const buttonStyle: ViewStyle = {

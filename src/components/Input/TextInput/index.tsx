@@ -3,6 +3,7 @@ import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
+import { ThemeMode, useTheme } from '../../../theme';
 import { UiKeys, useStyle } from '../../../ui';
 import { Text } from '../../Text';
 
@@ -20,13 +21,14 @@ export const TextInput: React.FC<Props> = ({
   contentType = 'none',
   ...props
 }) => {
+  const { isLightMode } = useTheme();
   const { values, handleBlur, handleChange } = useFormikContext();
   const value = (values as Record<string, string>)[id] ?? '';
 
   const style = useStyle({
     p: 2,
-    bgColor: '#F2F2F2',
-    color: '#4F4F4F',
+    bgColor: isLightMode ? '#F2F2F2' : '#2C3966',
+    color: isLightMode ? '#4F4F4F' : '#FFFFFF',
     borderRadius: 1,
     ...props,
   });
@@ -37,7 +39,7 @@ export const TextInput: React.FC<Props> = ({
         keyboardType={keyboardType}
         secureTextEntry={['password', 'newPassword'].includes(contentType)}
         textContentType={contentType}
-        placeholderTextColor="#828282"
+        placeholderTextColor={isLightMode ? '#828282' : '#8096DF'}
         style={style}
         placeholder={placeholder}
         autoCapitalize="none"

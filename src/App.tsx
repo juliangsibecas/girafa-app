@@ -1,15 +1,15 @@
 import './yup';
+import React from 'react';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import { ApolloProvider } from '@apollo/client';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import { useCachedResources } from './hooks/useCachedResources';
-import { ThemeProvider } from './theme';
-import { ApolloProvider } from '@apollo/client';
+import { theme, ThemeMode, ThemeProvider } from './theme';
 import { client } from './apollo';
-import { AuthProvider } from './modules/auth/provider';
+import { AuthProvider } from './modules/auth';
 import { Navigation } from './navigation';
 
 const AppComponent = () => {
@@ -22,7 +22,7 @@ const AppComponent = () => {
       <SafeAreaProvider>
         <StatusBar />
         <ApolloProvider client={client}>
-          <ThemeProvider>
+          <ThemeProvider theme={theme} mode={ThemeMode.LIGHT}>
             <AuthProvider>
               <Navigation />
               <Toast position="bottom" />

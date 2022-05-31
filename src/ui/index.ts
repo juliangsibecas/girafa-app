@@ -1,16 +1,16 @@
 import { Dimensions, TextStyle, ViewStyle } from 'react-native';
-import { lightPalette } from '../theme/palette';
 import { useTheme } from '../theme';
+import { Palette } from '../theme/palette';
 import { UiKeys } from './types';
 
 type Style = ViewStyle & TextStyle;
 
-function formatColor(color: string) {
-  return color.startsWith('#') ? color : lightPalette[color as 'primary'].main;
+function formatColor(palette: Palette, color: string) {
+  return color.startsWith('#') ? color : palette[color as 'primary'].main;
 }
 
 export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const style: Style = { ...baseStyle };
 
@@ -33,13 +33,15 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
   style.flexDirection = keys.column ? 'column' : keys.row ? 'row' : undefined;
 
   style.backgroundColor = keys.bgColor
-    ? formatColor(keys.bgColor)
+    ? formatColor(theme.palette, keys.bgColor)
     : baseStyle.backgroundColor;
   style.borderRadius = keys.borderRadius
     ? keys.borderRadius * theme.shape.borderRadiues
     : undefined;
 
-  style.color = keys.color ? formatColor(keys.color) : baseStyle.color;
+  style.color = keys.color
+    ? formatColor(theme.palette, keys.color)
+    : baseStyle.color;
   style.textAlign = keys.textCenter ? 'center' : 'left';
 
   style.height =

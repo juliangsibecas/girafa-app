@@ -1,17 +1,12 @@
-export enum PaletteMode {
-  LIGHT = 'LIGHT',
-  DARK = 'DARK',
-}
-
 export type Color = {
   main: string;
   light?: string;
   dark?: string;
 };
 
-export type PaletteColorCode = `${keyof PaletteColors}.${keyof Color}`;
+export type PaletteColorCode = `${keyof Palette}.${keyof Color}`;
 
-export type PaletteColors = {
+export type Palette = {
   primary: Color;
   secondary: Color;
   success: Color;
@@ -27,7 +22,3 @@ export type PaletteColors = {
     paper: string;
   };
 };
-
-export type Palette = {
-  mode: PaletteMode;
-} & PaletteColors;
