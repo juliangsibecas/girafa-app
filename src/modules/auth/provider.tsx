@@ -1,10 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from './context';
 import * as SecureStore from 'expo-secure-store';
 import { SignInPayload } from './types';
+import jwtDecode from 'jwt-decode';
+import { useSignInFromRefreshTokenMutation } from '../../generated/graphql';
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();
   const [userId, setUserId] = useState('');
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fn = async () => {
+      const accessToken = await SecureStore.getItemAsync('accessToken');
+      const refreshToken = await SecureStore.getItemAsync('refreshToken');
+
+      if (accessToken) {
+        const { userId, exp } = jwtDecode<{ userId: string; exp: number }>(
+          accessToken
+        );
+
+        if (Date.now() < exp * 1000) {
+          setUserId(userId);
+          return;
+        }
+      }
+
+      if (refreshToken) {
+        try {
+          const res = await signinFromRefreshToken({
+            context: {
+              headers: {
+                Refresh: refreshToken,
+              },
+            },
+          });
+
+          const data = res.data!.signInFromRefreshToken;
+
+          await SecureStore.setItemAsync('accessToken', data.accessToken);
+          await SecureStore.setItemAsync('refreshToken', data.refreshToken);
+          setUserId(data.userId);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+
+    setLoading(false);
+
+    fn();
+  }, []);
 
   const signIn = async ({
     userId,
@@ -12,17 +58,25 @@ export const AuthProvider: React.FC = ({ children }) => {
     refreshToken,
   }: SignInPayload) => {
     setUserId(userId);
-    SecureStore.setItemAsync('accessToken', accessToken);
-    SecureStore.setItemAsync('refreshToken', refreshToken);
+    await SecureStore.setItemAsync('accessToken', accessToken);
+    await SecureStore.setItemAsync('refreshToken', refreshToken);
   };
 
-  const signOut = () => {
+  const signOut = async () => {
     setUserId('');
+    await SecureStore.setItemAsync('accessToken', '');
+    await SecureStore.setItemAsync('refreshToken', '');
   };
 
   return (
     <AuthContext.Provider
-      value={{ isSignedIn: Boolean(userId), userId, signIn, signOut }}
+      value={{
+        isSignedIn: Boolean(userId),
+        userId,
+        signIn,
+        signOut,
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

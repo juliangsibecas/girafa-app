@@ -4,6 +4,8 @@ export type AuthContextValues = {
 
   signIn: (payload: SignInPayload) => void;
   signOut: () => void;
+
+  isLoading: boolean;
 };
 
 export type SignInPayload = {

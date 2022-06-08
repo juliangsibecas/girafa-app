@@ -46,7 +46,7 @@ export type Mutation = {
   generateRecoveryCode: Scalars['Boolean'];
   partyCreate: Party;
   signIn: AuthSignIn;
-  signInFromRefreshToken: Scalars['Boolean'];
+  signInFromRefreshToken: AuthSignIn;
   signUp: AuthSignIn;
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
@@ -213,6 +213,11 @@ export type SignInMutationVariables = Exact<{
 
 export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
 
+export type SignInFromRefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+
 
 export const SignUpDocument = gql`
     mutation signUp($data: AuthSignUpInput!) {
@@ -284,3 +289,37 @@ export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignI
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
 export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
+export const SignInFromRefreshTokenDocument = gql`
+    mutation signInFromRefreshToken {
+  signInFromRefreshToken {
+    userId
+    accessToken
+    refreshToken
+  }
+}
+    `;
+export type SignInFromRefreshTokenMutationFn = Apollo.MutationFunction<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;
+
+/**
+ * __useSignInFromRefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useSignInFromRefreshTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignInFromRefreshTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signInFromRefreshTokenMutation, { data, loading, error }] = useSignInFromRefreshTokenMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSignInFromRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>(SignInFromRefreshTokenDocument, options);
+      }
+export type SignInFromRefreshTokenMutationHookResult = ReturnType<typeof useSignInFromRefreshTokenMutation>;
+export type SignInFromRefreshTokenMutationResult = Apollo.MutationResult<SignInFromRefreshTokenMutation>;
+export type SignInFromRefreshTokenMutationOptions = Apollo.BaseMutationOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;

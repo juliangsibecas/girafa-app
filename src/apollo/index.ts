@@ -1,6 +1,12 @@
 import * as SecureStore from 'expo-secure-store';
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { TokenRefreshLink } from 'apollo-link-token-refresh';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',
@@ -18,7 +24,24 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
+const tokenRefreshLink = new TokenRefreshLink({
+  fetchAccessToken: async () => {
+    return fetch('http://localhost:4000/graphql', {
+      method: 'POST',
+      headers: {
+        Refresh: (await SecureStore.getItemAsync('refreshToken')) as string,
+      },
+    });
+  },
+  handleFetch: () => {
+    return {
+      accessToken: '',
+    };
+  },
+  isTokenValidOrUndefined: () => false,
+});
+
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  link: ApolloLink.from([authLink, httpLink]),
 });

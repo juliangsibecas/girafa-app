@@ -13,3 +13,11 @@ mutation signIn ($data: AuthSignInInput!) {
     refreshToken
   }
 }
+
+mutation signInFromRefreshToken  {
+  signInFromRefreshToken  {
+    userId
+    accessToken
+    refreshToken
+  }
+}

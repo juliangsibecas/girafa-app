@@ -1,16 +1,18 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Text } from '../components';
+import { StateHandler, Text } from '../components';
 import { useAuth } from '../modules/auth/hooks';
 import { OnboardingNavigator } from '../modules/onboarding/navigator';
 
 export const Navigation = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, isLoading } = useAuth();
 
   return (
-    <NavigationContainer>
-      {!isSignedIn && <OnboardingNavigator />}
-      {isSignedIn && <Text>hola</Text>}
-    </NavigationContainer>
+    <StateHandler isLoading={isLoading}>
+      <NavigationContainer>
+        {!isSignedIn && <OnboardingNavigator />}
+        {isSignedIn && <Text>hola</Text>}
+      </NavigationContainer>
+    </StateHandler>
   );
 };
