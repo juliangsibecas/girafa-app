@@ -41,6 +41,17 @@ export type AuthSignUpInput = {
   password: Scalars['String'];
 };
 
+export type Coordinates = {
+  __typename?: 'Coordinates';
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
+};
+
+export type CoordinatesCreateInput = {
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   generateRecoveryCode: Scalars['Boolean'];
@@ -50,6 +61,7 @@ export type Mutation = {
   signUp: AuthSignIn;
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
+  userSendPartyInvite: Scalars['Boolean'];
 };
 
 
@@ -82,12 +94,19 @@ export type MutationUserChangeFollowingStateArgs = {
   data: UserChangeFollowingStateInput;
 };
 
+
+export type MutationUserSendPartyInviteArgs = {
+  data: UserSendPartyInviteInput;
+};
+
 export type Notification = {
   __typename?: 'Notification';
+  _id: Scalars['String'];
+  createdAt: Scalars['Date'];
   from: User;
-  id: Scalars['String'];
   party?: Maybe<Party>;
   type: NotificationType;
+  updatedAt: Scalars['Date'];
   user: User;
 };
 
@@ -98,18 +117,21 @@ export enum NotificationType {
 
 export type Party = {
   __typename?: 'Party';
+  _id: Scalars['String'];
   address: Scalars['String'];
   allowInivites: Scalars['Boolean'];
   attenders: Array<User>;
   availability: PartyAvailability;
+  coordinates: Coordinates;
+  createdAt: Scalars['Date'];
   date: Scalars['Date'];
   description: Scalars['String'];
-  id: Scalars['String'];
   invited: Array<User>;
   minAge?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer: User;
+  updatedAt: Scalars['Date'];
 };
 
 export enum PartyAvailability {
@@ -121,6 +143,8 @@ export enum PartyAvailability {
 
 export type PartyCreateInput = {
   address: Scalars['String'];
+  availability: PartyAvailability;
+  coordinate: CoordinatesCreateInput;
   date: Scalars['Date'];
   description: Scalars['String'];
   name: Scalars['String'];
@@ -148,7 +172,7 @@ export type QueryPartyGetByIdArgs = {
 
 
 export type QueryPartySearchArgs = {
-  q: Scalars['String'];
+  q?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -173,13 +197,14 @@ export type SubscriptionNotificationsArgs = {
 
 export type User = {
   __typename?: 'User';
+  _id: Scalars['String'];
   attendedParties: Array<Party>;
   bio?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Date'];
   email: Scalars['String'];
   followers: Array<User>;
   following: Array<User>;
   fullName: Scalars['String'];
-  id: Scalars['String'];
   invites: Array<Party>;
   nickname: Scalars['String'];
   notifications: Array<Notification>;
@@ -187,6 +212,7 @@ export type User = {
   password?: Maybe<Scalars['String']>;
   recoveryCode?: Maybe<Scalars['String']>;
   refreshToken?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['Date'];
 };
 
 export type UserChangeAttendingStateInput = {
@@ -197,6 +223,11 @@ export type UserChangeAttendingStateInput = {
 export type UserChangeFollowingStateInput = {
   followingId: Scalars['String'];
   state: Scalars['Boolean'];
+};
+
+export type UserSendPartyInviteInput = {
+  invitedId: Scalars['String'];
+  partyId: Scalars['String'];
 };
 
 export type SignUpMutationVariables = Exact<{
@@ -217,6 +248,13 @@ export type SignInFromRefreshTokenMutationVariables = Exact<{ [key: string]: nev
 
 
 export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+
+export type PartySearchQueryVariables = Exact<{
+  q?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PartySearchQuery = { __typename?: 'Query', partySearch: Array<{ __typename?: 'Party', _id: string, name: string, date: any, organizer: { __typename?: 'User', nickname: string }, coordinates: { __typename?: 'Coordinates', latitude: number, longitude: number } }> };
 
 
 export const SignUpDocument = gql`
@@ -323,3 +361,47 @@ export function useSignInFromRefreshTokenMutation(baseOptions?: Apollo.MutationH
 export type SignInFromRefreshTokenMutationHookResult = ReturnType<typeof useSignInFromRefreshTokenMutation>;
 export type SignInFromRefreshTokenMutationResult = Apollo.MutationResult<SignInFromRefreshTokenMutation>;
 export type SignInFromRefreshTokenMutationOptions = Apollo.BaseMutationOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;
+export const PartySearchDocument = gql`
+    query partySearch($q: String) {
+  partySearch(q: $q) {
+    _id
+    name
+    organizer {
+      nickname
+    }
+    coordinates {
+      latitude
+      longitude
+    }
+    date
+  }
+}
+    `;
+
+/**
+ * __usePartySearchQuery__
+ *
+ * To run a query within a React component, call `usePartySearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartySearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartySearchQuery({
+ *   variables: {
+ *      q: // value for 'q'
+ *   },
+ * });
+ */
+export function usePartySearchQuery(baseOptions?: Apollo.QueryHookOptions<PartySearchQuery, PartySearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartySearchQuery, PartySearchQueryVariables>(PartySearchDocument, options);
+      }
+export function usePartySearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartySearchQuery, PartySearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartySearchQuery, PartySearchQueryVariables>(PartySearchDocument, options);
+        }
+export type PartySearchQueryHookResult = ReturnType<typeof usePartySearchQuery>;
+export type PartySearchLazyQueryHookResult = ReturnType<typeof usePartySearchLazyQuery>;
+export type PartySearchQueryResult = Apollo.QueryResult<PartySearchQuery, PartySearchQueryVariables>;

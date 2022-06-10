@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, ViewProps, ViewStyle } from 'react-native';
 import { useStyle, UiKeys } from '../../ui';
 
-interface Props extends UiKeys {
-  style?: ViewStyle;
-}
+type Props = ViewProps & UiKeys;
 
 export const Box: React.FC<Props> = ({ children, ...props }) => {
   const style = useStyle(props);
 
-  return <View style={{ ...style, ...props.style }}>{children}</View>;
+  return (
+    <View
+      style={{ ...style, ...(props.style as ViewStyle) }}
+      pointerEvents={props.pointerEvents}
+    >
+      {children}
+    </View>
+  );
 };

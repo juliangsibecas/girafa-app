@@ -43,10 +43,13 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
     ? formatColor(theme.palette, keys.color)
     : baseStyle.color;
   style.textAlign = keys.textCenter ? 'center' : 'left';
+  style.fontFamily = keys.fontFamily ?? baseStyle.fontFamily;
 
   style.height =
     keys.height === 'screen'
-      ? Dimensions.get('screen').width
+      ? Dimensions.get('screen').height -
+        (style.paddingTop ?? 0) -
+        (style.paddingBottom ?? 0)
       : spacing(keys.height) ?? baseStyle.height;
 
   style.width =

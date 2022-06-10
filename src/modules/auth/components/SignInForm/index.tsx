@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 import { Formik, FormikHelpers } from 'formik';
 import { Box, TextInput } from '../../../../components';
 import { Button } from '../../../../components/Button';
-import { useSignInMutation } from '../../../../generated/graphql';
+import { useSignInMutation } from '../../../../api';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { useAuth } from '../../hooks';
 

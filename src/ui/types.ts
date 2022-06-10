@@ -1,3 +1,5 @@
+import { FontFamily } from '../theme/text/types';
+
 export type UiKeys = Partial<{
   m: number;
   mt: number;
@@ -27,6 +29,7 @@ export type UiKeys = Partial<{
   hcenter: boolean;
   center: boolean;
 
+  fontFamily: FontFamily;
   textCenter: boolean;
   color: 'primary' | 'secondary' | 'background' | string;
 

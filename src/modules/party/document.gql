@@ -1,0 +1,14 @@
+query partySearch ($q: String) {
+  partySearch (q: $q) {
+    _id
+    name
+    organizer {
+      nickname
+    }
+    coordinates {
+      latitude
+      longitude
+    }
+    date
+  }
+}

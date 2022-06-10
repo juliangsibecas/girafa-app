@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList, Image, ViewToken } from 'react-native';
 import { Box, Text } from '../../../../components';
 import image from '../../../../../assets/images/onboarding.png';
@@ -8,18 +8,14 @@ type Step = 0 | 1 | 2;
 export const OnboardingSlider: React.FC = () => {
   const [step, setStep] = useState<Step>(0);
 
-  const onViewableItemsChanged = (info: {
-    viewableItems: Array<ViewToken>;
-  }) => {
-    console.log(info);
-  };
-
   const onViewRef = React.useRef(
     (info: { viewableItems: Array<ViewToken> }) => {
       setStep(info.viewableItems[0].index as Step);
     }
   );
+
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
+
   return (
     <Box mx={-2}>
       <FlatList

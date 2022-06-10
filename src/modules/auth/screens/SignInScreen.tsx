@@ -4,7 +4,7 @@ import { SignInForm } from '../components';
 
 export const SignInScreen: React.FC = () => {
   return (
-    <Container>
+    <Container noBottomTab>
       <Text type="h2" textCenter mb={2}>
         Holanda
       </Text>

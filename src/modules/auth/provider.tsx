@@ -3,7 +3,7 @@ import { AuthContext } from './context';
 import * as SecureStore from 'expo-secure-store';
 import { SignInPayload } from './types';
 import jwtDecode from 'jwt-decode';
-import { useSignInFromRefreshTokenMutation } from '../../generated/graphql';
+import { useSignInFromRefreshTokenMutation } from '../../api';
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();

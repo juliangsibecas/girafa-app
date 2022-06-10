@@ -1,14 +1,17 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { ViewProps, ViewStyle } from 'react-native';
 import { UiKeys } from '../../ui';
 import { Box } from '../Box';
 
-interface Props extends UiKeys {
-  noHeader?: boolean;
-}
+type Props = ViewProps &
+  UiKeys & {
+    noHeader?: boolean;
+    noBottomTab?: boolean;
+  };
 
 export const Container: React.FC<Props> = ({
   noHeader,
+  noBottomTab,
   children,
   ...props
 }) => (
@@ -18,7 +21,7 @@ export const Container: React.FC<Props> = ({
     flexGrow={1}
     px={2}
     pt={noHeader ? 8 : 2}
-    pb={6}
+    pb={noBottomTab ? 6 : 3}
     height={noHeader ? 'screen' : 10}
     width="screen"
     bgColor="background"

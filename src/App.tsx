@@ -11,6 +11,7 @@ import { theme, ThemeMode, ThemeProvider } from './theme';
 import { client } from './apollo';
 import { AuthProvider } from './modules/auth';
 import { Navigation } from './navigation';
+import { Appearance } from 'react-native';
 
 const AppComponent = () => {
   const isLoadingComplete = useCachedResources();
@@ -22,7 +23,14 @@ const AppComponent = () => {
       <SafeAreaProvider>
         <StatusBar />
         <ApolloProvider client={client}>
-          <ThemeProvider theme={theme} mode={ThemeMode.LIGHT}>
+          <ThemeProvider
+            theme={theme}
+            mode={
+              Appearance.getColorScheme() === 'light'
+                ? ThemeMode.LIGHT
+                : ThemeMode.LIGHT
+            }
+          >
             <AuthProvider>
               <Navigation />
               <Toast position="bottom" />
