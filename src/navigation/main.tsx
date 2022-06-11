@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../theme';
 import { MapScreen } from '../modules/party';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Icon } from '../components';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -11,12 +11,6 @@ export const MainNavigator: React.FC = () => {
   return (
     <BottomTab.Navigator
       screenOptions={{
-        headerTitle: '',
-        headerShadowVisible: false,
-        headerTintColor: theme.palette.primary.main,
-        headerStyle: {
-          backgroundColor: theme.palette.background.main,
-        },
         tabBarStyle: {
           backgroundColor: theme.palette.background.main,
         },
@@ -29,8 +23,8 @@ export const MainNavigator: React.FC = () => {
         component={MapScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="home" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Icon name="home" size={3} color={color} />
           ),
         }}
       />

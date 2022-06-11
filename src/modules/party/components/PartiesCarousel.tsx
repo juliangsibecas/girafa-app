@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Box, Text } from '../../../components';
+import { Box, Icon, Text } from '../../../components';
 import { Party } from '../../../api';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';

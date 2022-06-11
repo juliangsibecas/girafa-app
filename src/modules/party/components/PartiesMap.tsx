@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Party } from '../../../api';
+import { Box, Icon } from '../../../components';
 import { useTheme } from '../../../theme';
 
 interface Props {
@@ -38,28 +38,26 @@ export const PartiesMap: React.FC<Props> = ({
   }, [idx]);
 
   return (
-    <MapView
-      ref={map as React.LegacyRef<MapView>}
-      provider={PROVIDER_GOOGLE}
-      initialRegion={INITIAL_REGION}
-      style={{
-        height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width,
-      }}
-    >
-      {parties.map((party, i) => (
-        <Marker
-          key={i}
-          coordinate={party.coordinates}
-          onPress={() => handleIdxChange(i)}
-        >
-          <Icon
-            name="map-marker"
-            size={theme.spacing(4)}
-            color={theme.palette.primary.main}
-          />
-        </Marker>
-      ))}
-    </MapView>
+    <Box position="absolute">
+      <MapView
+        ref={map as React.LegacyRef<MapView>}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={INITIAL_REGION}
+        style={{
+          height: Dimensions.get('window').height,
+          width: Dimensions.get('window').width,
+        }}
+      >
+        {parties.map((party, i) => (
+          <Marker
+            key={i}
+            coordinate={party.coordinates}
+            onPress={() => handleIdxChange(i)}
+          >
+            <Icon name="map-marker" size={4} color="primary" />
+          </Marker>
+        ))}
+      </MapView>
+    </Box>
   );
 };

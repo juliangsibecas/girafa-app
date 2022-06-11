@@ -1,6 +1,14 @@
+import { ViewStyle } from 'react-native';
 import { FontFamily } from '../theme/text/types';
 
 export type UiKeys = Partial<{
+  position: ViewStyle['position'];
+
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+
   m: number;
   mt: number;
   mb: number;
@@ -36,4 +44,6 @@ export type UiKeys = Partial<{
   height: 'screen' | number;
   width: 'screen' | number;
   fullWidth: boolean;
+
+  overflow: ViewStyle['overflow'];
 }>;

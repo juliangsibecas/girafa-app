@@ -16,6 +16,12 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
 
   const spacing = (n?: number) => (n ? theme.spacing(n) : n);
 
+  style.position = keys.position;
+  style.top = spacing(keys.top);
+  style.bottom = spacing(keys.bottom);
+  style.left = spacing(keys.left);
+  style.right = spacing(keys.right);
+
   style.margin = spacing(keys.m);
   style.marginTop = spacing(keys.my ?? keys.mt);
   style.marginBottom = spacing(keys.my ?? keys.mb);
@@ -61,6 +67,8 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
     keys.hcenter || keys.center ? 'center' : baseStyle.alignItems;
   style.justifyContent =
     keys.vcenter || keys.center ? 'center' : baseStyle.justifyContent;
+
+  style.overflow = keys.overflow;
 
   return style;
 };

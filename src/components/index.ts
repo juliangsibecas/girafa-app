@@ -6,3 +6,4 @@ export * from './Button';
 export * from './Spinner';
 export * from './StateHandler';
 export * from './Logo';
+export * from './Icon';
