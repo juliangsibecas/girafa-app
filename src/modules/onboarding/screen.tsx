@@ -1,11 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+} from '@react-navigation/native';
 import React from 'react';
 import { Box, Container, Logo } from '../../components';
 import { Button } from '../../components/Button';
 import { OnboardingSlider } from './components';
+import { OnboardingNavigationProp } from './navigator';
 
 export const OnboardingScreen: React.FC = () => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<OnboardingNavigationProp>();
+
   return (
     <Container noHeader noBottomTab>
       <Box center>

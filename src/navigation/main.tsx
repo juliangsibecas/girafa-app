@@ -1,14 +1,18 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../theme';
-import { MapScreen } from '../modules/party';
 import { Icon } from '../components';
 import { HomeNavigator } from './home';
 
-const BottomTab = createBottomTabNavigator();
+type MainBottomTabNavigatorParamList = {
+  Home: undefined;
+};
+
+const BottomTab = createBottomTabNavigator<MainBottomTabNavigatorParamList>();
 
 export const MainNavigator: React.FC = () => {
   const { theme } = useTheme();
+
   return (
     <BottomTab.Navigator
       screenOptions={{

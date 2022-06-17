@@ -33,3 +33,6 @@ export const Navigation = () => {
     </StateHandler>
   );
 };
+
+export * from './main';
+export * from './home';

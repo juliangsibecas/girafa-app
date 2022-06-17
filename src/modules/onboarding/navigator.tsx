@@ -4,13 +4,23 @@ import { SignUpScreen } from '../auth';
 import { OnboardingScreen } from './screen';
 import { SignInScreen } from '../auth/screens/SignInScreen';
 import { useTheme } from '../../theme';
+import { NavigationProp } from '@react-navigation/native';
 
-const Stack = createNativeStackNavigator();
+export type OnboardingStackParamList = {
+  Onboarding: undefined;
+  SignUp: undefined;
+  SignIn: undefined;
+};
+
+export type OnboardingNavigationProp = NavigationProp<OnboardingStackParamList>;
+
+const Stack = createNativeStackNavigator<OnboardingStackParamList>();
 
 export const OnboardingNavigator: React.FC = () => {
   const { theme } = useTheme();
   return (
     <Stack.Navigator
+      initialRouteName="Onboarding"
       screenOptions={{
         headerTitle: '',
         headerBackTitle: '',

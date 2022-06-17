@@ -1,11 +1,12 @@
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
 import { Container, StateHandler } from '../../../components';
 import { PartyGetByIdResponse, usePartyGetByIdQuery } from '../../../api';
+import { HomeRouteProp } from '../../../navigation';
 import { PartyDetail } from '../components';
-import { useRoute } from '@react-navigation/native';
 
 export const PartyDetailScreen: React.FC = () => {
-  const { params } = useRoute();
+  const { params } = useRoute<HomeRouteProp<'PartyDetail'>>();
   const {
     data,
     loading: isLoading,

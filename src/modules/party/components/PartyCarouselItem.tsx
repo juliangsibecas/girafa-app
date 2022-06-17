@@ -7,13 +7,14 @@ import image from '../../../../assets/images/onboarding.png';
 import { Party } from '../../../api';
 import { useNavigation } from '@react-navigation/native';
 import { formatDate } from '../../../utils';
+import { HomeNavigationProp } from '../../../navigation';
 
 interface Props {
   party: Party;
 }
 
 export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<HomeNavigationProp>();
   const { theme } = useTheme();
   return (
     <Box width="screen" center>
