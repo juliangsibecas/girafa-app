@@ -1,0 +1,4 @@
+
+mutation userChangeAttendingState ($data: UserChangeAttendingStateInput!) {
+  userChangeAttendingState (data: $data)
+}

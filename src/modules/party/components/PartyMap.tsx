@@ -3,7 +3,6 @@ import { Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Party } from '../../../api';
 import { Box, Icon } from '../../../components';
-import { useTheme } from '../../../theme';
 
 interface Props {
   idx: number;
@@ -17,13 +16,13 @@ const INITIAL_REGION = {
   latitudeDelta: 0.082,
   longitudeDelta: 0.082,
 };
-export const PartiesMap: React.FC<Props> = ({
+
+export const PartyMap: React.FC<Props> = ({
   idx,
   parties,
   handleIdxChange,
 }) => {
   const map = useRef<MapView>();
-  const { theme } = useTheme();
 
   useEffect(() => {
     map.current?.animateToRegion(

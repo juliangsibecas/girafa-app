@@ -1,3 +1,4 @@
-icons (create icon component)
+icons (choose icon lib)
 style map (light and dark)
 define dates logic and parsers
+domain (redirect schema => share)

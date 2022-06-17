@@ -28,7 +28,7 @@ const AppComponent = () => {
             mode={
               Appearance.getColorScheme() === 'light'
                 ? ThemeMode.LIGHT
-                : ThemeMode.LIGHT
+                : ThemeMode.DARK
             }
           >
             <AuthProvider>

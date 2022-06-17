@@ -27,10 +27,11 @@ export type UiKeys = Partial<{
 
   flex: boolean;
   flexGrow: number;
+  flexShrink: number;
   row: boolean;
   column: boolean;
 
-  bgColor: 'primary' | 'secondary' | 'background' | 'disabled' | string;
+  bgColor: string;
   borderRadius: number;
 
   vcenter: boolean;
@@ -39,10 +40,12 @@ export type UiKeys = Partial<{
 
   fontFamily: FontFamily;
   textCenter: boolean;
-  color: 'primary' | 'secondary' | 'background' | string;
+  color: string;
 
   height: 'screen' | number;
   width: 'screen' | number;
+  minHeight: number;
+  minWidth: number;
   fullWidth: boolean;
 
   overflow: ViewStyle['overflow'];

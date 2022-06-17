@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FlatList, Image, ViewToken } from 'react-native';
-import { Box, Text } from '../../../../components';
+import { FlatList, ViewToken } from 'react-native';
+import { Box, Image, Text } from '../../../../components';
 import image from '../../../../../assets/images/onboarding.png';
 
 type Step = 0 | 1 | 2;
@@ -26,7 +26,7 @@ export const OnboardingSlider: React.FC = () => {
         data={[1, 2, 3]}
         renderItem={() => (
           <Box width="screen" center>
-            <Image source={image} />
+            <Image src={image} />
             <Text type="h4" mb={1}>
               Hola
             </Text>

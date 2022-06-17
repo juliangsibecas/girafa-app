@@ -4,3 +4,5 @@ export function insertObjectIf<T = Record<string, unknown>>(
 ): T | {} {
   return condition ? obj : {};
 }
+
+export * from './date';

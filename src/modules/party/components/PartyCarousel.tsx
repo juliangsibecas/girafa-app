@@ -5,7 +5,7 @@ import { Box, Icon, Text } from '../../../components';
 import { Party } from '../../../api';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
-import { PartiesCarouselItem } from './PartiesCarouselItem';
+import { PartyCarouselItem } from './PartyCarouselItem';
 
 interface Props {
   idx: number;
@@ -13,7 +13,7 @@ interface Props {
   handleIdxChange: (idx: number) => void;
 }
 
-export const PartiesCarousel: React.FC<Props> = ({
+export const PartyCarousel: React.FC<Props> = ({
   idx,
   parties,
   handleIdxChange,
@@ -59,7 +59,7 @@ export const PartiesCarousel: React.FC<Props> = ({
           );
         }
 
-        return <PartiesCarouselItem party={party} />;
+        return <PartyCarouselItem party={party} />;
       }}
       onSnapToItem={(i) => handleIdxChange(i - 1)}
     />

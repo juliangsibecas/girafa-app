@@ -1,16 +1,19 @@
 import React from 'react';
-import { Dimensions, Image } from 'react-native';
-import { Box, Button, Icon, Text } from '../../../components';
+import { Dimensions } from 'react-native';
+import { Box, Button, Icon, Image, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import image from '../../../../assets/images/onboarding.png';
 import { Party } from '../../../api';
+import { useNavigation } from '@react-navigation/native';
+import { formatDate } from '../../../utils';
 
 interface Props {
   party: Party;
 }
 
-export const PartiesCarouselItem: React.FC<Props> = ({ party }) => {
+export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
+  const { navigate } = useNavigation();
   const { theme } = useTheme();
   return (
     <Box width="screen" center>
@@ -24,10 +27,10 @@ export const PartiesCarouselItem: React.FC<Props> = ({ party }) => {
           overflow="hidden"
         >
           <Image
-            source={image}
+            src={image}
+            height={24}
+            minWidth={12}
             style={{
-              height: theme.spacing(24),
-              minWidth: theme.spacing(12),
               transform: [{ translateX: -50 }],
             }}
           />
@@ -35,7 +38,6 @@ export const PartiesCarouselItem: React.FC<Props> = ({ party }) => {
         <Box
           flex
           pl={12}
-          pr={2}
           py={3}
           style={{
             minWidth: Dimensions.get('screen').width - theme.spacing(20),
@@ -47,10 +49,14 @@ export const PartiesCarouselItem: React.FC<Props> = ({ party }) => {
           </Box>
           <Box>
             <Text color="primary" fontFamily={FontFamily.SEMIBOLD}>
-              {party.date}
+              {formatDate(party.date)}
             </Text>
             <Box position="absolute" bottom={-2} right={-2}>
-              <Button height={6} width={6}>
+              <Button
+                height={6}
+                width={6}
+                onPress={() => navigate('PartyDetail', { id: party._id })}
+              >
                 <Icon name="chevron-right" />
               </Button>
             </Box>

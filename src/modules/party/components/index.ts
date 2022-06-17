@@ -1,2 +1,3 @@
-export * from './PartiesMap';
-export * from './PartiesCarousel';
+export * from './PartyMap';
+export * from './PartyCarousel';
+export * from './PartyDetail';

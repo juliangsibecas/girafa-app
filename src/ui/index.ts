@@ -5,9 +5,32 @@ import { UiKeys } from './types';
 
 type Style = ViewStyle & TextStyle;
 
-function formatColor(palette: Palette, color: string) {
-  return color.startsWith('#') ? color : palette[color as 'primary'].main;
-}
+const removeUndefined = (style: Style) => {
+  const obj = style;
+
+  Object.keys(obj).forEach(
+    (key) =>
+      obj[key as keyof Style] === undefined && delete obj[key as keyof Style]
+  );
+
+  return obj;
+};
+
+const formatColor = (palette: Palette, color: string) => {
+  if (color.includes('.')) {
+    const splitted = color.split('.');
+
+    return (palette as Record<string, Record<string, string>>)[splitted[0]][
+      splitted[1]
+    ];
+  }
+
+  if (color.startsWith('#')) {
+    return color;
+  }
+
+  return palette[color as 'primary'].main;
+};
 
 export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
   const { theme } = useTheme();
@@ -36,6 +59,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
 
   style.display = keys.flex ? 'flex' : undefined;
   style.flexGrow = keys.flexGrow;
+  style.flexShrink = keys.flexShrink;
   style.flexDirection = keys.column ? 'column' : keys.row ? 'row' : undefined;
 
   style.backgroundColor = keys.bgColor
@@ -48,7 +72,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
   style.color = keys.color
     ? formatColor(theme.palette, keys.color)
     : baseStyle.color;
-  style.textAlign = keys.textCenter ? 'center' : 'left';
+  style.textAlign = keys.textCenter ? 'center' : undefined;
   style.fontFamily = keys.fontFamily ?? baseStyle.fontFamily;
 
   style.height =
@@ -63,6 +87,9 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
       ? Dimensions.get('screen').width
       : spacing(keys.width) ?? baseStyle.width;
 
+  style.minHeight = spacing(keys.minHeight);
+  style.minWidth = spacing(keys.minWidth);
+
   style.alignItems =
     keys.hcenter || keys.center ? 'center' : baseStyle.alignItems;
   style.justifyContent =
@@ -70,7 +97,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
 
   style.overflow = keys.overflow;
 
-  return style;
+  return removeUndefined(style);
 };
 
 export { UiKeys };

@@ -53,7 +53,7 @@ export const darkPalette: Palette = {
   },
   text: {
     primary: '#FFFFFF',
-    secondary: '#B2B2B2',
+    secondary: '#8096DF',
     disabled: '#B2B2B2',
   },
   background: {

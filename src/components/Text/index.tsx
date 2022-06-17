@@ -5,8 +5,6 @@ import { Theme } from '../../theme/types';
 import { useStyle, UiKeys } from '../../ui';
 
 interface Props extends UiKeys {
-  children: string;
-
   type?: keyof Theme['text'];
 }
 
@@ -18,5 +16,5 @@ export const Text: React.FC<Props> = ({
   const { theme } = useTheme();
   const style = useStyle(props, theme.text[type]);
 
-  return <RNText style={style}>{children}</RNText>;
+  return <RNText style={style}>{children as string}</RNText>;
 };

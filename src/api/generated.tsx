@@ -121,6 +121,7 @@ export type Party = {
   address: Scalars['String'];
   allowInivites: Scalars['Boolean'];
   attenders: Array<User>;
+  attendersCount: Scalars['Float'];
   availability: PartyAvailability;
   coordinates: Coordinates;
   createdAt: Scalars['Date'];
@@ -151,10 +152,24 @@ export type PartyCreateInput = {
   openBar: Scalars['Boolean'];
 };
 
+export type PartyGetByIdResponse = {
+  __typename?: 'PartyGetByIdResponse';
+  _id: Scalars['String'];
+  address: Scalars['String'];
+  attenders: Array<User>;
+  attendersCount: Scalars['Float'];
+  date: Scalars['Date'];
+  description: Scalars['String'];
+  isAttender: Scalars['Boolean'];
+  name: Scalars['String'];
+  openBar: Scalars['Boolean'];
+  organizer: User;
+};
+
 export type Query = {
   __typename?: 'Query';
   checkRecoveryCode: Scalars['Boolean'];
-  partyGetById: Party;
+  partyGetById: PartyGetByIdResponse;
   partySearch: Array<Party>;
   userGetById: User;
   userSearch: Array<User>;
@@ -255,6 +270,20 @@ export type PartySearchQueryVariables = Exact<{
 
 
 export type PartySearchQuery = { __typename?: 'Query', partySearch: Array<{ __typename?: 'Party', _id: string, name: string, date: any, organizer: { __typename?: 'User', nickname: string }, coordinates: { __typename?: 'Coordinates', latitude: number, longitude: number } }> };
+
+export type PartyGetByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, address: string, date: any, openBar: boolean, description: string, attendersCount: number, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+
+export type UserChangeAttendingStateMutationVariables = Exact<{
+  data: UserChangeAttendingStateInput;
+}>;
+
+
+export type UserChangeAttendingStateMutation = { __typename?: 'Mutation', userChangeAttendingState: boolean };
 
 
 export const SignUpDocument = gql`
@@ -405,3 +434,82 @@ export function usePartySearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type PartySearchQueryHookResult = ReturnType<typeof usePartySearchQuery>;
 export type PartySearchLazyQueryHookResult = ReturnType<typeof usePartySearchLazyQuery>;
 export type PartySearchQueryResult = Apollo.QueryResult<PartySearchQuery, PartySearchQueryVariables>;
+export const PartyGetByIdDocument = gql`
+    query partyGetById($id: String!) {
+  partyGetById(id: $id) {
+    _id
+    name
+    organizer {
+      nickname
+    }
+    address
+    date
+    openBar
+    description
+    attenders {
+      _id
+    }
+    attendersCount
+    isAttender
+  }
+}
+    `;
+
+/**
+ * __usePartyGetByIdQuery__
+ *
+ * To run a query within a React component, call `usePartyGetByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartyGetByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartyGetByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePartyGetByIdQuery(baseOptions: Apollo.QueryHookOptions<PartyGetByIdQuery, PartyGetByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartyGetByIdQuery, PartyGetByIdQueryVariables>(PartyGetByIdDocument, options);
+      }
+export function usePartyGetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartyGetByIdQuery, PartyGetByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartyGetByIdQuery, PartyGetByIdQueryVariables>(PartyGetByIdDocument, options);
+        }
+export type PartyGetByIdQueryHookResult = ReturnType<typeof usePartyGetByIdQuery>;
+export type PartyGetByIdLazyQueryHookResult = ReturnType<typeof usePartyGetByIdLazyQuery>;
+export type PartyGetByIdQueryResult = Apollo.QueryResult<PartyGetByIdQuery, PartyGetByIdQueryVariables>;
+export const UserChangeAttendingStateDocument = gql`
+    mutation userChangeAttendingState($data: UserChangeAttendingStateInput!) {
+  userChangeAttendingState(data: $data)
+}
+    `;
+export type UserChangeAttendingStateMutationFn = Apollo.MutationFunction<UserChangeAttendingStateMutation, UserChangeAttendingStateMutationVariables>;
+
+/**
+ * __useUserChangeAttendingStateMutation__
+ *
+ * To run a mutation, you first call `useUserChangeAttendingStateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserChangeAttendingStateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userChangeAttendingStateMutation, { data, loading, error }] = useUserChangeAttendingStateMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserChangeAttendingStateMutation(baseOptions?: Apollo.MutationHookOptions<UserChangeAttendingStateMutation, UserChangeAttendingStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserChangeAttendingStateMutation, UserChangeAttendingStateMutationVariables>(UserChangeAttendingStateDocument, options);
+      }
+export type UserChangeAttendingStateMutationHookResult = ReturnType<typeof useUserChangeAttendingStateMutation>;
+export type UserChangeAttendingStateMutationResult = Apollo.MutationResult<UserChangeAttendingStateMutation>;
+export type UserChangeAttendingStateMutationOptions = Apollo.BaseMutationOptions<UserChangeAttendingStateMutation, UserChangeAttendingStateMutationVariables>;

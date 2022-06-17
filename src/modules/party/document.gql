@@ -12,3 +12,24 @@ query partySearch ($q: String) {
     date
   }
 }
+
+query partyGetById ($id: String!) {
+  partyGetById (id: $id) {
+    _id
+    name    
+    organizer {
+      nickname
+    }
+    address
+    date
+    openBar
+    description
+
+    attenders {
+      _id
+    }
+    attendersCount 
+    isAttender
+  }
+}
+

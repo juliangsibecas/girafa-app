@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../theme';
 import { MapScreen } from '../modules/party';
 import { Icon } from '../components';
+import { HomeNavigator } from './home';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ export const MainNavigator: React.FC = () => {
     >
       <BottomTab.Screen
         name="Home"
-        component={MapScreen}
+        component={HomeNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

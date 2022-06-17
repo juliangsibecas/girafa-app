@@ -17,7 +17,7 @@ export const text = (palette: Palette) => {
   return {
     primary: defaultFont,
     secondary: createFont({
-      color: lightPalette.text.secondary,
+      color: palette.text.secondary,
     }),
 
     h1: createFont({
@@ -43,7 +43,6 @@ export const text = (palette: Palette) => {
       fontFamily: FontFamily.SEMIBOLD,
       fontSize: 18,
       lineHeight: 20,
-      color: '#FFFFFF',
     }),
 
     hint: createFont({
