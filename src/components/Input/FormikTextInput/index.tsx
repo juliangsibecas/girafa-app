@@ -16,6 +16,7 @@ export const FormikTextInput: React.FC<Props> = ({
   placeholder,
   keyboardType = 'default',
   contentType = 'none',
+  ...props
 }) => {
   const { values, handleBlur, handleChange } = useFormikContext();
   const value = (values as Record<string, string>)[id] ?? '';
@@ -29,6 +30,7 @@ export const FormikTextInput: React.FC<Props> = ({
         contentType={contentType}
         onChangeText={handleChange(id)}
         onBlur={handleBlur(id)}
+        {...props}
       />
       <ErrorMessage
         name={id}
