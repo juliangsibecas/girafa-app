@@ -17,7 +17,7 @@ export const Image: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
   return (
     <RNImage
       source={isUri ? { uri: source as string } : (source as number)}
-      style={style}
+      style={{ ...style, ...props.style, aspectRatio: 1 }}
       onError={() => fallbackSrc && setSource(fallbackSrc)}
     />
   );

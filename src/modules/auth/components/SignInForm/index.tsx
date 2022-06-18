@@ -2,7 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import Toast from 'react-native-toast-message';
 import { Formik, FormikHelpers } from 'formik';
-import { Box, TextInput } from '../../../../components';
+import { Box, FormikTextInput } from '../../../../components';
 import { Button } from '../../../../components/Button';
 import { useSignInMutation } from '../../../../api';
 import { GraphQLErrors } from '@apollo/client/errors';
@@ -72,14 +72,14 @@ export const SignInForm: React.FC = () => {
       {({ submitForm }) => (
         <>
           <Box flex flexGrow={1}>
-            <TextInput
+            <FormikTextInput
               id="email"
               placeholder="Correo electronico"
               keyboardType="email-address"
               contentType="emailAddress"
               mt={1}
             />
-            <TextInput
+            <FormikTextInput
               id="password"
               placeholder="Contraseña"
               contentType="password"

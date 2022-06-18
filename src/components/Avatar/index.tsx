@@ -6,6 +6,7 @@ import { Image } from '../Image';
 type Props = UiKeys & {
   src: string;
   fallbackSrc?: string;
+  style?: ImageStyle;
 };
 
 export const Avatar: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
@@ -18,7 +19,7 @@ export const Avatar: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
       height={props.height ?? 5}
       width={props.width ?? 5}
       borderRadius={2}
-      style={style}
+      style={{ ...style, ...props.style }}
     />
   );
 };

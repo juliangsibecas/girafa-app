@@ -1,29 +1,27 @@
-import { ErrorMessage, useFormikContext } from 'formik';
 import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
-import { ThemeMode, useTheme } from '../../../theme';
+import { useTheme } from '../../../theme';
 import { UiKeys, useStyle } from '../../../ui';
-import { Text } from '../../Text';
 
-interface Props extends UiKeys {
-  id: string;
-  placeholder: string;
-  keyboardType?: RNTextInputProps['keyboardType'];
-  contentType?: RNTextInputProps['textContentType'];
-}
+type Props = UiKeys &
+  Pick<RNTextInputProps, 'onChangeText' | 'onBlur' | 'keyboardType'> & {
+    placeholder: string;
+    value: string;
+    contentType?: RNTextInputProps['textContentType'];
+  };
 
 export const TextInput: React.FC<Props> = ({
-  id,
   placeholder,
+  value,
   keyboardType = 'default',
   contentType = 'none',
+  onChangeText,
+  onBlur,
   ...props
 }) => {
   const { isLightMode } = useTheme();
-  const { values, handleBlur, handleChange } = useFormikContext();
-  const value = (values as Record<string, string>)[id] ?? '';
 
   const style = useStyle({
     p: 2,
@@ -44,16 +42,8 @@ export const TextInput: React.FC<Props> = ({
         placeholder={placeholder}
         autoCapitalize="none"
         value={value}
-        onChangeText={handleChange(id)}
-        onBlur={handleBlur(id)}
-      />
-      <ErrorMessage
-        name={id}
-        render={(err) => (
-          <Text type="hint" color="#ff0000" mt={0.5} ml={1}>
-            {err}
-          </Text>
-        )}
+        onChangeText={onChangeText}
+        onBlur={onBlur}
       />
     </>
   );

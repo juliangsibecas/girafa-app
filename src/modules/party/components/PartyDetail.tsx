@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Share, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
@@ -13,6 +14,7 @@ import { FontFamily } from '../../../theme/text/types';
 import { formatDate } from '../../../utils';
 import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
+import { PartyDetailScreenProps } from '../navigators';
 import { PartyAvatar } from './PartyAvatar';
 
 type Props = {
@@ -20,6 +22,8 @@ type Props = {
 };
 
 export const PartyDetail: React.FC<Props> = ({ party }) => {
+  const { navigate } =
+    useNavigation<PartyDetailScreenProps<'Detail'>['navigation']>();
   const { userId } = useAuth();
   const [
     changeAttendingStateMutation,
@@ -111,9 +115,13 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             {attendersCount}
           </Text>
           {attendersCount ? (
-            <Text type="secondary" fontFamily={FontFamily.LIGHT}>
-              Ver todos
-            </Text>
+            <TouchableOpacity
+              onPress={() => navigate('PartyAttenders', { id: party._id })}
+            >
+              <Text type="secondary" fontFamily={FontFamily.LIGHT}>
+                Ver todos
+              </Text>
+            </TouchableOpacity>
           ) : undefined}
         </Box>
         <Box flex row mt={0.5}>

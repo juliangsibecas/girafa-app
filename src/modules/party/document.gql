@@ -33,3 +33,11 @@ query partyGetById ($id: String!) {
   }
 }
 
+query partySearchAttenders ($data: PartySearchAttendersInput!) {
+  partySearchAttenders (data: $data) {
+    _id
+    nickname    
+    fullName
+  }
+}
+
