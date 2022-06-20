@@ -20,6 +20,7 @@ query partyGetById ($id: String!) {
     organizer {
       nickname
     }
+    availability
     address
     date
     openBar

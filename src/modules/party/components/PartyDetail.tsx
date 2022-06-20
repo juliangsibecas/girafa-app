@@ -16,6 +16,7 @@ import { formatDate } from '../../../utils';
 import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
 import { PartyDetailScreenProps } from '../navigators';
+import { formatePartyAvailability } from '../utils';
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
 
@@ -87,9 +88,10 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
     <>
       <Box flex row hcenter mt={2}>
         <PartyAvatar id={party._id} height={10} width={10} />
-        <Text type="h1" ml={2} flexShrink={1}>
-          {party.name}
-        </Text>
+        <Box flexShrink={1} ml={2}>
+          <Text type="h1">{party.name}</Text>
+          <Text ml={0.2}>{formatePartyAvailability(party.availability)}</Text>
+        </Box>
       </Box>
       <Box mt={6}>
         <Box flex row>

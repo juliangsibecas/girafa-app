@@ -119,7 +119,7 @@ export type Party = {
   __typename?: 'Party';
   _id: Scalars['String'];
   address: Scalars['String'];
-  allowInivites: Scalars['Boolean'];
+  allowInvites: Scalars['Boolean'];
   attenders: Array<User>;
   attendersCount: Scalars['Float'];
   availability: PartyAvailability;
@@ -300,7 +300,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -494,6 +494,7 @@ export const PartyGetByIdDocument = gql`
     organizer {
       nickname
     }
+    availability
     address
     date
     openBar

@@ -125,7 +125,6 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
     }
   };
 
-  console.log(Object.keys(selectedUsersId).length);
   return (
     <BottomModal isOpen={isOpen} onClose={onClose}>
       <Box flex row mb={2} style={{ alignItems: 'baseline' }}>
