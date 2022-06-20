@@ -156,8 +156,10 @@ export type PartyGetByIdResponse = {
   __typename?: 'PartyGetByIdResponse';
   _id: Scalars['String'];
   address: Scalars['String'];
+  allowInvites: Scalars['Boolean'];
   attenders: Array<User>;
   attendersCount: Scalars['Float'];
+  availability: PartyAvailability;
   date: Scalars['Date'];
   description: Scalars['String'];
   isAttender: Scalars['Boolean'];
@@ -179,6 +181,7 @@ export type Query = {
   partySearchAttenders: Array<User>;
   userGetById: User;
   userSearch: Array<User>;
+  userSearchFollowersToInvite: Array<User>;
 };
 
 
@@ -208,7 +211,12 @@ export type QueryUserGetByIdArgs = {
 
 
 export type QueryUserSearchArgs = {
-  q: Scalars['String'];
+  q?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryUserSearchFollowersToInviteArgs = {
+  data: UserSearchFollowersToInviteInput;
 };
 
 export type Subscription = {
@@ -251,8 +259,13 @@ export type UserChangeFollowingStateInput = {
   state: Scalars['Boolean'];
 };
 
+export type UserSearchFollowersToInviteInput = {
+  partyId: Scalars['String'];
+  q?: InputMaybe<Scalars['String']>;
+};
+
 export type UserSendPartyInviteInput = {
-  invitedId: Scalars['String'];
+  invitedId: Array<Scalars['String']>;
   partyId: Scalars['String'];
 };
 
@@ -287,7 +300,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, address: string, date: any, openBar: boolean, description: string, attendersCount: number, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -296,12 +309,33 @@ export type PartySearchAttendersQueryVariables = Exact<{
 
 export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
 
+export type UserSearchQueryVariables = Exact<{
+  q?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+
+export type UserSearchFollowersToInviteQueryVariables = Exact<{
+  data: UserSearchFollowersToInviteInput;
+}>;
+
+
+export type UserSearchFollowersToInviteQuery = { __typename?: 'Query', userSearchFollowersToInvite: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+
 export type UserChangeAttendingStateMutationVariables = Exact<{
   data: UserChangeAttendingStateInput;
 }>;
 
 
 export type UserChangeAttendingStateMutation = { __typename?: 'Mutation', userChangeAttendingState: boolean };
+
+export type UserSendPartyInviteMutationVariables = Exact<{
+  data: UserSendPartyInviteInput;
+}>;
+
+
+export type UserSendPartyInviteMutation = { __typename?: 'Mutation', userSendPartyInvite: boolean };
 
 
 export const SignUpDocument = gql`
@@ -468,6 +502,7 @@ export const PartyGetByIdDocument = gql`
       _id
     }
     attendersCount
+    allowInvites
     isAttender
   }
 }
@@ -537,6 +572,80 @@ export function usePartySearchAttendersLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type PartySearchAttendersQueryHookResult = ReturnType<typeof usePartySearchAttendersQuery>;
 export type PartySearchAttendersLazyQueryHookResult = ReturnType<typeof usePartySearchAttendersLazyQuery>;
 export type PartySearchAttendersQueryResult = Apollo.QueryResult<PartySearchAttendersQuery, PartySearchAttendersQueryVariables>;
+export const UserSearchDocument = gql`
+    query userSearch($q: String) {
+  userSearch(q: $q) {
+    _id
+    nickname
+    fullName
+  }
+}
+    `;
+
+/**
+ * __useUserSearchQuery__
+ *
+ * To run a query within a React component, call `useUserSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserSearchQuery({
+ *   variables: {
+ *      q: // value for 'q'
+ *   },
+ * });
+ */
+export function useUserSearchQuery(baseOptions?: Apollo.QueryHookOptions<UserSearchQuery, UserSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserSearchQuery, UserSearchQueryVariables>(UserSearchDocument, options);
+      }
+export function useUserSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserSearchQuery, UserSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserSearchQuery, UserSearchQueryVariables>(UserSearchDocument, options);
+        }
+export type UserSearchQueryHookResult = ReturnType<typeof useUserSearchQuery>;
+export type UserSearchLazyQueryHookResult = ReturnType<typeof useUserSearchLazyQuery>;
+export type UserSearchQueryResult = Apollo.QueryResult<UserSearchQuery, UserSearchQueryVariables>;
+export const UserSearchFollowersToInviteDocument = gql`
+    query userSearchFollowersToInvite($data: UserSearchFollowersToInviteInput!) {
+  userSearchFollowersToInvite(data: $data) {
+    _id
+    nickname
+    fullName
+  }
+}
+    `;
+
+/**
+ * __useUserSearchFollowersToInviteQuery__
+ *
+ * To run a query within a React component, call `useUserSearchFollowersToInviteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserSearchFollowersToInviteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserSearchFollowersToInviteQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserSearchFollowersToInviteQuery(baseOptions: Apollo.QueryHookOptions<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>(UserSearchFollowersToInviteDocument, options);
+      }
+export function useUserSearchFollowersToInviteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>(UserSearchFollowersToInviteDocument, options);
+        }
+export type UserSearchFollowersToInviteQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteQuery>;
+export type UserSearchFollowersToInviteLazyQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteLazyQuery>;
+export type UserSearchFollowersToInviteQueryResult = Apollo.QueryResult<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>;
 export const UserChangeAttendingStateDocument = gql`
     mutation userChangeAttendingState($data: UserChangeAttendingStateInput!) {
   userChangeAttendingState(data: $data)
@@ -568,3 +677,34 @@ export function useUserChangeAttendingStateMutation(baseOptions?: Apollo.Mutatio
 export type UserChangeAttendingStateMutationHookResult = ReturnType<typeof useUserChangeAttendingStateMutation>;
 export type UserChangeAttendingStateMutationResult = Apollo.MutationResult<UserChangeAttendingStateMutation>;
 export type UserChangeAttendingStateMutationOptions = Apollo.BaseMutationOptions<UserChangeAttendingStateMutation, UserChangeAttendingStateMutationVariables>;
+export const UserSendPartyInviteDocument = gql`
+    mutation userSendPartyInvite($data: UserSendPartyInviteInput!) {
+  userSendPartyInvite(data: $data)
+}
+    `;
+export type UserSendPartyInviteMutationFn = Apollo.MutationFunction<UserSendPartyInviteMutation, UserSendPartyInviteMutationVariables>;
+
+/**
+ * __useUserSendPartyInviteMutation__
+ *
+ * To run a mutation, you first call `useUserSendPartyInviteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserSendPartyInviteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userSendPartyInviteMutation, { data, loading, error }] = useUserSendPartyInviteMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserSendPartyInviteMutation(baseOptions?: Apollo.MutationHookOptions<UserSendPartyInviteMutation, UserSendPartyInviteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserSendPartyInviteMutation, UserSendPartyInviteMutationVariables>(UserSendPartyInviteDocument, options);
+      }
+export type UserSendPartyInviteMutationHookResult = ReturnType<typeof useUserSendPartyInviteMutation>;
+export type UserSendPartyInviteMutationResult = Apollo.MutationResult<UserSendPartyInviteMutation>;
+export type UserSendPartyInviteMutationOptions = Apollo.BaseMutationOptions<UserSendPartyInviteMutation, UserSendPartyInviteMutationVariables>;

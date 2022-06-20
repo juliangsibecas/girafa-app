@@ -29,6 +29,7 @@ query partyGetById ($id: String!) {
       _id
     }
     attendersCount 
+    allowInvites
     isAttender
   }
 }

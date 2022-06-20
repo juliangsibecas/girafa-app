@@ -1,4 +1,23 @@
+query userSearch ($q: String) {
+  userSearch(q: $q) {
+    _id
+    nickname
+    fullName
+  }
+}
+
+query userSearchFollowersToInvite ($data: UserSearchFollowersToInviteInput!) {
+  userSearchFollowersToInvite (data: $data) {
+    _id
+    nickname    
+    fullName
+  }
+}
 
 mutation userChangeAttendingState ($data: UserChangeAttendingStateInput!) {
   userChangeAttendingState (data: $data)
+}
+
+mutation userSendPartyInvite ($data: UserSendPartyInviteInput!) {
+  userSendPartyInvite (data: $data)
 }

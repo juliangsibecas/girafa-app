@@ -32,7 +32,11 @@ export type UiKeys = Partial<{
   column: boolean;
 
   bgColor: string;
+
   borderRadius: number;
+  borderColor: string;
+  borderWidth: number;
+  borderStyle: ViewStyle['borderStyle'];
 
   vcenter: boolean;
   hcenter: boolean;

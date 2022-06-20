@@ -2,3 +2,7 @@ icons (choose icon lib)
 style map (light and dark)
 define dates logic and parsers
 domain (redirect schema => share)
+empty states
+
+canInvite?
+party availabilities (expire, show, actions)

@@ -4,6 +4,7 @@ import { Share, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import Toast from 'react-native-toast-message';
 import {
+  PartyAvailability,
   PartyGetByIdDocument,
   PartyGetByIdResponse,
   User,
@@ -16,6 +17,7 @@ import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
 import { PartyDetailScreenProps } from '../navigators';
 import { PartyAvatar } from './PartyAvatar';
+import { PartyInvite } from './PartyInvite';
 
 type Props = {
   party: PartyGetByIdResponse;
@@ -35,6 +37,13 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const [attendersCount, setAttendersCount] = useState(party.attendersCount);
 
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
+
+  const isOrganizer = party.organizer._id === userId;
+
+  const canInvite =
+    isOrganizer ||
+    party.allowInvites ||
+    party.availability === PartyAvailability.Public;
 
   const changeAttendingState = async () => {
     const res = await changeAttendingStateMutation({
@@ -142,26 +151,32 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           {isAttender ? 'Asistiendo' : 'Asistir'}
         </Button>
         <Box mx={3}>
-          <TouchableOpacity onPress={() => setInviteModalOpen(true)}>
-            <Icon name="paper-plane" size={3} color="primary" />
+          <TouchableOpacity
+            onPress={() => setInviteModalOpen(true)}
+            disabled={!canInvite}
+          >
+            <Icon
+              name="paper-plane"
+              size={3}
+              color={canInvite ? 'primary' : 'disabled'}
+            />
           </TouchableOpacity>
         </Box>
         <Box mr={1}>
           <TouchableOpacity onPress={share}>
-            <Icon name="share-alt" size={3} color="primary" />
+            <Icon
+              name="share-alt"
+              size={3}
+              color={canInvite ? 'primary' : 'disabled'}
+            />
           </TouchableOpacity>
         </Box>
       </Box>
-      <Modal
-        isVisible={isInviteModalOpen}
-        onSwipeComplete={() => setInviteModalOpen(false)}
-        swipeDirection={['down']}
-        style={{ justifyContent: 'flex-end', margin: 0 }}
-      >
-        <Box bgColor="background" py={8} px={4}>
-          <Text>Invitar</Text>
-        </Box>
-      </Modal>
+      <PartyInvite
+        partyId={party._id}
+        isOpen={isInviteModalOpen}
+        onClose={() => setInviteModalOpen(false)}
+      />
     </>
   );
 };
