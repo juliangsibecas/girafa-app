@@ -22,6 +22,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         if (Date.now() < exp * 1000) {
           setUserId(userId);
+          setLoading(false);
           return;
         }
       }
@@ -41,13 +42,14 @@ export const AuthProvider: React.FC = ({ children }) => {
           await SecureStore.setItemAsync('accessToken', data.accessToken);
           await SecureStore.setItemAsync('refreshToken', data.refreshToken);
           setUserId(data.userId);
+          setLoading(false);
         } catch (e) {
           console.log(e);
         }
       }
-    };
 
-    setLoading(false);
+      console.log('aoeu');
+    };
 
     fn();
   }, []);
