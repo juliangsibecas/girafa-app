@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-  ActivityIndicator,
   TouchableOpacity,
   TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '../../theme';
 import { useStyle, UiKeys } from '../../ui';
 import { insertObjectIf } from '../../utils';
 import { Spinner } from '../Spinner';
@@ -17,6 +15,7 @@ type Props = UiKeys &
     secondary?: boolean;
     isLoading?: boolean;
     isDisabled?: boolean;
+    textProps?: UiKeys;
   };
 
 export const Button: React.FC<Props> = ({
@@ -25,6 +24,7 @@ export const Button: React.FC<Props> = ({
   onPress,
   isLoading,
   isDisabled,
+  textProps,
   ...props
 }) => {
   const type = secondary ? 'secondary' : 'primary';
@@ -67,7 +67,7 @@ export const Button: React.FC<Props> = ({
     >
       {isLoading && <Spinner color={color} />}
       {!isLoading && (
-        <Text type="button" color={color}>
+        <Text type="button" color={color} {...textProps}>
           {children}
         </Text>
       )}

@@ -1,24 +1,24 @@
 import { TouchableOpacity } from 'react-native';
-import { UserPreview } from '../../../api';
+import { PartyPreview } from '../../../api';
 import { Box, Icon, Text } from '../../../components';
 import { FontFamily } from '../../../theme/text/types';
-import { UserAvatar } from './UserAvatar';
+import { PartyAvatar } from './PartyAvatar';
 
 type Props = {
-  user: UserPreview;
+  party: PartyPreview;
   go: (id: string) => void;
 };
 
-export const UserRow: React.FC<Props> = ({ user, go }) => (
-  <TouchableOpacity onPress={() => go(user._id)}>
+export const PartyRow: React.FC<Props> = ({ party, go }) => (
+  <TouchableOpacity onPress={() => go(party._id)}>
     <Box flex row hcenter>
-      <UserAvatar id={user._id} width={6} />
+      <PartyAvatar id={party._id} width={6} />
 
       <Box ml={2} flexGrow={1}>
         <Text type="h4" fontFamily={FontFamily.BOLD}>
-          {user.nickname}
+          {party.name}
         </Text>
-        <Text>{user.fullName}</Text>
+        <Text>{party.organizerNickname}</Text>
       </Box>
       <Icon name="chevron-right" color="primary" />
     </Box>

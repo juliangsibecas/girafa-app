@@ -6,12 +6,46 @@ query userSearch ($q: String) {
   }
 }
 
+query userGetById ($id: String!) {
+  userGetById(id: $id) {
+    _id
+    nickname
+    fullName
+
+    followersCount
+    followingCount
+    attendedPartiesCount 
+
+    isFollowing
+  }
+}
+
+query userGetFollowersById ($id: String!) {
+  userGetFollowersById(id: $id) {
+    _id
+    nickname
+    fullName
+  }
+}
+
+query userGetAttendedPartiesById ($id: String!) {
+  userGetAttendedPartiesById(id: $id) {
+    _id
+    name
+    fullName
+  }
+}
+
 query userSearchFollowersToInvite ($data: UserSearchFollowersToInviteInput!) {
   userSearchFollowersToInvite (data: $data) {
     _id
     nickname    
     fullName
   }
+}
+
+mutation userChangeFollowingState ($data: UserChangeFollowingStateInput!) {
+  userChangeFollowingState (data: $data)
 }
 
 mutation userChangeAttendingState ($data: UserChangeAttendingStateInput!) {

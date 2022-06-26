@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Share, TouchableOpacity } from 'react-native';
-import Modal from 'react-native-modal';
 import Toast from 'react-native-toast-message';
 import {
   PartyAvailability,
   PartyGetByIdDocument,
   PartyGetByIdResponse,
   User,
+  UserGetAttendedPartiesByIdDocument,
+  UserGetByIdDocument,
   useUserChangeAttendingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, LabelValue, Text } from '../../../components';
@@ -47,34 +48,41 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
     party.availability === PartyAvailability.Public;
 
   const changeAttendingState = async () => {
-    const res = await changeAttendingStateMutation({
-      variables: { data: { partyId: party._id, state: !isAttender } },
-      refetchQueries: [
-        { query: PartyGetByIdDocument, variables: { id: party._id } },
-      ],
-    });
+    try {
+      const res = await changeAttendingStateMutation({
+        variables: { data: { partyId: party._id, state: !isAttender } },
+        refetchQueries: [
+          { query: PartyGetByIdDocument, variables: { id: party._id } },
+          { query: UserGetByIdDocument, variables: { id: userId } },
+          {
+            query: UserGetAttendedPartiesByIdDocument,
+            variables: { id: userId },
+          },
+        ],
+      });
 
-    if (res.errors) {
+      if (res.errors) {
+        throw new Error();
+      }
+
+      if (res.data?.userChangeAttendingState) {
+        if (!isAttender) {
+          setAttenders((attenders) => [{ _id: userId } as User, ...attenders]);
+          setAttendersCount((attendersCount) => attendersCount + 1);
+        } else {
+          setAttenders((attenders) =>
+            attenders.filter(({ _id }) => _id !== userId)
+          );
+          setAttendersCount((attendersCount) => attendersCount - 1);
+        }
+
+        setIsAttender(!isAttender);
+      }
+    } catch (e) {
       Toast.show({
         type: 'error',
         text1: 'Hubo un error al intentar asistir a la fiesta',
       });
-
-      return;
-    }
-
-    if (res.data?.userChangeAttendingState) {
-      if (!isAttender) {
-        setAttenders((attenders) => [{ _id: userId } as User, ...attenders]);
-        setAttendersCount((attendersCount) => attendersCount + 1);
-      } else {
-        setAttenders((attenders) =>
-          attenders.filter(({ _id }) => _id !== userId)
-        );
-        setAttendersCount((attendersCount) => attendersCount - 1);
-      }
-
-      setIsAttender(!isAttender);
     }
   };
 

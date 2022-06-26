@@ -80,8 +80,13 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
   style.color = keys.color
     ? formatColor(theme.palette, keys.color)
     : baseStyle.color;
-  style.textAlign = keys.textCenter ? 'center' : undefined;
+  style.textAlign = keys.textCenter
+    ? 'center'
+    : keys.textRight
+    ? 'right'
+    : undefined;
   style.fontFamily = keys.fontFamily ?? baseStyle.fontFamily;
+  style.fontSize = keys.fontSize ?? baseStyle.fontSize;
 
   style.height =
     keys.height === 'screen'

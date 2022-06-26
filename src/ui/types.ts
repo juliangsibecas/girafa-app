@@ -43,7 +43,9 @@ export type UiKeys = Partial<{
   center: boolean;
 
   fontFamily: FontFamily;
+  fontSize: number;
   textCenter: boolean;
+  textRight: boolean;
   color: string;
 
   height: 'screen' | number;

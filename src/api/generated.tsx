@@ -168,6 +168,13 @@ export type PartyGetByIdResponse = {
   organizer: User;
 };
 
+export type PartyPreview = {
+  __typename?: 'PartyPreview';
+  _id: Scalars['String'];
+  name: Scalars['String'];
+  organizerNickname: Scalars['String'];
+};
+
 export type PartySearchAttendersInput = {
   id: Scalars['String'];
   q?: InputMaybe<Scalars['String']>;
@@ -179,7 +186,10 @@ export type Query = {
   partyGetById: PartyGetByIdResponse;
   partySearch: Array<Party>;
   partySearchAttenders: Array<User>;
-  userGetById: User;
+  userGetAttendedPartiesById: Array<PartyPreview>;
+  userGetById: UserGetByIdResponse;
+  userGetFollowersById: Array<UserPreview>;
+  userGetFollowingById: Array<UserPreview>;
   userSearch: Array<User>;
   userSearchFollowersToInvite: Array<User>;
 };
@@ -205,7 +215,22 @@ export type QueryPartySearchAttendersArgs = {
 };
 
 
+export type QueryUserGetAttendedPartiesByIdArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryUserGetByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryUserGetFollowersByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryUserGetFollowingByIdArgs = {
   id: Scalars['String'];
 };
 
@@ -233,11 +258,14 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
   attendedParties: Array<Party>;
+  attendedPartiesCount: Scalars['Float'];
   bio?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   email: Scalars['String'];
   followers: Array<User>;
+  followersCount: Scalars['Float'];
   following: Array<User>;
+  followingCount: Scalars['Float'];
   fullName: Scalars['String'];
   invites: Array<Party>;
   nickname: Scalars['String'];
@@ -257,6 +285,24 @@ export type UserChangeAttendingStateInput = {
 export type UserChangeFollowingStateInput = {
   followingId: Scalars['String'];
   state: Scalars['Boolean'];
+};
+
+export type UserGetByIdResponse = {
+  __typename?: 'UserGetByIdResponse';
+  _id: Scalars['String'];
+  attendedPartiesCount: Scalars['Float'];
+  followersCount: Scalars['Float'];
+  followingCount: Scalars['Float'];
+  fullName: Scalars['String'];
+  isFollowing: Scalars['Boolean'];
+  nickname: Scalars['String'];
+};
+
+export type UserPreview = {
+  __typename?: 'UserPreview';
+  _id: Scalars['String'];
+  fullName: Scalars['String'];
+  nickname: Scalars['String'];
 };
 
 export type UserSearchFollowersToInviteInput = {
@@ -316,12 +362,40 @@ export type UserSearchQueryVariables = Exact<{
 
 export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
 
+export type UserGetByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserGetByIdQuery = { __typename?: 'Query', userGetById: { __typename?: 'UserGetByIdResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean } };
+
+export type UserGetFollowersByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserGetFollowersByIdQuery = { __typename?: 'Query', userGetFollowersById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName: string }> };
+
+export type UserGetAttendedPartiesByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserGetAttendedPartiesByIdQuery = { __typename?: 'Query', userGetAttendedPartiesById: Array<{ __typename?: 'PartyPreview', _id: string, name: string, organizerNickname: string }> };
+
 export type UserSearchFollowersToInviteQueryVariables = Exact<{
   data: UserSearchFollowersToInviteInput;
 }>;
 
 
 export type UserSearchFollowersToInviteQuery = { __typename?: 'Query', userSearchFollowersToInvite: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+
+export type UserChangeFollowingStateMutationVariables = Exact<{
+  data: UserChangeFollowingStateInput;
+}>;
+
+
+export type UserChangeFollowingStateMutation = { __typename?: 'Mutation', userChangeFollowingState: boolean };
 
 export type UserChangeAttendingStateMutationVariables = Exact<{
   data: UserChangeAttendingStateInput;
@@ -610,6 +684,121 @@ export function useUserSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type UserSearchQueryHookResult = ReturnType<typeof useUserSearchQuery>;
 export type UserSearchLazyQueryHookResult = ReturnType<typeof useUserSearchLazyQuery>;
 export type UserSearchQueryResult = Apollo.QueryResult<UserSearchQuery, UserSearchQueryVariables>;
+export const UserGetByIdDocument = gql`
+    query userGetById($id: String!) {
+  userGetById(id: $id) {
+    _id
+    nickname
+    fullName
+    followersCount
+    followingCount
+    attendedPartiesCount
+    isFollowing
+  }
+}
+    `;
+
+/**
+ * __useUserGetByIdQuery__
+ *
+ * To run a query within a React component, call `useUserGetByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserGetByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserGetByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserGetByIdQuery(baseOptions: Apollo.QueryHookOptions<UserGetByIdQuery, UserGetByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserGetByIdQuery, UserGetByIdQueryVariables>(UserGetByIdDocument, options);
+      }
+export function useUserGetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetByIdQuery, UserGetByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserGetByIdQuery, UserGetByIdQueryVariables>(UserGetByIdDocument, options);
+        }
+export type UserGetByIdQueryHookResult = ReturnType<typeof useUserGetByIdQuery>;
+export type UserGetByIdLazyQueryHookResult = ReturnType<typeof useUserGetByIdLazyQuery>;
+export type UserGetByIdQueryResult = Apollo.QueryResult<UserGetByIdQuery, UserGetByIdQueryVariables>;
+export const UserGetFollowersByIdDocument = gql`
+    query userGetFollowersById($id: String!) {
+  userGetFollowersById(id: $id) {
+    _id
+    nickname
+    fullName
+  }
+}
+    `;
+
+/**
+ * __useUserGetFollowersByIdQuery__
+ *
+ * To run a query within a React component, call `useUserGetFollowersByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserGetFollowersByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserGetFollowersByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserGetFollowersByIdQuery(baseOptions: Apollo.QueryHookOptions<UserGetFollowersByIdQuery, UserGetFollowersByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserGetFollowersByIdQuery, UserGetFollowersByIdQueryVariables>(UserGetFollowersByIdDocument, options);
+      }
+export function useUserGetFollowersByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetFollowersByIdQuery, UserGetFollowersByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserGetFollowersByIdQuery, UserGetFollowersByIdQueryVariables>(UserGetFollowersByIdDocument, options);
+        }
+export type UserGetFollowersByIdQueryHookResult = ReturnType<typeof useUserGetFollowersByIdQuery>;
+export type UserGetFollowersByIdLazyQueryHookResult = ReturnType<typeof useUserGetFollowersByIdLazyQuery>;
+export type UserGetFollowersByIdQueryResult = Apollo.QueryResult<UserGetFollowersByIdQuery, UserGetFollowersByIdQueryVariables>;
+export const UserGetAttendedPartiesByIdDocument = gql`
+    query userGetAttendedPartiesById($id: String!) {
+  userGetAttendedPartiesById(id: $id) {
+    _id
+    name
+    organizerNickname
+  }
+}
+    `;
+
+/**
+ * __useUserGetAttendedPartiesByIdQuery__
+ *
+ * To run a query within a React component, call `useUserGetAttendedPartiesByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserGetAttendedPartiesByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserGetAttendedPartiesByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserGetAttendedPartiesByIdQuery(baseOptions: Apollo.QueryHookOptions<UserGetAttendedPartiesByIdQuery, UserGetAttendedPartiesByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserGetAttendedPartiesByIdQuery, UserGetAttendedPartiesByIdQueryVariables>(UserGetAttendedPartiesByIdDocument, options);
+      }
+export function useUserGetAttendedPartiesByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetAttendedPartiesByIdQuery, UserGetAttendedPartiesByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserGetAttendedPartiesByIdQuery, UserGetAttendedPartiesByIdQueryVariables>(UserGetAttendedPartiesByIdDocument, options);
+        }
+export type UserGetAttendedPartiesByIdQueryHookResult = ReturnType<typeof useUserGetAttendedPartiesByIdQuery>;
+export type UserGetAttendedPartiesByIdLazyQueryHookResult = ReturnType<typeof useUserGetAttendedPartiesByIdLazyQuery>;
+export type UserGetAttendedPartiesByIdQueryResult = Apollo.QueryResult<UserGetAttendedPartiesByIdQuery, UserGetAttendedPartiesByIdQueryVariables>;
 export const UserSearchFollowersToInviteDocument = gql`
     query userSearchFollowersToInvite($data: UserSearchFollowersToInviteInput!) {
   userSearchFollowersToInvite(data: $data) {
@@ -647,6 +836,37 @@ export function useUserSearchFollowersToInviteLazyQuery(baseOptions?: Apollo.Laz
 export type UserSearchFollowersToInviteQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteQuery>;
 export type UserSearchFollowersToInviteLazyQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteLazyQuery>;
 export type UserSearchFollowersToInviteQueryResult = Apollo.QueryResult<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>;
+export const UserChangeFollowingStateDocument = gql`
+    mutation userChangeFollowingState($data: UserChangeFollowingStateInput!) {
+  userChangeFollowingState(data: $data)
+}
+    `;
+export type UserChangeFollowingStateMutationFn = Apollo.MutationFunction<UserChangeFollowingStateMutation, UserChangeFollowingStateMutationVariables>;
+
+/**
+ * __useUserChangeFollowingStateMutation__
+ *
+ * To run a mutation, you first call `useUserChangeFollowingStateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserChangeFollowingStateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userChangeFollowingStateMutation, { data, loading, error }] = useUserChangeFollowingStateMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserChangeFollowingStateMutation(baseOptions?: Apollo.MutationHookOptions<UserChangeFollowingStateMutation, UserChangeFollowingStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserChangeFollowingStateMutation, UserChangeFollowingStateMutationVariables>(UserChangeFollowingStateDocument, options);
+      }
+export type UserChangeFollowingStateMutationHookResult = ReturnType<typeof useUserChangeFollowingStateMutation>;
+export type UserChangeFollowingStateMutationResult = Apollo.MutationResult<UserChangeFollowingStateMutation>;
+export type UserChangeFollowingStateMutationOptions = Apollo.BaseMutationOptions<UserChangeFollowingStateMutation, UserChangeFollowingStateMutationVariables>;
 export const UserChangeAttendingStateDocument = gql`
     mutation userChangeAttendingState($data: UserChangeAttendingStateInput!) {
   userChangeAttendingState(data: $data)

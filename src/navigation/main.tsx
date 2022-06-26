@@ -9,12 +9,13 @@ import {
   RouteProp,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { MyProfileNavigator } from './profile';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Discover: undefined;
   Notifications: undefined;
-  Profile: undefined;
+  MyProfile: undefined;
 };
 
 export type MainBottomTabRouteProp<T extends keyof MainBottomTabParamList> =
@@ -38,13 +39,13 @@ export const MainNavigator: React.FC = () => {
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: theme.palette.primary.main,
+        headerShown: false,
       }}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="home" size={2.5} color={color} />
           ),
@@ -54,7 +55,6 @@ export const MainNavigator: React.FC = () => {
         name="Discover"
         component={HomeNavigator}
         options={{
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="search" size={2.5} color={color} />
           ),
@@ -64,17 +64,15 @@ export const MainNavigator: React.FC = () => {
         name="Notifications"
         component={HomeNavigator}
         options={{
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="bell" size={2.5} color={color} />
           ),
         }}
       />
       <BottomTab.Screen
-        name="Profile"
-        component={HomeNavigator}
+        name="MyProfile"
+        component={MyProfileNavigator}
         options={{
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name="user" size={2.5} color={color} />
           ),

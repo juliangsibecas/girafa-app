@@ -7,12 +7,13 @@ import { UserAvatar } from './UserAvatar';
 
 type Props = {
   user: Pick<User, '_id' | 'nickname' | 'fullName'>;
+  go: (id: string) => void;
 };
 
-export const UserPreview: React.FC<Props> = ({ user }) => {
+export const UserPreview: React.FC<Props> = ({ user, go }) => {
   const { theme } = useTheme();
   return (
-    <TouchableOpacity onPress={() => alert(user._id)}>
+    <TouchableOpacity onPress={() => go(user._id)}>
       <UserAvatar
         id={user._id}
         style={{

@@ -8,11 +8,21 @@ import { useTheme } from '../theme';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { PartyDetailScreen } from '../modules/party/screens/PartyDetailScreen';
 import { PartyAttendersScreen } from '../modules/party/screens/PartyAttendersScreen';
+import {
+  UserAttendedPartiesScreen,
+  UserFollowersScreen,
+  UserFollowingScreen,
+  UserProfileScreen,
+} from '../modules/user';
 
 export type HomeStackParamList = {
   Map: undefined;
   PartyDetail: { id: string };
   PartyAttenders: { id: string };
+  UserProfile: { id: string };
+  UserFollowers: { id: string };
+  UserFollowing: { id: string };
+  UserAttendedParties: { id: string };
 };
 
 export type HomeStackRouteProp<T extends keyof HomeStackParamList> = RouteProp<
@@ -48,6 +58,17 @@ export const HomeNavigator: React.FC = () => {
       />
       <Stack.Screen name="PartyDetail" component={PartyDetailScreen} />
       <Stack.Screen name="PartyAttenders" component={PartyAttendersScreen} />
+      <Stack.Screen
+        name="UserProfile"
+        component={UserProfileScreen}
+        options={{ headerTransparent: true, headerStyle: {} }}
+      />
+      <Stack.Screen name="UserFollowers" component={UserFollowersScreen} />
+      <Stack.Screen name="UserFollowing" component={UserFollowingScreen} />
+      <Stack.Screen
+        name="UserAttendedParties"
+        component={UserAttendedPartiesScreen}
+      />
     </Stack.Navigator>
   );
 };

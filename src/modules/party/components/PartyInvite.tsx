@@ -110,18 +110,22 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    const invitedId = Object.keys(selectedUsersId);
-    const res = await sendInvite({
-      variables: { data: { partyId: partyId, invitedId } },
-    });
+    try {
+      const invitedId = Object.keys(selectedUsersId);
+      const res = await sendInvite({
+        variables: { data: { partyId: partyId, invitedId } },
+      });
 
-    onClose();
+      onClose();
 
-    if (res.errors || !res.data?.userSendPartyInvite) {
+      if (res.errors || !res.data?.userSendPartyInvite) {
+        throw new Error();
+      } else {
+        setSelectedUsersId({});
+        Toast.show({ type: 'success', text1: 'Invitacionse enviadas!' });
+      }
+    } catch (e) {
       Toast.show({ type: 'error', text1: 'Ocurrio un error' });
-    } else {
-      setSelectedUsersId({});
-      Toast.show({ type: 'success', text1: 'Invitacionse enviadas!' });
     }
   };
 

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
@@ -11,15 +12,18 @@ import {
   TextInput,
 } from '../../../components';
 import { useDebounce } from '../../../hooks';
+import { HomeStackNavigationProp } from '../../../navigation';
 import { UserPreview, UserRow } from '../../user';
 
 type Props = {
   partyId: string;
 };
 export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
+  const { navigate } = useNavigation<HomeStackNavigationProp>();
   const [search, setSearch] = useState('');
   const [isCardsListMode, setCardsListMode] = useState(true);
   const debouncedSearch = useDebounce(search, 500);
+  const goToAttender = (id: string) => navigate('UserProfile', { id });
 
   const {
     data,
@@ -57,11 +61,11 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
           renderItem={({ item }) =>
             isCardsListMode ? (
               <Box mb={2}>
-                <UserPreview user={item} />
+                <UserPreview user={item} go={goToAttender} />
               </Box>
             ) : (
               <Box mb={2}>
-                <UserRow user={item} />
+                <UserRow user={item} go={goToAttender} />
               </Box>
             )
           }

@@ -32,7 +32,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
             height={24}
             minWidth={12}
             style={{
-              transform: [{ translateX: -50 }],
+              transform: [{ translateX: -theme.spacing(6) }],
             }}
           />
         </Box>

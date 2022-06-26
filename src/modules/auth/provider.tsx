@@ -42,13 +42,12 @@ export const AuthProvider: React.FC = ({ children }) => {
           await SecureStore.setItemAsync('accessToken', data.accessToken);
           await SecureStore.setItemAsync('refreshToken', data.refreshToken);
           setUserId(data.userId);
-          setLoading(false);
         } catch (e) {
           console.log(e);
         }
       }
 
-      console.log('aoeu');
+      setLoading(false);
     };
 
     fn();
@@ -65,9 +64,11 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const signOut = async () => {
-    setUserId('');
+    setLoading(true);
     await SecureStore.setItemAsync('accessToken', '');
     await SecureStore.setItemAsync('refreshToken', '');
+    setUserId('');
+    setLoading(false);
   };
 
   return (
