@@ -15,6 +15,8 @@ export type Scalars = {
   Float: number;
   /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: any;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
 };
 
 export type AuthCheckRecoveryCodeInput = {
@@ -102,11 +104,11 @@ export type MutationUserSendPartyInviteArgs = {
 export type Notification = {
   __typename?: 'Notification';
   _id: Scalars['String'];
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   from: User;
   party?: Maybe<Party>;
   type: NotificationType;
-  updatedAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   user: User;
 };
 
@@ -124,7 +126,7 @@ export type Party = {
   attendersCount: Scalars['Float'];
   availability: PartyAvailability;
   coordinates: Coordinates;
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   date: Scalars['Date'];
   description: Scalars['String'];
   invited: Array<User>;
@@ -132,7 +134,7 @@ export type Party = {
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer: User;
-  updatedAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export enum PartyAvailability {
@@ -144,8 +146,9 @@ export enum PartyAvailability {
 
 export type PartyCreateInput = {
   address: Scalars['String'];
+  allowInvites: Scalars['Boolean'];
   availability: PartyAvailability;
-  coordinate: CoordinatesCreateInput;
+  coordinates: CoordinatesCreateInput;
   date: Scalars['Date'];
   description: Scalars['String'];
   name: Scalars['String'];
@@ -172,7 +175,7 @@ export type PartyPreview = {
   __typename?: 'PartyPreview';
   _id: Scalars['String'];
   name: Scalars['String'];
-  organizerNickname: Scalars['String'];
+  organizerNickname?: Maybe<Scalars['String']>;
 };
 
 export type PartySearchAttendersInput = {
@@ -183,6 +186,7 @@ export type PartySearchAttendersInput = {
 export type Query = {
   __typename?: 'Query';
   checkRecoveryCode: Scalars['Boolean'];
+  getNotifications: Array<UserNotification>;
   partyGetById: PartyGetByIdResponse;
   partySearch: Array<Party>;
   partySearchAttenders: Array<User>;
@@ -244,23 +248,13 @@ export type QueryUserSearchFollowersToInviteArgs = {
   data: UserSearchFollowersToInviteInput;
 };
 
-export type Subscription = {
-  __typename?: 'Subscription';
-  notifications: Notification;
-};
-
-
-export type SubscriptionNotificationsArgs = {
-  userId: Scalars['String'];
-};
-
 export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
   attendedParties: Array<Party>;
   attendedPartiesCount: Scalars['Float'];
   bio?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   followers: Array<User>;
   followersCount: Scalars['Float'];
@@ -274,7 +268,7 @@ export type User = {
   password?: Maybe<Scalars['String']>;
   recoveryCode?: Maybe<Scalars['String']>;
   refreshToken?: Maybe<Scalars['String']>;
-  updatedAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserChangeAttendingStateInput = {
@@ -298,10 +292,19 @@ export type UserGetByIdResponse = {
   nickname: Scalars['String'];
 };
 
+export type UserNotification = {
+  __typename?: 'UserNotification';
+  _id: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  from: UserPreview;
+  party?: Maybe<PartyPreview>;
+  type: NotificationType;
+};
+
 export type UserPreview = {
   __typename?: 'UserPreview';
   _id: Scalars['String'];
-  fullName: Scalars['String'];
+  fullName?: Maybe<Scalars['String']>;
   nickname: Scalars['String'];
 };
 
@@ -333,6 +336,11 @@ export type SignInFromRefreshTokenMutationVariables = Exact<{ [key: string]: nev
 
 
 export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+
+export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNotificationsQuery = { __typename?: 'Query', getNotifications: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
 
 export type PartySearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
@@ -369,19 +377,26 @@ export type UserGetByIdQueryVariables = Exact<{
 
 export type UserGetByIdQuery = { __typename?: 'Query', userGetById: { __typename?: 'UserGetByIdResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean } };
 
+export type UserGetFollowingByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserGetFollowingByIdQuery = { __typename?: 'Query', userGetFollowingById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+
 export type UserGetFollowersByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type UserGetFollowersByIdQuery = { __typename?: 'Query', userGetFollowersById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName: string }> };
+export type UserGetFollowersByIdQuery = { __typename?: 'Query', userGetFollowersById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
 
 export type UserGetAttendedPartiesByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type UserGetAttendedPartiesByIdQuery = { __typename?: 'Query', userGetAttendedPartiesById: Array<{ __typename?: 'PartyPreview', _id: string, name: string, organizerNickname: string }> };
+export type UserGetAttendedPartiesByIdQuery = { __typename?: 'Query', userGetAttendedPartiesById: Array<{ __typename?: 'PartyPreview', _id: string, name: string }> };
 
 export type UserSearchFollowersToInviteQueryVariables = Exact<{
   data: UserSearchFollowersToInviteInput;
@@ -516,6 +531,50 @@ export function useSignInFromRefreshTokenMutation(baseOptions?: Apollo.MutationH
 export type SignInFromRefreshTokenMutationHookResult = ReturnType<typeof useSignInFromRefreshTokenMutation>;
 export type SignInFromRefreshTokenMutationResult = Apollo.MutationResult<SignInFromRefreshTokenMutation>;
 export type SignInFromRefreshTokenMutationOptions = Apollo.BaseMutationOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;
+export const GetNotificationsDocument = gql`
+    query getNotifications {
+  getNotifications {
+    _id
+    type
+    from {
+      _id
+      nickname
+    }
+    party {
+      _id
+      name
+    }
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+      }
+export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        }
+export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
+export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
+export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
 export const PartySearchDocument = gql`
     query partySearch($q: String) {
   partySearch(q: $q) {
@@ -725,6 +784,43 @@ export function useUserGetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type UserGetByIdQueryHookResult = ReturnType<typeof useUserGetByIdQuery>;
 export type UserGetByIdLazyQueryHookResult = ReturnType<typeof useUserGetByIdLazyQuery>;
 export type UserGetByIdQueryResult = Apollo.QueryResult<UserGetByIdQuery, UserGetByIdQueryVariables>;
+export const UserGetFollowingByIdDocument = gql`
+    query userGetFollowingById($id: String!) {
+  userGetFollowingById(id: $id) {
+    _id
+    nickname
+    fullName
+  }
+}
+    `;
+
+/**
+ * __useUserGetFollowingByIdQuery__
+ *
+ * To run a query within a React component, call `useUserGetFollowingByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserGetFollowingByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserGetFollowingByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserGetFollowingByIdQuery(baseOptions: Apollo.QueryHookOptions<UserGetFollowingByIdQuery, UserGetFollowingByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserGetFollowingByIdQuery, UserGetFollowingByIdQueryVariables>(UserGetFollowingByIdDocument, options);
+      }
+export function useUserGetFollowingByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetFollowingByIdQuery, UserGetFollowingByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserGetFollowingByIdQuery, UserGetFollowingByIdQueryVariables>(UserGetFollowingByIdDocument, options);
+        }
+export type UserGetFollowingByIdQueryHookResult = ReturnType<typeof useUserGetFollowingByIdQuery>;
+export type UserGetFollowingByIdLazyQueryHookResult = ReturnType<typeof useUserGetFollowingByIdLazyQuery>;
+export type UserGetFollowingByIdQueryResult = Apollo.QueryResult<UserGetFollowingByIdQuery, UserGetFollowingByIdQueryVariables>;
 export const UserGetFollowersByIdDocument = gql`
     query userGetFollowersById($id: String!) {
   userGetFollowersById(id: $id) {
@@ -767,7 +863,6 @@ export const UserGetAttendedPartiesByIdDocument = gql`
   userGetAttendedPartiesById(id: $id) {
     _id
     name
-    organizerNickname
   }
 }
     `;

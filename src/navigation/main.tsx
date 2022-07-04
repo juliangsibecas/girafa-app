@@ -10,6 +10,9 @@ import {
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MyProfileNavigator } from './profile';
+import { NotificationNavigator } from '../modules/notification';
+import { FontFamily } from '../theme/text/types';
+import { useNotification } from '../modules/notification/hooks';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
@@ -28,6 +31,7 @@ export type MainBottomTabScreenProps<T extends keyof MainBottomTabParamList> =
 const BottomTab = createBottomTabNavigator<MainBottomTabParamList>();
 
 export const MainNavigator: React.FC = () => {
+  const { pendingNotificationsCount } = useNotification();
   const { theme } = useTheme();
 
   return (
@@ -62,11 +66,27 @@ export const MainNavigator: React.FC = () => {
       />
       <BottomTab.Screen
         name="Notifications"
-        component={HomeNavigator}
+        component={NotificationNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="bell" size={2.5} color={color} />
           ),
+          tabBarBadge:
+            pendingNotificationsCount > 0
+              ? pendingNotificationsCount
+              : undefined,
+          tabBarBadgeStyle: {
+            height: theme.spacing(2),
+            minWidth: theme.spacing(2),
+            borderRadius: theme.spacing(1),
+            fontFamily: FontFamily.BOLD,
+            fontSize: 10,
+            lineHeight: 16,
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.background.main,
+            marginTop: theme.spacing(0.2),
+            paddingHorizontal: 0,
+          },
         }}
       />
       <BottomTab.Screen

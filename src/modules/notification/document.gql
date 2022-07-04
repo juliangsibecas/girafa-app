@@ -1,0 +1,15 @@
+query getNotifications {
+  getNotifications {
+    _id
+    type
+    from {
+      _id
+      nickname
+    }
+    party {
+      _id
+      name
+    }
+    createdAt
+  }
+}

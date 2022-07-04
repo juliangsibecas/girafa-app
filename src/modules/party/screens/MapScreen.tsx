@@ -13,11 +13,6 @@ export const MapScreen: React.FC = () => {
 
   return (
     <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
-      <PartyMap
-        idx={currentIdx}
-        parties={parties}
-        handleIdxChange={handleIdxChange}
-      />
       <Container noHeader px={0} bgColor={undefined} pointerEvents="box-none">
         <Box hcenter flexGrow={1} pointerEvents="none">
           <Logo />

@@ -20,6 +20,14 @@ query userGetById ($id: String!) {
   }
 }
 
+query userGetFollowingById ($id: String!) {
+  userGetFollowingById(id: $id) {
+    _id
+    nickname
+    fullName
+  }
+}
+
 query userGetFollowersById ($id: String!) {
   userGetFollowersById(id: $id) {
     _id
@@ -32,7 +40,6 @@ query userGetAttendedPartiesById ($id: String!) {
   userGetAttendedPartiesById(id: $id) {
     _id
     name
-    fullName
   }
 }
 

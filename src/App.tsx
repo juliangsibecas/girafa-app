@@ -12,6 +12,7 @@ import { client } from './apollo';
 import { AuthProvider } from './modules/auth';
 import { Navigation } from './navigation';
 import { Appearance } from 'react-native';
+import { NotificationsProvider } from './modules/notification';
 
 const AppComponent = () => {
   const isLoadingComplete = useCachedResources();
@@ -32,8 +33,10 @@ const AppComponent = () => {
             }
           >
             <AuthProvider>
-              <Navigation />
-              <Toast position="bottom" />
+              <NotificationsProvider>
+                <Navigation />
+                <Toast position="bottom" />
+              </NotificationsProvider>
             </AuthProvider>
           </ThemeProvider>
         </ApolloProvider>

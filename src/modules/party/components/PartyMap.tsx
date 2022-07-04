@@ -40,7 +40,6 @@ export const PartyMap: React.FC<Props> = ({
     <Box position="absolute">
       <MapView
         ref={map as React.LegacyRef<MapView>}
-        provider={PROVIDER_GOOGLE}
         initialRegion={INITIAL_REGION}
         style={{
           height: Dimensions.get('window').height,

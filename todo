@@ -9,3 +9,5 @@ party availabilities (expire, show, actions)
 party load invites on modal open
 
 implement dragdown to update (delete refetchs?)
+
+push notification deep linking?
