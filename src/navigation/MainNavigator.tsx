@@ -2,18 +2,18 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '../theme';
 import { Icon } from '../components';
-import { HomeNavigator, HomeStackParamList } from './home';
+import { HomeNavigator, HomeStackParamList } from './HomeNavigator';
 import {
   NavigationProp,
   NavigatorScreenParams,
   RouteProp,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MyProfileNavigator } from './profile';
 import { NotificationNavigator } from '../modules/notification';
 import { FontFamily } from '../theme/text/types';
 import { useNotification } from '../modules/notification/hooks';
 import { DiscoverNavigator } from '../modules/discover';
+import { MyProfileNavigator } from '../modules/user';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;

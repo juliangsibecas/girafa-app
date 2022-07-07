@@ -199,7 +199,7 @@ export type Query = {
   partyFind: Array<PartyMapPreview>;
   partyGetById: PartyGetByIdResponse;
   partySearch: Array<PartyPreview>;
-  partySearchAttenders: Array<User>;
+  partySearchAttenders: Array<UserPreview>;
   userGetAttendedPartiesById: Array<PartyPreview>;
   userGetById: UserGetByIdResponse;
   userGetFollowersById: Array<UserPreview>;
@@ -376,7 +376,7 @@ export type PartySearchAttendersQueryVariables = Exact<{
 }>;
 
 
-export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
 
 export type UserSearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;

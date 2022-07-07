@@ -4,7 +4,7 @@ import React from 'react';
 import { StateHandler } from '../components';
 import { useAuth } from '../modules/auth/hooks';
 import { OnboardingNavigator } from '../modules/onboarding/navigator';
-import { MainNavigator } from './main';
+import { MainNavigator } from './MainNavigator';
 
 const prefix = Linking.createURL('/');
 
@@ -34,5 +34,5 @@ export const Navigation = () => {
   );
 };
 
-export * from './main';
-export * from './home';
+export * from './MainNavigator';
+export * from './HomeNavigator';

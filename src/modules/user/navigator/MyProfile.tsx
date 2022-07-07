@@ -9,9 +9,9 @@ import {
   UserAttendedPartiesScreen,
   UserFollowersScreen,
   UserFollowingScreen,
-} from '../modules/user';
-import { SettingsScreen } from '../modules/settings';
-import { useTheme } from '../theme';
+} from '../screens';
+import { SettingsScreen } from '../../../modules/settings';
+import { useTheme } from '../../../theme';
 
 export type MyProfileStackParamList = {
   Profile: undefined;
@@ -40,6 +40,9 @@ export const MyProfileNavigator: React.FC = () => {
         headerBackTitle: '',
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
+        headerStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
       }}
     >
       <Stack.Screen

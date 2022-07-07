@@ -6,14 +6,11 @@ import {
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../../theme';
 import { DiscoverScreen } from './screens';
-import { UserProfileScreen } from '../user';
-import { PartyDetailScreen } from '../party';
-import { UserPreview } from '../../api';
+import { ProfileStackGroup } from '../user';
+import { PartyDetailStackGroup } from '../party';
 
 export type DiscoverStackParamList = {
   List: undefined;
-  UserList: { users: Array<UserPreview>; q: string };
-  PartyList: { q: string };
   UserProfile: { id: string };
   PartyDetail: { id: string };
 };
@@ -43,8 +40,8 @@ export const DiscoverNavigator: React.FC = () => {
       }}
     >
       <Stack.Screen name="List" component={DiscoverScreen} />
-      <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-      <Stack.Screen name="PartyDetail" component={PartyDetailScreen} />
+      {ProfileStackGroup({ Stack })}
+      {PartyDetailStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

@@ -5,6 +5,7 @@ import {
   Container,
   ListSwitch,
   StateHandler,
+  Text,
   TextInput,
 } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -43,14 +44,10 @@ export const DiscoverScreen: React.FC = () => {
 
   return (
     <Container>
-      <Box flex row center mb={4}>
-        <TextInput
-          placeholder="Buscar..."
-          value={search}
-          onChangeText={(text) => setSearch(text)}
-          flexGrow={1}
-          mr={2}
-        />
+      <Box flex row center>
+        <Text flexGrow={1} type="h1">
+          Descubrir
+        </Text>
         <Box flex center>
           <ListSwitch
             isCards={isCardsListMode}
@@ -58,6 +55,13 @@ export const DiscoverScreen: React.FC = () => {
             isDisabled={isShowingAll !== 'user'}
           />
         </Box>
+      </Box>
+      <Box mt={2} mb={4}>
+        <TextInput
+          placeholder="Buscar..."
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
       </Box>
       <StateHandler
         isLoading={isPartiesLoading || isUsersLoading}

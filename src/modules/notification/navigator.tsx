@@ -6,8 +6,8 @@ import {
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../../theme';
 import { NotificationsScreen } from './screens';
-import { UserProfileScreen } from '../user';
-import { PartyDetailScreen } from '../party';
+import { ProfileStackGroup } from '../user';
+import { PartyDetailStackGroup } from '../party';
 
 export type NotificationStackParamList = {
   List: undefined;
@@ -36,14 +36,19 @@ export const NotificationNavigator: React.FC = () => {
         headerBackTitle: '',
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
-        headerStyle: {
-          backgroundColor: theme.palette.background.main,
-        },
       }}
     >
-      <Stack.Screen name="List" component={NotificationsScreen} />
-      <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-      <Stack.Screen name="PartyDetail" component={PartyDetailScreen} />
+      <Stack.Screen
+        name="List"
+        component={NotificationsScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: theme.palette.background.main,
+          },
+        }}
+      />
+      {ProfileStackGroup({ Stack })}
+      {PartyDetailStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

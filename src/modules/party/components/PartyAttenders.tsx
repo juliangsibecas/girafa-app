@@ -2,18 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
-import {
-  Box,
-  Button,
-  Icon,
-  ListSwitch,
-  StateHandler,
-  Text,
-  TextInput,
-} from '../../../components';
+import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
 import { useDebounce } from '../../../hooks';
 import { HomeStackNavigationProp } from '../../../navigation';
-import { UserPreview, UserRow } from '../../user';
+import { UserCard, UserRow } from '../../user';
 
 type Props = {
   partyId: string;
@@ -61,7 +53,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
           renderItem={({ item }) =>
             isCardsListMode ? (
               <Box mb={2}>
-                <UserPreview user={item} go={goToAttender} />
+                <UserCard user={item} go={goToAttender} />
               </Box>
             ) : (
               <Box mb={2}>

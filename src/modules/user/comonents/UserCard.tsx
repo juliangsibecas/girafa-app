@@ -1,12 +1,12 @@
 import { Dimensions, TouchableOpacity } from 'react-native';
-import { UserPreview as IUserPreview } from '../../../api';
+import { UserPreview } from '../../../api';
 import { Box, Icon, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
-  user: IUserPreview;
+  user: UserPreview;
   go: (id: string) => void;
 };
 

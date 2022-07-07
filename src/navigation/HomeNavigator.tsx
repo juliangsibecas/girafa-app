@@ -3,17 +3,10 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import { MapScreen } from '../modules/party';
+import { MapScreen, PartyDetailStackGroup } from '../modules/party';
 import { useTheme } from '../theme';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { PartyDetailScreen } from '../modules/party/screens/PartyDetailScreen';
-import { PartyAttendersScreen } from '../modules/party/screens/PartyAttendersScreen';
-import {
-  UserAttendedPartiesScreen,
-  UserFollowersScreen,
-  UserFollowingScreen,
-  UserProfileScreen,
-} from '../modules/user';
+import { ProfileStackGroup } from '../modules/user';
 
 export type HomeStackParamList = {
   Map: undefined;
@@ -56,19 +49,8 @@ export const HomeNavigator: React.FC = () => {
         component={MapScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="PartyDetail" component={PartyDetailScreen} />
-      <Stack.Screen name="PartyAttenders" component={PartyAttendersScreen} />
-      <Stack.Screen
-        name="UserProfile"
-        component={UserProfileScreen}
-        options={{ headerTransparent: true, headerStyle: {} }}
-      />
-      <Stack.Screen name="UserFollowers" component={UserFollowersScreen} />
-      <Stack.Screen name="UserFollowing" component={UserFollowingScreen} />
-      <Stack.Screen
-        name="UserAttendedParties"
-        component={UserAttendedPartiesScreen}
-      />
+      {ProfileStackGroup({ Stack })}
+      {PartyDetailStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };
