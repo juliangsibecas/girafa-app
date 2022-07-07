@@ -34,14 +34,20 @@ export const DiscoverScreen: React.FC = () => {
     }
   }, [debouncedSearch]);
 
-  const users = usersData?.userSearch ?? [];
-  const parties = partiesData?.partySearch ?? [];
+  const users = search ? usersData?.userSearch ?? [] : [];
+  const parties = search ? partiesData?.partySearch ?? [] : [];
 
   const handleShowAll = (status: boolean, value: 'user' | 'party') => {
     setShowingAll(status ? value : undefined);
     setCardsListMode(false);
   };
 
+  const shouldShowUsers =
+    users.length > 0 && (!isShowingAll || isShowingAll === 'user');
+  const shouldShowParties =
+    parties.length > 0 && (!isShowingAll || isShowingAll === 'party');
+
+  console.log(shouldShowParties);
   return (
     <Container>
       <Box flex row center>
@@ -52,7 +58,7 @@ export const DiscoverScreen: React.FC = () => {
           <ListSwitch
             isCards={isCardsListMode}
             onSwitch={() => setCardsListMode(!isCardsListMode)}
-            isDisabled={isShowingAll !== 'user'}
+            isDisabled={!shouldShowUsers || shouldShowParties}
           />
         </Box>
       </Box>
@@ -67,21 +73,23 @@ export const DiscoverScreen: React.FC = () => {
         isLoading={isPartiesLoading || isUsersLoading}
         isError={Boolean(partiesError || usersError)}
       >
-        {!isShowingAll || isShowingAll === 'user' ? (
+        {shouldShowUsers ? (
           <DiscoverList
             type="user"
             data={users}
+            isOnly={!shouldShowParties}
             isShowingAll={Boolean(isShowingAll)}
             isCardsListMode={isCardsListMode}
             showAll={(status: boolean) => handleShowAll(status, 'user')}
           />
         ) : undefined}
-        {!isShowingAll ? <Box mt={4} /> : undefined}
-        {!isShowingAll || isShowingAll === 'party' ? (
+        {shouldShowUsers && shouldShowParties ? <Box mt={4} /> : undefined}
+        {shouldShowParties ? (
           <DiscoverList
             type="party"
             data={parties}
-            isShowingAll={Boolean(isShowingAll)}
+            isOnly={!shouldShowUsers}
+            isShowingAll={Boolean(isShowingAll) || !shouldShowUsers}
             isCardsListMode={isCardsListMode}
             showAll={(status: boolean) => handleShowAll(status, 'party')}
           />

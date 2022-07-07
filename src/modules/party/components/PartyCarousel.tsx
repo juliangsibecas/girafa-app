@@ -46,14 +46,28 @@ export const PartyCarousel: React.FC<Props> = ({
                   backgroundColor: `${theme.palette.primary.main}66`,
                 }}
               >
-                <Icon name="arrow-left" color={theme.palette.background.main} />
-                <Text
-                  fontFamily={FontFamily.SEMIBOLD}
-                  ml={2}
-                  color={theme.palette.background.main}
-                >
-                  Deslizar para ver festicholas
-                </Text>
+                {parties.length > 0 ? (
+                  <>
+                    <Icon
+                      name="arrow-left"
+                      color={theme.palette.background.main}
+                    />
+                    <Text
+                      fontFamily={FontFamily.SEMIBOLD}
+                      ml={2}
+                      color={theme.palette.background.main}
+                    >
+                      Deslizar para ver festicholas
+                    </Text>
+                  </>
+                ) : (
+                  <Text
+                    fontFamily={FontFamily.SEMIBOLD}
+                    color={theme.palette.background.main}
+                  >
+                    No hay fiestas F
+                  </Text>
+                )}
               </Box>
             </Box>
           );

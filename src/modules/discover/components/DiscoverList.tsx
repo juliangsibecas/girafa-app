@@ -10,6 +10,7 @@ import { DiscoverStackScreenProps } from '../navigator';
 type Props = {
   type: 'user' | 'party';
   data: Array<UserPreview | PartyPreview>;
+  isOnly: boolean;
   isShowingAll: boolean;
   showAll: (status: boolean) => void;
   isCardsListMode: boolean;
@@ -18,6 +19,7 @@ type Props = {
 export const DiscoverList: React.FC<Props> = ({
   type,
   data,
+  isOnly,
   isShowingAll,
   showAll,
   isCardsListMode,
@@ -41,7 +43,7 @@ export const DiscoverList: React.FC<Props> = ({
         style={{ justifyContent: 'space-between', alignItems: 'baseline' }}
       >
         <Text type="h4">{isUser ? 'Usuarios' : 'Fiestas'}</Text>
-        {data.length > 4 ? (
+        {data.length > 4 || !isOnly ? (
           <TouchableOpacity onPress={() => showAll(!isShowingAll)}>
             <Text type="hint">{isShowingAll ? 'Ver menos' : 'Ver mas'}</Text>
           </TouchableOpacity>
@@ -51,7 +53,7 @@ export const DiscoverList: React.FC<Props> = ({
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <Box mt={1}>
+            <Box mt={2}>
               {isUser ? (
                 <UserItem user={item as UserPreview} go={go} />
               ) : (

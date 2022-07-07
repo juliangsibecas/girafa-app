@@ -10,9 +10,9 @@ import {
   useUserChangeFollowingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, Text } from '../../../components';
-import { MyProfileStackScreenProps } from '../../../navigation/profile';
 import { FontFamily } from '../../../theme/text/types';
 import { useAuth } from '../../auth/hooks';
+import { MyProfileStackScreenProps } from '../navigator';
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
@@ -124,12 +124,14 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         </Box>
         <Box flex row style={{ justifyContent: 'space-between' }}>
           <TouchableOpacity
+            disabled={user.followingCount === 0}
             onPress={() => navigate('UserFollowing', { id: user._id })}
           >
             <Text fontFamily={FontFamily.BOLD}>{user.followingCount}</Text>
             <Text type="hint">Seguidos</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            disabled={followersCount === 0}
             onPress={() => navigate('UserFollowers', { id: user._id })}
           >
             <Text fontFamily={FontFamily.BOLD} textCenter>
@@ -140,6 +142,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            disabled={user.attendedPartiesCount === 0}
             onPress={() => navigate('UserAttendedParties', { id: user._id })}
           >
             <Text fontFamily={FontFamily.BOLD} textRight>

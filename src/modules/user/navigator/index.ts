@@ -1,2 +1,2 @@
-export * from './MyProfile';
-export * from './Profile';
+export * from './MyProfileNavigator';
+export * from './ProfileStackGroup';
