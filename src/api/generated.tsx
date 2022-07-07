@@ -171,6 +171,15 @@ export type PartyGetByIdResponse = {
   organizer: User;
 };
 
+export type PartyMapPreview = {
+  __typename?: 'PartyMapPreview';
+  _id: Scalars['String'];
+  coordinates: Coordinates;
+  date: Scalars['Date'];
+  name: Scalars['String'];
+  organizerNickname?: Maybe<Scalars['String']>;
+};
+
 export type PartyPreview = {
   __typename?: 'PartyPreview';
   _id: Scalars['String'];
@@ -187,14 +196,15 @@ export type Query = {
   __typename?: 'Query';
   checkRecoveryCode: Scalars['Boolean'];
   getNotifications: Array<UserNotification>;
+  partyFind: Array<PartyMapPreview>;
   partyGetById: PartyGetByIdResponse;
-  partySearch: Array<Party>;
+  partySearch: Array<PartyPreview>;
   partySearchAttenders: Array<User>;
   userGetAttendedPartiesById: Array<PartyPreview>;
   userGetById: UserGetByIdResponse;
   userGetFollowersById: Array<UserPreview>;
   userGetFollowingById: Array<UserPreview>;
-  userSearch: Array<User>;
+  userSearch: Array<UserPreview>;
   userSearchFollowersToInvite: Array<User>;
 };
 
@@ -342,12 +352,17 @@ export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNotificationsQuery = { __typename?: 'Query', getNotifications: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
 
+export type PartyFindQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PartyFindQuery = { __typename?: 'Query', partyFind: Array<{ __typename?: 'PartyMapPreview', _id: string, name: string, organizerNickname?: string | null, date: any, coordinates: { __typename?: 'Coordinates', latitude: number, longitude: number } }> };
+
 export type PartySearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type PartySearchQuery = { __typename?: 'Query', partySearch: Array<{ __typename?: 'Party', _id: string, name: string, date: any, organizer: { __typename?: 'User', nickname: string }, coordinates: { __typename?: 'Coordinates', latitude: number, longitude: number } }> };
+export type PartySearchQuery = { __typename?: 'Query', partySearch: Array<{ __typename?: 'PartyPreview', _id: string, name: string, organizerNickname?: string | null }> };
 
 export type PartyGetByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -368,7 +383,7 @@ export type UserSearchQueryVariables = Exact<{
 }>;
 
 
-export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
 
 export type UserGetByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -575,19 +590,53 @@ export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
 export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
 export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
-export const PartySearchDocument = gql`
-    query partySearch($q: String) {
-  partySearch(q: $q) {
+export const PartyFindDocument = gql`
+    query partyFind {
+  partyFind {
     _id
     name
-    organizer {
-      nickname
-    }
+    organizerNickname
     coordinates {
       latitude
       longitude
     }
     date
+  }
+}
+    `;
+
+/**
+ * __usePartyFindQuery__
+ *
+ * To run a query within a React component, call `usePartyFindQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartyFindQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePartyFindQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePartyFindQuery(baseOptions?: Apollo.QueryHookOptions<PartyFindQuery, PartyFindQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PartyFindQuery, PartyFindQueryVariables>(PartyFindDocument, options);
+      }
+export function usePartyFindLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartyFindQuery, PartyFindQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PartyFindQuery, PartyFindQueryVariables>(PartyFindDocument, options);
+        }
+export type PartyFindQueryHookResult = ReturnType<typeof usePartyFindQuery>;
+export type PartyFindLazyQueryHookResult = ReturnType<typeof usePartyFindLazyQuery>;
+export type PartyFindQueryResult = Apollo.QueryResult<PartyFindQuery, PartyFindQueryVariables>;
+export const PartySearchDocument = gql`
+    query partySearch($q: String) {
+  partySearch(q: $q) {
+    _id
+    name
+    organizerNickname
   }
 }
     `;

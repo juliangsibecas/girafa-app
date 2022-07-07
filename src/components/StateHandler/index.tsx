@@ -21,5 +21,5 @@ export const StateHandler: React.FC<Props> = ({
     );
   }
 
-  return children;
+  return children ?? <></>;
 };

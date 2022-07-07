@@ -1,15 +1,21 @@
-query partySearch ($q: String) {
-  partySearch (q: $q) {
+query partyFind  {
+  partyFind  {
     _id
     name
-    organizer {
-      nickname
-    }
+    organizerNickname 
     coordinates {
       latitude
       longitude
     }
     date
+  }
+}
+
+query partySearch ($q: String) {
+  partySearch (q: $q) {
+    _id
+    name
+    organizerNickname 
   }
 }
 

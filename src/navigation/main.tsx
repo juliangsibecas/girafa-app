@@ -13,6 +13,7 @@ import { MyProfileNavigator } from './profile';
 import { NotificationNavigator } from '../modules/notification';
 import { FontFamily } from '../theme/text/types';
 import { useNotification } from '../modules/notification/hooks';
+import { DiscoverNavigator } from '../modules/discover';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
@@ -57,7 +58,7 @@ export const MainNavigator: React.FC = () => {
       />
       <BottomTab.Screen
         name="Discover"
-        component={HomeNavigator}
+        component={DiscoverNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="search" size={2.5} color={color} />

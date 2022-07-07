@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Box, Icon, Text } from '../../../components';
-import { Party } from '../../../api';
+import { PartyMapPreview } from '../../../api';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import { PartyCarouselItem } from './PartyCarouselItem';
 
 interface Props {
   idx: number;
-  parties: Array<Party>;
+  parties: Array<PartyMapPreview>;
   handleIdxChange: (idx: number) => void;
 }
 
@@ -18,7 +18,7 @@ export const PartyCarousel: React.FC<Props> = ({
   parties,
   handleIdxChange,
 }) => {
-  const carousel = useRef<Carousel<Party>>(null);
+  const carousel = useRef<Carousel<PartyMapPreview>>(null);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const PartyCarousel: React.FC<Props> = ({
       ref={carousel}
       sliderWidth={Dimensions.get('screen').width}
       itemWidth={Dimensions.get('screen').width}
-      data={[{}, ...parties] as Array<Party>}
+      data={[{}, ...parties] as Array<PartyMapPreview>}
       renderItem={({ item: party, index }) => {
         if (index === 0) {
           return (

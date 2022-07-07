@@ -4,13 +4,13 @@ import { Box, Button, Icon, Image, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import image from '../../../../assets/images/onboarding.png';
-import { Party } from '../../../api';
+import { PartyMapPreview } from '../../../api';
 import { useNavigation } from '@react-navigation/native';
 import { formatDate } from '../../../utils';
 import { HomeStackNavigationProp } from '../../../navigation';
 
 interface Props {
-  party: Party;
+  party: PartyMapPreview;
 }
 
 export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
@@ -46,7 +46,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
         >
           <Box flexGrow={1}>
             <Text type="h2">{party.name}</Text>
-            <Text>{party.organizer.nickname}</Text>
+            <Text>{party.organizerNickname}</Text>
           </Box>
           <Box>
             <Text color="primary" fontFamily={FontFamily.SEMIBOLD}>

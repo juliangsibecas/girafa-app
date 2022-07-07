@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Container, Logo, StateHandler } from '../../../components';
-import { Party, usePartySearchQuery } from '../../../api';
-import { PartyCarousel, PartyMap } from '../components';
+import { PartyMapPreview, usePartyFindQuery } from '../../../api';
+import { PartyCarousel } from '../components';
 
 export const MapScreen: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useState(-1);
-  const { data, loading: isLoading, error: isError } = usePartySearchQuery();
+  const { data, loading: isLoading, error: isError } = usePartyFindQuery();
 
-  const parties = (data?.partySearch ?? []) as Array<Party>;
+  const parties = (data?.partyFind ?? []) as Array<PartyMapPreview>;
 
   const handleIdxChange = (idx: number) => setCurrentIdx(idx);
 

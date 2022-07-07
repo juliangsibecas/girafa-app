@@ -43,13 +43,13 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
   return (
     <>
       <Box flex row center mb={4}>
-        <Box flexGrow={1} mr={2}>
-          <TextInput
-            placeholder="Buscar..."
-            value={search}
-            onChangeText={(text) => setSearch(text)}
-          />
-        </Box>
+        <TextInput
+          placeholder="Buscar..."
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+          flexGrow={1}
+          mr={2}
+        />
         <ListSwitch
           isCards={isCardsListMode}
           onSwitch={() => setCardsListMode(!isCardsListMode)}

@@ -1,16 +1,16 @@
 import { Dimensions, TouchableOpacity } from 'react-native';
-import { User } from '../../../api';
+import { UserPreview as IUserPreview } from '../../../api';
 import { Box, Icon, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
-  user: Pick<User, '_id' | 'nickname' | 'fullName'>;
+  user: IUserPreview;
   go: (id: string) => void;
 };
 
-export const UserPreview: React.FC<Props> = ({ user, go }) => {
+export const UserCard: React.FC<Props> = ({ user, go }) => {
   const { theme } = useTheme();
   return (
     <TouchableOpacity onPress={() => go(user._id)}>

@@ -1,4 +1,4 @@
 export * from './UserAvatar';
 export * from './UserProfile';
-export * from './UserPreview';
+export * from './UserCard';
 export * from './UserRow';
