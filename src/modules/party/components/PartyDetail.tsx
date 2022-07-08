@@ -12,11 +12,11 @@ import {
   useUserChangeAttendingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, LabelValue, Text } from '../../../components';
+import { HomeStackScreenProps } from '../../../navigation';
 import { FontFamily } from '../../../theme/text/types';
 import { formatDate } from '../../../utils';
 import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
-import { PartyDetailScreenProps } from '../navigators';
 import { formatePartyAvailability } from '../utils';
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
@@ -27,7 +27,7 @@ type Props = {
 
 export const PartyDetail: React.FC<Props> = ({ party }) => {
   const { navigate } =
-    useNavigation<PartyDetailScreenProps<'Detail'>['navigation']>();
+    useNavigation<HomeStackScreenProps<'PartyDetail'>['navigation']>();
   const { userId } = useAuth();
   const [
     changeAttendingStateMutation,
@@ -43,9 +43,10 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const isOrganizer = party.organizer._id === userId;
 
   const canInvite =
-    isOrganizer ||
-    party.allowInvites ||
-    party.availability === PartyAvailability.Public;
+    !party.isExpired &&
+    (isOrganizer ||
+      party.allowInvites ||
+      party.availability === PartyAvailability.Public);
 
   const changeAttendingState = async () => {
     try {
@@ -157,8 +158,15 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           secondary={isAttender}
           onPress={changeAttendingState}
           isLoading={isChangeAttendingStateLoading}
+          isDisabled={party.isExpired}
         >
-          {isAttender ? 'Asistiendo' : 'Asistir'}
+          {!party.isExpired
+            ? isAttender
+              ? 'Asistiendo'
+              : 'Asistir'
+            : isAttender
+            ? 'Asististe'
+            : 'No asististe'}
         </Button>
         <Box mx={3}>
           <TouchableOpacity
@@ -173,7 +181,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           </TouchableOpacity>
         </Box>
         <Box mr={1}>
-          <TouchableOpacity onPress={share}>
+          <TouchableOpacity onPress={share} disabled={!canInvite}>
             <Icon
               name="share-alt"
               size={3}

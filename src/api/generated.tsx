@@ -130,6 +130,7 @@ export type Party = {
   date: Scalars['Date'];
   description: Scalars['String'];
   invited: Array<User>;
+  isExpired: Scalars['Boolean'];
   minAge?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
@@ -166,6 +167,7 @@ export type PartyGetByIdResponse = {
   date: Scalars['Date'];
   description: Scalars['String'];
   isAttender: Scalars['Boolean'];
+  isExpired: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer: User;
@@ -369,7 +371,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isExpired: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -687,6 +689,7 @@ export const PartyGetByIdDocument = gql`
     attendersCount
     allowInvites
     isAttender
+    isExpired
   }
 }
     `;

@@ -44,7 +44,7 @@ export const Button: React.FC<Props> = ({
       ...insertObjectIf(type === 'primary', {
         bgColor: 'primary',
       }),
-      ...insertObjectIf(type === 'secondary', {
+      ...insertObjectIf(!isDisabled && type === 'secondary', {
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: 'primary',
@@ -57,7 +57,7 @@ export const Button: React.FC<Props> = ({
     buttonStyle
   );
 
-  const color = type === 'primary' ? 'background' : 'primary';
+  const color = type === 'primary' || isDisabled ? 'background' : 'primary';
 
   return (
     <TouchableOpacity

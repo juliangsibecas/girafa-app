@@ -38,6 +38,7 @@ query partyGetById ($id: String!) {
     attendersCount 
     allowInvites
     isAttender
+    isExpired
   }
 }
 
