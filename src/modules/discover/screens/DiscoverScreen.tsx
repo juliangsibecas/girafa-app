@@ -47,7 +47,6 @@ export const DiscoverScreen: React.FC = () => {
   const shouldShowParties =
     parties.length > 0 && (!isShowingAll || isShowingAll === 'party');
 
-  console.log(shouldShowParties);
   return (
     <Container>
       <Box flex row center>

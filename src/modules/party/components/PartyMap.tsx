@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Party } from '../../../api';
+import { PartyMapPreview } from '../../../api';
 import { Box, Icon } from '../../../components';
 
 interface Props {
   idx: number;
-  parties: Array<Party>;
+  parties: Array<PartyMapPreview>;
   handleIdxChange: (idx: number) => void;
 }
 
@@ -39,6 +39,7 @@ export const PartyMap: React.FC<Props> = ({
   return (
     <Box position="absolute">
       <MapView
+        provider={PROVIDER_GOOGLE}
         ref={map as React.LegacyRef<MapView>}
         initialRegion={INITIAL_REGION}
         style={{

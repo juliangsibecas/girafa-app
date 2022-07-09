@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Container, Logo, StateHandler } from '../../../components';
 import { PartyMapPreview, usePartyFindQuery } from '../../../api';
-import { PartyCarousel } from '../components';
+import { PartyCarousel, PartyMap } from '../components';
 
 export const MapScreen: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useState(-1);
@@ -13,6 +13,11 @@ export const MapScreen: React.FC = () => {
 
   return (
     <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
+      <PartyMap
+        parties={parties}
+        idx={currentIdx}
+        handleIdxChange={handleIdxChange}
+      />
       <Container noHeader px={0} bgColor={undefined} pointerEvents="box-none">
         <Box hcenter flexGrow={1} pointerEvents="none">
           <Logo />

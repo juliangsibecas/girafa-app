@@ -1,4 +1,9 @@
 #import "AppDelegate.h"
+// @generated begin react-native-maps-import - expo prebuild (DO NOT MODIFY) sync-f2f83125c99c0d74b42a2612947510c4e08c423a
+#if __has_include(<GoogleMaps/GoogleMaps.h>)
+#import <GoogleMaps/GoogleMaps.h>
+#endif
+// @generated end react-native-maps-import
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -33,6 +38,11 @@
 {
   RCTAppSetupPrepareApp(application);
 
+// @generated begin react-native-maps-init - expo prebuild (DO NOT MODIFY) sync-4d648eb831e47c77a0c308106d19f3af36ed7a2e
+#if __has_include(<GoogleMaps/GoogleMaps.h>)
+  [GMSServices provideAPIKey:@"AIzaSyD9bkjjnyhOApKzlJL1l_DnG_4aS1SYjAo"];
+#endif
+// @generated end react-native-maps-init
   RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
 
 #if RCT_NEW_ARCH_ENABLED

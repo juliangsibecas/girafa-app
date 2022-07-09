@@ -23,11 +23,11 @@ export default {
     supportsTablet: true,
   },
   android: {
+    package: 'ar.com.girafa.app',
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
-    package: 'ar.com.girafa.app',
   },
   web: {
     favicon: './assets/images/favicon.png',
@@ -42,5 +42,6 @@ export default {
   ],
   extra: {
     onesignalAppId: process.env.ONESIGNAL_APP_ID,
+    googleMapsKey: process.env.GOOGLE_MAPS_KEY,
   },
 };
