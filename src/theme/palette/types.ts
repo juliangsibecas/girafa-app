@@ -18,8 +18,5 @@ export type Palette = {
     secondary: string;
     disabled: string;
   };
-  background: {
-    main: string;
-    paper: string;
-  };
+  background: Color;
 };

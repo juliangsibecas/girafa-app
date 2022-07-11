@@ -2,7 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { PartyMapPreview } from '../../../api';
-import { Box, Icon } from '../../../components';
+import { BottomTabGradient, Box, Icon } from '../../../components';
+import lightStyle from '../../../../assets/maps/light.json';
+import darkStyle from '../../../../assets/maps/dark.json';
+import { useTheme } from '../../../theme';
 
 interface Props {
   idx: number;
@@ -22,6 +25,7 @@ export const PartyMap: React.FC<Props> = ({
   parties,
   handleIdxChange,
 }) => {
+  const { isLightMode } = useTheme();
   const map = useRef<MapView>();
 
   useEffect(() => {
@@ -46,6 +50,7 @@ export const PartyMap: React.FC<Props> = ({
           height: Dimensions.get('window').height,
           width: Dimensions.get('window').width,
         }}
+        customMapStyle={isLightMode ? lightStyle : darkStyle}
       >
         {parties.map((party, i) => (
           <Marker

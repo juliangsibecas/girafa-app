@@ -11,3 +11,4 @@ export * from './Image';
 export * from './Avatar';
 export * from './LabelValue';
 export * from './ListSwitch';
+export * from './BottomTabGradient';

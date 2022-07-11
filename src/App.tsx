@@ -15,6 +15,7 @@ import { Appearance } from 'react-native';
 import { NotificationsProvider } from './modules/notification';
 
 const AppComponent = () => {
+  const isLightTheme = Appearance.getColorScheme() !== 'light';
   const isLoadingComplete = useCachedResources();
 
   if (!isLoadingComplete) {
@@ -22,15 +23,11 @@ const AppComponent = () => {
   } else {
     return (
       <SafeAreaProvider>
-        <StatusBar />
+        <StatusBar style={isLightTheme ? 'dark' : 'light'} />
         <ApolloProvider client={client}>
           <ThemeProvider
             theme={theme}
-            mode={
-              Appearance.getColorScheme() === 'light'
-                ? ThemeMode.LIGHT
-                : ThemeMode.DARK
-            }
+            mode={isLightTheme ? ThemeMode.LIGHT : ThemeMode.DARK}
           >
             <AuthProvider>
               <NotificationsProvider>

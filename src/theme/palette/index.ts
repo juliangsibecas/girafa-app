@@ -28,7 +28,6 @@ export const lightPalette: Palette = {
   },
   background: {
     main: '#FFFFFF',
-    paper: '#000000',
   },
 };
 
@@ -58,6 +57,6 @@ export const darkPalette: Palette = {
   },
   background: {
     main: '#1B2855',
-    paper: '#000000',
+    light: '#25356b',
   },
 };

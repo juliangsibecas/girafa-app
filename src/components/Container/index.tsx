@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewProps, ViewStyle } from 'react-native';
+import { ViewProps } from 'react-native';
 import { UiKeys } from '../../ui';
 import { Box } from '../Box';
 
@@ -22,7 +22,6 @@ export const Container: React.FC<Props> = ({
     px={2}
     pt={noHeader ? 8 : 2}
     pb={noBottomTab ? 6 : 3}
-    height={noHeader ? 'screen' : 10}
     width="screen"
     bgColor="background"
     {...props}

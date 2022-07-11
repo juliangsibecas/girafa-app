@@ -41,9 +41,11 @@ export const MainNavigator: React.FC = () => {
         tabBarStyle: {
           backgroundColor: theme.palette.background.main,
           borderTopWidth: 0,
+          elevation: 0,
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: theme.palette.primary.main,
+        tabBarInactiveTintColor: theme.palette.text.secondary,
         headerShown: false,
       }}
     >

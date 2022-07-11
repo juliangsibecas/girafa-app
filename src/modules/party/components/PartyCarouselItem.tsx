@@ -18,7 +18,15 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
   const { theme } = useTheme();
   return (
     <Box width="screen" center>
-      <Box bgColor="background" borderRadius={1} flex row height={20} my={2}>
+      <Box
+        bgColor="background.light"
+        borderRadius={1}
+        flex
+        row
+        height={20}
+        my={2}
+        style={{ elevation: 8 }}
+      >
         <Box
           position="absolute"
           top={-2}

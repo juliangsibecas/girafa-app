@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Container, Logo, StateHandler } from '../../../components';
+import {
+  BottomTabGradient,
+  Box,
+  Container,
+  Logo,
+  StateHandler,
+} from '../../../components';
 import { PartyMapPreview, usePartyFindQuery } from '../../../api';
 import { PartyCarousel, PartyMap } from '../components';
 
@@ -30,6 +36,7 @@ export const MapScreen: React.FC = () => {
           />
         </Box>
       </Container>
+      <BottomTabGradient />
     </StateHandler>
   );
 };
