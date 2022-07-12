@@ -1,6 +1,7 @@
 import React from 'react';
 import { ViewProps } from 'react-native';
 import { UiKeys } from '../../ui';
+import { BottomTabGradient } from '../BottomTabGradient';
 import { Box } from '../Box';
 
 type Props = ViewProps &
@@ -15,17 +16,21 @@ export const Container: React.FC<Props> = ({
   children,
   ...props
 }) => (
-  <Box
-    flex
-    column
-    flexGrow={1}
-    px={2}
-    pt={noHeader ? 8 : 2}
-    pb={noBottomTab ? 6 : 3}
-    width="screen"
-    bgColor="background"
-    {...props}
-  >
-    {children}
-  </Box>
+  <>
+    <Box
+      flex
+      column
+      flexGrow={1}
+      flexShrink={1}
+      px={2}
+      pt={noHeader ? 8 : 2}
+      pb={noBottomTab ? 6 : 1}
+      width="screen"
+      bgColor="background"
+      {...props}
+    >
+      {children}
+      <BottomTabGradient />
+    </Box>
+  </>
 );

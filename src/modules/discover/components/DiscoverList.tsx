@@ -49,15 +49,19 @@ export const DiscoverList: React.FC<Props> = ({
           </TouchableOpacity>
         ) : undefined}
       </Box>
-      {isShowingAll ? (
+      {isShowingAll || isOnly ? (
         <FlatList
           data={data}
           renderItem={({ item }) => (
             <Box mt={2}>
               {isUser ? (
-                <UserItem user={item as UserPreview} go={go} />
+                <UserItem key={item._id} user={item as UserPreview} go={go} />
               ) : (
-                <PartyItem party={item as PartyPreview} go={go} />
+                <PartyItem
+                  key={item._id}
+                  party={item as PartyPreview}
+                  go={go}
+                />
               )}
             </Box>
           )}

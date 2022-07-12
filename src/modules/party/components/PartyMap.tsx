@@ -58,7 +58,7 @@ export const PartyMap: React.FC<Props> = ({
             coordinate={party.coordinates}
             onPress={() => handleIdxChange(i)}
           >
-            <Icon name="map-marker" size={4} color="primary" />
+            <Icon name="map-pin" size={3} color="primary" isFilled />
           </Marker>
         ))}
       </MapView>

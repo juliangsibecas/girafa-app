@@ -76,7 +76,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       <Box mt={7} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
           <TouchableOpacity onPress={() => navigate('Settings')}>
-            <Icon name="bars" color="primary" size={3} />
+            <Icon name="menu" color="primary" size={3} />
           </TouchableOpacity>
         ) : undefined}
       </Box>

@@ -43,19 +43,21 @@ export const PartyCarousel: React.FC<Props> = ({
                 px={1.5}
                 borderRadius={2}
                 style={{
-                  backgroundColor: `${theme.palette.primary.main}66`,
+                  backgroundColor: `${theme.palette.primary.main}BB`,
+                  opacity: 0.8,
                 }}
               >
                 {parties.length > 0 ? (
                   <>
                     <Icon
-                      name="arrow-left"
-                      color={theme.palette.background.main}
+                      name="chevron-left"
+                      color={theme.palette.text.primary}
+                      weight={3}
                     />
                     <Text
                       fontFamily={FontFamily.SEMIBOLD}
                       ml={2}
-                      color={theme.palette.background.main}
+                      color={theme.palette.text.primary}
                     >
                       Deslizar para ver festicholas
                     </Text>

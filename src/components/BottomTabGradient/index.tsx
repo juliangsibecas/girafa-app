@@ -11,7 +11,7 @@ export const BottomTabGradient = () => {
       position="absolute"
       bottom={0}
       left={0}
-      height={4}
+      height={6}
       width="screen"
       pointerEvents="none"
     >
