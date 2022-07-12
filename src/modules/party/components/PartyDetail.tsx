@@ -174,7 +174,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             disabled={!canInvite}
           >
             <Icon
-              name="paper-plane"
+              name="send"
               size={3}
               color={canInvite ? 'primary' : 'disabled'}
             />
@@ -183,7 +183,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         <Box mr={1}>
           <TouchableOpacity onPress={share} disabled={!canInvite}>
             <Icon
-              name="share-alt"
+              name="share-2"
               size={3}
               color={canInvite ? 'primary' : 'disabled'}
             />

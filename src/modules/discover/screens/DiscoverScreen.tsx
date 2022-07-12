@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { usePartySearchLazyQuery, useUserSearchLazyQuery } from '../../../api';
 import {
-  BottomTabGradient,
   Box,
   Container,
   ListSwitch,
@@ -95,7 +94,6 @@ export const DiscoverScreen: React.FC = () => {
           />
         ) : undefined}
       </StateHandler>
-      <BottomTabGradient />
     </Container>
   );
 };

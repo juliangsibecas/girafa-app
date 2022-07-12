@@ -28,6 +28,7 @@ export const lightPalette: Palette = {
   },
   background: {
     main: '#FFFFFF',
+    light: '#FFFFFF',
   },
 };
 

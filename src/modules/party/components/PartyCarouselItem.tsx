@@ -69,8 +69,15 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
                     id: party._id,
                   })
                 }
+                pt={0.5}
+                pl={0.5}
               >
-                <Icon name="chevron-right" />
+                <Icon
+                  name="chevron-right"
+                  color="background"
+                  size={3}
+                  weight={3}
+                />
               </Button>
             </Box>
           </Box>

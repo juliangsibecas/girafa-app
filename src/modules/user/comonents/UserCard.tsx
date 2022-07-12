@@ -41,7 +41,7 @@ export const UserCard: React.FC<Props> = ({ user, go }) => {
           </Text>
           <Text color="background">{user.fullName}</Text>
         </Box>
-        <Icon name="chevron-right" color="background" />
+        <Icon name="chevron-right" color="background" size={3} />
       </Box>
     </TouchableOpacity>
   );
