@@ -102,29 +102,25 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           <Text ml={0.2}>{formatePartyAvailability(party.availability)}</Text>
         </Box>
       </Box>
-      <Box mt={6}>
-        <Box flex row>
-          <Box flexGrow={1}>
-            <LabelValue label="Organizador" value={party.organizer.nickname} />
-          </Box>
-          <Box flexGrow={1}>
-            <LabelValue label="Dirección" value={party.address} />
-          </Box>
-        </Box>
-        <Box flex row mt={4}>
-          <Box flexGrow={1}>
+      <Box flex row mt={6}>
+        <Box flex flexGrow={1}>
+          <LabelValue label="Organizador" value={party.organizer.nickname} />
+          <Box mt={4}>
             <LabelValue label="Fecha" value={formatDate(party.date)} />
           </Box>
-          <Box flexGrow={1}>
+        </Box>
+        <Box flex flexGrow={1}>
+          <LabelValue label="Dirección" value={party.address} />
+          <Box mt={4}>
             <LabelValue
               label="Barra Libre"
               value={party.openBar ? 'Si' : 'No'}
             />
           </Box>
         </Box>
-        <Box mt={4}>
-          <LabelValue label="Descripción" value={party.description} />
-        </Box>
+      </Box>
+      <Box mt={4}>
+        <LabelValue label="Descripción" value={party.description} />
       </Box>
       <Box mt={4} flexGrow={1}>
         <Box flex row fullWidth>

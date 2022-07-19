@@ -13,9 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: any;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
 };
 
@@ -57,7 +55,7 @@ export type CoordinatesCreateInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   generateRecoveryCode: Scalars['Boolean'];
-  partyCreate: Party;
+  partyCreate: Scalars['Boolean'];
   signIn: AuthSignIn;
   signInFromRefreshToken: AuthSignIn;
   signUp: AuthSignIn;
@@ -131,7 +129,6 @@ export type Party = {
   description: Scalars['String'];
   invited: Array<User>;
   isExpired: Scalars['Boolean'];
-  minAge?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer: User;
@@ -353,6 +350,13 @@ export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetNotificationsQuery = { __typename?: 'Query', getNotifications: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
+
+export type PartyCreateMutationVariables = Exact<{
+  data: PartyCreateInput;
+}>;
+
+
+export type PartyCreateMutation = { __typename?: 'Mutation', partyCreate: boolean };
 
 export type PartyFindQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -592,6 +596,37 @@ export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
 export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
 export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
+export const PartyCreateDocument = gql`
+    mutation partyCreate($data: PartyCreateInput!) {
+  partyCreate(data: $data)
+}
+    `;
+export type PartyCreateMutationFn = Apollo.MutationFunction<PartyCreateMutation, PartyCreateMutationVariables>;
+
+/**
+ * __usePartyCreateMutation__
+ *
+ * To run a mutation, you first call `usePartyCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePartyCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [partyCreateMutation, { data, loading, error }] = usePartyCreateMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function usePartyCreateMutation(baseOptions?: Apollo.MutationHookOptions<PartyCreateMutation, PartyCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PartyCreateMutation, PartyCreateMutationVariables>(PartyCreateDocument, options);
+      }
+export type PartyCreateMutationHookResult = ReturnType<typeof usePartyCreateMutation>;
+export type PartyCreateMutationResult = Apollo.MutationResult<PartyCreateMutation>;
+export type PartyCreateMutationOptions = Apollo.BaseMutationOptions<PartyCreateMutation, PartyCreateMutationVariables>;
 export const PartyFindDocument = gql`
     query partyFind {
   partyFind {

@@ -7,6 +7,7 @@ import {
   List,
   MapPin,
   Menu,
+  Plus,
   Search,
   Send,
   Share,
@@ -33,6 +34,7 @@ const dict = {
   square: Square,
   list: List,
   menu: Menu,
+  plus: Plus,
 
   share: Share,
   'share-2': Share2,

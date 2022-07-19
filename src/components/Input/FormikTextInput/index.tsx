@@ -1,7 +1,8 @@
-import { ErrorMessage, useFormikContext } from 'formik';
+import React from 'react';
 import { TextInputProps as RNTextInputProps } from 'react-native';
+import { useFormikContext } from 'formik';
 import { UiKeys } from '../../../ui';
-import { Text } from '../../Text';
+import { FormikError } from '../FormikError';
 import { TextInput } from '../TextInput';
 
 interface Props extends UiKeys {
@@ -32,14 +33,7 @@ export const FormikTextInput: React.FC<Props> = ({
         onBlur={handleBlur(id)}
         {...props}
       />
-      <ErrorMessage
-        name={id}
-        render={(err) => (
-          <Text type="hint" color="#ff0000" mt={0.5} ml={1}>
-            {err}
-          </Text>
-        )}
-      />
+      <FormikError id={id} />
     </>
   );
 };

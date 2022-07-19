@@ -1,3 +1,7 @@
+mutation partyCreate ($data: PartyCreateInput!) {
+  partyCreate (data: $data) 
+}
+
 query partyFind  {
   partyFind  {
     _id

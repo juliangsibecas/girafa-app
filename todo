@@ -1,15 +1,11 @@
-icons (choose icon lib)
-style map (light and dark)
 define dates logic and parsers
 domain (redirect schema => share)
 empty states
 
-canInvite?
-party availabilities (expire, show, actions)
 party load invites on modal open
 
 implement dragdown to update (delete refetchs?)
 
 push notification deep linking?
 
-google map api
+ios shadows
