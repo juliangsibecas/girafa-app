@@ -9,7 +9,7 @@ import { setContext } from '@apollo/client/link/context';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.68.110:4000/graphql',
+  uri: 'http://192.168.68.117:4000/graphql',
   credentials: 'include',
 });
 
