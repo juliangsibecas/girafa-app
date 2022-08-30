@@ -8,11 +8,13 @@ type Props = ViewProps &
   UiKeys & {
     noHeader?: boolean;
     noBottomTab?: boolean;
+    noBottomGradient?: boolean;
   };
 
 export const Container: React.FC<Props> = ({
   noHeader,
   noBottomTab,
+  noBottomGradient,
   children,
   ...props
 }) => (
@@ -23,14 +25,14 @@ export const Container: React.FC<Props> = ({
       flexGrow={1}
       flexShrink={1}
       px={2}
-      pt={noHeader ? 8 : 2}
+      pt={noHeader ? 10 : 2}
       pb={noBottomTab ? 6 : 1}
       width="screen"
       bgColor="background"
       {...props}
     >
       {children}
-      <BottomTabGradient />
+      {!noBottomGradient ? <BottomTabGradient /> : undefined}
     </Box>
   </>
 );

@@ -3,11 +3,11 @@ import { Dimensions } from 'react-native';
 import { Box, Button, Icon, Image, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
-import image from '../../../../assets/images/onboarding.png';
 import { PartyMapPreview } from '../../../api';
 import { useNavigation } from '@react-navigation/native';
 import { formatDate } from '../../../utils';
 import { HomeStackNavigationProp } from '../../../navigation';
+import { PartyAvatar } from './PartyAvatar';
 
 interface Props {
   party: PartyMapPreview;
@@ -25,7 +25,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
         row
         height={20}
         my={2}
-        style={{ elevation: 8 }}
+        style={{ elevation: 8, maxWidth: Dimensions.get('screen').width * 0.8 }}
       >
         <Box
           position="absolute"
@@ -35,19 +35,19 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
           borderRadius={1}
           overflow="hidden"
         >
-          <Image
-            src={image}
-            height={24}
-            minWidth={12}
+          <Box
             style={{
               transform: [{ translateX: -theme.spacing(6) }],
             }}
-          />
+          >
+            <PartyAvatar id={party._id} height={24} minWidth={12} />
+          </Box>
         </Box>
         <Box
           flex
           pl={12}
           py={3}
+          pr={2}
           style={{
             minWidth: Dimensions.get('screen').width - theme.spacing(20),
           }}
@@ -60,7 +60,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
             <Text color="primary" fontFamily={FontFamily.SEMIBOLD}>
               {formatDate(party.date)}
             </Text>
-            <Box position="absolute" bottom={-2} right={-2}>
+            <Box position="absolute" bottom={-2} right={-5}>
               <Button
                 height={6}
                 width={6}

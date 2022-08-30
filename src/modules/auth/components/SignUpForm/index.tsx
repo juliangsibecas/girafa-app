@@ -31,7 +31,7 @@ export const SignUpForm: React.FC = () => {
     fullName: Yup.string()
       .required()
       .min(3)
-      .max(20)
+      .max(25)
       .matches(/^[a-zA-Z\s]*$/, 'Solo puede contener letras y espacios.'),
     email: Yup.string().required().email(),
     nickname: Yup.string()

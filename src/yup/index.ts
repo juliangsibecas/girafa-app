@@ -1,8 +1,12 @@
 import * as Yup from 'yup';
 
+export const ErrorMessages = {
+  required: 'Campo requerido.',
+};
+
 Yup.setLocale({
   mixed: {
-    required: 'Campo requerido.',
+    required: ErrorMessages.required,
   },
   string: {
     min: ({ min }) => `Debe contener al menos ${min} caracteres.`,

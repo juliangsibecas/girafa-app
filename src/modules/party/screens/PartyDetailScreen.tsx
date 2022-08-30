@@ -15,7 +15,7 @@ export const PartyDetailScreen: React.FC = () => {
 
   return (
     <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
-      <Container>
+      <Container noBottomGradient>
         <PartyDetail party={data?.partyGetById as PartyGetByIdResponse} />
       </Container>
     </StateHandler>

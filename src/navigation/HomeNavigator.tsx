@@ -5,16 +5,19 @@ import {
 } from '@react-navigation/native-stack';
 import {
   MapScreen,
-  PartyCreateScreen,
+  PartyCreateMapScreen,
+  PartyCreateFormScreen,
   PartyDetailStackGroup,
 } from '../modules/party';
 import { useTheme } from '../theme';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { ProfileStackGroup } from '../modules/user';
+import { Coordinate } from '../api';
 
 export type HomeStackParamList = {
   Map: undefined;
-  PartyCreate: undefined;
+  PartyCreateForm: { coordinate: Coordinate } | undefined;
+  PartyCreateMap: undefined;
   PartyDetail: { id: string };
   PartyAttenders: { id: string };
   UserProfile: { id: string };
@@ -38,7 +41,7 @@ export const HomeNavigator: React.FC = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="PartyCreate"
+      initialRouteName="Map"
       screenOptions={{
         headerTitle: '',
         headerBackTitle: '',
@@ -54,7 +57,12 @@ export const HomeNavigator: React.FC = () => {
         component={MapScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="PartyCreate" component={PartyCreateScreen} />
+      <Stack.Screen name="PartyCreateForm" component={PartyCreateFormScreen} />
+      <Stack.Screen
+        name="PartyCreateMap"
+        component={PartyCreateMapScreen}
+        options={{ headerTransparent: true, headerStyle: {} }}
+      />
       {ProfileStackGroup({ Stack })}
       {PartyDetailStackGroup({ Stack })}
     </Stack.Navigator>

@@ -13,6 +13,7 @@ type Props = UiKeys &
   TouchableOpacityProps & {
     children: string;
     secondary?: boolean;
+    small?: boolean;
     isLoading?: boolean;
     isDisabled?: boolean;
     textProps?: UiKeys;
@@ -20,6 +21,7 @@ type Props = UiKeys &
 
 export const Button: React.FC<Props> = ({
   secondary,
+  small,
   children,
   onPress,
   isLoading,
@@ -40,7 +42,7 @@ export const Button: React.FC<Props> = ({
       center: true,
       fullWidth: true,
       borderRadius: 1,
-      height: 8,
+      height: small ? 5 : 8,
       ...insertObjectIf(type === 'primary', {
         bgColor: 'primary',
       }),
@@ -67,7 +69,12 @@ export const Button: React.FC<Props> = ({
     >
       {isLoading && <Spinner color={color} />}
       {!isLoading && (
-        <Text type="button" color={color} {...textProps}>
+        <Text
+          type="button"
+          color={color}
+          fontSize={small ? 14 : undefined}
+          {...textProps}
+        >
           {children}
         </Text>
       )}

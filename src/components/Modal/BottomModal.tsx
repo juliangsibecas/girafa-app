@@ -6,6 +6,7 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
+
 export const BottomModal: React.FC<Props> = ({ children, isOpen, onClose }) => (
   <Modal
     isVisible={isOpen}

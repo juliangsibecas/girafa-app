@@ -7,7 +7,7 @@ query partyFind  {
     _id
     name
     organizerNickname 
-    coordinates {
+    coordinate {
       latitude
       longitude
     }
@@ -42,6 +42,7 @@ query partyGetById ($id: String!) {
     attendersCount 
     allowInvites
     isAttender
+    isOrganizer
     isExpired
   }
 }

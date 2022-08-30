@@ -1,8 +1,4 @@
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Box, Container, Logo } from '../../components';
 import { Button } from '../../components/Button';

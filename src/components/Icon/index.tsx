@@ -1,9 +1,12 @@
 import {
   AlignJustify,
   Bell,
+  Calendar,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Home,
+  Image,
   List,
   MapPin,
   Menu,
@@ -35,12 +38,15 @@ const dict = {
   list: List,
   menu: Menu,
   plus: Plus,
+  calendar: Calendar,
+  image: Image,
 
   share: Share,
   'share-2': Share2,
 
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,
+  'chevron-down': ChevronDown,
 
   'map-pin': MapPin,
 

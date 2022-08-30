@@ -41,7 +41,8 @@ export default {
     ],
   ],
   extra: {
-    onesignalAppId: process.env.ONESIGNAL_APP_ID,
-    googleMapsKey: process.env.GOOGLE_MAPS_KEY,
+    apiUrl: process.env.API_URL,
+    s3Url: process.env.S3_URL,
+    oneSignalId: process.env.ONESIGNAL_APP_ID,
   },
 };

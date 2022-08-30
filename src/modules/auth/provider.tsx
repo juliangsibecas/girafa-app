@@ -4,24 +4,27 @@ import * as SecureStore from 'expo-secure-store';
 import { SignInPayload } from './types';
 import jwtDecode from 'jwt-decode';
 import { useSignInFromRefreshTokenMutation } from '../../api';
+import { client } from '../../apollo';
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();
   const [userId, setUserId] = useState('');
+  const [accessToken, setAccessToken] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fn = async () => {
-      const accessToken = await SecureStore.getItemAsync('accessToken');
+      const storedAccessToken = await SecureStore.getItemAsync('accessToken');
       const refreshToken = await SecureStore.getItemAsync('refreshToken');
 
-      if (accessToken) {
+      if (storedAccessToken) {
         const { userId, exp } = jwtDecode<{ userId: string; exp: number }>(
-          accessToken
+          storedAccessToken
         );
 
         if (Date.now() < exp * 1000) {
           setUserId(userId);
+          setAccessToken(storedAccessToken);
           setLoading(false);
           return;
         }
@@ -41,8 +44,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
           await SecureStore.setItemAsync('accessToken', data.accessToken);
           await SecureStore.setItemAsync('refreshToken', data.refreshToken);
+          setAccessToken(data.accessToken);
           setUserId(data.userId);
         } catch (e) {
+          setUserId('');
           console.log(e);
         }
       }
@@ -59,6 +64,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     refreshToken,
   }: SignInPayload) => {
     setUserId(userId);
+    setAccessToken(accessToken);
     await SecureStore.setItemAsync('accessToken', accessToken);
     await SecureStore.setItemAsync('refreshToken', refreshToken);
   };
@@ -68,7 +74,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     await SecureStore.setItemAsync('accessToken', '');
     await SecureStore.setItemAsync('refreshToken', '');
     setUserId('');
+    setAccessToken('');
     setLoading(false);
+
+    await client.clearStore();
   };
 
   return (
@@ -76,6 +85,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       value={{
         isSignedIn: Boolean(userId),
         userId,
+        accessToken,
         signIn,
         signOut,
         isLoading,

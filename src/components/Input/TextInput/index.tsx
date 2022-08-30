@@ -10,6 +10,7 @@ type Props = UiKeys &
     placeholder: string;
     value: string;
     contentType?: RNTextInputProps['textContentType'];
+    lines?: number;
   };
 
 export const TextInput: React.FC<Props> = ({
@@ -19,17 +20,21 @@ export const TextInput: React.FC<Props> = ({
   contentType = 'none',
   onChangeText,
   onBlur,
+  lines,
   ...props
 }) => {
-  const { isLightMode } = useTheme();
+  const { theme } = useTheme();
 
   const style = useStyle({
-    p: 2,
+    py: 2,
+    px: 2,
     bgColor: 'disabled',
-    color: isLightMode ? '#4F4F4F' : '#FFFFFF',
+    color: 'text.primary',
     borderRadius: 1,
     ...props,
   });
+
+  const isMultiline = Boolean(lines);
 
   return (
     <>
@@ -37,13 +42,16 @@ export const TextInput: React.FC<Props> = ({
         keyboardType={keyboardType}
         secureTextEntry={['password', 'newPassword'].includes(contentType)}
         textContentType={contentType}
-        placeholderTextColor={isLightMode ? '#828282' : '#8096DF'}
+        placeholderTextColor={theme.palette.text.secondary}
         style={style}
         placeholder={placeholder}
         autoCapitalize="none"
         value={value}
         onChangeText={onChangeText}
         onBlur={onBlur}
+        multiline={isMultiline}
+        numberOfLines={lines}
+        textAlignVertical={isMultiline ? 'top' : 'center'}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { lightPalette, Palette } from '../palette';
+import { Palette } from '../palette';
 import { Font, FontFamily, Text } from './types';
 
 export const text = (palette: Palette) => {
@@ -30,7 +30,11 @@ export const text = (palette: Palette) => {
       fontSize: 24,
       lineHeight: 26,
     }),
-    h3: createFont({ fontSize: 32 }),
+    h3: createFont({
+      fontFamily: FontFamily.BOLD,
+      fontSize: 20,
+      lineHeight: 22,
+    }),
     h4: createFont({
       fontFamily: FontFamily.MEDIUM,
       fontSize: 18,
@@ -53,4 +57,4 @@ export const text = (palette: Palette) => {
   };
 };
 
-export { Text };
+export { FontFamily, Text };

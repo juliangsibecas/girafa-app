@@ -1,50 +1,35 @@
-import { capitalize } from './string';
-import { timezone } from 'expo-localization';
+import moment, { Moment } from 'moment';
 
-const timezoneDate = (date: Date) => {
-  return new Date(
-    date.toLocaleString('en-US', {
-      timeZone: timezone,
-    })
-  );
-};
+const isToday = (date: Moment) => moment().isSame(date, 'day');
+const isYesterday = (date: Moment) =>
+  moment().subtract(1, 'day').isSame(date, 'day');
 
-const isToday = (date: Date) =>
-  timezoneDate(new Date()).toDateString() === date.toDateString();
-
-const isYesterday = (date: Date) => {
-  const today = new Date();
-  today.setDate(today.getDate() - 1);
-
-  return timezoneDate(today).toDateString() === date.toDateString();
-};
+const isTomorrow = (date: Moment) => moment().add(1, 'day').isSame(date, 'day');
 
 export const formatDate = (str: string) => {
-  const today = new Date();
-  const date = new Date(str);
+  const date = moment(str).locale('es-AR');
 
-  if (today.toDateString() === date.toDateString()) {
+  if (isToday(date)) {
     return 'Hoy';
   }
 
-  return capitalize(
-    `${date.toLocaleDateString('es', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'numeric',
-    })}`
-  );
+  if (isTomorrow(date)) {
+    return 'Mañana';
+  }
+
+  return date.format('dddd DD/MM');
 };
 
 export const formatDateTime = (str: string) => {
-  const date = timezoneDate(new Date(str));
+  const date = moment(str);
 
   if (isToday(date)) {
-    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+    return `${date.hours}:${String(date.minutes)}`;
   }
+
   if (isYesterday(date)) {
     return `Ayer`;
   }
 
-  return `${date.getDate()}/${date.getMonth() + 1}`;
+  return date.format('DD/MM');
 };

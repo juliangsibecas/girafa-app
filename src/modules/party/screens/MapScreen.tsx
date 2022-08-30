@@ -9,11 +9,14 @@ import {
 } from '../../../components';
 import { PartyMapPreview, usePartyFindQuery } from '../../../api';
 import { PartyCarousel, PartyMap } from '../components';
-import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { HomeStackScreenProps } from '../../../navigation';
 
 export const MapScreen: React.FC = () => {
-  const [currentIdx, setCurrentIdx] = useState(-1);
+  const { navigate } =
+    useNavigation<HomeStackScreenProps<'Map'>['navigation']>();
   const { data, loading: isLoading, error: isError } = usePartyFindQuery();
+  const [currentIdx, setCurrentIdx] = useState(-1);
 
   const parties = (data?.partyFind ?? []) as Array<PartyMapPreview>;
 
@@ -39,12 +42,17 @@ export const MapScreen: React.FC = () => {
             style={{ alignItems: 'flex-end' }}
             pointerEvents="auto"
           >
-            <Button borderRadius={8} height={4} width={4}>
-              <Icon name="plus" color="text.primary" weight={4} />
+            <Button
+              borderRadius={8}
+              height={4}
+              width={4}
+              onPress={() => navigate('PartyCreateForm')}
+            >
+              <Icon name="plus" color="background" weight={4} />
             </Button>
           </Box>
         </Box>
-        <Box height={24}>
+        <Box height={24} mb={4}>
           <PartyCarousel
             idx={currentIdx}
             parties={parties}

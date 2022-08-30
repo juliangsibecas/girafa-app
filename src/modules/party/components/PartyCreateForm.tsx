@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as Yup from 'yup';
-import Toast from 'react-native-toast-message';
 import { Formik } from 'formik';
 import {
-  CoordinatesCreateInput,
+  Coordinate,
   PartyAvailability,
   usePartyCreateMutation,
 } from '../../../api';
@@ -12,78 +11,127 @@ import {
   Button,
   FormikTextInput,
   FormikSelect,
+  FormikDateInput,
+  FormikImageInput,
+  CoordinateInput,
 } from '../../../components';
 import { Maybe } from '../../../types';
+import { useNavigation } from '@react-navigation/native';
+import { HomeStackScreenProps } from '../../../navigation';
+import { partyAvailabilityLabels } from '../utils';
+import { usePictureUpload } from '../../picture';
+import Toast from 'react-native-toast-message';
 
 type FormValues = {
   name: string;
   availability: Maybe<PartyAvailability>;
   date: string;
   address: string;
-  coordinates: CoordinatesCreateInput;
-  openBar: boolean;
-  allowInvites: boolean;
+  openBar: string;
+  allowInvites: string;
   description: string;
+  image: string;
+  coordinate: Maybe<Coordinate>;
+};
+
+const initialValues: FormValues = {
+  name: '',
+  availability: null,
+  date: '',
+  address: '',
+  coordinate: null,
+  openBar: '',
+  allowInvites: '',
+  description: '',
+  image: '',
 };
 
 export const PartyCreateForm: React.FC = () => {
+  const { navigate } =
+    useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
   const [create, { loading: isLoading }] = usePartyCreateMutation();
-  const initialValues: FormValues = {
-    name: '',
-    availability: null,
-    date: '',
-    address: '',
-    coordinates: {
-      latitude: 0,
-      longitude: 0,
-    },
-    openBar: true,
-    allowInvites: true,
-    description: '',
-  };
+  const { upload } = usePictureUpload();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required()
-      .min(3)
-      .max(20)
-      .matches(/^[a-zA-Z\s]*$/, 'Solo puede contener letras y espacios.'),
-    email: Yup.string().required().email(),
-    nickname: Yup.string()
-      .required()
-      .min(3)
-      .max(15)
+      .min(10)
+      .max(25)
       .matches(
-        /^[a-zA-Z0-9_]{3,15}$/,
-        'Solo puede contener letras, numeros y guiones bajos.'
+        /^[A-Za-z0-9\s]+$/g,
+        'Solo puede contener letras, numeros y espacios.'
       ),
-    password: Yup.string().required(),
-    confirmPassword: Yup.string()
+    availability: Yup.string().nullable().required(),
+    date: Yup.string().required(),
+    address: Yup.string()
       .required()
-      .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden.'),
+      .min(10)
+      .max(30)
+      .matches(
+        /^[A-Za-z0-9\s]+$/g,
+        'Solo puede contener letras, numeros y espacios.'
+      ),
+    openBar: Yup.string().required(),
+    allowInvites: Yup.string().required(),
+    description: Yup.string().required().min(20).max(100),
+    image: Yup.string().required(),
+    coordinate: Yup.object().nullable().required(),
   });
+
+  const availabilityOptions = useMemo(
+    () =>
+      Object.entries(partyAvailabilityLabels).map(([key, value]) => ({
+        label: value,
+        value: key,
+      })),
+    []
+  );
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const { data } = await create({
+      const { image, ...rest } = values;
+
+      const res = await create({
         variables: {
-          data: values,
+          data: {
+            ...rest,
+            availability: values.availability!,
+            coordinate: {
+              latitude: Number(values.coordinate?.latitude),
+              longitude: Number(values.coordinate?.longitude),
+            },
+            openBar: values.openBar === 'yes',
+            allowInvites: values.allowInvites === 'yes',
+          },
         },
       });
 
-      if (!data?.partyCreate) {
+      if (res.errors) {
         Toast.show({
           type: 'error',
-          text1: 'Hubo un error al intentar crear la fiesta',
+          text1: 'Hubo un error al crear la fiesta.',
         });
+        return;
       }
+
+      await upload(res.data!.partyCreate, values.image);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Se mando la solicitud.',
+      });
+
+      navigate('Map');
     } catch (e) {
       Toast.show({
         type: 'error',
-        text1: 'Hubo un error al intentar crear la fiesta',
+        text1: 'Hubo un error al crear la fiesta.',
       });
+      console.log(e);
     }
   };
+
+  const pickCoordinate = () => navigate('PartyCreateMap');
 
   return (
     <Formik
@@ -91,54 +139,68 @@ export const PartyCreateForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ submitForm }) => (
+      {({ values, submitForm }) => (
         <>
           <Box flex flexGrow={1}>
             <FormikTextInput id="name" placeholder="Nombre" mt={1} />
             <Box flex row mt={1}>
               <FormikSelect
                 id="availability"
-                options={[
-                  { label: 'Publica', value: PartyAvailability.Public },
-                  {
-                    label: 'Solo seguidores',
-                    value: PartyAvailability.Followers,
-                  },
-                  {
-                    label: 'Solo seguidos',
-                    value: PartyAvailability.Following,
-                  },
-                  { label: 'Privada', value: PartyAvailability.Private },
-                ]}
-                mr={1}
-                flexGrow={1}
+                placeholder="Tipo"
+                options={availabilityOptions}
               />
-              <FormikTextInput id="date" placeholder="Fecha" />
             </Box>
-            <FormikTextInput id="address" placeholder="Direccion" mt={1} />
+            <FormikTextInput
+              id="address"
+              placeholder="Direccion (Ej: 17 E/ 503 y 504 N2906)"
+              mt={1}
+            />
             <Box flex row mt={1}>
               <FormikSelect
                 id="openBar"
+                placeholder="Barra libre"
                 options={[
-                  { label: 'Si', value: PartyAvailability.Public },
-                  {
-                    label: 'Solo seguidores',
-                    value: PartyAvailability.Followers,
-                  },
-                  {
-                    label: 'Solo seguidos',
-                    value: PartyAvailability.Following,
-                  },
-                  { label: 'Privada', value: PartyAvailability.Private },
+                  { label: 'Si', value: 'yes' },
+                  { label: 'No', value: 'no' },
                 ]}
                 mr={1}
-                flexGrow={1}
               />
-              <FormikTextInput id="date" placeholder="Fecha" />
+              <Box flexGrow={1}>
+                <FormikDateInput id="date" placeholder="Fecha" />
+              </Box>
+            </Box>
+            {values.availability !== PartyAvailability.Public && (
+              <Box flex row mt={1}>
+                <FormikSelect
+                  id="allowInvites"
+                  placeholder="Mis invitados pueden invitar"
+                  options={[
+                    { label: 'Si', value: 'yes' },
+                    { label: 'No', value: 'no' },
+                  ]}
+                />
+              </Box>
+            )}
+            <FormikTextInput
+              id="description"
+              placeholder="Descripcion"
+              mt={1}
+              lines={4}
+            />
+            <Box flex row mt={1}>
+              <Box mr={1} flexGrow={1}>
+                <FormikImageInput id="image" />
+              </Box>
+              <Box flexGrow={1}>
+                <CoordinateInput
+                  id="coordinate"
+                  pickCoordinate={pickCoordinate}
+                />
+              </Box>
             </Box>
           </Box>
-          <Button onPress={() => submitForm()} isLoading={isLoading}>
-            Crear
+          <Button onPress={submitForm} isLoading={isLoading}>
+            Continuar
           </Button>
         </>
       )}

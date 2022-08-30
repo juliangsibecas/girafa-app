@@ -1,4 +1,3 @@
-import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OneSignal from 'react-native-onesignal';
 import { useEffect, useState } from 'react';
@@ -13,8 +12,9 @@ import {
 import { StateHandler } from '../../components';
 import { Maybe } from 'yup/lib/types';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
+import { env } from '../../env';
 
-OneSignal.setAppId(Constants.manifest!.extra!.onesignalAppId);
+OneSignal.setAppId(env.oneSignalId);
 
 export const NotificationsProvider: React.FC = ({ children }) => {
   const { isForeground } = useAppStatus();

@@ -10,6 +10,7 @@ interface Props extends UiKeys {
   placeholder: string;
   keyboardType?: RNTextInputProps['keyboardType'];
   contentType?: RNTextInputProps['textContentType'];
+  lines?: number;
 }
 
 export const FormikTextInput: React.FC<Props> = ({

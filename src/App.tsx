@@ -1,4 +1,5 @@
 import './yup';
+import './date';
 import React from 'react';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
@@ -15,7 +16,7 @@ import { Appearance } from 'react-native';
 import { NotificationsProvider } from './modules/notification';
 
 const AppComponent = () => {
-  const isLightTheme = Appearance.getColorScheme() !== 'light';
+  const isLightTheme = Appearance.getColorScheme() === 'light';
   const isLoadingComplete = useCachedResources();
 
   if (!isLoadingComplete) {

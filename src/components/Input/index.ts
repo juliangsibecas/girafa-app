@@ -2,3 +2,8 @@ export * from './TextInput';
 export * from './FormikTextInput';
 export * from './Select';
 export * from './FormikSelect';
+export * from './DateInput';
+export * from './FormikDateInput';
+export * from './ImageInput';
+export * from './FormikImageInput';
+export * from './CoordinateInput';

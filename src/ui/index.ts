@@ -87,6 +87,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
     : undefined;
   style.fontFamily = keys.fontFamily ?? baseStyle.fontFamily;
   style.fontSize = keys.fontSize ?? baseStyle.fontSize;
+  style.lineHeight = keys.fontSize ? keys.fontSize + 2 : baseStyle.lineHeight;
 
   style.height =
     keys.height === 'screen'

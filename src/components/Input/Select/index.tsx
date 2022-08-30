@@ -1,12 +1,18 @@
-import React from 'react';
-import { Picker } from '@react-native-picker/picker';
-import { useTheme } from '../../../theme';
-import { UiKeys, useStyle } from '../../../ui';
+import React, { useMemo } from 'react';
+import { UiKeys } from '../../../ui';
+import {
+  NativeSyntheticEvent,
+  TargetedEvent,
+  TouchableOpacity,
+} from 'react-native';
 import { Box } from '../../Box';
-import { NativeSyntheticEvent, TargetedEvent } from 'react-native';
 import { Text } from '../../Text';
+import { Icon } from '../../Icon';
+import { BottomModal } from '../../Modal';
+import { useModal } from '../../../hooks';
 
 type Props = UiKeys & {
+  placeholder: string;
   value: any;
   onChange: (value: any) => void;
   onBlur?: (e: NativeSyntheticEvent<TargetedEvent>) => void;
@@ -14,25 +20,53 @@ type Props = UiKeys & {
 };
 
 export const Select: React.FC<Props> = ({
+  placeholder,
   value,
   onChange,
-  onBlur,
   options,
   ...props
 }) => {
-  const { theme, isLightMode } = useTheme();
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const label = useMemo(
+    () => options.find((option) => option.value === value)?.label,
+    [value]
+  );
+
+  const handleChange = (newValue: any) => {
+    onChange(newValue);
+    closeModal();
+  };
 
   return (
     <>
-      <Box p={2} bgColor="disabled" color={isLightMode ? '#4F4F4F' : '#FFFFFF'}>
-        <Text>Hola</Text>
-      </Box>
-
-      <Picker
-        onBlur={onBlur}
-        dropdownIconRippleColor={theme.palette.disabled.main}
-        dropdownIconColor={theme.palette.text.secondary}
-      ></Picker>
+      <TouchableOpacity style={{ flexGrow: 1 }} onPress={openModal}>
+        <Box
+          flex
+          borderRadius={1}
+          overflow="hidden"
+          bgColor="disabled"
+          p={2}
+          hcenter
+          row
+          {...props}
+        >
+          <Text type={label ? 'primary' : 'secondary'} flexGrow={1}>
+            {label ?? placeholder}
+          </Text>
+          <Icon name="chevron-down" color="primary" />
+        </Box>
+      </TouchableOpacity>
+      <BottomModal isOpen={isModalOpen} onClose={closeModal}>
+        <Text type="secondary">{placeholder}</Text>
+        {options.map((option, i) => (
+          <TouchableOpacity onPress={() => handleChange(option.value)}>
+            <Text key={i} mt={3} fontSize={16}>
+              {option.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </BottomModal>
     </>
   );
 };

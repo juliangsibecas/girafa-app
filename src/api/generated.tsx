@@ -41,13 +41,13 @@ export type AuthSignUpInput = {
   password: Scalars['String'];
 };
 
-export type Coordinates = {
-  __typename?: 'Coordinates';
+export type Coordinate = {
+  __typename?: 'Coordinate';
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
 };
 
-export type CoordinatesCreateInput = {
+export type CoordinateCreateInput = {
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
 };
@@ -55,7 +55,8 @@ export type CoordinatesCreateInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   generateRecoveryCode: Scalars['Boolean'];
-  partyCreate: Scalars['Boolean'];
+  partyCreate: Scalars['String'];
+  partyEnable: Scalars['Boolean'];
   signIn: AuthSignIn;
   signInFromRefreshToken: AuthSignIn;
   signUp: AuthSignIn;
@@ -72,6 +73,11 @@ export type MutationGenerateRecoveryCodeArgs = {
 
 export type MutationPartyCreateArgs = {
   data: PartyCreateInput;
+};
+
+
+export type MutationPartyEnableArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -123,11 +129,12 @@ export type Party = {
   attenders: Array<User>;
   attendersCount: Scalars['Float'];
   availability: PartyAvailability;
-  coordinates: Coordinates;
+  coordinate: Coordinate;
   createdAt: Scalars['DateTime'];
   date: Scalars['Date'];
   description: Scalars['String'];
   invited: Array<User>;
+  isEnabled: Scalars['Boolean'];
   isExpired: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
@@ -146,7 +153,7 @@ export type PartyCreateInput = {
   address: Scalars['String'];
   allowInvites: Scalars['Boolean'];
   availability: PartyAvailability;
-  coordinates: CoordinatesCreateInput;
+  coordinate: CoordinateCreateInput;
   date: Scalars['Date'];
   description: Scalars['String'];
   name: Scalars['String'];
@@ -165,6 +172,7 @@ export type PartyGetByIdResponse = {
   description: Scalars['String'];
   isAttender: Scalars['Boolean'];
   isExpired: Scalars['Boolean'];
+  isOrganizer: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer: User;
@@ -173,7 +181,7 @@ export type PartyGetByIdResponse = {
 export type PartyMapPreview = {
   __typename?: 'PartyMapPreview';
   _id: Scalars['String'];
-  coordinates: Coordinates;
+  coordinate: Coordinate;
   date: Scalars['Date'];
   name: Scalars['String'];
   organizerNickname?: Maybe<Scalars['String']>;
@@ -356,12 +364,12 @@ export type PartyCreateMutationVariables = Exact<{
 }>;
 
 
-export type PartyCreateMutation = { __typename?: 'Mutation', partyCreate: boolean };
+export type PartyCreateMutation = { __typename?: 'Mutation', partyCreate: string };
 
 export type PartyFindQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PartyFindQuery = { __typename?: 'Query', partyFind: Array<{ __typename?: 'PartyMapPreview', _id: string, name: string, organizerNickname?: string | null, date: any, coordinates: { __typename?: 'Coordinates', latitude: number, longitude: number } }> };
+export type PartyFindQuery = { __typename?: 'Query', partyFind: Array<{ __typename?: 'PartyMapPreview', _id: string, name: string, organizerNickname?: string | null, date: any, coordinate: { __typename?: 'Coordinate', latitude: number, longitude: number } }> };
 
 export type PartySearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
@@ -375,7 +383,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isExpired: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, isExpired: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -633,7 +641,7 @@ export const PartyFindDocument = gql`
     _id
     name
     organizerNickname
-    coordinates {
+    coordinate {
       latitude
       longitude
     }
@@ -724,6 +732,7 @@ export const PartyGetByIdDocument = gql`
     attendersCount
     allowInvites
     isAttender
+    isOrganizer
     isExpired
   }
 }
