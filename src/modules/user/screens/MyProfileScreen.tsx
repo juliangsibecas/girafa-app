@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUserGetByIdQuery } from '../../../api';
 import { StateHandler } from '../../../components';
-import { useAuth } from '../../auth/hooks';
+import { useAuth } from '../../auth';
 import { UserProfile } from '../comonents';
 
 export const MyProfileScreen: React.FC = () => {

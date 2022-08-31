@@ -11,7 +11,7 @@ import {
 } from '../modules/party';
 import { useTheme } from '../theme';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { ProfileStackGroup } from '../modules/user';
+import { ProfileStackGroup } from '../modules/user/navigator';
 import { Coordinate } from '../api';
 
 export type HomeStackParamList = {

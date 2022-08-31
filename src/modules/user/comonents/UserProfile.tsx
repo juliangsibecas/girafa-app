@@ -10,8 +10,8 @@ import {
   useUserChangeFollowingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, Text } from '../../../components';
-import { FontFamily } from '../../../theme/text/types';
-import { useAuth } from '../../auth/hooks';
+import { FontFamily } from '../../../theme';
+import { useAuth } from '../../auth';
 import { MyProfileStackScreenProps } from '../navigator';
 import { UserAvatar } from './UserAvatar';
 

@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Share, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
+
 import {
   PartyAvailability,
   PartyGetByIdDocument,
@@ -13,11 +14,14 @@ import {
 } from '../../../api';
 import { Box, Button, Icon, LabelValue, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
-import { FontFamily } from '../../../theme/text/types';
+import { FontFamily } from '../../../theme';
 import { formatDate } from '../../../utils';
+
 import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
+
 import { partyAvailabilityLabels } from '../utils';
+
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
 
@@ -90,8 +94,6 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
       message: `${party.name} schema://girafa/party/${party._id}`,
     });
   };
-
-  console.log(party);
 
   return (
     <>

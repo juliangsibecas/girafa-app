@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
 import { Box, Container, StateHandler, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
-import { PartyRow } from '../../party';
+import { PartyRow } from '../../party/components/PartyRow';
 
 export const UserAttendedPartiesScreen: React.FC = () => {
   const {

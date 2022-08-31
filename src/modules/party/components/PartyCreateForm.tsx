@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import {
   Coordinate,
   PartyAvailability,
@@ -14,6 +14,7 @@ import {
   FormikDateInput,
   FormikImageInput,
   CoordinateInput,
+  Text,
 } from '../../../components';
 import { Maybe } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +22,7 @@ import { HomeStackScreenProps } from '../../../navigation';
 import { partyAvailabilityLabels } from '../utils';
 import { usePictureUpload } from '../../picture';
 import Toast from 'react-native-toast-message';
+import { GraphQLErrors } from '@apollo/client/errors';
 
 type FormValues = {
   name: string;
@@ -72,7 +74,6 @@ export const PartyCreateForm: React.FC = () => {
         'Solo puede contener letras, numeros y espacios.'
       ),
     openBar: Yup.string().required(),
-    allowInvites: Yup.string().required(),
     description: Yup.string().required().min(20).max(100),
     image: Yup.string().required(),
     coordinate: Yup.object().nullable().required(),
@@ -87,7 +88,10 @@ export const PartyCreateForm: React.FC = () => {
     []
   );
 
-  const handleSubmit = async (values: FormValues) => {
+  const handleSubmit = async (
+    values: FormValues,
+    { setErrors }: FormikHelpers<FormValues>
+  ) => {
     try {
       const { image, ...rest } = values;
 
@@ -123,10 +127,19 @@ export const PartyCreateForm: React.FC = () => {
 
       navigate('Map');
     } catch (e) {
+      const errors = e.graphQLErrors as GraphQLErrors;
+      const error = errors[0];
+
+      if (error && error.message === 'VALIDATION_ERROR') {
+        setErrors(error.extensions);
+        return;
+      }
+
       Toast.show({
         type: 'error',
         text1: 'Hubo un error al crear la fiesta.',
       });
+
       console.log(e);
     }
   };

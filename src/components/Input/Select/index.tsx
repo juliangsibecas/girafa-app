@@ -60,8 +60,8 @@ export const Select: React.FC<Props> = ({
       <BottomModal isOpen={isModalOpen} onClose={closeModal}>
         <Text type="secondary">{placeholder}</Text>
         {options.map((option, i) => (
-          <TouchableOpacity onPress={() => handleChange(option.value)}>
-            <Text key={i} mt={3} fontSize={16}>
+          <TouchableOpacity key={i} onPress={() => handleChange(option.value)}>
+            <Text mt={3} fontSize={16}>
               {option.label}
             </Text>
           </TouchableOpacity>
