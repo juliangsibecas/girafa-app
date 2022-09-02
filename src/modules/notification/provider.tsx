@@ -40,16 +40,26 @@ export const NotificationsProvider: React.FC = ({ children }) => {
   };
 
   const clearPendingNotifications = async () => {
-    setPendingCount(0);
-    const last = notifications[0]._id;
+    try {
+      if (notifications.length) {
+        setPendingCount(0);
+        const last = notifications[0]._id;
 
-    setLastViewed(last);
-    await AsyncStorage.setItem('lastNotificationViewed', last);
+        setLastViewed(last);
+        await AsyncStorage.setItem('lastNotificationViewed', last);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
     const fn = async () => {
-      setLastViewed(await AsyncStorage.getItem('lastNotificationViewed'));
+      try {
+        setLastViewed(await AsyncStorage.getItem('lastNotificationViewed'));
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     fn();
@@ -76,8 +86,12 @@ export const NotificationsProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const fn = async () => {
-      if (!permission || (!permission.granted && permission.canAskAgain)) {
-        await askPermission();
+      try {
+        if (!permission || (!permission.granted && permission.canAskAgain)) {
+          await askPermission();
+        }
+      } catch (e) {
+        console.log(e);
       }
     };
 
@@ -105,6 +119,7 @@ export const NotificationsProvider: React.FC = ({ children }) => {
       notificationReceivedEvent.complete(notification);
     }
   );
+
   return (
     <NotificationContext.Provider
       value={{

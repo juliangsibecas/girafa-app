@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { FlatList } from 'react-native';
-import { BottomTabGradient, Box, Container, Text } from '../../../components';
+import { Box, Container, Text } from '../../../components';
 import { NotificationItem } from '../components/NotificationItem';
 import { useNotification } from '../hooks';
 
