@@ -11,10 +11,18 @@ export const PartyDetailScreen: React.FC = () => {
     data,
     loading: isLoading,
     error: isError,
+    refetch,
+    networkStatus,
   } = usePartyGetByIdQuery({ variables: { id: params.id } });
 
   return (
-    <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
+    <StateHandler
+      isLoading={isLoading}
+      isError={Boolean(isError)}
+      isRefreshEnabled
+      isRefreshing={networkStatus === 4}
+      onRefresh={refetch}
+    >
       <Container noBottomGradient>
         <PartyDetail party={data?.partyGetById as PartyGetByIdResponse} />
       </Container>

@@ -10,12 +10,20 @@ export const MyProfileScreen: React.FC = () => {
     data,
     loading: isLoading,
     error,
+    refetch,
+    networkStatus,
   } = useUserGetByIdQuery({ variables: { id: userId } });
 
   const user = data?.userGetById!;
 
   return (
-    <StateHandler isLoading={isLoading} isError={Boolean(error)}>
+    <StateHandler
+      isLoading={isLoading}
+      isError={Boolean(error)}
+      isRefreshEnabled
+      isRefreshing={networkStatus === 4}
+      onRefresh={refetch}
+    >
       <UserProfile user={user} isMyProfile={true} />
     </StateHandler>
   );

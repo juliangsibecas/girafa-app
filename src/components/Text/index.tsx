@@ -5,6 +5,7 @@ import { Theme } from '../../theme/types';
 import { useStyle, UiKeys } from '../../ui';
 
 interface Props extends UiKeys {
+  children: React.ReactNode;
   type?: keyof Theme['text'];
 }
 

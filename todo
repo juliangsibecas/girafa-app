@@ -1,15 +1,27 @@
-define dates logic and parsers
-domain (redirect schema => share)
+
+
+#
+# DEFINITION
+#
+push notification deep linking?
+
+
+#
+# PRE-RELEASE
+#
+
 empty states
 
-party load invites on modal open
-
-implement dragdown to update (delete refetchs?)
-
-push notification deep linking?
+contact support
+password recovery
 
 ios shadows
 
-map filters (only today, only this weekend)
+universal links 
 
-contact support
+party load invites on modal open
+
+#
+# POST-RELEASE
+#
+map filters (only today, only this weekend)

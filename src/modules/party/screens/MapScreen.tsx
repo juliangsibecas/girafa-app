@@ -15,7 +15,13 @@ import { HomeStackScreenProps } from '../../../navigation';
 export const MapScreen: React.FC = () => {
   const { navigate } =
     useNavigation<HomeStackScreenProps<'Map'>['navigation']>();
-  const { data, loading: isLoading, error: isError } = usePartyFindQuery();
+  const {
+    data,
+    loading: isLoading,
+    error: isError,
+    refetch,
+    networkStatus,
+  } = usePartyFindQuery();
   const [currentIdx, setCurrentIdx] = useState(-1);
 
   const parties = (data?.partyFind ?? []) as Array<PartyMapPreview>;
@@ -23,7 +29,13 @@ export const MapScreen: React.FC = () => {
   const handleIdxChange = (idx: number) => setCurrentIdx(idx);
 
   return (
-    <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
+    <StateHandler
+      isLoading={isLoading}
+      isError={Boolean(isError)}
+      isRefreshEnabled
+      isRefreshing={networkStatus === 4}
+      onRefresh={refetch}
+    >
       <PartyMap
         parties={parties}
         idx={currentIdx}

@@ -18,21 +18,19 @@ export const Container: React.FC<Props> = ({
   children,
   ...props
 }) => (
-  <>
-    <Box
-      flex
-      column
-      flexGrow={1}
-      flexShrink={1}
-      px={2}
-      pt={noHeader ? 10 : 2}
-      pb={noBottomTab ? 6 : 1}
-      width="screen"
-      bgColor="background"
-      {...props}
-    >
-      {children}
-      {!noBottomGradient ? <BottomTabGradient /> : undefined}
-    </Box>
-  </>
+  <Box
+    flex
+    column
+    flexGrow={1}
+    flexShrink={1}
+    px={2}
+    pt={noHeader ? 10 : 2}
+    pb={noBottomTab ? 6 : 1}
+    width="screen"
+    bgColor="background"
+    {...props}
+  >
+    {children}
+    {!noBottomGradient ? <BottomTabGradient /> : undefined}
+  </Box>
 );

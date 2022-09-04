@@ -5,8 +5,6 @@ import Toast from 'react-native-toast-message';
 import {
   UserGetByIdDocument,
   UserGetByIdResponse,
-  UserGetFollowersByIdDocument,
-  UserGetFollowingByIdDocument,
   useUserChangeFollowingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, Text } from '../../../components';
@@ -41,8 +39,6 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         refetchQueries: [
           { query: UserGetByIdDocument, variables: { id: myId } },
           { query: UserGetByIdDocument, variables: { id: user._id } },
-          { query: UserGetFollowingByIdDocument, variables: { id: myId } },
-          { query: UserGetFollowersByIdDocument, variables: { id: user._id } },
         ],
       });
 

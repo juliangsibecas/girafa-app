@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
 import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
 import { useDebounce } from '../../../hooks';
@@ -10,6 +10,7 @@ import { UserCard, UserRow } from '../../user';
 type Props = {
   partyId: string;
 };
+
 export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
   const { navigate } = useNavigation<HomeStackNavigationProp>();
   const [search, setSearch] = useState('');
@@ -22,6 +23,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
     loading: isLoading,
     error: isError,
     refetch,
+    networkStatus,
   } = usePartySearchAttendersQuery({
     variables: { data: { id: partyId } },
   });
@@ -49,6 +51,12 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
       </Box>
       <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={networkStatus === 4}
+              onRefresh={refetch}
+            />
+          }
           data={attenders}
           renderItem={({ item }) =>
             isCardsListMode ? (

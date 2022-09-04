@@ -26,6 +26,7 @@ export const NotificationsProvider: React.FC = ({ children }) => {
     loading: isLoading,
     error,
     refetch,
+    networkStatus,
   } = useGetNotificationsQuery({ skip: isAuthLoading || !isSignedIn });
 
   const [notifications, setNotifications] = useState<Array<UserNotification>>(
@@ -124,13 +125,15 @@ export const NotificationsProvider: React.FC = ({ children }) => {
     <NotificationContext.Provider
       value={{
         notifications,
+        refetch,
+        isLoading,
+        isError: Boolean(error),
+        isRefreshing: networkStatus === 4,
         pendingNotificationsCount: pendingCount,
         clearPendingNotifications,
       }}
     >
-      <StateHandler isLoading={isLoading} isError={Boolean(error)}>
-        {children}
-      </StateHandler>
+      {children}
     </NotificationContext.Provider>
   );
 };

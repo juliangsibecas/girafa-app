@@ -8,7 +8,6 @@ import {
   PartyGetByIdDocument,
   PartyGetByIdResponse,
   User,
-  UserGetAttendedPartiesByIdDocument,
   UserGetByIdDocument,
   useUserChangeAttendingStateMutation,
 } from '../../../api';
@@ -57,10 +56,6 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         refetchQueries: [
           { query: PartyGetByIdDocument, variables: { id: party._id } },
           { query: UserGetByIdDocument, variables: { id: userId } },
-          {
-            query: UserGetAttendedPartiesByIdDocument,
-            variables: { id: userId },
-          },
         ],
       });
 

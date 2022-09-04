@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
 import { Box, Container, StateHandler, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
@@ -17,6 +17,8 @@ export const UserAttendedPartiesScreen: React.FC = () => {
     data,
     loading: isLoading,
     error,
+    refetch,
+    networkStatus,
   } = useUserGetAttendedPartiesByIdQuery({ variables: { id } });
 
   const parties = data?.userGetAttendedPartiesById ?? [];
@@ -28,6 +30,12 @@ export const UserAttendedPartiesScreen: React.FC = () => {
       </Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={networkStatus === 4}
+              onRefresh={refetch}
+            />
+          }
           data={parties}
           renderItem={({ item: party }) => (
             <Box mb={2}>

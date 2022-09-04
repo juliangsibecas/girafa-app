@@ -11,6 +11,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 import { env } from '../env';
 import { SignInFromRefreshTokenMutationResult } from '../api';
+import moment from 'moment';
 
 const REFRESH_TOKEN_QUERY = `
   mutation {
@@ -27,14 +28,15 @@ const httpLink = createHttpLink({
   credentials: 'include',
 });
 
-const authLink = setContext(async (_, { headers }) => {
-  const token = await SecureStore.getItemAsync('accessToken');
+const tokenLink = setContext(async () => ({
+  accessToken: await SecureStore.getItemAsync('accessToken'),
+}));
 
+const authLink = setContext(async (_, { accessToken, headers }) => {
   return {
-    accessToken: token,
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}` : '',
+      Authorization: accessToken ? `Bearer ${accessToken}` : '',
     },
   };
 });
@@ -43,7 +45,7 @@ const tokenRefreshLink = new TokenRefreshLink<{
   accessToken: string;
   refreshToken: string;
 }>({
-  isTokenValidOrUndefined: async (operation) => {
+  isTokenValidOrUndefined: (operation) => {
     try {
       const token: string = operation.getContext().accessToken;
       if (token) {
@@ -51,7 +53,7 @@ const tokenRefreshLink = new TokenRefreshLink<{
           operation.getContext().accessToken
         ) as JwtPayload;
 
-        return Date.now() > decoded.exp!;
+        return moment().valueOf() < moment.unix(decoded.exp!).valueOf();
       }
 
       return false;
@@ -84,9 +86,13 @@ const tokenRefreshLink = new TokenRefreshLink<{
     const accessToken = response.data?.signInFromRefreshToken;
     return { access_token: accessToken };
   },
-  handleFetch: async ({ accessToken, refreshToken }) => {
+  handleFetch: async ({ accessToken, refreshToken }, { setContext }) => {
     await SecureStore.setItemAsync('accessToken', accessToken);
     await SecureStore.setItemAsync('refreshToken', refreshToken);
+
+    setContext({
+      accessToken,
+    });
   },
   handleError: (err) => {
     console.log(err);
@@ -95,5 +101,5 @@ const tokenRefreshLink = new TokenRefreshLink<{
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([authLink, tokenRefreshLink, httpLink]),
+  link: ApolloLink.from([tokenLink, tokenRefreshLink, authLink, httpLink]),
 });

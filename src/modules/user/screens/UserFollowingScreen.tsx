@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { useUserGetFollowingByIdQuery } from '../../../api';
 import { Container, StateHandler, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
@@ -16,6 +16,8 @@ export const UserFollowingScreen: React.FC = () => {
     data,
     loading: isLoading,
     error,
+    refetch,
+    networkStatus,
   } = useUserGetFollowingByIdQuery({ variables: { id } });
 
   const following = data?.userGetFollowingById ?? [];
@@ -27,6 +29,12 @@ export const UserFollowingScreen: React.FC = () => {
       </Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={networkStatus === 4}
+              onRefresh={refetch}
+            />
+          }
           data={following}
           renderItem={({ item: user }) => (
             <UserRow
