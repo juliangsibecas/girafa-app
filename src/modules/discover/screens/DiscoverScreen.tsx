@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
 } from '../../../components';
-import { useDebounce } from '../../../hooks';
+import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { Maybe } from '../../../types';
 import { DiscoverList } from '../components';
 
@@ -27,7 +27,7 @@ export const DiscoverScreen: React.FC = () => {
   const [isCardsListMode, setCardsListMode] = useState(false);
   const [isShowingAll, setShowingAll] = useState<Maybe<'user' | 'party'>>();
 
-  useEffect(() => {
+  useEffectExceptOnMount(() => {
     if (debouncedSearch.length > 2) {
       searchParties({ variables: { q: debouncedSearch } });
       searchUsers({ variables: { q: debouncedSearch } });

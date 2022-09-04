@@ -14,7 +14,7 @@ import {
   TextInput,
 } from '../../../components';
 import { BottomModal } from '../../../components/Modal';
-import { useDebounce } from '../../../hooks';
+import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from '../../user';
 
@@ -81,6 +81,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
         partyId,
       },
     },
+    skip: !isOpen,
   });
 
   const [sendInvite, { loading: isSendInviteLoading }] =
@@ -95,7 +96,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
 
   const users = data?.userSearchFollowersToInvite ?? [];
 
-  useEffect(() => {
+  useEffectExceptOnMount(() => {
     refetch({ data: { partyId, q: debouncedSearch } });
   }, [debouncedSearch]);
 

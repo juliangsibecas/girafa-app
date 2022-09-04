@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
 import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
-import { useDebounce } from '../../../hooks';
+import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { HomeStackNavigationProp } from '../../../navigation';
 import { UserCard, UserRow } from '../../user';
 
@@ -30,7 +30,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
 
   const attenders = data?.partySearchAttenders ?? [];
 
-  useEffect(() => {
+  useEffectExceptOnMount(() => {
     refetch({ data: { id: partyId, q: debouncedSearch } });
   }, [debouncedSearch]);
 
