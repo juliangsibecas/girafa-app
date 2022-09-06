@@ -8,10 +8,10 @@ export const SignInScreen: React.FC = () => {
       <Text type="h2" textCenter mb={2}>
         Holanda
       </Text>
-      <Text textCenter mb={2}>
+      <Text textCenter mb={4}>
         Holanda
       </Text>
-      <Box mt={4} flexGrow={1}>
+      <Box flexGrow={1}>
         <SignInForm />
       </Box>
     </Container>

@@ -11,6 +11,7 @@ type Props = UiKeys &
     value: string;
     contentType?: RNTextInputProps['textContentType'];
     lines?: number;
+    maxLength?: number;
   };
 
 export const TextInput: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const TextInput: React.FC<Props> = ({
   onChangeText,
   onBlur,
   lines,
+  maxLength,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -52,6 +54,7 @@ export const TextInput: React.FC<Props> = ({
         multiline={isMultiline}
         numberOfLines={lines}
         textAlignVertical={isMultiline ? 'top' : 'center'}
+        maxLength={maxLength}
       />
     </>
   );

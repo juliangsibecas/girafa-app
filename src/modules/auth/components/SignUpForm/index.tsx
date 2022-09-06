@@ -42,7 +42,7 @@ export const SignUpForm: React.FC = () => {
         /^[a-zA-Z0-9_]{3,15}$/,
         'Solo puede contener letras, numeros y guiones bajos.'
       ),
-    password: Yup.string().required(),
+    password: Yup.string().required().min(4),
     confirmPassword: Yup.string()
       .required()
       .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden.'),
@@ -94,7 +94,6 @@ export const SignUpForm: React.FC = () => {
               id="fullName"
               placeholder="Nombre"
               contentType="name"
-              mt={1}
             />
             <FormikTextInput
               id="email"

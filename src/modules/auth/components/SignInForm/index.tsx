@@ -1,12 +1,16 @@
 import React from 'react';
 import * as Yup from 'yup';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { Formik, FormikHelpers } from 'formik';
-import { Box, FormikTextInput } from '../../../../components';
-import { Button } from '../../../../components/Button';
-import { useSignInMutation } from '../../../../api';
 import { GraphQLErrors } from '@apollo/client/errors';
+import { Formik, FormikHelpers } from 'formik';
+
+import { Box, Button, FormikTextInput, Text } from '../../../../components';
+import { useSignInMutation } from '../../../../api';
 import { useAuth } from '../../hooks';
+import { FontFamily } from '../../../../theme';
+import { OnboardingNavigationProp } from '../../../onboarding';
 
 type FormValues = {
   email: string;
@@ -14,6 +18,8 @@ type FormValues = {
 };
 
 export const SignInForm: React.FC = () => {
+  const { navigate } = useNavigation<OnboardingNavigationProp<'SignIn'>>();
+
   const { signIn: authSignIn } = useAuth();
   const [signIn, { loading: isLoading }] = useSignInMutation();
   const initialValues: FormValues = {
@@ -47,13 +53,16 @@ export const SignInForm: React.FC = () => {
       helpers.setErrors({
         password: 'El usuario y/o contraseña son incorrectos.',
       });
-    } catch (e) {
+    } catch (e: any) {
       const errors = e.graphQLErrors as GraphQLErrors;
-      const error = errors[0];
 
-      if (error && error.message === 'VALIDATION_ERROR') {
-        helpers.setErrors(error.extensions);
-        return;
+      if (errors && errors.length) {
+        const error = errors[0];
+
+        if (error && error.message === 'VALIDATION_ERROR') {
+          helpers.setErrors(error.extensions);
+          return;
+        }
       }
 
       Toast.show({
@@ -69,7 +78,7 @@ export const SignInForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ submitForm }) => (
+      {({ submitForm, values }) => (
         <>
           <Box flex flexGrow={1}>
             <FormikTextInput
@@ -77,7 +86,6 @@ export const SignInForm: React.FC = () => {
               placeholder="Correo electronico"
               keyboardType="email-address"
               contentType="emailAddress"
-              mt={1}
             />
             <FormikTextInput
               id="password"
@@ -85,6 +93,16 @@ export const SignInForm: React.FC = () => {
               contentType="password"
               mt={1}
             />
+            <TouchableOpacity
+              onPress={() =>
+                navigate('CodeGeneration', { email: values.email })
+              }
+            >
+              <Box flex row mt={1.5}>
+                <Text>Te olvidaste tu clave? </Text>
+                <Text fontFamily={FontFamily.BOLD}>aca</Text>
+              </Box>
+            </TouchableOpacity>
           </Box>
           <Button onPress={() => submitForm()} isLoading={isLoading}>
             Iniciar Sesión

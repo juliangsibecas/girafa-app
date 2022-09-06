@@ -1,8 +1,15 @@
 #
 # DEFINITION
 #
+
 push notification deep linking?
 
+
+#
+# TECHNICAL IMPROVEMENTS
+#
+
+standarize navigator types (route, navigation)
 
 #
 # PRE-RELEASE
@@ -17,7 +24,11 @@ ios shadows
 
 universal links 
 
+edit user
+profile picture upload 
+
 #
 # POST-RELEASE
 #
+
 map filters (only today, only this weekend)

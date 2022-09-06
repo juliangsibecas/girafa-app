@@ -11,6 +11,7 @@ interface Props extends UiKeys {
   keyboardType?: RNTextInputProps['keyboardType'];
   contentType?: RNTextInputProps['textContentType'];
   lines?: number;
+  maxLength?: number;
 }
 
 export const FormikTextInput: React.FC<Props> = ({

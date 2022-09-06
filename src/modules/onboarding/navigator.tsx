@@ -1,23 +1,33 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SignUpScreen } from '../auth';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import {
+  CodeGenerationScreen,
+  PasswordResetScreen,
+  SignInScreen,
+  SignUpScreen,
+} from '../auth';
 import { OnboardingScreen } from './screen';
-import { SignInScreen } from '../auth/screens/SignInScreen';
 import { useTheme } from '../../theme';
-import { NavigationProp } from '@react-navigation/native';
 
 export type OnboardingStackParamList = {
   Onboarding: undefined;
   SignUp: undefined;
   SignIn: undefined;
+  CodeGeneration: { email?: string };
+  PasswordRecovery: { email: string };
 };
 
-export type OnboardingNavigationProp = NavigationProp<OnboardingStackParamList>;
+export type OnboardingRouteProp<T extends keyof OnboardingStackParamList> =
+  RouteProp<OnboardingStackParamList, T>;
+export type OnboardingNavigationProp<T extends keyof OnboardingStackParamList> =
+  NavigationProp<OnboardingStackParamList, T>;
 
 const Stack = createNativeStackNavigator<OnboardingStackParamList>();
 
 export const OnboardingNavigator: React.FC = () => {
   const { theme } = useTheme();
+
   return (
     <Stack.Navigator
       initialRouteName="Onboarding"
@@ -38,6 +48,8 @@ export const OnboardingNavigator: React.FC = () => {
       />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="CodeGeneration" component={CodeGenerationScreen} />
+      <Stack.Screen name="PasswordRecovery" component={PasswordResetScreen} />
     </Stack.Navigator>
   );
 };

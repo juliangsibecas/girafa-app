@@ -48,15 +48,16 @@ const tokenRefreshLink = new TokenRefreshLink<{
   isTokenValidOrUndefined: (operation) => {
     try {
       const token: string = operation.getContext().accessToken;
-      if (token) {
-        const decoded = jwtDecode(
-          operation.getContext().accessToken
-        ) as JwtPayload;
 
-        return moment().valueOf() < moment.unix(decoded.exp!).valueOf();
+      if (!token) {
+        return true;
       }
 
-      return false;
+      const decoded = jwtDecode(
+        operation.getContext().accessToken
+      ) as JwtPayload;
+
+      return moment().valueOf() < moment.unix(decoded.exp!).valueOf();
     } catch (e) {
       console.log(e);
 

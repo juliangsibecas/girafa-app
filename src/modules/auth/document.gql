@@ -21,3 +21,11 @@ mutation signInFromRefreshToken  {
     refreshToken
   }
 }
+
+mutation generateRecoveryCode ($data: AuthGenerateRecoveryCodeInput!) {
+  generateRecoveryCode(data: $data)
+}
+
+mutation recoverPassword ($data: AuthRecoverPasswordInput!) {
+  recoverPassword(data: $data)
+}

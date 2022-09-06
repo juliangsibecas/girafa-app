@@ -6,7 +6,7 @@ import { OnboardingSlider } from './components';
 import { OnboardingNavigationProp } from './navigator';
 
 export const OnboardingScreen: React.FC = () => {
-  const { navigate } = useNavigation<OnboardingNavigationProp>();
+  const { navigate } = useNavigation<OnboardingNavigationProp<'Onboarding'>>();
 
   return (
     <Container noHeader noBottomTab>
