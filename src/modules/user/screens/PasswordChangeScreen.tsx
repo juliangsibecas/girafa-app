@@ -1,13 +1,9 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
-import {
-  useChangePasswordMutation,
-  useRecoverPasswordMutation,
-  useSignInMutation,
-} from '../../../api';
+import { useChangePasswordMutation } from '../../../api';
 import {
   Box,
   Button,
@@ -24,8 +20,6 @@ type FormValues = {
 };
 
 export const PasswordChangeScreen: React.FC = () => {
-  const { params } =
-    useRoute<MyProfileStackScreenProps<'PasswordChange'>['route']>();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'PasswordChange'>['navigation']>();
   const [changePassword, { loading: isLoading }] = useChangePasswordMutation();
@@ -80,7 +74,7 @@ export const PasswordChangeScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomTab>
+    <Container noBottomGradient>
       <Text type="h2" textCenter mb={2}>
         Holanda
       </Text>

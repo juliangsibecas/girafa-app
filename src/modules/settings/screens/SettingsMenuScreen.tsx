@@ -21,7 +21,7 @@ export const SettingsMenuScreen = () => {
     },
     {
       label: 'Contactar soporte',
-      to: 'ContactSupport',
+      to: 'Support',
     },
   ];
 

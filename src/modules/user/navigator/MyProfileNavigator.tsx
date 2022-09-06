@@ -13,6 +13,7 @@ import {
 } from '../screens';
 import { useTheme } from '../../../theme';
 import { SettingsMenuScreen } from '../../settings';
+import { SupportScreen } from '../../support';
 
 export type MyProfileStackParamList = {
   Profile: undefined;
@@ -22,7 +23,7 @@ export type MyProfileStackParamList = {
 
   Settings: undefined;
   PasswordChange: undefined;
-  ContactSupport: undefined;
+  Support: undefined;
 };
 
 export type MyProfileStackRouteProp<T extends keyof MyProfileStackParamList> =
@@ -62,6 +63,7 @@ export const MyProfileNavigator: React.FC = () => {
       />
       <Stack.Screen name="Settings" component={SettingsMenuScreen} />
       <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
+      <Stack.Screen name="Support" component={SupportScreen} />
     </Stack.Navigator>
   );
 };

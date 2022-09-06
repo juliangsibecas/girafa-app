@@ -72,6 +72,7 @@ export type Mutation = {
   signIn: AuthSignIn;
   signInFromRefreshToken: AuthSignIn;
   signUp: AuthSignIn;
+  supportSendMessage: Scalars['Boolean'];
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
   userSendPartyInvite: Scalars['Boolean'];
@@ -110,6 +111,11 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   data: AuthSignUpInput;
+};
+
+
+export type MutationSupportSendMessageArgs = {
+  data: SupportSendMessageInput;
 };
 
 
@@ -281,6 +287,11 @@ export type QueryUserSearchFollowersToInviteArgs = {
   data: UserSearchFollowersToInviteInput;
 };
 
+export type SupportSendMessageInput = {
+  body: Scalars['String'];
+  subject: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
@@ -427,6 +438,13 @@ export type PartySearchAttendersQueryVariables = Exact<{
 
 
 export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+
+export type SupportSendMessageMutationVariables = Exact<{
+  data: SupportSendMessageInput;
+}>;
+
+
+export type SupportSendMessageMutation = { __typename?: 'Mutation', supportSendMessage: boolean };
 
 export type UserSearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
@@ -931,6 +949,37 @@ export function usePartySearchAttendersLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type PartySearchAttendersQueryHookResult = ReturnType<typeof usePartySearchAttendersQuery>;
 export type PartySearchAttendersLazyQueryHookResult = ReturnType<typeof usePartySearchAttendersLazyQuery>;
 export type PartySearchAttendersQueryResult = Apollo.QueryResult<PartySearchAttendersQuery, PartySearchAttendersQueryVariables>;
+export const SupportSendMessageDocument = gql`
+    mutation supportSendMessage($data: SupportSendMessageInput!) {
+  supportSendMessage(data: $data)
+}
+    `;
+export type SupportSendMessageMutationFn = Apollo.MutationFunction<SupportSendMessageMutation, SupportSendMessageMutationVariables>;
+
+/**
+ * __useSupportSendMessageMutation__
+ *
+ * To run a mutation, you first call `useSupportSendMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSupportSendMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [supportSendMessageMutation, { data, loading, error }] = useSupportSendMessageMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSupportSendMessageMutation(baseOptions?: Apollo.MutationHookOptions<SupportSendMessageMutation, SupportSendMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SupportSendMessageMutation, SupportSendMessageMutationVariables>(SupportSendMessageDocument, options);
+      }
+export type SupportSendMessageMutationHookResult = ReturnType<typeof useSupportSendMessageMutation>;
+export type SupportSendMessageMutationResult = Apollo.MutationResult<SupportSendMessageMutation>;
+export type SupportSendMessageMutationOptions = Apollo.BaseMutationOptions<SupportSendMessageMutation, SupportSendMessageMutationVariables>;
 export const UserSearchDocument = gql`
     query userSearch($q: String) {
   userSearch(q: $q) {

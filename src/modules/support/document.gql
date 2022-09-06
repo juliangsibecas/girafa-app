@@ -1,0 +1,3 @@
+mutation supportSendMessage ($data: SupportSendMessageInput!) {
+  supportSendMessage (data: $data) 
+}
