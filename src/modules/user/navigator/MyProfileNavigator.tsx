@@ -6,19 +6,23 @@ import {
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import {
   MyProfileScreen,
+  PasswordChangeScreen,
   UserAttendedPartiesScreen,
   UserFollowersScreen,
   UserFollowingScreen,
 } from '../screens';
-import { SettingsScreen } from '../../../modules/settings';
 import { useTheme } from '../../../theme';
+import { SettingsMenuScreen } from '../../settings';
 
 export type MyProfileStackParamList = {
   Profile: undefined;
   UserFollowers: { id: string };
   UserFollowing: { id: string };
   UserAttendedParties: { id: string };
+
   Settings: undefined;
+  PasswordChange: undefined;
+  ContactSupport: undefined;
 };
 
 export type MyProfileStackRouteProp<T extends keyof MyProfileStackParamList> =
@@ -56,7 +60,8 @@ export const MyProfileNavigator: React.FC = () => {
         name="UserAttendedParties"
         component={UserAttendedPartiesScreen}
       />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={SettingsMenuScreen} />
+      <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
     </Stack.Navigator>
   );
 };

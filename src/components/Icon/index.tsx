@@ -61,7 +61,10 @@ export const Icon: React.FC<Props> = ({
   ...props
 }) => {
   const { theme } = useTheme();
-  const style = useStyle(props);
+  const style = useStyle({
+    ...props,
+    color: props.color ?? 'text.primary',
+  });
 
   const FeatherIcon = dict[name];
   const size = theme.spacing(nSize ?? 2);

@@ -28,7 +28,7 @@ export const PasswordResetScreen: React.FC = () => {
   const { params } = useRoute<OnboardingRouteProp<'CodeGeneration'>>();
   const { navigate } =
     useNavigation<OnboardingNavigationProp<'CodeGeneration'>>();
-  const [generateRecoveryCode, { loading: isGenerationLoading }] =
+  const [recoverPassword, { loading: isGenerationLoading }] =
     useRecoverPasswordMutation();
   const [signInMutation, { loading: isSignInLoading }] = useSignInMutation();
 
@@ -40,7 +40,7 @@ export const PasswordResetScreen: React.FC = () => {
 
   const validationSchema = Yup.object().shape({
     code: Yup.string().required(),
-    password: Yup.string().required(),
+    password: Yup.string().required().min(4),
     confirmPassword: Yup.string()
       .required()
       .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden.'),
@@ -51,7 +51,7 @@ export const PasswordResetScreen: React.FC = () => {
     helpers: FormikHelpers<FormValues>
   ) => {
     try {
-      const { data } = await generateRecoveryCode({
+      const { data } = await recoverPassword({
         variables: {
           data: {
             email: params.email!,

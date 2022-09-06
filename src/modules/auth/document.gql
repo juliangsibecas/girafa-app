@@ -29,3 +29,7 @@ mutation generateRecoveryCode ($data: AuthGenerateRecoveryCodeInput!) {
 mutation recoverPassword ($data: AuthRecoverPasswordInput!) {
   recoverPassword(data: $data)
 }
+
+mutation changePassword ($data: AuthChangePasswordInput!) {
+  changePassword(data: $data)
+}

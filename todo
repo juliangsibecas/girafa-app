@@ -3,6 +3,7 @@
 #
 
 push notification deep linking?
+delete account?
 
 
 #
@@ -16,9 +17,9 @@ standarize navigator types (route, navigation)
 #
 
 empty states
+ux writing
 
 contact support
-password recovery
 
 ios shadows
 
@@ -26,6 +27,7 @@ universal links
 
 edit user
 profile picture upload 
+
 
 #
 # POST-RELEASE
