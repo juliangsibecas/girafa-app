@@ -8,6 +8,7 @@ import {
   MyProfileScreen,
   PasswordChangeScreen,
   UserAttendedPartiesScreen,
+  UserEditScreen,
   UserFollowersScreen,
   UserFollowingScreen,
 } from '../screens';
@@ -20,6 +21,7 @@ export type MyProfileStackParamList = {
   UserFollowers: { id: string };
   UserFollowing: { id: string };
   UserAttendedParties: { id: string };
+  UserEdit: { fullname: string; nickname: string };
 
   Settings: undefined;
   PasswordChange: undefined;
@@ -61,6 +63,7 @@ export const MyProfileNavigator: React.FC = () => {
         name="UserAttendedParties"
         component={UserAttendedPartiesScreen}
       />
+      <Stack.Screen name="UserEdit" component={UserEditScreen} />
       <Stack.Screen name="Settings" component={SettingsMenuScreen} />
       <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
       <Stack.Screen name="Support" component={SupportScreen} />

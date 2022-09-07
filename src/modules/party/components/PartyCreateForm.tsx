@@ -14,7 +14,6 @@ import {
   FormikDateInput,
   FormikImageInput,
   CoordinateInput,
-  Text,
 } from '../../../components';
 import { Maybe } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
@@ -52,7 +51,7 @@ export const PartyCreateForm: React.FC = () => {
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
   const [create, { loading: isLoading }] = usePartyCreateMutation();
-  const { upload } = usePictureUpload();
+  const { uploadParty } = usePictureUpload();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -118,7 +117,7 @@ export const PartyCreateForm: React.FC = () => {
         return;
       }
 
-      await upload(res.data!.partyCreate, values.image);
+      await uploadParty(res.data!.partyCreate, values.image);
 
       Toast.show({
         type: 'success',
@@ -126,7 +125,7 @@ export const PartyCreateForm: React.FC = () => {
       });
 
       navigate('Map');
-    } catch (e) {
+    } catch (e: any) {
       const errors = e.graphQLErrors as GraphQLErrors;
       const error = errors[0];
 

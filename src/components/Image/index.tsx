@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image as RNImage, ImageStyle } from 'react-native';
+import { useEffectExceptOnMount } from '../../hooks';
 import { UiKeys, useStyle } from '../../ui';
 
 type Props = UiKeys & {
@@ -14,9 +15,17 @@ export const Image: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
 
   const style = useStyle(props) as ImageStyle;
 
+  useEffectExceptOnMount(() => {
+    setSource(src);
+  }, [src]);
+
   return (
     <RNImage
-      source={isUri ? { uri: source as string } : (source as number)}
+      source={
+        isUri
+          ? { uri: `${source as string}?t=${Date.now()}` }
+          : (source as number)
+      }
       style={{ ...style, ...props.style, aspectRatio: 1 }}
       onError={() => fallbackSrc && setSource(fallbackSrc)}
     />

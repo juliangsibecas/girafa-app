@@ -1,3 +1,7 @@
+mutation userEdit ($data: UserEditInput!) {
+  userEdit(data: $data)   
+}
+
 query userSearch ($q: String) {
   userSearch(q: $q) {
     _id

@@ -75,6 +75,7 @@ export type Mutation = {
   supportSendMessage: Scalars['Boolean'];
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
+  userEdit: Scalars['Boolean'];
   userSendPartyInvite: Scalars['Boolean'];
 };
 
@@ -126,6 +127,11 @@ export type MutationUserChangeAttendingStateArgs = {
 
 export type MutationUserChangeFollowingStateArgs = {
   data: UserChangeFollowingStateInput;
+};
+
+
+export type MutationUserEditArgs = {
+  data: UserEditInput;
 };
 
 
@@ -324,6 +330,11 @@ export type UserChangeFollowingStateInput = {
   state: Scalars['Boolean'];
 };
 
+export type UserEditInput = {
+  fullName: Scalars['String'];
+  nickname: Scalars['String'];
+};
+
 export type UserGetByIdResponse = {
   __typename?: 'UserGetByIdResponse';
   _id: Scalars['String'];
@@ -445,6 +456,13 @@ export type SupportSendMessageMutationVariables = Exact<{
 
 
 export type SupportSendMessageMutation = { __typename?: 'Mutation', supportSendMessage: boolean };
+
+export type UserEditMutationVariables = Exact<{
+  data: UserEditInput;
+}>;
+
+
+export type UserEditMutation = { __typename?: 'Mutation', userEdit: boolean };
 
 export type UserSearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
@@ -980,6 +998,37 @@ export function useSupportSendMessageMutation(baseOptions?: Apollo.MutationHookO
 export type SupportSendMessageMutationHookResult = ReturnType<typeof useSupportSendMessageMutation>;
 export type SupportSendMessageMutationResult = Apollo.MutationResult<SupportSendMessageMutation>;
 export type SupportSendMessageMutationOptions = Apollo.BaseMutationOptions<SupportSendMessageMutation, SupportSendMessageMutationVariables>;
+export const UserEditDocument = gql`
+    mutation userEdit($data: UserEditInput!) {
+  userEdit(data: $data)
+}
+    `;
+export type UserEditMutationFn = Apollo.MutationFunction<UserEditMutation, UserEditMutationVariables>;
+
+/**
+ * __useUserEditMutation__
+ *
+ * To run a mutation, you first call `useUserEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEditMutation, { data, loading, error }] = useUserEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserEditMutation(baseOptions?: Apollo.MutationHookOptions<UserEditMutation, UserEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEditMutation, UserEditMutationVariables>(UserEditDocument, options);
+      }
+export type UserEditMutationHookResult = ReturnType<typeof useUserEditMutation>;
+export type UserEditMutationResult = Apollo.MutationResult<UserEditMutation>;
+export type UserEditMutationOptions = Apollo.BaseMutationOptions<UserEditMutation, UserEditMutationVariables>;
 export const UserSearchDocument = gql`
     query userSearch($q: String) {
   userSearch(q: $q) {

@@ -1,7 +1,7 @@
 import { ImageStyle } from 'react-native';
 import { Avatar } from '../../../components';
 import { UiKeys } from '../../../ui';
-import { getUserPictureUrl } from '../utils';
+import { getUserPictureUrl, USER_FALLBACK_SRC } from '../../picture';
 
 type Props = UiKeys & {
   id: string;
@@ -11,7 +11,7 @@ type Props = UiKeys & {
 export const UserAvatar: React.FC<Props> = ({ id, ...props }) => (
   <Avatar
     src={getUserPictureUrl(id)}
-    fallbackSrc="https://cdn-1.motorsport.com/images/amp/0qXBBz46/s6/charles-leclerc-ferrari-speaks.jpg"
+    fallbackSrc={USER_FALLBACK_SRC}
     {...props}
   />
 );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Box, Button, Icon, Image, Text } from '../../../components';
+import { Box, Button, Icon, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import { PartyMapPreview } from '../../../api';

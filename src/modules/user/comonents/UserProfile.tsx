@@ -113,6 +113,12 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               width={20}
               height={5}
               textProps={{ fontSize: 14 }}
+              onPress={() =>
+                navigate('UserEdit', {
+                  fullname: user.fullName,
+                  nickname: user.nickname,
+                })
+              }
             >
               Editar perfil
             </Button>
