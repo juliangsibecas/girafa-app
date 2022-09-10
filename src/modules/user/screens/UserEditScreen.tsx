@@ -102,6 +102,7 @@ export const UserEditScreen: React.FC = () => {
         return;
       }
 
+      console.log(e);
       Toast.show({
         type: 'error',
         text1: 'Hubo un error al intentar editar',
