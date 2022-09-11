@@ -1,7 +1,9 @@
 import {
+  AlertCircle,
   AlignJustify,
   Bell,
   Calendar,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -29,6 +31,7 @@ type Props = UiKeys & {
 };
 
 const dict = {
+  warning: AlertCircle,
   home: Home,
   search: Search,
   bell: Bell,
@@ -40,6 +43,7 @@ const dict = {
   plus: Plus,
   calendar: Calendar,
   image: Image,
+  check: Check,
 
   share: Share,
   'share-2': Share2,

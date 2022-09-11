@@ -12,9 +12,9 @@ export const FormikError: React.FC<Props> = ({ id }) => {
   return (
     <ErrorMessage
       name={id}
-      render={(err) => (
+      render={(e) => (
         <Text type="hint" color={theme.palette.error.main} mt={0.5} ml={1}>
-          {err}
+          {e}
         </Text>
       )}
     />

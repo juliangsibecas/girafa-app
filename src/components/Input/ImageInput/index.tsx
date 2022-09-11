@@ -5,6 +5,7 @@ import { Button } from '../../Button';
 import { Icon } from '../../Icon';
 import { Text } from '../../Text';
 import { FontFamily } from '../../../theme/text/types';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   onChange: (uri: string) => void;
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const ImageInput: React.FC<Props> = ({ onChange, onBlur }) => {
+  const { t } = useTranslation();
   const pickImage = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,7 +39,7 @@ export const ImageInput: React.FC<Props> = ({ onChange, onBlur }) => {
       <Box flex row>
         <Icon name="image" color="background" weight={2.5} />
         <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
-          Foto
+          {t('general.photo')}
         </Text>
       </Box>
     </Button>

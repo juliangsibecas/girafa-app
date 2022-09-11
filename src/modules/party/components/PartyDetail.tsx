@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Share, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -19,8 +20,6 @@ import { formatDate } from '../../../utils';
 import { useAuth } from '../../auth/hooks';
 import { UserAvatar } from '../../user';
 
-import { partyAvailabilityLabels } from '../utils';
-
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
 
@@ -29,6 +28,7 @@ type Props = {
 };
 
 export const PartyDetail: React.FC<Props> = ({ party }) => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyDetail'>['navigation']>();
   const { userId } = useAuth();
@@ -96,33 +96,41 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         <PartyAvatar id={party._id} height={10} width={10} />
         <Box flexShrink={1} ml={2}>
           <Text type="h1">{party.name}</Text>
-          <Text ml={0.2}>{partyAvailabilityLabels[party.availability]}</Text>
+          <Text ml={0.2}>
+            {t(`party.availabilities.${party.availability}`)}
+          </Text>
         </Box>
       </Box>
       <Box flex row mt={6}>
         <Box flex flexGrow={1}>
-          <LabelValue label="Organizador" value={party.organizer.nickname} />
+          <LabelValue
+            label={t('party.organizer')}
+            value={party.organizer.nickname}
+          />
           <Box mt={4}>
-            <LabelValue label="Fecha" value={formatDate(party.date)} />
+            <LabelValue
+              label={t('general.date')}
+              value={formatDate(party.date)}
+            />
           </Box>
         </Box>
         <Box flex flexGrow={1}>
-          <LabelValue label="Dirección" value={party.address} />
+          <LabelValue label={t('party.address')} value={party.address} />
           <Box mt={4}>
             <LabelValue
-              label="Barra Libre"
+              label={t('party.openBar')}
               value={party.openBar ? 'Si' : 'No'}
             />
           </Box>
         </Box>
       </Box>
       <Box mt={4}>
-        <LabelValue label="Descripción" value={party.description} />
+        <LabelValue label={t('party.description')} value={party.description} />
       </Box>
       <Box mt={4} flexGrow={1}>
         <Box flex row fullWidth>
           <Text fontFamily={FontFamily.LIGHT} type="secondary" mb={0.5}>
-            Asisitiran
+            {t('party.willAttend')}
           </Text>
           <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flexGrow={1}>
             {attendersCount}
@@ -132,7 +140,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
               onPress={() => navigate('PartyAttenders', { id: party._id })}
             >
               <Text type="secondary" fontFamily={FontFamily.LIGHT}>
-                Ver todos
+                {t('general.seeAll')}
               </Text>
             </TouchableOpacity>
           ) : undefined}
@@ -153,13 +161,17 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           isLoading={isChangeAttendingStateLoading}
           isDisabled={party.isOrganizer || party.isExpired}
         >
-          {!party.isExpired
-            ? isAttender
-              ? 'Asistiendo'
-              : 'Asistir'
-            : isAttender
-            ? 'Asististe'
-            : 'No asististe'}
+          {t(
+            `party.${
+              !party.isExpired
+                ? isAttender
+                  ? 'attending'
+                  : 'attend'
+                : isAttender
+                ? 'attended'
+                : 'notAttended'
+            }`
+          )}
         </Button>
         <Box mx={3}>
           <TouchableOpacity

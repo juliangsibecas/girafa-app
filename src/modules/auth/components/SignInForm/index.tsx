@@ -2,15 +2,16 @@ import React from 'react';
 import * as Yup from 'yup';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { Formik, FormikHelpers } from 'formik';
 
 import { Box, Button, FormikTextInput, Text } from '../../../../components';
-import { useSignInMutation } from '../../../../api';
+import { useResponse, useSignInMutation } from '../../../../api';
+
 import { useAuth } from '../../hooks';
 import { FontFamily } from '../../../../theme';
 import { OnboardingNavigationProp } from '../../../onboarding';
+import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   email: string;
@@ -18,6 +19,8 @@ type FormValues = {
 };
 
 export const SignInForm: React.FC = () => {
+  const { t } = useTranslation();
+  const { onError } = useResponse();
   const { navigate } = useNavigation<OnboardingNavigationProp<'SignIn'>>();
 
   const { signIn: authSignIn } = useAuth();
@@ -48,11 +51,10 @@ export const SignInForm: React.FC = () => {
 
       if (data?.signIn) {
         authSignIn(data.signIn);
+        return;
       }
 
-      helpers.setErrors({
-        password: 'El usuario y/o contraseña son incorrectos.',
-      });
+      throw Error();
     } catch (e: any) {
       const errors = e.graphQLErrors as GraphQLErrors;
 
@@ -65,10 +67,7 @@ export const SignInForm: React.FC = () => {
         }
       }
 
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar iniciar sesión',
-      });
+      onError();
     }
   };
 
@@ -83,13 +82,13 @@ export const SignInForm: React.FC = () => {
           <Box flex flexGrow={1}>
             <FormikTextInput
               id="email"
-              placeholder="Correo electronico"
+              placeholder={t('user.email')}
               keyboardType="email-address"
               contentType="emailAddress"
             />
             <FormikTextInput
               id="password"
-              placeholder="Contraseña"
+              placeholder={t('user.password')}
               contentType="password"
               mt={1}
             />
@@ -99,13 +98,13 @@ export const SignInForm: React.FC = () => {
               }
             >
               <Box flex row mt={1.5}>
-                <Text>Te olvidaste tu clave? </Text>
+                <Text>{t('auth.components.SignIn.forgotPassword')} </Text>
                 <Text fontFamily={FontFamily.BOLD}>aca</Text>
               </Box>
             </TouchableOpacity>
           </Box>
           <Button onPress={() => submitForm()} isLoading={isLoading}>
-            Iniciar Sesión
+            {t('auth.components.SignIn.signIn')}
           </Button>
         </>
       )}

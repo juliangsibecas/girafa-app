@@ -1,10 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 import { Coordinate } from '../../../api';
 import { Box, Button, Container, Map, Marker, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
+import { useTranslation } from 'react-i18next';
 
 export const PartyCreateMapScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyCreateMap'>['navigation']>();
   const [coordinate, setCoordinate] = useState<Coordinate>();
@@ -20,18 +23,20 @@ export const PartyCreateMapScreen: React.FC = () => {
       <Container noHeader bgColor={undefined} pointerEvents="box-none">
         <Box flexGrow={1} pointerEvents="box-none">
           <Text type="h3" textCenter>
-            Selecciona ubicacion
+            {t('party.screens.CreateMap.title')}
           </Text>
           <Text type="hint" textCenter mt={1}>
-            Solo dentro de Gran La Plata
+            {t('party.screens.CreateMap.hint')}
           </Text>
         </Box>
         <Button
-          onPress={() => navigate('PartyCreateForm', { coordinate })}
+          onPress={() =>
+            navigate('PartyCreateForm', { coordinate: coordinate! })
+          }
           isDisabled={!Boolean(coordinate)}
           mb={4}
         >
-          Continuar
+          {t('general.continue')}
         </Button>
       </Container>
     </>

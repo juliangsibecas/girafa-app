@@ -13,7 +13,7 @@ export const lightPalette: Palette = {
     main: '#00FF00',
   },
   warning: {
-    main: '#FFFF00',
+    main: '#FFAA00',
   },
   error: {
     main: '#FF0000',
@@ -43,7 +43,7 @@ export const darkPalette: Palette = {
     main: '#00FF00',
   },
   warning: {
-    main: '#FFFF00',
+    main: '#FFAA00',
   },
   error: {
     main: '#FF0000',

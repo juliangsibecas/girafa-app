@@ -8,19 +8,21 @@ import { FontFamily } from '../../../theme';
 
 import { useAuth } from '../../auth';
 import { MyProfileStackParamList, MyProfileStackScreenProps } from '../../user';
+import { useTranslation } from 'react-i18next';
 
 export const SettingsMenuScreen = () => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'Settings'>['navigation']>();
   const { signOut } = useAuth();
 
   const options: Array<{ label: string; to: keyof MyProfileStackParamList }> = [
     {
-      label: 'Cambiar clave',
+      label: t('settings.screens.SettingMenu.changePassword'),
       to: 'PasswordChange',
     },
     {
-      label: 'Contactar soporte',
+      label: t('settings.screens.SettingMenu.contactSupport'),
       to: 'Support',
     },
   ];
@@ -41,7 +43,7 @@ export const SettingsMenuScreen = () => {
         />
       </Box>
       <Button secondary onPress={signOut}>
-        Cerrar sesión
+        {t('settings.screens.SettingMenu.signOut')}
       </Button>
       <Text
         type="secondary"
@@ -50,7 +52,7 @@ export const SettingsMenuScreen = () => {
         textCenter
         mt={1}
       >
-        Version: {nativeApplicationVersion}
+        {t('settings.screens.SettingMenu.version')}: {nativeApplicationVersion}
       </Text>
     </Container>
   );

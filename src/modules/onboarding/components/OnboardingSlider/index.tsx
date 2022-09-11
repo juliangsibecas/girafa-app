@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { FlatList, ViewToken } from 'react-native';
-import { Box, Image, Text } from '../../../../components';
+import { useTranslation } from 'react-i18next';
+
 import image from '../../../../../assets/images/onboarding.png';
+
+import { Box, Image, Text } from '../../../../components';
 
 type Step = 0 | 1 | 2;
 
 export const OnboardingSlider: React.FC = () => {
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>(0);
 
   const onViewRef = React.useRef(

@@ -44,6 +44,7 @@ query userGetAttendedPartiesById ($id: String!) {
   userGetAttendedPartiesById(id: $id) {
     _id
     name
+    organizerNickname
   }
 }
 

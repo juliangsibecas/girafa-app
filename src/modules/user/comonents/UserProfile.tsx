@@ -1,16 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
-import Toast from 'react-native-toast-message';
+
 import {
+  useResponse,
   UserGetByIdDocument,
   UserGetByIdResponse,
   useUserChangeFollowingStateMutation,
 } from '../../../api';
 import { Box, Button, Icon, Text } from '../../../components';
+
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
+
 import { MyProfileStackScreenProps } from '../navigator';
+
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
@@ -19,6 +24,8 @@ type Props = {
 };
 
 export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
+  const { t } = useTranslation();
+  const { onError } = useResponse();
   const { userId: myId } = useAuth();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'Profile'>['navigation']>();
@@ -53,12 +60,10 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         setFollowing(!isFollowing);
       }
     } catch (e) {
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar seguir al usuario',
-      });
+      onError();
     }
   };
+
   return (
     <Box overflow="hidden" width="screen" height="screen">
       <UserAvatar
@@ -104,7 +109,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               onPress={changeFollowingState}
               isLoading={isChangeFollowingStateLoading}
             >
-              {isFollowing ? 'Siguiendo' : 'Seguir'}
+              {isFollowing ? t('user.following') : t('user.follow')}
             </Button>
           ) : undefined}
           {isMyProfile ? (
@@ -120,7 +125,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
                 })
               }
             >
-              Editar perfil
+              {t('user.components.Profile.editProfile')}
             </Button>
           ) : undefined}
         </Box>
@@ -130,7 +135,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             onPress={() => navigate('UserFollowing', { id: user._id })}
           >
             <Text fontFamily={FontFamily.BOLD}>{user.followingCount}</Text>
-            <Text type="hint">Seguidos</Text>
+            <Text type="hint">{t('user.following')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             disabled={followersCount === 0}
@@ -140,7 +145,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               {followersCount}
             </Text>
             <Text type="hint" textCenter>
-              Seguidores
+              {t('user.followers')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -151,7 +156,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               {user.attendedPartiesCount}
             </Text>
             <Text type="hint" textRight>
-              Fiestas
+              {t('general.parties')}
             </Text>
           </TouchableOpacity>
         </Box>

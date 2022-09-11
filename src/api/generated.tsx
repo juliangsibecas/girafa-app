@@ -497,7 +497,7 @@ export type UserGetAttendedPartiesByIdQueryVariables = Exact<{
 }>;
 
 
-export type UserGetAttendedPartiesByIdQuery = { __typename?: 'Query', userGetAttendedPartiesById: Array<{ __typename?: 'PartyPreview', _id: string, name: string }> };
+export type UserGetAttendedPartiesByIdQuery = { __typename?: 'Query', userGetAttendedPartiesById: Array<{ __typename?: 'PartyPreview', _id: string, name: string, organizerNickname?: string | null }> };
 
 export type UserSearchFollowersToInviteQueryVariables = Exact<{
   data: UserSearchFollowersToInviteInput;
@@ -1186,6 +1186,7 @@ export const UserGetAttendedPartiesByIdDocument = gql`
   userGetAttendedPartiesById(id: $id) {
     _id
     name
+    organizerNickname
   }
 }
     `;

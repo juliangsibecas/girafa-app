@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
 import {
   Coordinate,
   PartyAvailability,
   usePartyCreateMutation,
+  useResponse,
 } from '../../../api';
 import {
   Box,
@@ -18,10 +19,9 @@ import {
 import { Maybe } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackScreenProps } from '../../../navigation';
-import { partyAvailabilityLabels } from '../utils';
 import { usePictureUpload } from '../../picture';
-import Toast from 'react-native-toast-message';
 import { GraphQLErrors } from '@apollo/client/errors';
+import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   name: string;
@@ -48,10 +48,12 @@ const initialValues: FormValues = {
 };
 
 export const PartyCreateForm: React.FC = () => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
   const [create, { loading: isLoading }] = usePartyCreateMutation();
   const { uploadParty } = usePictureUpload();
+  const { onSuccess, onError } = useResponse();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -78,15 +80,6 @@ export const PartyCreateForm: React.FC = () => {
     coordinate: Yup.object().nullable().required(),
   });
 
-  const availabilityOptions = useMemo(
-    () =>
-      Object.entries(partyAvailabilityLabels).map(([key, value]) => ({
-        label: value,
-        value: key,
-      })),
-    []
-  );
-
   const handleSubmit = async (
     values: FormValues,
     { setErrors }: FormikHelpers<FormValues>
@@ -110,19 +103,12 @@ export const PartyCreateForm: React.FC = () => {
       });
 
       if (res.errors) {
-        Toast.show({
-          type: 'error',
-          text1: 'Hubo un error al crear la fiesta.',
-        });
-        return;
+        throw Error();
       }
 
       await uploadParty(res.data!.partyCreate, values.image);
 
-      Toast.show({
-        type: 'success',
-        text1: 'Se mando la solicitud.',
-      });
+      onSuccess();
 
       navigate('Map');
     } catch (e: any) {
@@ -134,16 +120,20 @@ export const PartyCreateForm: React.FC = () => {
         return;
       }
 
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al crear la fiesta.',
-      });
+      onError();
 
       console.log(e);
     }
   };
 
   const pickCoordinate = () => navigate('PartyCreateMap');
+
+  const partyAvailabilityOptions = [
+    PartyAvailability.Public,
+    PartyAvailability.Followers,
+    PartyAvailability.Following,
+    PartyAvailability.Private,
+  ];
 
   return (
     <Formik
@@ -154,48 +144,53 @@ export const PartyCreateForm: React.FC = () => {
       {({ values, submitForm }) => (
         <>
           <Box flex flexGrow={1}>
-            <FormikTextInput id="name" placeholder="Nombre" mt={1} />
+            <FormikTextInput id="name" placeholder={t('general.name')} mt={1} />
             <Box flex row mt={1}>
               <FormikSelect
                 id="availability"
-                placeholder="Tipo"
-                options={availabilityOptions}
+                placeholder={t('party.availability')}
+                options={partyAvailabilityOptions.map((value) => ({
+                  label: t(`party.availabilities.${value}`),
+                  value,
+                }))}
               />
             </Box>
             <FormikTextInput
               id="address"
-              placeholder="Direccion (Ej: 17 E/ 503 y 504 N2906)"
+              placeholder={`${t('party.address')} (${t(
+                'party.components.Create.addressExample'
+              )})`}
               mt={1}
             />
             <Box flex row mt={1}>
               <FormikSelect
                 id="openBar"
-                placeholder="Barra libre"
+                placeholder={t('party.openBar')}
                 options={[
-                  { label: 'Si', value: 'yes' },
-                  { label: 'No', value: 'no' },
+                  { label: t('general.yes'), value: 'yes' },
+                  { label: t('general.no'), value: 'no' },
                 ]}
                 mr={1}
               />
               <Box flexGrow={1}>
-                <FormikDateInput id="date" placeholder="Fecha" />
+                <FormikDateInput id="date" placeholder={t('general.date')} />
               </Box>
             </Box>
             {values.availability !== PartyAvailability.Public && (
               <Box flex row mt={1}>
                 <FormikSelect
                   id="allowInvites"
-                  placeholder="Mis invitados pueden invitar"
+                  placeholder={t('party.components.Create.allowInvitesHelper')}
                   options={[
-                    { label: 'Si', value: 'yes' },
-                    { label: 'No', value: 'no' },
+                    { label: t('general.yes'), value: 'yes' },
+                    { label: t('general.no'), value: 'no' },
                   ]}
                 />
               </Box>
             )}
             <FormikTextInput
               id="description"
-              placeholder="Descripcion"
+              placeholder={t('party.description')}
               mt={1}
               lines={4}
             />
@@ -212,7 +207,7 @@ export const PartyCreateForm: React.FC = () => {
             </Box>
           </Box>
           <Button onPress={submitForm} isLoading={isLoading}>
-            Continuar
+            {t('general.continue')}
           </Button>
         </>
       )}

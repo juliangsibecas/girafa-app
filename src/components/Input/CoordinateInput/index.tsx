@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HomeStackScreenProps } from '../../../navigation';
 import { FontFamily } from '../../../theme';
 import { Box } from '../../Box';
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const CoordinateInput: React.FC<Props> = ({ id, pickCoordinate }) => {
+  const { t } = useTranslation();
   const { params } =
     useRoute<HomeStackScreenProps<'PartyCreateForm'>['route']>();
   const { handleChange } = useFormikContext();
@@ -31,7 +33,7 @@ export const CoordinateInput: React.FC<Props> = ({ id, pickCoordinate }) => {
         <Box flex row>
           <Icon name="map-pin" color="background" weight={2.5} />
           <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
-            Ubicacion
+            {t('party.location')}
           </Text>
         </Box>
       </Button>

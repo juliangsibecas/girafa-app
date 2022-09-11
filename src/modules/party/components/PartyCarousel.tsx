@@ -6,6 +6,7 @@ import { PartyMapPreview } from '../../../api';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
 import { PartyCarouselItem } from './PartyCarouselItem';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   idx: number;
@@ -18,8 +19,9 @@ export const PartyCarousel: React.FC<Props> = ({
   parties,
   handleIdxChange,
 }) => {
-  const carousel = useRef<Carousel<PartyMapPreview>>(null);
+  const { t } = useTranslation();
   const { theme } = useTheme();
+  const carousel = useRef<Carousel<PartyMapPreview>>(null);
 
   useEffect(() => {
     carousel.current?.snapToItem(idx + 1);
@@ -59,7 +61,7 @@ export const PartyCarousel: React.FC<Props> = ({
                       ml={2}
                       color={theme.palette.text.primary}
                     >
-                      Deslizar para ver festicholas
+                      {t('party.components.Carousel.slideToSee')}
                     </Text>
                   </>
                 ) : (
@@ -67,7 +69,7 @@ export const PartyCarousel: React.FC<Props> = ({
                     fontFamily={FontFamily.SEMIBOLD}
                     color={theme.palette.background.main}
                   >
-                    No hay fiestas F
+                    {t('party.components.Carousel.notAvailable')}
                   </Text>
                 )}
               </Box>

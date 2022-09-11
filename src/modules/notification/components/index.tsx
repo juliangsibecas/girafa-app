@@ -1,1 +1,1 @@
-export * from './FollowNotification';
+export * from './NotificationItem';

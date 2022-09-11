@@ -24,7 +24,7 @@ export const formatDateTime = (str: string) => {
   const date = moment(str);
 
   if (isToday(date)) {
-    return `${date.hours}:${String(date.minutes)}`;
+    return `${date.hours()}:${String(date.minutes())}`;
   }
 
   if (isYesterday(date)) {

@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
-import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { useChangePasswordMutation } from '../../../api';
+
+import { useChangePasswordMutation, useResponse } from '../../../api';
 import {
   Box,
   Button,
@@ -11,6 +12,7 @@ import {
   FormikTextInput,
   Text,
 } from '../../../components';
+
 import { MyProfileStackScreenProps } from '../navigator';
 
 type FormValues = {
@@ -20,6 +22,8 @@ type FormValues = {
 };
 
 export const PasswordChangeScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { onSuccess, onError } = useResponse();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'PasswordChange'>['navigation']>();
   const [changePassword, { loading: isLoading }] = useChangePasswordMutation();
@@ -33,6 +37,7 @@ export const PasswordChangeScreen: React.FC = () => {
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required(),
     newPassword: Yup.string().required().min(4),
+    // TODO
     confirmPassword: Yup.string()
       .required()
       .oneOf([Yup.ref('newPassword'), null], 'Las contraseñas no coinciden.'),
@@ -53,33 +58,28 @@ export const PasswordChangeScreen: React.FC = () => {
       });
 
       if (data?.changePassword) {
-        Toast.show({
-          type: 'success',
-          text1: 'Exito',
-        });
+        onSuccess();
 
         navigate('Settings');
         return;
       }
 
+      // TODO
       helpers.setErrors({
         currentPassword: 'La pw esta mal bro.',
       });
     } catch (e: any) {
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar actualizar la pw',
-      });
+      onError();
     }
   };
 
   return (
     <Container noBottomGradient>
       <Text type="h2" textCenter mb={2}>
-        Holanda
+        {t('user.screens.PasswordChange.title')}
       </Text>
       <Text textCenter mb={4}>
-        Holanda
+        {t('user.screens.PasswordChange.subtitle')}
       </Text>
       <Formik
         initialValues={initialValues}
@@ -91,24 +91,24 @@ export const PasswordChangeScreen: React.FC = () => {
             <Box flex flexGrow={1}>
               <FormikTextInput
                 id="currentPassword"
-                placeholder="Contra actual"
+                placeholder={t('user.screens.PasswordChange.currentPassword')}
                 contentType="password"
               />
               <FormikTextInput
                 id="newPassword"
-                placeholder="Contra nueva"
+                placeholder={t('user.screens.PasswordChange.newPassword')}
                 contentType="password"
                 mt={4}
               />
               <FormikTextInput
                 id="confirmPassword"
-                placeholder="Confirmar contra"
+                placeholder={t('general.confirmPassword')}
                 contentType="password"
                 mt={1}
               />
             </Box>
             <Button onPress={() => submitForm()} isLoading={isLoading}>
-              Cambiar contrasena
+              {t('user.screens.PasswordChange.changePassword')}
             </Button>
           </>
         )}

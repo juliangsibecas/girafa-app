@@ -1,9 +1,10 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
-import { useGenerateRecoveryCodeMutation } from '../../../api';
+import { useGenerateRecoveryCodeMutation, useResponse } from '../../../api';
 import {
   Box,
   Button,
@@ -21,6 +22,8 @@ type FormValues = {
 };
 
 export const CodeGenerationScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { onError } = useResponse();
   const { params } = useRoute<OnboardingRouteProp<'CodeGeneration'>>();
   const { navigate } =
     useNavigation<OnboardingNavigationProp<'CodeGeneration'>>();
@@ -50,26 +53,25 @@ export const CodeGenerationScreen: React.FC = () => {
 
       if (data?.generateRecoveryCode) {
         navigate('PasswordRecovery', { email: values.email });
+        return;
       }
 
+      // TODO
       helpers.setErrors({
         email: 'El correo esta mal bro.',
       });
     } catch (e: any) {
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar generar el codigo',
-      });
+      onError();
     }
   };
 
   return (
     <Container noBottomTab>
       <Text type="h2" textCenter mb={2}>
-        Holanda
+        {t('auth.screens.CodeGeneration.title')}
       </Text>
       <Text textCenter mb={2}>
-        Holanda
+        {t('auth.screens.CodeGeneration.subtitle')}
       </Text>
       <Formik
         initialValues={initialValues}
@@ -81,14 +83,14 @@ export const CodeGenerationScreen: React.FC = () => {
             <Box flex flexGrow={1}>
               <FormikTextInput
                 id="email"
-                placeholder="Correo electronico"
+                placeholder={t('user.email')}
                 keyboardType="email-address"
                 contentType="emailAddress"
                 mt={1}
               />
             </Box>
             <Button onPress={() => submitForm()} isLoading={isLoading}>
-              Enviar codigo
+              {t('auth.screens.CodeGeneration.sendCode')}
             </Button>
           </>
         )}

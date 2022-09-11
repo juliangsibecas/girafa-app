@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
 import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyAttenders'>['navigation']>();
   const [search, setSearch] = useState('');
@@ -39,7 +41,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
     <>
       <Box flex row center mb={4}>
         <TextInput
-          placeholder="Buscar..."
+          placeholder={t('general.searchEllipsis')}
           value={search}
           onChangeText={(text) => setSearch(text)}
           flexGrow={1}

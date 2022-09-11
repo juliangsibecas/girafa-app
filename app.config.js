@@ -19,11 +19,11 @@ export default {
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'ar.com.girafa.app',
+    bundleIdentifier: 'com.girafa.app',
     supportsTablet: true,
   },
   android: {
-    package: 'ar.com.girafa.app',
+    package: 'com.girafa.app',
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',

@@ -1,11 +1,15 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl, ScrollView } from 'react-native';
-import { Box, Container, StateHandler, Text } from '../../../components';
-import { NotificationItem } from '../components/NotificationItem';
+
+import { Box, Container, Icon, StateHandler, Text } from '../../../components';
+
+import { NotificationItem } from '../components';
 import { useNotification } from '../hooks';
 
 export const NotificationsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const isFocused = useIsFocused();
   const {
     notifications,
@@ -24,7 +28,7 @@ export const NotificationsScreen: React.FC = () => {
 
   return (
     <Container>
-      <Text type="h1">Notificaciones</Text>
+      <Text type="h1">{t('general.notifications')}</Text>
       <StateHandler isLoading={isLoading} isError={isError}>
         {notifications.length > 0 ? (
           <FlatList
@@ -42,7 +46,8 @@ export const NotificationsScreen: React.FC = () => {
             }
           >
             <Box flexGrow={1} center>
-              <Text>No tenes notis pa</Text>
+              <Icon name="warning" color="warning" size={12} />
+              <Text>{t('notification.screens.Notifications.emptyText')}</Text>
             </Box>
           </ScrollView>
         )}

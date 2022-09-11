@@ -1,12 +1,16 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
 import { Box, Container, StateHandler, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
+
 import { PartyRow } from '../../party/components/PartyRow';
 
 export const UserAttendedPartiesScreen: React.FC = () => {
+  const { t } = useTranslation();
   const {
     params: { id },
   } = useRoute<HomeStackScreenProps<'UserAttendedParties'>['route']>();
@@ -26,7 +30,7 @@ export const UserAttendedPartiesScreen: React.FC = () => {
   return (
     <Container>
       <Text type="h1" mb={4}>
-        Fiestas
+        {t('general.parties')}
       </Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList

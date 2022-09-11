@@ -1,5 +1,7 @@
 import './yup';
 import './date';
+import './i18n';
+
 import React from 'react';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';

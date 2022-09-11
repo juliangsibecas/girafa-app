@@ -5,7 +5,11 @@ import { Formik, FormikHelpers } from 'formik';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { UserGetByIdDocument, useUserEditMutation } from '../../../api';
+import {
+  useResponse,
+  UserGetByIdDocument,
+  useUserEditMutation,
+} from '../../../api';
 import {
   Box,
   Button,
@@ -17,6 +21,7 @@ import { MyProfileStackScreenProps } from '../navigator';
 import { useAuth } from '../../auth';
 import { UserPicturePicker } from '../comonents';
 import { usePictureUpload } from '../../picture';
+import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   picture?: string;
@@ -25,6 +30,8 @@ type FormValues = {
 };
 
 export const UserEditScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { onSuccess, onError } = useResponse();
   const { userId } = useAuth();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'UserEdit'>['navigation']>();
@@ -49,11 +56,13 @@ export const UserEditScreen: React.FC = () => {
       .required()
       .min(3)
       .max(25)
+      // TODO
       .matches(/^[a-zA-Z\s]*$/, 'Solo puede contener letras y espacios.'),
     nickname: Yup.string()
       .required()
       .min(3)
       .max(15)
+      // TODO
       .matches(
         /^[a-zA-Z0-9_]{3,15}$/,
         'Solo puede contener letras, numeros y guiones bajos.'
@@ -75,10 +84,7 @@ export const UserEditScreen: React.FC = () => {
       });
 
       if (data?.userEdit) {
-        Toast.show({
-          type: 'success',
-          text1: 'Exito',
-        });
+        onSuccess();
 
         if (values.picture) {
           await uploadUser(values.picture);
@@ -89,10 +95,7 @@ export const UserEditScreen: React.FC = () => {
         return;
       }
 
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar editar',
-      });
+      throw Error();
     } catch (e: any) {
       const errors = e.graphQLErrors as GraphQLErrors;
       const error = errors[0];
@@ -102,21 +105,17 @@ export const UserEditScreen: React.FC = () => {
         return;
       }
 
-      console.log(e);
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar editar',
-      });
+      onError();
     }
   };
 
   return (
     <Container noBottomGradient>
       <Text type="h2" textCenter mb={2}>
-        Bienvenido
+        {t('user.screens.Edit.title')}
       </Text>
       <Text textCenter mb={6}>
-        Bienvenido
+        {t('user.screens.Edit.subtitle')}
       </Text>
       <Formik
         initialValues={initialValues}
@@ -128,24 +127,24 @@ export const UserEditScreen: React.FC = () => {
             <Box flex flexGrow={1}>
               <UserPicturePicker id="picture" />
               <Text type="hint" mt={2} mb={0.5} ml={0.5}>
-                Nombre
+                {t('general.name')}
               </Text>
               <FormikTextInput
                 id="fullName"
-                placeholder="Nombre"
+                placeholder={t('general.name')}
                 contentType="name"
               />
               <Text type="hint" mt={2} mb={0.5} ml={0.5}>
-                Nombre de usuario
+                {t('user.nickname')}
               </Text>
               <FormikTextInput
                 id="nickname"
-                placeholder="Nombre de usuario"
+                placeholder={t('user.nickname')}
                 contentType="username"
               />
             </Box>
             <Button onPress={() => submitForm()} isLoading={isLoading}>
-              Editar
+              {t('general.edit')}
             </Button>
           </>
         )}

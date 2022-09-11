@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl } from 'react-native';
 import { useUserGetFollowingByIdQuery } from '../../../api';
 import { Container, StateHandler, Text } from '../../../components';
@@ -6,6 +7,7 @@ import { HomeStackScreenProps } from '../../../navigation';
 import { UserRow } from '../comonents';
 
 export const UserFollowingScreen: React.FC = () => {
+  const { t } = useTranslation();
   const {
     params: { id },
   } = useRoute<HomeStackScreenProps<'UserFollowing'>['route']>();
@@ -25,7 +27,7 @@ export const UserFollowingScreen: React.FC = () => {
   return (
     <Container>
       <Text type="h1" mb={4}>
-        Seguidos
+        {t('user.following')}
       </Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList

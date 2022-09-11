@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { PartyPreview, UserPreview } from '../../../api';
 import { Box, Text } from '../../../components';
@@ -12,8 +13,8 @@ type Props = {
   data: Array<UserPreview | PartyPreview>;
   isOnly: boolean;
   isShowingAll: boolean;
-  showAll: (status: boolean) => void;
   isCardsListMode: boolean;
+  showAll: (status: boolean) => void;
 };
 
 export const DiscoverList: React.FC<Props> = ({
@@ -24,6 +25,7 @@ export const DiscoverList: React.FC<Props> = ({
   showAll,
   isCardsListMode,
 }) => {
+  const { t } = useTranslation();
   const { navigate } =
     useNavigation<DiscoverStackScreenProps<'List'>['navigation']>();
 
@@ -42,10 +44,14 @@ export const DiscoverList: React.FC<Props> = ({
         row
         style={{ justifyContent: 'space-between', alignItems: 'baseline' }}
       >
-        <Text type="h4">{isUser ? 'Usuarios' : 'Fiestas'}</Text>
+        <Text type="h4">
+          {isUser ? t('general.users') : t('general.parties')}
+        </Text>
         {data.length > 4 || !isOnly ? (
           <TouchableOpacity onPress={() => showAll(!isShowingAll)}>
-            <Text type="hint">{isShowingAll ? 'Ver menos' : 'Ver mas'}</Text>
+            <Text type="hint">
+              {isShowingAll ? t('general.seeLess') : t('general.seeMore')}
+            </Text>
           </TouchableOpacity>
         ) : undefined}
       </Box>

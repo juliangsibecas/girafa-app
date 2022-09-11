@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Modal from 'react-native-modal';
 import { Box } from '../Box';
 import { Button } from '../Button';
@@ -9,6 +10,7 @@ type Props = {
 
   title: string;
   body: string;
+
   confirm?: string;
   cancel?: string;
 
@@ -24,21 +26,27 @@ export const ConfirmationModal: React.FC<Props> = ({
   cancel,
   onConfirm,
   onCancel,
-}) => (
-  <Modal isVisible={isOpen}>
-    <Box bgColor="background" borderRadius={2} py={4} px={4}>
-      <Text type="h3" textCenter>
-        {title}
-      </Text>
-      <Text mt={2} textCenter>
-        {body}
-      </Text>
-      <Button small mt={2} onPress={onConfirm}>
-        {confirm ?? 'Confirmar'}
-      </Button>
-      <Button secondary small mt={1} onPress={onCancel}>
-        {cancel ?? 'Cancelar'}
-      </Button>
-    </Box>
-  </Modal>
-);
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Modal isVisible={isOpen}>
+      <Box bgColor="background" borderRadius={2} py={4} px={4}>
+        <Text type="h3" textCenter>
+          {title}
+        </Text>
+        <Text mt={2} textCenter>
+          {body}
+        </Text>
+        <Box flex row center mt={2}>
+          <Button secondary small mr={2} onPress={onCancel} flexGrow={1}>
+            {cancel ?? t('general.cancel')}
+          </Button>
+          <Button small onPress={onConfirm} flexGrow={1}>
+            {confirm ?? t('general.confirm')}
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};

@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik } from 'formik';
 import React from 'react';
-import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { useSupportSendMessageMutation } from '../../api';
+
+import { useResponse, useSupportSendMessageMutation } from '../../api';
 import {
   Box,
   Button,
@@ -11,6 +12,7 @@ import {
   FormikTextInput,
   Text,
 } from '../../components';
+
 import { MyProfileStackScreenProps } from '../user';
 
 type FormValues = {
@@ -19,6 +21,8 @@ type FormValues = {
 };
 
 export const SupportScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const { onSuccess, onError } = useResponse();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'Support'>['navigation']>();
   const [sendMessage, { loading: isLoading }] = useSupportSendMessageMutation();
@@ -33,10 +37,7 @@ export const SupportScreen: React.FC = () => {
     body: Yup.string().required().min(4),
   });
 
-  const handleSubmit = async (
-    values: FormValues,
-    helpers: FormikHelpers<FormValues>
-  ) => {
+  const handleSubmit = async (values: FormValues) => {
     try {
       const { data } = await sendMessage({
         variables: {
@@ -45,34 +46,26 @@ export const SupportScreen: React.FC = () => {
       });
 
       if (data?.supportSendMessage) {
-        Toast.show({
-          type: 'success',
-          text1: 'Exito',
-        });
+        onSuccess();
 
         navigate('Settings');
         return;
       }
 
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar mandar el msj',
-      });
+      throw Error();
     } catch (e: any) {
-      Toast.show({
-        type: 'error',
-        text1: 'Hubo un error al intentar mandar el msj',
-      });
+      onError();
+      console.log(e);
     }
   };
 
   return (
     <Container noBottomGradient>
       <Text type="h2" textCenter mb={2}>
-        Holanda
+        {t('support.screens.Support.title')}
       </Text>
       <Text textCenter mb={4}>
-        Holanda
+        {t('support.screens.Support.subtitle')}
       </Text>
       <Formik
         initialValues={initialValues}
@@ -82,16 +75,19 @@ export const SupportScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex flexGrow={1}>
-              <FormikTextInput id="subject" placeholder="Asunto" />
+              <FormikTextInput
+                id="subject"
+                placeholder={t('support.screens.Support.subject')}
+              />
               <FormikTextInput
                 id="body"
-                placeholder="Mensaje"
+                placeholder={t('support.screens.Support.body')}
                 mt={2}
                 lines={4}
               />
             </Box>
             <Button onPress={() => submitForm()} isLoading={isLoading}>
-              Enviar mensaje
+              {t('support.screens.Support.sendMessage')}
             </Button>
           </>
         )}

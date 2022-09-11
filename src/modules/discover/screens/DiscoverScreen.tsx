@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePartySearchLazyQuery, useUserSearchLazyQuery } from '../../../api';
 import {
   Box,
@@ -13,6 +14,7 @@ import { Maybe } from '../../../types';
 import { DiscoverList } from '../components';
 
 export const DiscoverScreen: React.FC = () => {
+  const { t } = useTranslation();
   const [
     searchUsers,
     { data: usersData, loading: isUsersLoading, error: usersError },
@@ -51,7 +53,7 @@ export const DiscoverScreen: React.FC = () => {
     <Container>
       <Box flex row center>
         <Text flexGrow={1} type="h1">
-          Descubrir
+          {t('general.discover')}
         </Text>
         <Box flex center>
           <ListSwitch
@@ -63,7 +65,7 @@ export const DiscoverScreen: React.FC = () => {
       </Box>
       <Box mt={2} mb={4}>
         <TextInput
-          placeholder="Buscar..."
+          placeholder={t('general.searchEllipsis')}
           value={search}
           onChangeText={(text) => setSearch(text)}
         />

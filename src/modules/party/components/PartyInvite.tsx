@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, TouchableOpacity, View } from 'react-native';
-import Toast from 'react-native-toast-message';
+
 import {
+  useResponse,
   useUserSearchFollowersToInviteQuery,
   useUserSendPartyInviteMutation,
 } from '../../../api';
@@ -15,6 +17,7 @@ import {
 } from '../../../components';
 import { BottomModal } from '../../../components/Modal';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
+
 import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from '../../user';
 
@@ -70,6 +73,8 @@ type Props = {
 };
 
 export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
+  const { t } = useTranslation();
+  const { onSuccess, onError } = useResponse();
   const {
     data,
     loading: isLoading,
@@ -90,8 +95,8 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
   const [selectedUsersId, setSelectedUsersId] = useState<
     Record<string, boolean>
   >({});
-
   const [search, setSearch] = useState('');
+
   const debouncedSearch = useDebounce(search);
 
   const users = data?.userSearchFollowersToInvite ?? [];
@@ -123,10 +128,10 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
         throw new Error();
       } else {
         setSelectedUsersId({});
-        Toast.show({ type: 'success', text1: 'Invitacionse enviadas!' });
+        onSuccess();
       }
     } catch (e) {
-      Toast.show({ type: 'error', text1: 'Ocurrio un error' });
+      onError();
     }
   };
 
@@ -134,29 +139,40 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
     <BottomModal isOpen={isOpen} onClose={onClose}>
       <Box flex row mb={2} style={{ alignItems: 'baseline' }}>
         <Text type="h2" flexGrow={1}>
-          Invitar
+          {t('party.components.Invite.invite')}
         </Text>
-        <Text type="secondary">Solo seguidores</Text>
+        <Text type="secondary">
+          {t('party.components.Invite.onlyFollowersAllowed')}
+        </Text>
       </Box>
       <TextInput
-        placeholder="Buscar..."
+        placeholder={t('general.searchEllipsis')}
         value={search}
         onChangeText={(text) => setSearch(text)}
         mb={4}
       />
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
-        <FlatList
-          style={{ height: 200 }}
-          data={users}
-          renderItem={({ item }) => (
-            <PartyInviteItem
-              user={item}
-              selectedUserIds={selectedUsersId}
-              add={addUserId}
-              remove={removeUserId}
+        <Box height={15} center>
+          {users.length ? (
+            <FlatList
+              style={{ height: '100%', width: '100%' }}
+              data={users}
+              renderItem={({ item }) => (
+                <PartyInviteItem
+                  user={item}
+                  selectedUserIds={selectedUsersId}
+                  add={addUserId}
+                  remove={removeUserId}
+                />
+              )}
             />
+          ) : (
+            <Box flex row>
+              <Icon name="warning" color="warning" mr={1} />
+              <Text>{t('party.components.Invite.emptyText')}</Text>
+            </Box>
           )}
-        />
+        </Box>
       </StateHandler>
       <Button
         mt={4}
@@ -164,7 +180,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
         onPress={handleSubmit}
         isDisabled={Object.keys(selectedUsersId).length === 0}
       >
-        Enviar invitaciones
+        {t('party.components.Invite.sendInvitations')}
       </Button>
     </BottomModal>
   );
