@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import MapView from 'react-native-maps';
 import { PartyMapPreview } from '../../../api';
 import { Box, INITIAL_REGION, Map } from '../../../components';
+import { useEffectExceptOnMount } from '../../../hooks';
 
 interface Props {
   idx: number;
@@ -16,7 +17,7 @@ export const PartyMap: React.FC<Props> = ({
 }) => {
   const map = useRef<MapView>();
 
-  useEffect(() => {
+  useEffectExceptOnMount(() => {
     map.current?.animateToRegion(
       idx === -1
         ? INITIAL_REGION
