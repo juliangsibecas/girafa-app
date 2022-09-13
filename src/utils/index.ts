@@ -6,3 +6,4 @@ export function insertObjectIf<T = Record<string, unknown>>(
 }
 
 export * from './date';
+export * from './platform';

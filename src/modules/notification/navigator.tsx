@@ -36,17 +36,12 @@ export const NotificationNavigator: React.FC = () => {
         headerBackTitle: '',
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
+        headerStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
       }}
     >
-      <Stack.Screen
-        name="List"
-        component={NotificationsScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: theme.palette.background.main,
-          },
-        }}
-      />
+      <Stack.Screen name="List" component={NotificationsScreen} />
       {ProfileStackGroup({ Stack })}
       {PartyDetailStackGroup({ Stack })}
     </Stack.Navigator>

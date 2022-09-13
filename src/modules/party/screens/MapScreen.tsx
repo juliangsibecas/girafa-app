@@ -11,17 +11,12 @@ import { PartyMapPreview, usePartyFindQuery } from '../../../api';
 import { PartyCarousel, PartyMap } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackScreenProps } from '../../../navigation';
+import { isIOS } from '../../../utils';
 
 export const MapScreen: React.FC = () => {
   const { navigate } =
     useNavigation<HomeStackScreenProps<'Map'>['navigation']>();
-  const {
-    data,
-    loading: isLoading,
-    error: isError,
-    refetch,
-    networkStatus,
-  } = usePartyFindQuery();
+  const { data, loading: isLoading, error: isError } = usePartyFindQuery();
   const [currentIdx, setCurrentIdx] = useState(-1);
 
   const parties = (data?.partyFind ?? []) as Array<PartyMapPreview>;
@@ -59,6 +54,8 @@ export const MapScreen: React.FC = () => {
               height={4}
               width={4}
               onPress={() => navigate('PartyCreateForm')}
+              pt={isIOS ? 0.6 : undefined}
+              pl={isIOS ? 0.1 : undefined}
             >
               <Icon name="plus" color="background" weight={4} />
             </Button>

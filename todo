@@ -6,9 +6,6 @@ push notification deep linking?
 delete account?
 party edit?
 
-cache images
-default images (local)
-
 change email
 
 #
@@ -35,3 +32,5 @@ createparty button ios
 #
 
 map filters (only today, only this weekend)
+
+define cache images policies
