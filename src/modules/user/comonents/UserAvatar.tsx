@@ -1,7 +1,7 @@
 import { ImageStyle } from 'react-native';
 import { Avatar } from '../../../components';
 import { UiKeys } from '../../../ui';
-import { getUserPictureUrl, USER_FALLBACK_SRC } from '../../picture';
+import { getUserPictureUrl } from '../../picture';
 import defaultImage from '../../../../assets/images/user.png';
 
 type Props = UiKeys & {

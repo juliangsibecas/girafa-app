@@ -1,33 +1,27 @@
 import React, { useState } from 'react';
-import { Image as RNImage, ImageStyle } from 'react-native';
-import { useEffectExceptOnMount } from '../../hooks';
+import { ImageStyle } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { UiKeys, useStyle } from '../../ui';
 
 type Props = UiKeys & {
   src: string | number;
-  fallbackSrc?: string;
+  fallbackSrc?: number;
   style?: ImageStyle;
 };
 
 export const Image: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
-  const [source, setSource] = useState(src);
-  const isUri = typeof source === 'string';
+  const isUri = typeof src === 'string';
 
   const style = useStyle(props) as ImageStyle;
 
-  useEffectExceptOnMount(() => {
-    setSource(src);
-  }, [src]);
-
   return (
-    <RNImage
+    <FastImage
       source={
-        isUri
-          ? { uri: `${source as string}?t=${Date.now()}` }
-          : (source as number)
+        isUri ? { uri: `${src as string}?t=${Date.now()}` } : (src as number)
       }
       style={{ ...style, ...props.style, aspectRatio: 1 }}
-      onError={() => fallbackSrc && setSource(fallbackSrc)}
+      fallback
+      defaultSource={require('../../../assets/images/user.png')}
     />
   );
 };

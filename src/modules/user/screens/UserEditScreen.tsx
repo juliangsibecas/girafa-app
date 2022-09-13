@@ -23,6 +23,7 @@ import { usePictureUpload } from '../../picture';
 
 import { MyProfileStackScreenProps } from '../navigator';
 import { UserPicturePicker } from '../comonents';
+import { useUser } from '../hooks';
 
 type FormValues = {
   picture?: string;
@@ -34,6 +35,7 @@ export const UserEditScreen: React.FC = () => {
   const { t } = useTranslation();
   const { onSuccess, onError } = useResponse();
   const { userId } = useAuth();
+  const { updatePictureVersion } = useUser();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'UserEdit'>['navigation']>();
   const { params } = useRoute<MyProfileStackScreenProps<'UserEdit'>['route']>();
@@ -90,6 +92,8 @@ export const UserEditScreen: React.FC = () => {
         if (values.picture) {
           await uploadUser(values.picture);
         }
+
+        updatePictureVersion();
 
         navigate('Profile');
 
