@@ -18,7 +18,7 @@ export default {
     fallbackToCacheTimeout: 0,
   },
   assetBundlePatterns: ['**/*'],
-  ios: {
+ ios: {
     bundleIdentifier: 'com.girafa.app',
     supportsTablet: true,
   },

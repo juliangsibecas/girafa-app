@@ -4,9 +4,9 @@ import { Box, Container, Text } from '../../../components';
 import { SignUpForm } from '../components';
 
 export const SignUpScreen: React.FC = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   return (
-    <Container noBottomTab>
+    <Container noBottomTab keyboardDismiss>
       <Text type="h2" textCenter mb={2}>
         {t('auth.screens.SignUp.title')}
       </Text>

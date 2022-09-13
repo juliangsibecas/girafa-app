@@ -29,20 +29,20 @@ export const MapScreen: React.FC = () => {
   const handleIdxChange = (idx: number) => setCurrentIdx(idx);
 
   return (
-    <StateHandler
-      isLoading={isLoading}
-      isError={Boolean(isError)}
-      isRefreshEnabled
-      isRefreshing={networkStatus === 4}
-      onRefresh={refetch}
-    >
+    <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
       <PartyMap
         parties={parties}
         idx={currentIdx}
         handleIdxChange={handleIdxChange}
       />
-      <Container noHeader px={0} bgColor={undefined} pointerEvents="box-none">
-        <Box flexGrow={1} pointerEvents="box-none" row>
+      <Container
+        noHeader
+        px={0}
+        bgColor={undefined}
+        pointerEvents="box-none"
+        style={{ justifyContent: 'space-between' }}
+      >
+        <Box pointerEvents="box-none" row>
           <Box flexGrow={1} />
           <Box hcenter flexGrow={1}>
             <Logo />

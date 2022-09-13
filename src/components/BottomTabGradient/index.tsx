@@ -16,7 +16,10 @@ export const BottomTabGradient = () => {
       pointerEvents="none"
     >
       <LinearGradient
-        colors={['transparent', theme.palette.background.main]}
+        colors={[
+          `${theme.palette.background.main}00`,
+          theme.palette.background.main,
+        ]}
         locations={[0, 1]}
         style={{ height: '100%' }}
       />

@@ -18,7 +18,7 @@ export const Avatar: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
       fallbackSrc={fallbackSrc}
       height={props.height ?? 5}
       width={props.width ?? 5}
-      borderRadius={2}
+      borderRadius={props.borderRadius ?? 2}
       style={{ ...style, ...props.style }}
     />
   );

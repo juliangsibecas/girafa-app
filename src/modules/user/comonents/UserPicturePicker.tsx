@@ -3,10 +3,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
 
+import defaultPicture from '../../../../assets/images/user.png';
+
 import { Box, Image } from '../../../components';
 
 import { useAuth } from '../../auth';
-import { USER_FALLBACK_SRC } from '../../picture/constants';
 import { getUserPictureUrl } from '../../picture';
 
 interface Props {
@@ -43,7 +44,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
       <TouchableOpacity onPress={pickImage}>
         <Image
           src={values[id] ?? getUserPictureUrl(userId)}
-          fallbackSrc={USER_FALLBACK_SRC}
+          fallbackSrc={defaultPicture}
           width={15}
           height={15}
           style={{ borderRadius: 100 }}

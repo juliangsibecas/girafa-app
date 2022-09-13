@@ -2,6 +2,7 @@ import { ImageStyle } from 'react-native';
 import { Avatar } from '../../../components';
 import { UiKeys } from '../../../ui';
 import { getUserPictureUrl, USER_FALLBACK_SRC } from '../../picture';
+import defaultImage from '../../../../assets/images/user.png';
 
 type Props = UiKeys & {
   id: string;
@@ -9,9 +10,5 @@ type Props = UiKeys & {
 };
 
 export const UserAvatar: React.FC<Props> = ({ id, ...props }) => (
-  <Avatar
-    src={getUserPictureUrl(id)}
-    fallbackSrc={USER_FALLBACK_SRC}
-    {...props}
-  />
+  <Avatar src={getUserPictureUrl(id)} fallbackSrc={defaultImage} {...props} />
 );

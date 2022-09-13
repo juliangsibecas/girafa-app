@@ -60,7 +60,7 @@ export const SupportScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient>
+    <Container noBottomGradient keyboardDismiss>
       <Text type="h2" textCenter mb={2}>
         {t('support.screens.Support.title')}
       </Text>

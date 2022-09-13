@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Yup from 'yup';
-import Toast from 'react-native-toast-message';
 import { Formik, FormikHelpers } from 'formik';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import {
   useResponse,
@@ -17,11 +17,12 @@ import {
   FormikTextInput,
   Text,
 } from '../../../components';
-import { MyProfileStackScreenProps } from '../navigator';
+
 import { useAuth } from '../../auth';
-import { UserPicturePicker } from '../comonents';
 import { usePictureUpload } from '../../picture';
-import { useTranslation } from 'react-i18next';
+
+import { MyProfileStackScreenProps } from '../navigator';
+import { UserPicturePicker } from '../comonents';
 
 type FormValues = {
   picture?: string;
@@ -110,7 +111,7 @@ export const UserEditScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient>
+    <Container noBottomGradient keyboardDismiss>
       <Text type="h2" textCenter mb={2}>
         {t('user.screens.Edit.title')}
       </Text>

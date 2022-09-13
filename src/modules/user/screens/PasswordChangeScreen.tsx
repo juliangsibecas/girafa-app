@@ -74,7 +74,7 @@ export const PasswordChangeScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient>
+    <Container noBottomGradient keyboardDismiss>
       <Text type="h2" textCenter mb={2}>
         {t('user.screens.PasswordChange.title')}
       </Text>

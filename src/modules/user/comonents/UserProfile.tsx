@@ -73,6 +73,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         position="absolute"
         top={0}
         left={0}
+        borderRadius={0}
       />
       <Box mt={7} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
