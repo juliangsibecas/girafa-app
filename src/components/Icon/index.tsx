@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  XCircle,
   Home,
   Image,
   List,
@@ -32,6 +33,7 @@ type Props = UiKeys & {
 
 const dict = {
   warning: AlertCircle,
+  error: XCircle,
   home: Home,
   search: Search,
   bell: Bell,

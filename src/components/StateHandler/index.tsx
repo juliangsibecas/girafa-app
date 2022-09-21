@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView } from 'react-native';
 import { Box } from '../Box';
+import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
 import { Text } from '../Text';
 
@@ -37,11 +39,17 @@ export const StateHandler: React.FC<Props> = ({
   onRefresh,
   children,
 }) => {
+  const { t } = useTranslation();
   if (isLoading || isError) {
     return (
-      <Box flexGrow={1} bgColor="background" vcenter>
+      <Box flexGrow={1} bgColor="background" center>
         {isLoading && <Spinner />}
-        {isError && <Text>Error</Text>}
+        {isError && (
+          <>
+            <Icon name="error" color="error" size={10} />
+            <Text mt={2}>{t('general.error')}</Text>
+          </>
+        )}
       </Box>
     );
   }

@@ -31,6 +31,8 @@ export const es = {
       seeAll: 'Ver todos',
       seeMore: 'Ver más',
       seeLess: 'Ver menos',
+
+      error: 'Ocurrio un error inesperado',
     },
     api: {
       error: 'Hubo un error al realizar la acción',
