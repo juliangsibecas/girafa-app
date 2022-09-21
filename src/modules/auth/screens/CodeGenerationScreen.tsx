@@ -2,8 +2,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
+
 import { useGenerateRecoveryCodeMutation, useResponse } from '../../../api';
 import {
   Box,
@@ -12,6 +12,7 @@ import {
   FormikTextInput,
   Text,
 } from '../../../components';
+
 import {
   OnboardingNavigationProp,
   OnboardingRouteProp,

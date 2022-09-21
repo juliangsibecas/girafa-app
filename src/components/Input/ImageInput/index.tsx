@@ -1,11 +1,11 @@
 import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { useTranslation } from 'react-i18next';
 import { Box } from '../../Box';
 import { Button } from '../../Button';
 import { Icon } from '../../Icon';
 import { Text } from '../../Text';
 import { FontFamily } from '../../../theme/text/types';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
   onChange: (uri: string) => void;

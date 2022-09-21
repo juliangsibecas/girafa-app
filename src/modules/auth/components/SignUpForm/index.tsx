@@ -1,12 +1,14 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { GraphQLErrors } from '@apollo/client/errors';
+
 import { Box, FormikTextInput } from '../../../../components';
 import { Button } from '../../../../components/Button';
 import { useResponse, useSignUpMutation } from '../../../../api';
-import { GraphQLErrors } from '@apollo/client/errors';
+
 import { useAuth } from '../../hooks';
-import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   fullName: string;

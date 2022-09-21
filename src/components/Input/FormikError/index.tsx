@@ -1,7 +1,9 @@
 import React from 'react';
 import { ErrorMessage } from 'formik';
-import { Text } from '../../Text';
+
 import { useTheme } from '../../../theme';
+
+import { Text } from '../../Text';
 
 type Props = {
   id: string;

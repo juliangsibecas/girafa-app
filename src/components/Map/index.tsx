@@ -6,6 +6,7 @@ import RNMap, {
   MarkerProps as RNMarkerProps,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
+
 import lightStyle from '../../../assets/maps/light.json';
 import darkStyle from '../../../assets/maps/dark.json';
 

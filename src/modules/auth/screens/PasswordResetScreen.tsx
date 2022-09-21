@@ -3,6 +3,7 @@ import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+
 import {
   useRecoverPasswordMutation,
   useResponse,
@@ -15,10 +16,12 @@ import {
   FormikTextInput,
   Text,
 } from '../../../components';
+
 import {
   OnboardingNavigationProp,
   OnboardingRouteProp,
 } from '../../onboarding';
+
 import { useAuth } from '../hooks';
 
 type FormValues = {

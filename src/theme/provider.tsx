@@ -2,6 +2,7 @@ import { ThemeContext } from './context';
 import { Theme, ThemeMode } from './types';
 
 type Props = {
+  children: React.ReactNode;
   theme: (mode: ThemeMode) => Theme;
   mode?: ThemeMode;
 };

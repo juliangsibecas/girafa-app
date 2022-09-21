@@ -5,7 +5,7 @@ import { Image } from '../Image';
 
 type Props = UiKeys & {
   src: string;
-  fallbackSrc?: string;
+  fallbackSrc?: number;
   style?: ImageStyle;
 };
 

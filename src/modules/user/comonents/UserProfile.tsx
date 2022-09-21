@@ -13,7 +13,6 @@ import { Box, Button, Icon, Text } from '../../../components';
 
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
-import { useUser } from '../hooks';
 
 import { MyProfileStackScreenProps } from '../navigator';
 
@@ -22,7 +21,7 @@ import { UserAvatar } from './UserAvatar';
 type Props = {
   user: UserGetByIdResponse;
   isMyProfile?: boolean;
-  pictureVersion: number;
+  pictureVersion?: number;
 };
 
 export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {

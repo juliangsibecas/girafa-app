@@ -1,6 +1,5 @@
 import React from 'react';
-import { ImageStyle } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import FastImage, { ImageStyle } from 'react-native-fast-image';
 import { UiKeys, useStyle } from '../../ui';
 
 type Props = UiKeys & {

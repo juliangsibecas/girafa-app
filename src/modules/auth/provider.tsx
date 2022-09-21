@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { AuthContext } from './context';
 import * as SecureStore from 'expo-secure-store';
 import { SignInPayload } from './types';
@@ -6,7 +6,11 @@ import jwtDecode from 'jwt-decode';
 import { useSignInFromRefreshTokenMutation } from '../../api';
 import { client } from '../../apollo';
 
-export const AuthProvider: React.FC = ({ children }) => {
+type Props = {
+  children: ReactNode;
+};
+
+export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();
   const [userId, setUserId] = useState('');
   const [accessToken, setAccessToken] = useState('');

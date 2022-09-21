@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Box, Container, Text } from '../../../components';
+
 import { SignUpForm } from '../components';
 
 export const SignUpScreen: React.FC = () => {

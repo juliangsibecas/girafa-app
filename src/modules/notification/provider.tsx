@@ -9,14 +9,17 @@ import {
   useGetNotificationsQuery,
   UserNotification,
 } from '../../api';
-import { StateHandler } from '../../components';
 import { Maybe } from 'yup/lib/types';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
 
 OneSignal.setAppId(env.oneSignalId);
 
-export const NotificationsProvider: React.FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   const { isForeground } = useAppStatus();
   const [permission, askPermission] = usePermissions();
   const { userId, isSignedIn, isLoading: isAuthLoading } = useAuth();

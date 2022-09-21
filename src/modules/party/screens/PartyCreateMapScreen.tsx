@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { Coordinate } from '../../../api';
-import { Box, Button, Container, Map, Marker, Text } from '../../../components';
+import { Box, Button, Container, Map, Text } from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
 import { useTranslation } from 'react-i18next';
 

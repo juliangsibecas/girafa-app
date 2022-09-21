@@ -4,14 +4,15 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { Formik, FormikHelpers } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Button, FormikTextInput, Text } from '../../../../components';
 import { useResponse, useSignInMutation } from '../../../../api';
+import { FontFamily } from '../../../../theme';
+
+import { OnboardingNavigationProp } from '../../../onboarding';
 
 import { useAuth } from '../../hooks';
-import { FontFamily } from '../../../../theme';
-import { OnboardingNavigationProp } from '../../../onboarding';
-import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   email: string;

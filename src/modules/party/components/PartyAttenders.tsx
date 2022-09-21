@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';

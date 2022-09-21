@@ -21,8 +21,10 @@ export const PartyCreateFormScreen: React.FC = () => {
 
   return (
     <Container noBottomGradient>
-      {confirmationModal}
-      <PartyCreateForm />
+      <>
+        {confirmationModal}
+        <PartyCreateForm />
+      </>
     </Container>
   );
 };

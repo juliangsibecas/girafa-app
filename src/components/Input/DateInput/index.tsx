@@ -2,10 +2,12 @@ import moment from 'moment';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+
 import { useModal } from '../../../hooks';
 import { useTheme } from '../../../theme';
 import { UiKeys } from '../../../ui';
 import { formatDate } from '../../../utils';
+
 import { Box } from '../../Box';
 import { Icon } from '../../Icon';
 import { BottomModal } from '../../Modal';

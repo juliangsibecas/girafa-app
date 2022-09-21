@@ -102,7 +102,7 @@ export const PasswordChangeScreen: React.FC = () => {
               />
               <FormikTextInput
                 id="confirmPassword"
-                placeholder={t('general.confirmPassword')}
+                placeholder={t('user.confirmPassword')}
                 contentType="password"
                 mt={1}
               />

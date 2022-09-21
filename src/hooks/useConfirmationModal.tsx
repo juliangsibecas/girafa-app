@@ -6,13 +6,10 @@ import { useModal } from './useModal';
 
 interface Props {
   isOpen?: boolean;
-
   title: string;
   body: string;
-
   confirm?: string;
   cancel?: string;
-
   onConfirm?: () => void;
   onCancel?: () => void;
 }

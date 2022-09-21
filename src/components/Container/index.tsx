@@ -22,6 +22,7 @@ export const ContainerWrapper: React.FC<Props> = ({ children }) => (
     {children}
   </Pressable>
 );
+
 export const Container: React.FC<Props> = ({
   noHeader,
   noBottomTab,

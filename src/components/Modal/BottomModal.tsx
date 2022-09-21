@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Modal from 'react-native-modal';
 import { Box } from '../Box';
 
 type Props = {
+  children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
 };

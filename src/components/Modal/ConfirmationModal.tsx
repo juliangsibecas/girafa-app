@@ -7,13 +7,10 @@ import { Text } from '../Text';
 
 type Props = {
   isOpen: boolean;
-
   title: string;
   body: string;
-
   confirm?: string;
   cancel?: string;
-
   onConfirm: () => void;
   onCancel: () => void;
 };

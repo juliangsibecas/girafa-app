@@ -1,7 +1,9 @@
 import React from 'react';
 import { TextInputProps as RNTextInputProps } from 'react-native';
 import { useFormikContext } from 'formik';
+
 import { UiKeys } from '../../../ui';
+
 import { FormikError } from '../FormikError';
 import { TextInput } from '../TextInput';
 
@@ -33,7 +35,6 @@ export const FormikTextInput: React.FC<Props> = ({
         contentType={contentType}
         onChangeText={handleChange(id)}
         onBlur={handleBlur(id)}
-        
         {...props}
       />
       <FormikError id={id} />

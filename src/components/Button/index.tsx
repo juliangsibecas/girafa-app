@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   TouchableOpacity,
   TouchableOpacityProps,
@@ -11,7 +11,7 @@ import { Text } from '../Text';
 
 type Props = UiKeys &
   TouchableOpacityProps & {
-    children: string;
+    children: ReactNode;
     secondary?: boolean;
     small?: boolean;
     isLoading?: boolean;

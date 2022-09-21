@@ -2,6 +2,7 @@ import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
+
 import { useTheme } from '../../../theme';
 import { UiKeys, useStyle } from '../../../ui';
 

@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import { UiKeys } from '../../../ui';
 import {
   NativeSyntheticEvent,
   TargetedEvent,
   TouchableOpacity,
 } from 'react-native';
+
+import { UiKeys } from '../../../ui';
+
 import { Box } from '../../Box';
 import { Text } from '../../Text';
 import { Icon } from '../../Icon';
