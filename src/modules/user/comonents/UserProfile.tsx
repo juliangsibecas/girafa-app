@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 
 import {
   useResponse,
@@ -70,16 +70,17 @@ export const UserProfile: React.FC<Props> = ({
   };
 
   return (
-    <Box overflow="hidden" width="screen" height="screen">
+    <Box overflow="hidden" width="screen" flexGrow={1}>
       <UserAvatar
         id={user._id}
         key={pictureVersion}
-        height="screen"
         width="screen"
         position="absolute"
         top={0}
         left={0}
         borderRadius={0}
+        style={{ height: '100%' }}
+        placeholderSize={Dimensions.get('screen').width / 18}
       />
       <Box mt={7} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
@@ -89,7 +90,6 @@ export const UserProfile: React.FC<Props> = ({
         ) : undefined}
       </Box>
       <Box
-        mb={9}
         p={3}
         bgColor="background"
         style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}

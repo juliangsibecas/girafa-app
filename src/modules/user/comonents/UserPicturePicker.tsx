@@ -3,9 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
 
-import defaultPicture from '../../../../assets/images/user.png';
-
-import { Box, Image } from '../../../components';
+import { Avatar, Box, Image } from '../../../components';
 
 import { useAuth } from '../../auth';
 import { getUserPictureUrl } from '../../picture';
@@ -45,11 +43,12 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
   return (
     <Box flex center>
       <TouchableOpacity onPress={pickImage}>
-        <Image
+        <Avatar
+          type="user"
           src={values[id] ?? getUserPictureUrl(userId)}
-          fallbackSrc={defaultPicture}
           width={15}
           height={15}
+          placeholderSize={8}
           style={{ borderRadius: 100 }}
         />
       </TouchableOpacity>

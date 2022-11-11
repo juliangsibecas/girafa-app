@@ -44,6 +44,7 @@ export type UiKeys = Partial<{
 
   fontFamily: FontFamily;
   fontSize: number;
+  lineHeight: number;
   textCenter: boolean;
   textRight: boolean;
   color: string;

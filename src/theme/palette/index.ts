@@ -7,7 +7,7 @@ export const lightPalette: Palette = {
     white: '#FFFFFF',
   },
   primary: {
-    main: '#9070ED',
+    main: '#774DF0',
   },
   secondary: {
     main: '#000000',
@@ -40,7 +40,7 @@ export const darkPalette: Palette = {
     white: '#FFFFFF',
   },
   primary: {
-    main: '#9070ED',
+    main: '#774DF0',
   },
   secondary: {
     main: '#000000',

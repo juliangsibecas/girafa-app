@@ -21,14 +21,18 @@ import {
   Square,
   User,
 } from 'react-native-feather';
+
 import { useTheme } from '../../theme';
 import { UiKeys, useStyle } from '../../ui';
+import PartyIcon from '../../assets/icons/party.svg';
+import { SvgProps } from 'react-native-svg';
 
 type Props = UiKeys & {
   name: keyof typeof dict;
   size?: number;
   weight?: number;
   isFilled?: boolean;
+  noStroke?: boolean;
 };
 
 const dict = {
@@ -38,6 +42,7 @@ const dict = {
   search: Search,
   bell: Bell,
   user: User,
+  party: PartyIcon,
   send: Send,
   square: Square,
   list: List,
@@ -64,6 +69,7 @@ export const Icon: React.FC<Props> = ({
   size: nSize,
   weight,
   isFilled,
+  noStroke,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -72,7 +78,7 @@ export const Icon: React.FC<Props> = ({
     color: props.color ?? 'text.primary',
   });
 
-  const FeatherIcon = dict[name];
+  const FeatherIcon: (props: SvgProps) => JSX.Element = dict[name];
   const size = theme.spacing(nSize ?? 2);
 
   return (
@@ -80,7 +86,7 @@ export const Icon: React.FC<Props> = ({
       width={size}
       height={size}
       fill={isFilled ? style.color : undefined}
-      stroke={style.color}
+      stroke={!noStroke ? style.color : undefined}
       strokeWidth={weight ?? 2}
       style={style}
     />

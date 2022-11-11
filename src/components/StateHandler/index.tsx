@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView } from 'react-native';
+import { useTheme } from '../../theme';
 import { Box } from '../Box';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
@@ -17,19 +18,23 @@ type Props = {
 
 const RefreshControlWrapper: React.FC<
   Pick<Props, 'children' | 'isRefreshing' | 'onRefresh'>
-> = ({ isRefreshing, onRefresh, children }) => (
-  <ScrollView
-    contentContainerStyle={{ flexGrow: 1 }}
-    refreshControl={
-      <RefreshControl
-        refreshing={Boolean(isRefreshing)}
-        onRefresh={onRefresh}
-      />
-    }
-  >
-    {children}
-  </ScrollView>
-);
+> = ({ isRefreshing, onRefresh, children }) => {
+  const { theme } = useTheme();
+  return (
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ backgroundColor: theme.palette.background.main }}
+      refreshControl={
+        <RefreshControl
+          refreshing={Boolean(isRefreshing)}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      {children}
+    </ScrollView>
+  );
+};
 
 export const StateHandler: React.FC<Props> = ({
   isLoading,

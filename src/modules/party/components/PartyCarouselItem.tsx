@@ -40,7 +40,12 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
               transform: [{ translateX: -theme.spacing(6) }],
             }}
           >
-            <PartyAvatar id={party._id} height={24} minWidth={12} />
+            <PartyAvatar
+              id={party._id}
+              height={24}
+              minWidth={12}
+              placeholderSize={7}
+            />
           </Box>
         </Box>
         <Box
@@ -69,8 +74,6 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
                     id: party._id,
                   })
                 }
-                pt={0.5}
-                pl={0.5}
               >
                 <Icon
                   name="chevron-right"

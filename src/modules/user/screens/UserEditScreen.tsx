@@ -126,9 +126,9 @@ export const UserEditScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1}>
+            <Box flex flexGrow={1} mt={3}>
               <UserPicturePicker id="picture" key={Date.now()} />
-              <Text type="hint" mt={2} mb={0.5} ml={0.5}>
+              <Text type="hint" mt={6} mb={0.5} ml={0.5}>
                 {t('general.name')}
               </Text>
               <FormikTextInput

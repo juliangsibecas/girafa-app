@@ -30,7 +30,7 @@ export const PartyMap: React.FC<Props> = ({
   }, [idx]);
 
   return (
-    <Box position="absolute">
+    <Box position="absolute" bgColor="background">
       <Map
         mapRef={map}
         markers={parties.map((party, i) => ({

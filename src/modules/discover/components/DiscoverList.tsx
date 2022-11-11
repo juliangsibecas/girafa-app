@@ -34,8 +34,7 @@ export const DiscoverList: React.FC<Props> = ({
   const PartyItem = PartyRow;
   const UserItem = isCardsListMode ? UserCard : UserRow;
 
-  const go = (id: string) =>
-    navigate('Discover', { screen: 'UserProfile', params: { id } });
+  const go = (id: string) => navigate('UserProfile', { id });
 
   return (
     <>

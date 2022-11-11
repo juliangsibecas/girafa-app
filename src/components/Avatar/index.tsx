@@ -1,25 +1,54 @@
 import React from 'react';
 import { ImageStyle } from 'react-native';
 import { UiKeys, useStyle } from '../../ui';
+import { Box } from '../Box';
+import { Icon } from '../Icon';
 import { Image } from '../Image';
 
 type Props = UiKeys & {
+  type: 'user' | 'party';
   src: string;
-  fallbackSrc?: number;
+  placeholderSize?: number;
   style?: ImageStyle;
 };
 
-export const Avatar: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
+export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
   const style = useStyle(props) as ImageStyle;
+  const placeholderSize = props.placeholderSize ?? 3;
+  const height = props.height ?? 5;
+  const width = props.width ?? 5;
+  const borderRadius = props.borderRadius ?? 2;
 
   return (
-    <Image
-      src={src}
-      fallbackSrc={fallbackSrc}
-      height={props.height ?? 5}
-      width={props.width ?? 5}
-      borderRadius={props.borderRadius ?? 2}
-      style={{ ...style, ...props.style }}
-    />
+    <Box
+      height={height}
+      width={width}
+      borderRadius={borderRadius}
+      overflow="hidden"
+      style={{ ...style, ...props.style, ...{ aspectRatio: 1 } }}
+    >
+      <Image
+        src={src}
+        height={height}
+        width={width}
+        borderRadius={borderRadius}
+        style={{ ...style, ...props.style }}
+      />
+      <Box
+        position="absolute"
+        bgColor="background.light"
+        flex
+        center
+        style={{ height: '100%', width: '100%' }}
+      >
+        <Icon
+          name={type}
+          color="primary"
+          size={placeholderSize}
+          isFilled={type === 'party'}
+          noStroke={type === 'party'}
+        />
+      </Box>
+    </Box>
   );
 };

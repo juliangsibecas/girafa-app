@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, ViewToken } from 'react-native';
 
-import image from '../../../../../assets/images/onboarding.png';
+import image from '../../../../assets/images/onboarding.png';
 
 import { Box, Image, Text } from '../../../../components';
 

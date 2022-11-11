@@ -7,8 +7,8 @@ import RNMap, {
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 
-import lightStyle from '../../../assets/maps/light.json';
-import darkStyle from '../../../assets/maps/dark.json';
+import lightStyle from '../../assets/maps/light.json';
+import darkStyle from '../../assets/maps/dark.json';
 
 import { useTheme } from '../../theme';
 import { Icon } from '../Icon';
@@ -42,7 +42,7 @@ export const Map: React.FC<Props> = ({
   useEffect(() => {
     const timeout = setTimeout(() => {
       ref?.current?.animateToRegion(INITIAL_REGION);
-    }, 1);
+    }, 100);
 
     return () => clearTimeout(timeout);
   }, []);

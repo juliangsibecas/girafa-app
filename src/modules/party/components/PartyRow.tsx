@@ -12,7 +12,7 @@ type Props = {
 export const PartyRow: React.FC<Props> = ({ party, go }) => (
   <TouchableOpacity onPress={() => go(party._id)}>
     <Box flex row hcenter>
-      <PartyAvatar id={party._id} width={6} />
+      <PartyAvatar id={party._id} width={6} height={6} placeholderSize={4} />
       <Box ml={2} flexGrow={1}>
         <Text type="h4" fontFamily={FontFamily.BOLD}>
           {party.name}

@@ -93,7 +93,12 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   return (
     <>
       <Box flex row hcenter mt={2}>
-        <PartyAvatar id={party._id} height={10} width={10} />
+        <PartyAvatar
+          id={party._id}
+          height={10}
+          width={10}
+          placeholderSize={6}
+        />
         <Box flexShrink={1} ml={2}>
           <Text type="h1">{party.name}</Text>
           <Text ml={0.2}>
