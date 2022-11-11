@@ -1,3 +1,4 @@
+import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
@@ -14,7 +15,7 @@ import {
   Button,
   Container,
   FormikTextInput,
-  Text,
+  Header,
 } from '../../../components';
 
 import {
@@ -90,24 +91,30 @@ export const PasswordResetScreen: React.FC = () => {
         signIn(res.data.signIn);
         return;
       }
-
-      // TODO
-      helpers.setErrors({
-        code: 'El codigo esta mal bro.',
-      });
     } catch (e: any) {
+      const errors = e.graphQLErrors as GraphQLErrors;
+      console.log(errors);
+
+      if (errors && errors.length) {
+        const error = errors[0];
+
+        if (error && error.message === 'VALIDATION_ERROR') {
+          helpers.setErrors({ code: t('auth.screens.PasswordReset.badCode') });
+          return;
+        }
+      }
+
       onError();
     }
   };
 
   return (
-    <Container noBottomTab>
-      <Text type="h2" textCenter mb={2}>
-        {t('auth.screens.PasswordReset.title')}
-      </Text>
-      <Text textCenter mb={4}>
-        {t('auth.screens.PasswordReset.subtitle')}
-      </Text>
+    <Container noBottomTab keyboardDismiss>
+      <Header
+        title={t('auth.screens.PasswordReset.title')}
+        subtitle={t('auth.screens.PasswordReset.subtitle')}
+      />
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

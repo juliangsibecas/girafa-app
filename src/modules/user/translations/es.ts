@@ -17,6 +17,7 @@ export const userTranslationES = {
       currentPassword: 'Contraseña actual',
       newPassword: 'Nueva contraseña',
       changePassword: 'Cambiar contraseña',
+      badCurrentPassword: 'La contraseña actual es incorrecta',
     },
   },
   components: {

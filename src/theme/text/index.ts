@@ -51,8 +51,8 @@ export const text = (palette: Palette) => {
 
     hint: createFont({
       fontFamily: FontFamily.REGULAR,
-      fontSize: 10,
-      lineHeight: 11,
+      fontSize: 12,
+      lineHeight: 13,
     }),
   };
 };

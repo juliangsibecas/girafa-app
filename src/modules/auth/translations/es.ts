@@ -14,11 +14,13 @@ export const authTranslationES = {
       subtitle:
         'Enviaremos un código a tu correo electrónico para que puedas acceder a tu cuenta',
       sendCode: 'Generar código',
+      badEmail: 'El correo electrónico es incorrecto',
     },
     PasswordReset: {
       title: 'Recuperar contraseña',
       subtitle: 'Ingresá el código que recibiste y elegí tu nueva contrasena',
       changePassword: 'Cambiar contraseña',
+      badCode: 'El código es incorrecto',
     },
   },
   components: {

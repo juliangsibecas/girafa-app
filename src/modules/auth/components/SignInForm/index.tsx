@@ -97,7 +97,7 @@ export const SignInForm: React.FC = () => {
                 navigate('CodeGeneration', { email: values.email })
               }
             >
-              <Box flex row mt={1.5}>
+              <Box flex row mt={2}>
                 <Text>{t('auth.components.SignIn.forgotPassword')} </Text>
               </Box>
             </TouchableOpacity>

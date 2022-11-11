@@ -1,3 +1,4 @@
+import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
@@ -10,6 +11,7 @@ import {
   Button,
   Container,
   FormikTextInput,
+  Header,
   Text,
 } from '../../../components';
 
@@ -56,24 +58,32 @@ export const CodeGenerationScreen: React.FC = () => {
         navigate('PasswordRecovery', { email: values.email });
         return;
       }
-
-      // TODO
-      helpers.setErrors({
-        email: 'El correo esta mal bro.',
-      });
     } catch (e: any) {
-      onError();
+      const errors = e.graphQLErrors as GraphQLErrors;
+
+      if (errors && errors.length) {
+        const error = errors[0];
+
+        if (error && error.message === 'VALIDATION_ERROR') {
+          helpers.setErrors({
+            email: t('auth.screens.CodeGeneration.badEmail'),
+          });
+
+          return;
+        }
+
+        onError();
+      }
     }
   };
 
   return (
-    <Container noBottomTab>
-      <Text type="h2" textCenter mb={2}>
-        {t('auth.screens.CodeGeneration.title')}
-      </Text>
-      <Text textCenter mb={2}>
-        {t('auth.screens.CodeGeneration.subtitle')}
-      </Text>
+    <Container noBottomTab keyboardDismiss>
+      <Header
+        title={t('auth.screens.CodeGeneration.title')}
+        subtitle={t('auth.screens.CodeGeneration.subtitle')}
+      />
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

@@ -10,6 +10,7 @@ import {
   Button,
   Container,
   FormikTextInput,
+  Header,
   Text,
 } from '../../components';
 
@@ -61,12 +62,10 @@ export const SupportScreen: React.FC = () => {
 
   return (
     <Container noBottomGradient keyboardDismiss>
-      <Text type="h2" textCenter mb={2}>
-        {t('support.screens.Support.title')}
-      </Text>
-      <Text textCenter mb={4}>
-        {t('support.screens.Support.subtitle')}
-      </Text>
+      <Header
+        title={t('support.screens.Support.title')}
+        subtitle={t('support.screens.Support.subtitle')}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

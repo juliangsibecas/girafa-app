@@ -6,6 +6,7 @@ import { UiKeys } from '../../../ui';
 
 import { FormikError } from '../FormikError';
 import { TextInput } from '../TextInput';
+import { Box } from '../../Box';
 
 interface Props extends UiKeys {
   id: string;
@@ -27,7 +28,7 @@ export const FormikTextInput: React.FC<Props> = ({
   const value = (values as Record<string, string>)[id] ?? '';
 
   return (
-    <>
+    <Box {...props}>
       <TextInput
         placeholder={placeholder}
         value={value}
@@ -35,9 +36,8 @@ export const FormikTextInput: React.FC<Props> = ({
         contentType={contentType}
         onChangeText={handleChange(id)}
         onBlur={handleBlur(id)}
-        {...props}
       />
       <FormikError id={id} />
-    </>
+    </Box>
   );
 };

@@ -10,7 +10,7 @@ import {
   Button,
   Container,
   FormikTextInput,
-  Text,
+  Header,
 } from '../../../components';
 
 import { MyProfileStackScreenProps } from '../navigator';
@@ -64,9 +64,8 @@ export const PasswordChangeScreen: React.FC = () => {
         return;
       }
 
-      // TODO
       helpers.setErrors({
-        currentPassword: 'La pw esta mal bro.',
+        currentPassword: t('user.screens.PasswordChange.badCurrentPassword'),
       });
     } catch (e: any) {
       onError();
@@ -75,9 +74,7 @@ export const PasswordChangeScreen: React.FC = () => {
 
   return (
     <Container noBottomGradient keyboardDismiss>
-      <Text type="h2" textCenter mb={2}>
-        {t('user.screens.PasswordChange.title')}
-      </Text>
+      <Header title={t('user.screens.PasswordChange.title')} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -85,7 +82,7 @@ export const PasswordChangeScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1}>
+            <Box flex flexGrow={1} mt={6}>
               <FormikTextInput
                 id="currentPassword"
                 placeholder={t('user.screens.PasswordChange.currentPassword')}

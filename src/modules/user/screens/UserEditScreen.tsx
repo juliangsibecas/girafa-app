@@ -15,6 +15,7 @@ import {
   Button,
   Container,
   FormikTextInput,
+  Header,
   Text,
 } from '../../../components';
 
@@ -116,9 +117,7 @@ export const UserEditScreen: React.FC = () => {
 
   return (
     <Container noBottomGradient keyboardDismiss>
-      <Text type="h2" textCenter mb={2}>
-        {t('user.screens.Edit.title')}
-      </Text>
+      <Header title={t('user.screens.Edit.title')} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
