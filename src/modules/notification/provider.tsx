@@ -6,7 +6,7 @@ import { NotificationContext } from './context';
 import { useAuth } from '../auth/hooks';
 import {
   NotificationType,
-  useGetNotificationsQuery,
+  useNotificationsGetByUserIdQuery,
   UserNotification,
 } from '../../api';
 import { Maybe } from 'yup/lib/types';
@@ -30,7 +30,8 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     error,
     refetch,
     networkStatus,
-  } = useGetNotificationsQuery({ skip: isAuthLoading || !isSignedIn });
+  } = useNotificationsGetByUserIdQuery({ skip: isAuthLoading || !isSignedIn });
+  console.log(error);
 
   const [notifications, setNotifications] = useState<Array<UserNotification>>(
     []

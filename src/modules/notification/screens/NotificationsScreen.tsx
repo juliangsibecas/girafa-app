@@ -47,7 +47,9 @@ export const NotificationsScreen: React.FC = () => {
           >
             <Box flexGrow={1} center>
               <Icon name="warning" color="warning" size={12} />
-              <Text>{t('notification.screens.Notifications.emptyText')}</Text>
+              <Text mt={2}>
+                {t('notification.screens.Notifications.emptyText')}
+              </Text>
             </Box>
           </ScrollView>
         )}

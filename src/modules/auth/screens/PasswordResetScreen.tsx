@@ -125,7 +125,7 @@ export const PasswordResetScreen: React.FC = () => {
               />
               <FormikTextInput
                 id="password"
-                placeholder={t('user.password')}
+                placeholder={t('user.newPassword')}
                 contentType="password"
                 mt={1}
               />

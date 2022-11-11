@@ -2,21 +2,22 @@ export const authTranslationES = {
   code: 'Código',
   screens: {
     SignUp: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
+      title: '¡Bienvenido!',
+      subtitle: 'Completá tus datos y sumate a la gira',
     },
     SignIn: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
+      title: '¡Hola de nuevo!',
+      subtitle: '¿Volviste por mí o por qué extranabas la joda?',
     },
     CodeGeneration: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
-      sendCode: 'Enviar código',
+      title: 'Recuperar contraseña',
+      subtitle:
+        'Enviaremos un código a tu correo electrónico para que puedas acceder a tu cuenta',
+      sendCode: 'Generar código',
     },
     PasswordReset: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
+      title: 'Recuperar contraseña',
+      subtitle: 'Ingresá el código que recibiste y elegí tu nueva contrasena',
       changePassword: 'Cambiar contraseña',
     },
   },
@@ -26,7 +27,7 @@ export const authTranslationES = {
       signIn: 'Iniciar sesión',
     },
     SignUp: {
-      signUp: 'Registrarse',
+      signUp: 'Comenzar',
     },
   },
 } as const;

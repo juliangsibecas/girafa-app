@@ -6,7 +6,7 @@ export const notificationTranslationES = {
   },
   components: {
     NotificationItem: {
-      userIsNowFollowingYou: '{{nickname}} ahora te sigue',
+      userIsNowFollowingYou: '{{nickname}} te sigue',
       userInvitedYouToParty: '{{nickname}} te invitó a {{party}}',
     },
   },

@@ -1,8 +1,9 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '../../../theme';
 import { PartyAttendersScreen, PartyDetailScreen } from '../screens';
 
 type Props = {
-  Stack: any;
+  Stack: ReturnType<typeof createNativeStackNavigator<any>>;
 };
 
 export const PartyDetailStackGroup: React.FC<Props> = ({ Stack }) => {

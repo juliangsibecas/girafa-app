@@ -3,6 +3,9 @@ import { Palette } from './types';
 export * from './types';
 
 export const lightPalette: Palette = {
+  common: {
+    white: '#FFFFFF',
+  },
   primary: {
     main: '#9070ED',
   },
@@ -16,7 +19,7 @@ export const lightPalette: Palette = {
     main: '#FFAA00',
   },
   error: {
-    main: '#FF0000',
+    main: '#E53935',
   },
   disabled: {
     main: '#F2F2F2',
@@ -33,6 +36,9 @@ export const lightPalette: Palette = {
 };
 
 export const darkPalette: Palette = {
+  common: {
+    white: '#FFFFFF',
+  },
   primary: {
     main: '#9070ED',
   },
@@ -46,7 +52,7 @@ export const darkPalette: Palette = {
     main: '#FFAA00',
   },
   error: {
-    main: '#FF0000',
+    main: '#E53935',
   },
   disabled: {
     main: '#2C3966',

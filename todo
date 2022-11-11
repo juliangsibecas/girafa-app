@@ -32,3 +32,5 @@ universal links
 map filters (only today, only this weekend)
 
 define cache images policies
+
+backbutton of following/follower on discover is navigating to discover and must navigate the discovered user profile

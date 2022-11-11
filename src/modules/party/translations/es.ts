@@ -12,8 +12,8 @@ export const partyTranslationES = {
     PRIVATE: 'Privada',
   },
 
-  attend: 'Asistir',
-  attending: 'Asistiendo',
+  attend: 'Voy',
+  attending: 'Yendo',
   willAttend: 'Asistirán',
   attended: 'Asististe',
   notAttended: 'No asististe',
@@ -26,7 +26,7 @@ export const partyTranslationES = {
   },
   components: {
     Carousel: {
-      slideToSee: 'Deslizá para ver fiestas',
+      slideToSee: 'Deslizá para encontrar fiestas',
       notAvailable: 'No hay fiestas disponibles',
     },
     Create: {

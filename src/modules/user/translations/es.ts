@@ -3,18 +3,17 @@ export const userTranslationES = {
   nickname: 'Nombre de usuario',
   password: 'Contraseña',
   confirmPassword: 'Confirmar contraseña',
+  newPassword: 'Nueva contraseña',
   follow: 'Seguir',
   followers: 'Seguidores',
   following: 'Siguiendo',
 
   screens: {
     Edit: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
+      title: 'Editar perfil',
     },
     PasswordChange: {
-      title: 'Titulo',
-      subtitle: 'Subtitulo',
+      title: 'Cambio de contraseña',
       currentPassword: 'Contraseña actual',
       newPassword: 'Nueva contraseña',
       changePassword: 'Cambiar contraseña',

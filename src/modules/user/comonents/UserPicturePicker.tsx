@@ -21,23 +21,30 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
 
   const pickImage = async () => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [9, 16],
-        quality: 1,
-      });
+      const permissionResult =
+        await ImagePicker.requestCameraPermissionsAsync();
 
-      if (result.cancelled) {
-        handleBlur(id)({});
-        return;
+      if (permissionResult.granted) {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [9, 16],
+          quality: 1,
+        });
+
+        if (result.cancelled) {
+          // handleBlur(id)({});
+          return;
+        }
+
+        handleChange(id)(result.uri);
       }
-
-      handleChange(id)(result.uri);
     } catch (e) {
       console.log(e);
     }
   };
+
+  console.log(values[id] ?? getUserPictureUrl(userId));
 
   return (
     <Box flex center>

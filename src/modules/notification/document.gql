@@ -1,5 +1,5 @@
-query getNotifications {
-  getNotifications {
+query notificationsGetByUserId {
+  notificationsGetByUserId {
     _id
     type
     from {

@@ -12,6 +12,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { env } from '../env';
 import { SignInFromRefreshTokenMutationResult } from '../api';
 import moment from 'moment';
+import { isIOS } from '../utils';
 
 const REFRESH_TOKEN_QUERY = `
   mutation {
@@ -23,8 +24,11 @@ const REFRESH_TOKEN_QUERY = `
   }
 `;
 
+console.log(
+  isIOS ? 'http://192.168.68.108:4000/graphql' : `${env.apiUrl}/graphql`
+);
 const httpLink = createHttpLink({
-  uri: `${env.apiUrl}/graphql`,
+  uri: isIOS ? 'http://192.168.68.108:4000/graphql' : `${env.apiUrl}/graphql`,
   credentials: 'include',
 });
 

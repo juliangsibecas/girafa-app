@@ -32,16 +32,16 @@ export type AuthRecoverPasswordInput = {
   password: Scalars['String'];
 };
 
-export type AuthSignIn = {
-  __typename?: 'AuthSignIn';
-  accessToken: Scalars['String'];
-  refreshToken: Scalars['String'];
-  userId: Scalars['String'];
-};
-
 export type AuthSignInInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type AuthSignInResponse = {
+  __typename?: 'AuthSignInResponse';
+  accessToken: Scalars['String'];
+  refreshToken: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type AuthSignUpInput = {
@@ -67,14 +67,16 @@ export type Mutation = {
   changePassword: Scalars['Boolean'];
   generateRecoveryCode: Scalars['Boolean'];
   partyCreate: Scalars['String'];
+  partyDelete: Scalars['Boolean'];
   partyEnable: Scalars['Boolean'];
   recoverPassword: Scalars['Boolean'];
-  signIn: AuthSignIn;
-  signInFromRefreshToken: AuthSignIn;
-  signUp: AuthSignIn;
+  signIn: AuthSignInResponse;
+  signInFromRefreshToken: AuthSignInResponse;
+  signUp: AuthSignInResponse;
   supportSendMessage: Scalars['Boolean'];
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
+  userDelete: Scalars['Boolean'];
   userEdit: Scalars['Boolean'];
   userSendPartyInvite: Scalars['Boolean'];
 };
@@ -92,6 +94,11 @@ export type MutationGenerateRecoveryCodeArgs = {
 
 export type MutationPartyCreateArgs = {
   data: PartyCreateInput;
+};
+
+
+export type MutationPartyDeleteArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -235,7 +242,7 @@ export type PartySearchAttendersInput = {
 
 export type Query = {
   __typename?: 'Query';
-  getNotifications: Array<UserNotification>;
+  notificationsGetByUserId: Array<UserNotification>;
   partyFind: Array<PartyMapPreview>;
   partyGetById: PartyGetByIdResponse;
   partySearch: Array<PartyPreview>;
@@ -377,19 +384,19 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthSignInResponse', userId: string, accessToken: string, refreshToken: string } };
 
 export type SignInMutationVariables = Exact<{
   data: AuthSignInInput;
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthSignInResponse', userId: string, accessToken: string, refreshToken: string } };
 
 export type SignInFromRefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignIn', userId: string, accessToken: string, refreshToken: string } };
+export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignInResponse', userId: string, accessToken: string, refreshToken: string } };
 
 export type GenerateRecoveryCodeMutationVariables = Exact<{
   data: AuthGenerateRecoveryCodeInput;
@@ -412,10 +419,10 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: boolean };
 
-export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+export type NotificationsGetByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename?: 'Query', getNotifications: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
+export type NotificationsGetByUserIdQuery = { __typename?: 'Query', notificationsGetByUserId: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
 
 export type PartyCreateMutationVariables = Exact<{
   data: PartyCreateInput;
@@ -725,9 +732,9 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
-export const GetNotificationsDocument = gql`
-    query getNotifications {
-  getNotifications {
+export const NotificationsGetByUserIdDocument = gql`
+    query notificationsGetByUserId {
+  notificationsGetByUserId {
     _id
     type
     from {
@@ -744,31 +751,31 @@ export const GetNotificationsDocument = gql`
     `;
 
 /**
- * __useGetNotificationsQuery__
+ * __useNotificationsGetByUserIdQuery__
  *
- * To run a query within a React component, call `useGetNotificationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useNotificationsGetByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsGetByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetNotificationsQuery({
+ * const { data, loading, error } = useNotificationsGetByUserIdQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+export function useNotificationsGetByUserIdQuery(baseOptions?: Apollo.QueryHookOptions<NotificationsGetByUserIdQuery, NotificationsGetByUserIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        return Apollo.useQuery<NotificationsGetByUserIdQuery, NotificationsGetByUserIdQueryVariables>(NotificationsGetByUserIdDocument, options);
       }
-export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+export function useNotificationsGetByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NotificationsGetByUserIdQuery, NotificationsGetByUserIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+          return Apollo.useLazyQuery<NotificationsGetByUserIdQuery, NotificationsGetByUserIdQueryVariables>(NotificationsGetByUserIdDocument, options);
         }
-export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
-export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
-export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
+export type NotificationsGetByUserIdQueryHookResult = ReturnType<typeof useNotificationsGetByUserIdQuery>;
+export type NotificationsGetByUserIdLazyQueryHookResult = ReturnType<typeof useNotificationsGetByUserIdLazyQuery>;
+export type NotificationsGetByUserIdQueryResult = Apollo.QueryResult<NotificationsGetByUserIdQuery, NotificationsGetByUserIdQueryVariables>;
 export const PartyCreateDocument = gql`
     mutation partyCreate($data: PartyCreateInput!) {
   partyCreate(data: $data)

@@ -7,6 +7,9 @@ export type Color = {
 export type PaletteColorCode = `${keyof Palette}.${keyof Color}`;
 
 export type Palette = {
+  common: {
+    white: string;
+  };
   primary: Color;
   secondary: Color;
   success: Color;

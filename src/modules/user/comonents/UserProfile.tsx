@@ -24,7 +24,11 @@ type Props = {
   pictureVersion?: number;
 };
 
-export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
+export const UserProfile: React.FC<Props> = ({
+  user,
+  isMyProfile,
+  pictureVersion,
+}) => {
   const { t } = useTranslation();
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
@@ -69,6 +73,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     <Box overflow="hidden" width="screen" height="screen">
       <UserAvatar
         id={user._id}
+        key={pictureVersion}
         height="screen"
         width="screen"
         position="absolute"

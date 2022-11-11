@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Box, Button, FormikTextInput, Text } from '../../../../components';
 import { useResponse, useSignInMutation } from '../../../../api';
-import { FontFamily } from '../../../../theme';
 
 import { OnboardingNavigationProp } from '../../../onboarding';
 
@@ -100,7 +99,6 @@ export const SignInForm: React.FC = () => {
             >
               <Box flex row mt={1.5}>
                 <Text>{t('auth.components.SignIn.forgotPassword')} </Text>
-                <Text fontFamily={FontFamily.BOLD}>aca</Text>
               </Box>
             </TouchableOpacity>
           </Box>

@@ -1,3 +1,4 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   UserAttendedPartiesScreen,
   UserFollowersScreen,
@@ -6,12 +7,16 @@ import {
 } from '../screens';
 
 type Props = {
-  Stack: any;
+  Stack: ReturnType<typeof createNativeStackNavigator<any>>;
 };
 
 export const ProfileStackGroup: React.FC<Props> = ({ Stack }) => (
   <Stack.Group>
-    <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+    <Stack.Screen
+      name="UserProfile"
+      component={UserProfileScreen}
+      options={{ headerTransparent: true, headerStyle: {} }}
+    />
     <Stack.Screen name="UserFollowers" component={UserFollowersScreen} />
     <Stack.Screen name="UserFollowing" component={UserFollowingScreen} />
     <Stack.Screen

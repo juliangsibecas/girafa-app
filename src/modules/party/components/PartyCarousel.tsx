@@ -53,13 +53,13 @@ export const PartyCarousel: React.FC<Props> = ({
                   <>
                     <Icon
                       name="chevron-left"
-                      color={theme.palette.text.primary}
+                      color={theme.palette.common.white}
                       weight={3}
                     />
                     <Text
                       fontFamily={FontFamily.SEMIBOLD}
                       ml={2}
-                      color={theme.palette.text.primary}
+                      color={theme.palette.common.white}
                     >
                       {t('party.components.Carousel.slideToSee')}
                     </Text>

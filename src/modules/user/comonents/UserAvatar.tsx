@@ -1,4 +1,5 @@
 import { ImageStyle } from 'react-native';
+
 import { Avatar } from '../../../components';
 import { UiKeys } from '../../../ui';
 import { getUserPictureUrl } from '../../picture';

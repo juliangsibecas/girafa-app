@@ -119,9 +119,6 @@ export const UserEditScreen: React.FC = () => {
       <Text type="h2" textCenter mb={2}>
         {t('user.screens.Edit.title')}
       </Text>
-      <Text textCenter mb={6}>
-        {t('user.screens.Edit.subtitle')}
-      </Text>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -130,7 +127,7 @@ export const UserEditScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex flexGrow={1}>
-              <UserPicturePicker id="picture" />
+              <UserPicturePicker id="picture" key={Date.now()} />
               <Text type="hint" mt={2} mb={0.5} ml={0.5}>
                 {t('general.name')}
               </Text>
@@ -149,7 +146,7 @@ export const UserEditScreen: React.FC = () => {
               />
             </Box>
             <Button onPress={() => submitForm()} isLoading={isLoading}>
-              {t('general.edit')}
+              {t('general.save')}
             </Button>
           </>
         )}

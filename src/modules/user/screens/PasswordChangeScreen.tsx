@@ -78,9 +78,6 @@ export const PasswordChangeScreen: React.FC = () => {
       <Text type="h2" textCenter mb={2}>
         {t('user.screens.PasswordChange.title')}
       </Text>
-      <Text textCenter mb={4}>
-        {t('user.screens.PasswordChange.subtitle')}
-      </Text>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

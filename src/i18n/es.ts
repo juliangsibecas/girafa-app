@@ -25,6 +25,7 @@ export const es = {
       continue: 'Continuar',
       goBack: 'Volver',
       edit: 'Editar',
+      save: 'Guardar',
       confirm: 'Confirmar',
       cancel: 'Cancelar',
 

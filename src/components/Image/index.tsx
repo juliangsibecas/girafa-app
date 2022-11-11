@@ -1,5 +1,5 @@
-import React from 'react';
-import FastImage, { ImageStyle } from 'react-native-fast-image';
+import React, { useState } from 'react';
+import { Image as RNImage, ImageStyle } from 'react-native';
 import { UiKeys, useStyle } from '../../ui';
 
 type Props = UiKeys & {
@@ -9,18 +9,25 @@ type Props = UiKeys & {
 };
 
 export const Image: React.FC<Props> = ({ src, fallbackSrc, ...props }) => {
-  const isUri = typeof src === 'string';
-
   const style = useStyle(props) as ImageStyle;
+  const isUri = typeof src === 'string';
+  const [source, setSource] = useState(
+    isUri ? { uri: `${src as string}?t=${Date.now()}` } : (src as number)
+  );
+
+  const fallback = () => fallbackSrc && setSource(fallbackSrc);
 
   return (
-    <FastImage
-      source={
-        isUri ? { uri: `${src as string}?t=${Date.now()}` } : (src as number)
-      }
-      style={{ ...style, ...props.style, aspectRatio: 1 }}
-      fallback
-      defaultSource={require('../../../assets/images/user.png')}
+    <RNImage
+      key={Date.now()}
+      source={source}
+      onError={fallback}
+      defaultSource={fallbackSrc}
+      style={{
+        ...style,
+        ...props.style,
+        aspectRatio: 1,
+      }}
     />
   );
 };
