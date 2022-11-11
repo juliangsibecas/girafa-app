@@ -31,12 +31,10 @@ export const CoordinateInput: React.FC<Props> = ({ id, pickCoordinate }) => {
     <>
       <Button small onPress={pickCoordinate}>
         <Box flex row>
-          <>
-            <Icon name="map-pin" color="background" weight={2.5} />
-            <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
-              {t('party.location')}
-            </Text>
-          </>
+          <Icon name="map-pin" color="background" weight={2.5} />
+          <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
+            {t('party.location')}
+          </Text>
         </Box>
       </Button>
       <FormikError id={id} />

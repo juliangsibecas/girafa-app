@@ -31,8 +31,6 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     refetch,
     networkStatus,
   } = useNotificationsGetByUserIdQuery({ skip: isAuthLoading || !isSignedIn });
-  console.log(error);
-
   const [notifications, setNotifications] = useState<Array<UserNotification>>(
     []
   );

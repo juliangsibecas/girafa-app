@@ -1,13 +1,7 @@
-export const notificationTranslationES = {
+export const discoverTranslationES = {
   screens: {
-    Notifications: {
-      emptyText: 'No tenés notificaciones por el momento',
-    },
-  },
-  components: {
-    NotificationItem: {
-      userIsNowFollowingYou: '{{nickname}} ahora te sigue',
-      userInvitedYouToParty: '{{nickname}} te invitó a {{party}}',
+    Discover: {
+      emptyText: 'No encontramos ningún resultado',
     },
   },
 } as const;

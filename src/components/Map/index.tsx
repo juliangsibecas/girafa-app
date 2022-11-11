@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import RNMap, {
   MapViewProps as RNMapProps,
@@ -14,7 +14,7 @@ import { useTheme } from '../../theme';
 import { Icon } from '../Icon';
 
 type Props = {
-  mapRef?: any;
+  mapRef?: React.MutableRefObject<RNMap | undefined>;
   markers?: Array<RNMarkerProps>;
 } & RNMapProps;
 
@@ -38,6 +38,14 @@ export const Map: React.FC<Props> = ({
   ...props
 }) => {
   const { isLightMode } = useTheme();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      ref?.current?.animateToRegion(INITIAL_REGION);
+    }, 1);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <RNMap

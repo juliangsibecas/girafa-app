@@ -16,19 +16,24 @@ export const ImageInput: React.FC<Props> = ({ onChange, onBlur }) => {
   const { t } = useTranslation();
   const pickImage = async () => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-      if (result.cancelled) {
-        onBlur({});
-        return;
+      if (permissionResult.granted) {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+
+        if (result.cancelled) {
+          onBlur({});
+          return;
+        }
+
+        onChange(result.uri);
       }
-
-      onChange(result.uri);
     } catch (e) {
       console.log(e);
     }

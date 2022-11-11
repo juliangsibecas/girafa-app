@@ -4,6 +4,7 @@ import { usePartySearchLazyQuery, useUserSearchLazyQuery } from '../../../api';
 import {
   Box,
   Container,
+  Icon,
   ListSwitch,
   StateHandler,
   Text,
@@ -15,29 +16,40 @@ import { DiscoverList } from '../components';
 
 export const DiscoverScreen: React.FC = () => {
   const { t } = useTranslation();
-  const [
-    searchUsers,
-    { data: usersData, loading: isUsersLoading, error: usersError },
-  ] = useUserSearchLazyQuery();
-  const [
-    searchParties,
-    { data: partiesData, loading: isPartiesLoading, error: partiesError },
-  ] = usePartySearchLazyQuery();
+  const [searchUsers, { data: usersData, error: usersError }] =
+    useUserSearchLazyQuery();
+  const [searchParties, { data: partiesData, error: partiesError }] =
+    usePartySearchLazyQuery();
 
-  const [search, setSearch] = useState('');
-  const debouncedSearch = useDebounce(search);
+  const [searchText, setSearchText] = useState('');
+  const debouncedSearch = useDebounce(searchText);
   const [isCardsListMode, setCardsListMode] = useState(false);
   const [isShowingAll, setShowingAll] = useState<Maybe<'user' | 'party'>>();
+  const [isLoading, setLoading] = useState(false);
 
   useEffectExceptOnMount(() => {
-    if (debouncedSearch.length > 2) {
-      searchParties({ variables: { q: debouncedSearch } });
-      searchUsers({ variables: { q: debouncedSearch } });
+    if (searchText.length > 2) {
+      return setLoading(true);
     }
+
+    setLoading(false);
+  }, [searchText]);
+
+  useEffectExceptOnMount(() => {
+    const search = async () => {
+      if (debouncedSearch.length > 2) {
+        await Promise.all([
+          searchParties({ variables: { q: debouncedSearch } }),
+          searchUsers({ variables: { q: debouncedSearch } }),
+        ]);
+        setLoading(false);
+      }
+    };
+    search();
   }, [debouncedSearch]);
 
-  const users = search ? usersData?.userSearch ?? [] : [];
-  const parties = search ? partiesData?.partySearch ?? [] : [];
+  const users = searchText ? usersData?.userSearch ?? [] : [];
+  const parties = searchText ? partiesData?.partySearch ?? [] : [];
 
   const handleShowAll = (status: boolean, value: 'user' | 'party') => {
     setShowingAll(status ? value : undefined);
@@ -66,35 +78,45 @@ export const DiscoverScreen: React.FC = () => {
       <Box mt={2} mb={4}>
         <TextInput
           placeholder={t('general.searchEllipsis')}
-          value={search}
-          onChangeText={(text) => setSearch(text)}
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
         />
       </Box>
       <StateHandler
-        isLoading={isPartiesLoading || isUsersLoading}
+        isLoading={isLoading}
         isError={Boolean(partiesError || usersError)}
       >
-        {shouldShowUsers ? (
-          <DiscoverList
-            type="user"
-            data={users}
-            isOnly={!shouldShowParties}
-            isShowingAll={Boolean(isShowingAll)}
-            isCardsListMode={isCardsListMode}
-            showAll={(status: boolean) => handleShowAll(status, 'user')}
-          />
-        ) : undefined}
-        {shouldShowUsers && shouldShowParties ? <Box mt={4} /> : undefined}
-        {shouldShowParties ? (
-          <DiscoverList
-            type="party"
-            data={parties}
-            isOnly={!shouldShowUsers}
-            isShowingAll={Boolean(isShowingAll) || !shouldShowUsers}
-            isCardsListMode={isCardsListMode}
-            showAll={(status: boolean) => handleShowAll(status, 'party')}
-          />
-        ) : undefined}
+        {debouncedSearch.length > 2 && (
+          <>
+            {shouldShowUsers ? (
+              <DiscoverList
+                type="user"
+                data={users}
+                isOnly={!shouldShowParties}
+                isShowingAll={Boolean(isShowingAll)}
+                isCardsListMode={isCardsListMode}
+                showAll={(status: boolean) => handleShowAll(status, 'user')}
+              />
+            ) : undefined}
+            {shouldShowUsers && shouldShowParties ? <Box mt={4} /> : undefined}
+            {shouldShowParties ? (
+              <DiscoverList
+                type="party"
+                data={parties}
+                isOnly={!shouldShowUsers}
+                isShowingAll={Boolean(isShowingAll) || !shouldShowUsers}
+                isCardsListMode={isCardsListMode}
+                showAll={(status: boolean) => handleShowAll(status, 'party')}
+              />
+            ) : undefined}
+            {!isLoading && !shouldShowUsers && !shouldShowParties && (
+              <Box flexGrow={1} center>
+                <Icon name="search" color="primary" size={12} />
+                <Text mt={2}>{t('discover.screens.Discover.emptyText')}</Text>
+              </Box>
+            )}
+          </>
+        )}
       </StateHandler>
     </Container>
   );

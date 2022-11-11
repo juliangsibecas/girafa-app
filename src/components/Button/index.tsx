@@ -68,16 +68,19 @@ export const Button: React.FC<Props> = ({
       disabled={isDisabled || isLoading}
     >
       {isLoading && <Spinner color={color} />}
-      {!isLoading && (
-        <Text
-          type="button"
-          color={color}
-          fontSize={small ? 14 : undefined}
-          {...textProps}
-        >
-          {children}
-        </Text>
-      )}
+      {!isLoading &&
+        (typeof children === 'string' ? (
+          <Text
+            type="button"
+            color={color}
+            fontSize={small ? 14 : undefined}
+            {...textProps}
+          >
+            {children}
+          </Text>
+        ) : (
+          children
+        ))}
     </TouchableOpacity>
   );
 };

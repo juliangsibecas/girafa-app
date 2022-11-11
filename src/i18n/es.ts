@@ -1,4 +1,5 @@
 import { authTranslationES } from '../modules/auth';
+import { discoverTranslationES } from '../modules/discover';
 import { notificationTranslationES } from '../modules/notification';
 import { onboardingTranslationES } from '../modules/onboarding';
 import { partyTranslationES } from '../modules/party';
@@ -44,6 +45,7 @@ export const es = {
     party: partyTranslationES,
     user: userTranslationES,
     notification: notificationTranslationES,
+    discover: discoverTranslationES,
     support: supportTranslationES,
     settings: settingsTranslationES,
   },

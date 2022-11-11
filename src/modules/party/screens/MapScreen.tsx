@@ -54,8 +54,6 @@ export const MapScreen: React.FC = () => {
               height={4}
               width={4}
               onPress={() => navigate('PartyCreateForm')}
-              pt={isIOS ? 0.6 : undefined}
-              pl={isIOS ? 0.1 : undefined}
             >
               <Icon name="plus" color="background" weight={4} />
             </Button>

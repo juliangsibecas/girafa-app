@@ -24,9 +24,6 @@ const REFRESH_TOKEN_QUERY = `
   }
 `;
 
-console.log(
-  isIOS ? 'http://192.168.68.108:4000/graphql' : `${env.apiUrl}/graphql`
-);
 const httpLink = createHttpLink({
   uri: isIOS ? 'http://192.168.68.108:4000/graphql' : `${env.apiUrl}/graphql`,
   credentials: 'include',

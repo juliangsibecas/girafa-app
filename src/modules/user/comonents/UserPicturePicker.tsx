@@ -16,13 +16,12 @@ interface Props {
 
 export const UserPicturePicker: React.FC<Props> = ({ id }) => {
   const { userId } = useAuth();
-  const { handleBlur, handleChange, values } =
-    useFormikContext<Record<string, string>>();
+  const { handleChange, values } = useFormikContext<Record<string, string>>();
 
   const pickImage = async () => {
     try {
       const permissionResult =
-        await ImagePicker.requestCameraPermissionsAsync();
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (permissionResult.granted) {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -33,7 +32,6 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
         });
 
         if (result.cancelled) {
-          // handleBlur(id)({});
           return;
         }
 
@@ -43,8 +41,6 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
       console.log(e);
     }
   };
-
-  console.log(values[id] ?? getUserPictureUrl(userId));
 
   return (
     <Box flex center>

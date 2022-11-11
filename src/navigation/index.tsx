@@ -5,6 +5,7 @@ import { StateHandler } from '../components';
 import { useAuth } from '../modules/auth/hooks';
 import { OnboardingNavigator } from '../modules/onboarding/navigator';
 import { MainNavigator } from './MainNavigator';
+import { View } from 'react-native';
 
 const prefix = Linking.createURL('/');
 

@@ -21,18 +21,18 @@ import { Navigation } from './navigation';
 const AppComponent = () => {
   const isLightTheme = Appearance.getColorScheme() === 'light';
   const isLoadingComplete = useCachedResources();
+  const themeMode = isLightTheme ? ThemeMode.LIGHT : ThemeMode.DARK;
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
+      <SafeAreaProvider
+        style={{ backgroundColor: theme(themeMode).palette.background.main }}
+      >
         <StatusBar style={isLightTheme ? 'dark' : 'light'} />
         <ApolloProvider client={client}>
-          <ThemeProvider
-            theme={theme}
-            mode={isLightTheme ? ThemeMode.LIGHT : ThemeMode.DARK}
-          >
+          <ThemeProvider theme={theme} mode={themeMode}>
             <AuthProvider>
               <UserProvider>
                 <NotificationsProvider>

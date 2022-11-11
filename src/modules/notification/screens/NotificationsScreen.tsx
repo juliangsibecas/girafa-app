@@ -46,7 +46,7 @@ export const NotificationsScreen: React.FC = () => {
             }
           >
             <Box flexGrow={1} center>
-              <Icon name="warning" color="warning" size={12} />
+              <Icon name="bell" color="primary" size={12} />
               <Text mt={2}>
                 {t('notification.screens.Notifications.emptyText')}
               </Text>
