@@ -39,7 +39,7 @@ export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
         bgColor="background.light"
         flex
         center
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '100%', width: '100%', zIndex: -1 }}
       >
         <Icon
           name={type}
