@@ -25,6 +25,7 @@ export const MyProfileScreen: React.FC = () => {
       isRefreshEnabled
       isRefreshing={networkStatus === 4}
       onRefresh={refetch}
+      showSignOutOnError
     >
       <UserProfile
         user={user}

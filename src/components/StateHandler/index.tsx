@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, ScrollView } from 'react-native';
+import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import { useAuth } from '../../modules/auth';
 import { useTheme } from '../../theme';
 import { Box } from '../Box';
 import { Icon } from '../Icon';
@@ -13,6 +14,7 @@ type Props = {
   isError?: boolean;
   isRefreshEnabled?: boolean;
   isRefreshing?: boolean;
+  showSignOutOnError?: boolean;
   onRefresh?: () => void;
 };
 
@@ -42,9 +44,12 @@ export const StateHandler: React.FC<Props> = ({
   isRefreshEnabled,
   isRefreshing,
   onRefresh,
+  showSignOutOnError,
   children,
 }) => {
   const { t } = useTranslation();
+  const { signOut } = useAuth();
+
   if (isLoading || isError) {
     return (
       <Box flexGrow={1} bgColor="background" center>
@@ -53,6 +58,15 @@ export const StateHandler: React.FC<Props> = ({
           <>
             <Icon name="error" color="error" size={10} />
             <Text mt={2}>{t('general.error')}</Text>
+            {showSignOutOnError && (
+              <Box mt={1}>
+                <TouchableOpacity onPress={signOut}>
+                  <Text type="hint" color="text.secondary">
+                    {t('general.signOut')}
+                  </Text>
+                </TouchableOpacity>
+              </Box>
+            )}
           </>
         )}
       </Box>

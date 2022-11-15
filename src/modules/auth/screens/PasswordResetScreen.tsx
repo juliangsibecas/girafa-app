@@ -93,7 +93,6 @@ export const PasswordResetScreen: React.FC = () => {
       }
     } catch (e: any) {
       const errors = e.graphQLErrors as GraphQLErrors;
-      console.log(errors);
 
       if (errors && errors.length) {
         const error = errors[0];

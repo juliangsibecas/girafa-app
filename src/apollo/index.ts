@@ -5,15 +5,12 @@ import {
   createHttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
-import { TokenRefreshLink } from 'apollo-link-token-refresh';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 import { env } from '../env';
-import { SignInFromRefreshTokenMutationResult } from '../api';
-import moment from 'moment';
 
-const REFRESH_TOKEN_QUERY = `
+/* const REFRESH_TOKEN_QUERY = `
   mutation {
     signInFromRefreshToken {
       userId
@@ -21,11 +18,21 @@ const REFRESH_TOKEN_QUERY = `
       refreshToken
     }
   }
-`;
+`; */
 
 const httpLink = createHttpLink({
   uri: `${env.apiUrl}/graphql`,
   credentials: 'include',
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const tokenLink = setContext(async () => ({
@@ -41,7 +48,7 @@ const authLink = setContext(async (_, { accessToken, headers }) => {
   };
 });
 
-const tokenRefreshLink = new TokenRefreshLink<{
+/* const tokenRefreshLink = new TokenRefreshLink<{
   accessToken: string;
   refreshToken: string;
 }>({
@@ -98,9 +105,15 @@ const tokenRefreshLink = new TokenRefreshLink<{
   handleError: (err) => {
     console.log(err);
   },
-});
+}); */
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([tokenLink, tokenRefreshLink, authLink, httpLink]),
+  link: ApolloLink.from([
+    tokenLink,
+    // tokenRefreshLink,
+    authLink,
+    errorLink,
+    httpLink,
+  ]),
 });

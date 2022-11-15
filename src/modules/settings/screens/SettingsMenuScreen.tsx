@@ -43,7 +43,7 @@ export const SettingsMenuScreen = () => {
         />
       </Box>
       <Button secondary onPress={signOut}>
-        {t('settings.screens.SettingMenu.signOut')}
+        {t('general.signOut')}
       </Button>
       <Text
         type="secondary"

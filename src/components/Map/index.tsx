@@ -52,6 +52,7 @@ export const Map: React.FC<Props> = ({
       ref={ref as React.LegacyRef<RNMap>}
       provider={PROVIDER_GOOGLE}
       initialRegion={INITIAL_REGION}
+      showsUserLocation={false}
       style={{
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,

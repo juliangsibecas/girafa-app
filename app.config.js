@@ -1,9 +1,10 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config({ path: `.env.${process.env.NODE_ENV ?? 'production'}` });
 
 export default {
   name: 'Girafa',
   slug: 'girafa',
-  entryPoint: 'index.tsx',
+  entryPoint: 'index.js',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './src/assets/images/icon.png',
@@ -38,13 +39,6 @@ export default {
       'onesignal-expo-plugin',
       {
         mode: 'development',
-      },
-    ],
-    [
-      'expo-image-picker',
-      {
-        photosPermission:
-          'The app accesses your photos to let you share them with your friends.',
       },
     ],
   ],

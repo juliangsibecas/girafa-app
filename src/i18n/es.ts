@@ -35,6 +35,8 @@ export const es = {
       seeLess: 'Ver menos',
 
       error: 'Ocurrio un error inesperado',
+
+      signOut: 'Cerrar sesión',
     },
     api: {
       error: 'Hubo un error al realizar la acción',
