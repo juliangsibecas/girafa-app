@@ -7,6 +7,7 @@ import { Avatar, Box, Image } from '../../../components';
 
 import { useAuth } from '../../auth';
 import { getUserPictureUrl } from '../../picture';
+import { UserAvatar } from './UserAvatar';
 
 interface Props {
   id: string;
@@ -51,9 +52,8 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
             style={{ borderRadius: 100 }}
           />
         ) : (
-          <Avatar
-            type="user"
-            src={getUserPictureUrl(userId)}
+          <UserAvatar
+            id={userId}
             width={15}
             height={15}
             placeholderSize={8}

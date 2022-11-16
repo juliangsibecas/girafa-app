@@ -17,10 +17,11 @@ export const ListSwitch: React.FC<Props> = ({
   <Box flex width={3} center>
     <TouchableOpacity onPress={onSwitch} disabled={isDisabled}>
       <Icon
-        name={isCards ? 'menu' : 'square'}
+        name={isCards ? 'menu' : 'user-card'}
         size={2.5}
         color={isDisabled ? 'disabled' : 'primary'}
         isFilled={!isCards}
+        noStroke={!isCards}
       />
     </TouchableOpacity>
   </Box>

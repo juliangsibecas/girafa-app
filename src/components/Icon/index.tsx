@@ -21,11 +21,12 @@ import {
   Square,
   User,
 } from 'react-native-feather';
+import { SvgProps } from 'react-native-svg';
 
 import { useTheme } from '../../theme';
 import { UiKeys, useStyle } from '../../ui';
 import PartyIcon from '../../assets/icons/party.svg';
-import { SvgProps } from 'react-native-svg';
+import UserCardIcon from '../../assets/icons/user_card.svg';
 
 type Props = UiKeys & {
   name: keyof typeof dict;
@@ -42,6 +43,7 @@ const dict = {
   search: Search,
   bell: Bell,
   user: User,
+  'user-card': UserCardIcon,
   party: PartyIcon,
   send: Send,
   square: Square,

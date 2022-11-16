@@ -11,7 +11,7 @@ type Props = {
 
 export const UserRow: React.FC<Props> = ({ user, go }) => (
   <TouchableOpacity onPress={() => go(user._id)}>
-    <Box flex row hcenter>
+    <Box flex row hcenter my={0.5}>
       <UserAvatar id={user._id} height={6} width={6} placeholderSize={4} />
       <Box ml={2} flexGrow={1}>
         <Text type="h4" fontFamily={FontFamily.BOLD}>

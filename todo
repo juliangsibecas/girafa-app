@@ -25,9 +25,7 @@ ios shadows
 
 universal links 
 
-KeyboardAvoidingView
-zoom in party create map
-search card icon 
+backbutton of following/follower on discover is navigating to discover and must navigate the discovered user profile
 
 #
 # POST-RELEASE
@@ -37,4 +35,3 @@ map filters (only today, only this weekend)
 
 define cache images policies
 
-backbutton of following/follower on discover is navigating to discover and must navigate the discovered user profile

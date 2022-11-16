@@ -12,18 +12,23 @@ type Props = ViewProps &
     noBottomTab?: boolean;
     noBottomGradient?: boolean;
     keyboard?: boolean;
+    keyboardDismiss?: boolean;
   };
 
-export const ContainerWrapper: React.FC<Props> = ({ children }) => (
+export const KeyboardDismissWrapper: React.FC<Props> = ({ children }) => (
+  <Pressable
+    style={{ flex: 1 }}
+    onPress={() => {
+      Keyboard.dismiss();
+    }}
+  >
+    {children}
+  </Pressable>
+);
+
+export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => (
   <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-    <Pressable
-      style={{ flex: 1 }}
-      onPress={() => {
-        Keyboard.dismiss();
-      }}
-    >
-      {children}
-    </Pressable>
+    <KeyboardDismissWrapper>{children}</KeyboardDismissWrapper>
   </KeyboardAwareScrollView>
 );
 
@@ -32,10 +37,15 @@ export const Container: React.FC<Props> = ({
   noBottomTab,
   noBottomGradient,
   keyboard,
+  keyboardDismiss,
   children,
   ...props
 }) => {
-  const Wrapper = keyboard ? ContainerWrapper : React.Fragment;
+  const Wrapper = keyboard
+    ? KeyboardScrollWrapper
+    : keyboardDismiss
+    ? KeyboardDismissWrapper
+    : React.Fragment;
 
   return (
     <Wrapper>
