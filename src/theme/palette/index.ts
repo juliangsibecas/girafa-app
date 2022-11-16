@@ -23,6 +23,7 @@ export const lightPalette: Palette = {
   },
   disabled: {
     main: '#F2F2F2',
+    dark: '#E8E8E8',
   },
   text: {
     primary: '#4F4F4F',
@@ -56,6 +57,7 @@ export const darkPalette: Palette = {
   },
   disabled: {
     main: '#2C3966',
+    dark: '#2A365F',
   },
   text: {
     primary: '#FFFFFF',

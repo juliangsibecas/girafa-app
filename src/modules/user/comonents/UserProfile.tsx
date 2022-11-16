@@ -13,6 +13,7 @@ import { Box, Button, Icon, Text } from '../../../components';
 
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
+import { useUser } from '../hooks';
 
 import { MyProfileStackScreenProps } from '../navigator';
 
@@ -21,14 +22,9 @@ import { UserAvatar } from './UserAvatar';
 type Props = {
   user: UserGetByIdResponse;
   isMyProfile?: boolean;
-  pictureVersion?: number;
 };
 
-export const UserProfile: React.FC<Props> = ({
-  user,
-  isMyProfile,
-  pictureVersion,
-}) => {
+export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { t } = useTranslation();
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
@@ -38,6 +34,7 @@ export const UserProfile: React.FC<Props> = ({
     changeFollowingStateMutation,
     { loading: isChangeFollowingStateLoading },
   ] = useUserChangeFollowingStateMutation();
+  const { pictureVersion } = useUser();
 
   const [isFollowing, setFollowing] = useState(user.isFollowing);
   const [followersCount, setFollowersCount] = useState(user.followersCount);

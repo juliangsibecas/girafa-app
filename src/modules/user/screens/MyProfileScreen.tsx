@@ -3,10 +3,8 @@ import { useUserGetByIdQuery } from '../../../api';
 import { StateHandler } from '../../../components';
 import { useAuth } from '../../auth';
 import { UserProfile } from '../comonents';
-import { useUser } from '../hooks';
 
 export const MyProfileScreen: React.FC = () => {
-  const { pictureVersion } = useUser();
   const { userId } = useAuth();
   const {
     data,
@@ -27,11 +25,7 @@ export const MyProfileScreen: React.FC = () => {
       onRefresh={refetch}
       showSignOutOnError
     >
-      <UserProfile
-        user={user}
-        isMyProfile={true}
-        pictureVersion={pictureVersion}
-      />
+      <UserProfile user={user} isMyProfile={true} />
     </StateHandler>
   );
 };

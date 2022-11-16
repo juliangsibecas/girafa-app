@@ -3,7 +3,6 @@ import { AuthContext } from './context';
 import * as SecureStore from 'expo-secure-store';
 import { SignInPayload } from './types';
 import jwtDecode from 'jwt-decode';
-import { useSignInFromRefreshTokenMutation } from '../../api';
 import { client } from '../../apollo';
 
 type Props = {
@@ -11,7 +10,7 @@ type Props = {
 };
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();
+  // const [signinFromRefreshToken] = useSignInFromRefreshTokenMutation();
   const [userId, setUserId] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [isLoading, setLoading] = useState(true);
@@ -19,7 +18,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const fn = async () => {
       const storedAccessToken = await SecureStore.getItemAsync('accessToken');
-      const refreshToken = await SecureStore.getItemAsync('refreshToken');
+      // const refreshToken = await SecureStore.getItemAsync('refreshToken');
 
       if (storedAccessToken) {
         const { userId, exp } = jwtDecode<{ userId: string; exp: number }>(
@@ -34,27 +33,27 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         }
       }
 
-      if (refreshToken) {
-        try {
-          const res = await signinFromRefreshToken({
-            context: {
-              headers: {
-                Refresh: refreshToken,
-              },
-            },
-          });
+      // if (refreshToken) {
+      //   try {
+      //     const res = await signinFromRefreshToken({
+      //       context: {
+      //         headers: {
+      //           Refresh: refreshToken,
+      //         },
+      //       },
+      //     });
 
-          const data = res.data!.signInFromRefreshToken;
+      //     const data = res.data!.signInFromRefreshToken;
 
-          await SecureStore.setItemAsync('accessToken', data.accessToken);
-          await SecureStore.setItemAsync('refreshToken', data.refreshToken);
-          setAccessToken(data.accessToken);
-          setUserId(data.userId);
-        } catch (e) {
-          setUserId('');
-          console.log(e);
-        }
-      }
+      //     await SecureStore.setItemAsync('accessToken', data.accessToken);
+      //     await SecureStore.setItemAsync('refreshToken', data.refreshToken);
+      //     setAccessToken(data.accessToken);
+      //     setUserId(data.userId);
+      //   } catch (e) {
+      //     setUserId('');
+      //     console.log(e);
+      //   }
+      // }
 
       setLoading(false);
     };

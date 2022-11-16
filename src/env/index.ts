@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 type Env = {
   apiUrl: string;
-  s3Url: string;
+  assetsUrl: string;
   oneSignalId: string;
 };
 

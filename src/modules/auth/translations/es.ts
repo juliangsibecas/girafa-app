@@ -7,7 +7,7 @@ export const authTranslationES = {
     },
     SignIn: {
       title: '¡Hola de nuevo!',
-      subtitle: '¿Volviste por mí o por qué extranabas la joda?',
+      subtitle: '¿Volviste por mí o por qué extrañabas la joda?',
     },
     CodeGeneration: {
       title: 'Recuperar contraseña',

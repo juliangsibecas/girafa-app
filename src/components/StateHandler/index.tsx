@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
-import { useAuth } from '../../modules/auth';
+
+import { useAuth } from '../../modules/auth/hooks';
 import { useTheme } from '../../theme';
 import { Box } from '../Box';
 import { Icon } from '../Icon';

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ImageStyle } from 'react-native';
+import { ImageStyle } from 'react-native-fast-image';
 import { UiKeys, useStyle } from '../../ui';
 import { Box } from '../Box';
+import { ExternalImage } from '../ExternalImage';
 import { Icon } from '../Icon';
-import { Image } from '../Image';
 
 type Props = UiKeys & {
   type: 'user' | 'party';
@@ -27,7 +27,7 @@ export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
       overflow="hidden"
       style={{ ...style, ...props.style, ...{ aspectRatio: 1 } }}
     >
-      <Image
+      <ExternalImage
         src={src}
         height={height}
         width={width}

@@ -47,7 +47,7 @@ export default {
       projectId: '03090a85-32cc-4c83-8eac-15c58efdda4b',
     },
     apiUrl: process.env.API_URL,
-    s3Url: process.env.S3_URL,
+    assetsUrl: process.env.ASSETS_URL,
     oneSignalId: process.env.ONESIGNAL_APP_ID,
   },
 };
