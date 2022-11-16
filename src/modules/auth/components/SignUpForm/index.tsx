@@ -130,7 +130,7 @@ export const SignUpForm: React.FC = () => {
               mt={1}
             />
           </Box>
-          <Button onPress={() => submitForm()} isLoading={isLoading}>
+          <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
             {t('auth.components.SignUp.signUp')}
           </Button>
         </>

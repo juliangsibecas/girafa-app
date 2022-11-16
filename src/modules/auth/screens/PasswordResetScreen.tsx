@@ -108,7 +108,7 @@ export const PasswordResetScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomTab keyboardDismiss>
+    <Container noBottomTab keyboard>
       <Header
         title={t('auth.screens.PasswordReset.title')}
         subtitle={t('auth.screens.PasswordReset.subtitle')}
@@ -143,8 +143,9 @@ export const PasswordResetScreen: React.FC = () => {
               />
             </Box>
             <Button
-              onPress={() => submitForm()}
               isLoading={isGenerationLoading || isSignInLoading}
+              onPress={() => submitForm()}
+              mt={4}
             >
               {t('auth.screens.PasswordReset.changePassword')}
             </Button>

@@ -78,7 +78,7 @@ export const CodeGenerationScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomTab keyboardDismiss>
+    <Container noBottomTab keyboard>
       <Header
         title={t('auth.screens.CodeGeneration.title')}
         subtitle={t('auth.screens.CodeGeneration.subtitle')}
@@ -100,7 +100,7 @@ export const CodeGenerationScreen: React.FC = () => {
                 mt={1}
               />
             </Box>
-            <Button onPress={() => submitForm()} isLoading={isLoading}>
+            <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
               {t('auth.screens.CodeGeneration.sendCode')}
             </Button>
           </>

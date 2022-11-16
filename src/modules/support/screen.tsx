@@ -61,7 +61,7 @@ export const SupportScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient keyboardDismiss>
+    <Container noBottomGradient keyboard>
       <Header
         title={t('support.screens.Support.title')}
         subtitle={t('support.screens.Support.subtitle')}

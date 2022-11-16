@@ -73,7 +73,7 @@ export const PasswordChangeScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient keyboardDismiss>
+    <Container noBottomGradient keyboard>
       <Header title={t('user.screens.PasswordChange.title')} />
       <Formik
         initialValues={initialValues}
@@ -101,7 +101,7 @@ export const PasswordChangeScreen: React.FC = () => {
                 mt={1}
               />
             </Box>
-            <Button onPress={() => submitForm()} isLoading={isLoading}>
+            <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
               {t('user.screens.PasswordChange.changePassword')}
             </Button>
           </>

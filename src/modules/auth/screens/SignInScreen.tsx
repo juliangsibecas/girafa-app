@@ -8,7 +8,7 @@ import { SignInForm } from '../components';
 export const SignInScreen: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <Container noBottomTab keyboardDismiss>
+    <Container noBottomTab keyboard>
       <Header
         title={t('auth.screens.SignIn.title')}
         subtitle={t('auth.screens.SignIn.subtitle')}

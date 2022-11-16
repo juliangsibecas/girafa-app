@@ -116,7 +116,7 @@ export const UserEditScreen: React.FC = () => {
   };
 
   return (
-    <Container noBottomGradient keyboardDismiss>
+    <Container noBottomGradient keyboard>
       <Header title={t('user.screens.Edit.title')} />
       <Formik
         initialValues={initialValues}
@@ -125,9 +125,9 @@ export const UserEditScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1} mt={3}>
+            <Box flex flexGrow={1} flexShrink={1} pt={3} pb={5}>
               <UserPicturePicker id="picture" key={Date.now()} />
-              <Text type="hint" mt={6} mb={0.5} ml={0.5}>
+              <Text type="hint" pt={6} pb={0.5} pl={0.5}>
                 {t('general.name')}
               </Text>
               <FormikTextInput
@@ -135,7 +135,7 @@ export const UserEditScreen: React.FC = () => {
                 placeholder={t('general.name')}
                 contentType="name"
               />
-              <Text type="hint" mt={2} mb={0.5} ml={0.5}>
+              <Text type="hint" pt={2} pb={0.5} pl={0.5}>
                 {t('user.nickname')}
               </Text>
               <FormikTextInput
@@ -144,7 +144,7 @@ export const UserEditScreen: React.FC = () => {
                 contentType="username"
               />
             </Box>
-            <Button onPress={() => submitForm()} isLoading={isLoading}>
+            <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
               {t('general.save')}
             </Button>
           </>

@@ -102,7 +102,7 @@ export const SignInForm: React.FC = () => {
               </Box>
             </TouchableOpacity>
           </Box>
-          <Button onPress={() => submitForm()} isLoading={isLoading}>
+          <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
             {t('auth.components.SignIn.signIn')}
           </Button>
         </>

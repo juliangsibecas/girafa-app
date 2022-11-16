@@ -56,6 +56,7 @@
     "react-native-calendars": "^1.1285.0",
     "react-native-fast-image": "^8.6.1",
     "react-native-feather": "^1.1.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-maps": "0.31.1",
     "react-native-modal": "^13.0.1",
     "react-native-onesignal": "^4.3.11",
