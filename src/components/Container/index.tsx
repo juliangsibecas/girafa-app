@@ -1,6 +1,7 @@
 import React from 'react';
 import { Keyboard, Pressable, ViewProps } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTheme } from '../../theme';
 
 import { UiKeys } from '../../ui';
 import { BottomTabGradient } from '../BottomTabGradient';
@@ -26,11 +27,20 @@ export const KeyboardDismissWrapper: React.FC<Props> = ({ children }) => (
   </Pressable>
 );
 
-export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => (
-  <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-    <KeyboardDismissWrapper>{children}</KeyboardDismissWrapper>
-  </KeyboardAwareScrollView>
-);
+export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => {
+  const { theme } = useTheme();
+
+  return (
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.main,
+      }}
+    >
+      <KeyboardDismissWrapper>{children}</KeyboardDismissWrapper>
+    </KeyboardAwareScrollView>
+  );
+};
 
 export const Container: React.FC<Props> = ({
   noHeader,

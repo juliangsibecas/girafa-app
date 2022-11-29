@@ -31,6 +31,7 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     refetch,
     networkStatus,
   } = useNotificationsGetByUserIdQuery({ skip: isAuthLoading || !isSignedIn });
+
   const [notifications, setNotifications] = useState<Array<UserNotification>>(
     []
   );
@@ -75,8 +76,8 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   }, [isForeground]);
 
   useEffect(() => {
-    if (query && query.getNotifications) {
-      const data = query.getNotifications;
+    if (query && query.notificationsGetByUserId) {
+      const data = query.notificationsGetByUserId;
       setNotifications(data);
 
       const count = lastViewed

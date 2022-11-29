@@ -27,7 +27,7 @@ export const NotificationItem: React.FC<Props> = ({ notification }) => {
         navigate(isFollowInvite ? 'UserProfile' : 'PartyDetail', { id })
       }
     >
-      <Box flex row hcenter mt={4}>
+      <Box flex row hcenter mt={2}>
         {isFollowInvite ? <UserAvatar id={id} /> : <PartyAvatar id={id} />}
         <Box ml={2} mr={2} flexGrow={1} flexShrink={1}>
           {isFollowInvite ? (

@@ -28,7 +28,9 @@ export const NotificationsScreen: React.FC = () => {
 
   return (
     <Container>
-      <Text type="h1">{t('general.notifications')}</Text>
+      <Text type="h1" mb={2}>
+        {t('general.notifications')}
+      </Text>
       <StateHandler isLoading={isLoading} isError={isError}>
         {notifications.length > 0 ? (
           <FlatList
