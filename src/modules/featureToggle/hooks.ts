@@ -15,8 +15,9 @@ export const useFeatureToggle = (name: FeatureToggleName) => {
     fetchPolicy: 'network-only' ?? getTimeBasedFetchPolicy(EXPIRY_TIME),
   });
 
-  const isEnabled =
-    !error && !loading && data?.featureToggleGetEnabledNames.includes(name);
+  const isEnabled = Boolean(
+    !error && !loading && data?.featureToggleGetEnabledNames.includes(name)
+  );
 
   const handleAction = (action: () => void) => {
     if (isEnabled) {
