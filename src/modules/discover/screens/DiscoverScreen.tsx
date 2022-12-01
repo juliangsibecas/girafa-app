@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePartySearchLazyQuery, useUserSearchLazyQuery } from '../../../api';
+import {
+  FeatureToggleName,
+  usePartySearchLazyQuery,
+  useUserSearchLazyQuery,
+} from '../../../api';
 import {
   Box,
   Container,
@@ -8,10 +12,11 @@ import {
   ListSwitch,
   StateHandler,
   Text,
-  TextInput,
 } from '../../../components';
+import { FeatureToggleTextInput } from '../../../components/Input/FeatureToggleTextInput';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { Maybe } from '../../../types';
+import { useFeatureToggle } from '../../featureToggle';
 import { DiscoverList } from '../components';
 
 export const DiscoverScreen: React.FC = () => {
@@ -20,7 +25,14 @@ export const DiscoverScreen: React.FC = () => {
     useUserSearchLazyQuery();
   const [searchParties, { data: partiesData, error: partiesError }] =
     usePartySearchLazyQuery();
-
+  const {
+    isEnabled: isUserGetEnabled,
+    isLoading: isUserGetFeatureToggleLoading,
+  } = useFeatureToggle(FeatureToggleName.UserGet);
+  const {
+    isEnabled: isPartyGetEnabled,
+    isLoading: isPartyGetFeatureToggleLoading,
+  } = useFeatureToggle(FeatureToggleName.PartyGet);
   const [searchText, setSearchText] = useState('');
   const debouncedSearch = useDebounce(searchText);
   const [isCardsListMode, setCardsListMode] = useState(false);
@@ -76,10 +88,14 @@ export const DiscoverScreen: React.FC = () => {
         </Box>
       </Box>
       <Box mt={2} mb={4}>
-        <TextInput
+        <FeatureToggleTextInput
           placeholder={t('general.searchEllipsis')}
           value={searchText}
           onChangeText={(text) => setSearchText(text)}
+          isDisabled={!isUserGetEnabled || !isPartyGetEnabled}
+          isLoading={
+            isUserGetFeatureToggleLoading || isPartyGetFeatureToggleLoading
+          }
         />
       </Box>
       <StateHandler

@@ -4,15 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { Dimensions, TouchableOpacity } from 'react-native';
 
 import {
+  FeatureToggleName,
   useResponse,
   UserGetByIdDocument,
   UserGetByIdResponse,
   useUserChangeFollowingStateMutation,
 } from '../../../api';
-import { Box, Button, Icon, Text } from '../../../components';
+import { Box, FeatureToggledButton, Icon, Text } from '../../../components';
 
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
+import { useFeatureToggle } from '../../featureToggle';
 import { useUser } from '../hooks';
 
 import { MyProfileStackScreenProps } from '../navigator';
@@ -30,6 +32,17 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { userId: myId } = useAuth();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'Profile'>['navigation']>();
+
+  const { handleAction: handleGetFollowersAction } = useFeatureToggle(
+    FeatureToggleName.UserGetFollowers
+  );
+  const { handleAction: handleGetFollowingAction } = useFeatureToggle(
+    FeatureToggleName.UserGetFollowing
+  );
+  const { handleAction: handleGetAttendedPartiesAction } = useFeatureToggle(
+    FeatureToggleName.UserGetAttendedParties
+  );
+
   const [
     changeFollowingStateMutation,
     { loading: isChangeFollowingStateLoading },
@@ -65,6 +78,23 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       onError();
     }
   };
+
+  const handleFollowingPress = () =>
+    handleGetFollowingAction(() => navigate('UserFollowing', { id: user._id }));
+
+  const handleFollowersPress = () =>
+    handleGetFollowersAction(() => navigate('UserFollowers', { id: user._id }));
+
+  const handleAttendedPartiesPress = () =>
+    handleGetAttendedPartiesAction(() =>
+      navigate('UserAttendedParties', { id: user._id })
+    );
+
+  const handleEditPress = () =>
+    navigate('UserEdit', {
+      fullname: user.fullName,
+      nickname: user.nickname,
+    });
 
   return (
     <Box overflow="hidden" width="screen" flexGrow={1}>
@@ -105,45 +135,42 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             <Text>{user.fullName}</Text>
           </Box>
           {!isMe ? (
-            <Button
+            <FeatureToggledButton
+              ft={FeatureToggleName.UserChangeFollowingState}
               secondary={user.isFollowing}
-              width={20}
-              height={5}
-              textProps={{ fontSize: 14 }}
+              width={12}
+              height={4}
+              textProps={{ fontSize: 12 }}
               onPress={changeFollowingState}
               isLoading={isChangeFollowingStateLoading}
             >
               {isFollowing ? t('user.following') : t('user.follow')}
-            </Button>
+            </FeatureToggledButton>
           ) : undefined}
           {isMyProfile ? (
-            <Button
+            <FeatureToggledButton
               secondary
-              width={20}
-              height={5}
-              textProps={{ fontSize: 14 }}
-              onPress={() =>
-                navigate('UserEdit', {
-                  fullname: user.fullName,
-                  nickname: user.nickname,
-                })
-              }
+              ft={FeatureToggleName.UserEdit}
+              width={12}
+              height={4}
+              textProps={{ fontSize: 12 }}
+              onPress={handleEditPress}
             >
               {t('user.components.Profile.editProfile')}
-            </Button>
+            </FeatureToggledButton>
           ) : undefined}
         </Box>
         <Box flex row style={{ justifyContent: 'space-between' }}>
           <TouchableOpacity
             disabled={user.followingCount === 0}
-            onPress={() => navigate('UserFollowing', { id: user._id })}
+            onPress={handleFollowingPress}
           >
             <Text fontFamily={FontFamily.BOLD}>{user.followingCount}</Text>
             <Text type="hint">{t('user.following')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             disabled={followersCount === 0}
-            onPress={() => navigate('UserFollowers', { id: user._id })}
+            onPress={handleFollowersPress}
           >
             <Text fontFamily={FontFamily.BOLD} textCenter>
               {followersCount}
@@ -154,7 +181,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
           </TouchableOpacity>
           <TouchableOpacity
             disabled={user.attendedPartiesCount === 0}
-            onPress={() => navigate('UserAttendedParties', { id: user._id })}
+            onPress={handleAttendedPartiesPress}
           >
             <Text fontFamily={FontFamily.BOLD} textRight>
               {user.attendedPartiesCount}

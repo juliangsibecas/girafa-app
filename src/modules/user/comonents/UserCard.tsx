@@ -1,8 +1,9 @@
 import { Dimensions, TouchableOpacity } from 'react-native';
-import { UserPreview } from '../../../api';
+import { FeatureToggleName, UserPreview } from '../../../api';
 import { Box, Icon, Text } from '../../../components';
 import { useTheme } from '../../../theme';
 import { FontFamily } from '../../../theme/text/types';
+import { useFeatureToggle } from '../../featureToggle';
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
@@ -12,8 +13,14 @@ type Props = {
 
 export const UserCard: React.FC<Props> = ({ user, go }) => {
   const { theme } = useTheme();
+  const { handleAction: handleUserGetAction } = useFeatureToggle(
+    FeatureToggleName.UserGet
+  );
+
+  const handlePress = () => handleUserGetAction(() => go(user._id));
+
   return (
-    <TouchableOpacity onPress={() => go(user._id)}>
+    <TouchableOpacity onPress={handlePress}>
       <UserAvatar
         id={user._id}
         placeholderSize={Dimensions.get('screen').width / 18}

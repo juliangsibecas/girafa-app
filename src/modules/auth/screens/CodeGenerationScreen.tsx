@@ -5,14 +5,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
-import { useGenerateRecoveryCodeMutation, useResponse } from '../../../api';
+import {
+  FeatureToggleName,
+  useGenerateRecoveryCodeMutation,
+  useResponse,
+} from '../../../api';
 import {
   Box,
-  Button,
   Container,
+  FeatureToggledButton,
   FormikTextInput,
   Header,
-  Text,
 } from '../../../components';
 
 import {
@@ -77,6 +80,10 @@ export const CodeGenerationScreen: React.FC = () => {
     }
   };
 
+  const handlePress = (submitForm: () => void) => {
+    return () => submitForm();
+  };
+
   return (
     <Container noBottomTab keyboard>
       <Header
@@ -100,9 +107,14 @@ export const CodeGenerationScreen: React.FC = () => {
                 mt={1}
               />
             </Box>
-            <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
+            <FeatureToggledButton
+              ft={FeatureToggleName.Mailing}
+              isLoading={isLoading}
+              onPress={handlePress(submitForm)}
+              mt={4}
+            >
               {t('auth.screens.CodeGeneration.sendCode')}
-            </Button>
+            </FeatureToggledButton>
           </>
         )}
       </Formik>

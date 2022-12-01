@@ -62,16 +62,54 @@ export type CoordinateCreateInput = {
   longitude: Scalars['Float'];
 };
 
+export type FeatureToggle = {
+  __typename?: 'FeatureToggle';
+  _id: Scalars['String'];
+  name: FeatureToggleName;
+  value: Scalars['Boolean'];
+};
+
+export type FeatureToggleChangeValueInput = {
+  name: FeatureToggleName;
+  value: Scalars['Boolean'];
+};
+
+export type FeatureToggleCreateInput = {
+  name: FeatureToggleName;
+  value: Scalars['Boolean'];
+};
+
+export enum FeatureToggleName {
+  Mailing = 'MAILING',
+  NotificationGet = 'NOTIFICATION_GET',
+  PartyCreate = 'PARTY_CREATE',
+  PartyDelete = 'PARTY_DELETE',
+  PartyGet = 'PARTY_GET',
+  PartySearchAttenders = 'PARTY_SEARCH_ATTENDERS',
+  SignUp = 'SIGN_UP',
+  UserChangeAttendingState = 'USER_CHANGE_ATTENDING_STATE',
+  UserChangeFollowingState = 'USER_CHANGE_FOLLOWING_STATE',
+  UserDelete = 'USER_DELETE',
+  UserEdit = 'USER_EDIT',
+  UserGet = 'USER_GET',
+  UserGetAttendedParties = 'USER_GET_ATTENDED_PARTIES',
+  UserGetFollowers = 'USER_GET_FOLLOWERS',
+  UserGetFollowing = 'USER_GET_FOLLOWING',
+  UserSearchFollowersToInvite = 'USER_SEARCH_FOLLOWERS_TO_INVITE',
+  UserSendPartyInvite = 'USER_SEND_PARTY_INVITE'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: Scalars['Boolean'];
+  featureToggleChangeValue: Scalars['Boolean'];
+  featureToggleCreate: Scalars['Boolean'];
   generateRecoveryCode: Scalars['Boolean'];
   partyCreate: Scalars['String'];
   partyDelete: Scalars['Boolean'];
   partyEnable: Scalars['Boolean'];
   recoverPassword: Scalars['Boolean'];
   signIn: AuthSignInResponse;
-  signInFromRefreshToken: AuthSignInResponse;
   signUp: AuthSignInResponse;
   supportSendMessage: Scalars['Boolean'];
   userChangeAttendingState: Scalars['Boolean'];
@@ -84,6 +122,16 @@ export type Mutation = {
 
 export type MutationChangePasswordArgs = {
   data: AuthChangePasswordInput;
+};
+
+
+export type MutationFeatureToggleChangeValueArgs = {
+  data: FeatureToggleChangeValueInput;
+};
+
+
+export type MutationFeatureToggleCreateArgs = {
+  data: FeatureToggleCreateInput;
 };
 
 
@@ -242,6 +290,8 @@ export type PartySearchAttendersInput = {
 
 export type Query = {
   __typename?: 'Query';
+  featureToggleGetEnabledNames: Array<FeatureToggleName>;
+  featureToggleList: Array<FeatureToggle>;
   notificationsGetByUserId: Array<UserNotification>;
   partyFind: Array<PartyMapPreview>;
   partyGetById: PartyGetByIdResponse;
@@ -393,11 +443,6 @@ export type SignInMutationVariables = Exact<{
 
 export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthSignInResponse', userId: string, accessToken: string, refreshToken: string } };
 
-export type SignInFromRefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SignInFromRefreshTokenMutation = { __typename?: 'Mutation', signInFromRefreshToken: { __typename?: 'AuthSignInResponse', userId: string, accessToken: string, refreshToken: string } };
-
 export type GenerateRecoveryCodeMutationVariables = Exact<{
   data: AuthGenerateRecoveryCodeInput;
 }>;
@@ -418,6 +463,11 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: boolean };
+
+export type FeatureToggleGetEnabledNamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeatureToggleGetEnabledNamesQuery = { __typename?: 'Query', featureToggleGetEnabledNames: Array<FeatureToggleName> };
 
 export type NotificationsGetByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -605,40 +655,6 @@ export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignI
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
 export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
-export const SignInFromRefreshTokenDocument = gql`
-    mutation signInFromRefreshToken {
-  signInFromRefreshToken {
-    userId
-    accessToken
-    refreshToken
-  }
-}
-    `;
-export type SignInFromRefreshTokenMutationFn = Apollo.MutationFunction<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;
-
-/**
- * __useSignInFromRefreshTokenMutation__
- *
- * To run a mutation, you first call `useSignInFromRefreshTokenMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignInFromRefreshTokenMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [signInFromRefreshTokenMutation, { data, loading, error }] = useSignInFromRefreshTokenMutation({
- *   variables: {
- *   },
- * });
- */
-export function useSignInFromRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>(SignInFromRefreshTokenDocument, options);
-      }
-export type SignInFromRefreshTokenMutationHookResult = ReturnType<typeof useSignInFromRefreshTokenMutation>;
-export type SignInFromRefreshTokenMutationResult = Apollo.MutationResult<SignInFromRefreshTokenMutation>;
-export type SignInFromRefreshTokenMutationOptions = Apollo.BaseMutationOptions<SignInFromRefreshTokenMutation, SignInFromRefreshTokenMutationVariables>;
 export const GenerateRecoveryCodeDocument = gql`
     mutation generateRecoveryCode($data: AuthGenerateRecoveryCodeInput!) {
   generateRecoveryCode(data: $data)
@@ -732,6 +748,38 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const FeatureToggleGetEnabledNamesDocument = gql`
+    query featureToggleGetEnabledNames {
+  featureToggleGetEnabledNames
+}
+    `;
+
+/**
+ * __useFeatureToggleGetEnabledNamesQuery__
+ *
+ * To run a query within a React component, call `useFeatureToggleGetEnabledNamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeatureToggleGetEnabledNamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeatureToggleGetEnabledNamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeatureToggleGetEnabledNamesQuery(baseOptions?: Apollo.QueryHookOptions<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>(FeatureToggleGetEnabledNamesDocument, options);
+      }
+export function useFeatureToggleGetEnabledNamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>(FeatureToggleGetEnabledNamesDocument, options);
+        }
+export type FeatureToggleGetEnabledNamesQueryHookResult = ReturnType<typeof useFeatureToggleGetEnabledNamesQuery>;
+export type FeatureToggleGetEnabledNamesLazyQueryHookResult = ReturnType<typeof useFeatureToggleGetEnabledNamesLazyQuery>;
+export type FeatureToggleGetEnabledNamesQueryResult = Apollo.QueryResult<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>;
 export const NotificationsGetByUserIdDocument = gql`
     query notificationsGetByUserId {
   notificationsGetByUserId {

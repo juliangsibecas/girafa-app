@@ -5,6 +5,7 @@ import { Share, TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import {
+  FeatureToggleName,
   PartyAvailability,
   PartyGetByIdDocument,
   PartyGetByIdResponse,
@@ -12,12 +13,19 @@ import {
   UserGetByIdDocument,
   useUserChangeAttendingStateMutation,
 } from '../../../api';
-import { Box, Button, Icon, LabelValue, Text } from '../../../components';
+import {
+  Box,
+  FeatureToggledButton,
+  Icon,
+  LabelValue,
+  Text,
+} from '../../../components';
 import { HomeStackScreenProps } from '../../../navigation';
 import { FontFamily } from '../../../theme';
 import { formatDate } from '../../../utils';
 
 import { useAuth } from '../../auth/hooks';
+import { useFeatureToggle } from '../../featureToggle';
 import { UserAvatar } from '../../user';
 
 import { PartyAvatar } from './PartyAvatar';
@@ -32,6 +40,13 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyDetail'>['navigation']>();
   const { userId } = useAuth();
+  const { isEnabled: isSearchAttendersEnabled } = useFeatureToggle(
+    FeatureToggleName.PartySearchAttenders
+  );
+  const {
+    isEnabled: isSearchFollowersToInviteEnabled,
+    handleAction: handleSearchFollowersToInviteAction,
+  } = useFeatureToggle(FeatureToggleName.UserSearchFollowersToInvite);
   const [
     changeAttendingStateMutation,
     { loading: isChangeAttendingStateLoading },
@@ -90,6 +105,9 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
     });
   };
 
+  const handleInvitePress = () =>
+    handleSearchFollowersToInviteAction(() => setInviteModalOpen(true));
+
   return (
     <>
       <Box flex row hcenter mt={2}>
@@ -140,7 +158,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flexGrow={1}>
             {attendersCount}
           </Text>
-          {attendersCount ? (
+          {isSearchAttendersEnabled && attendersCount ? (
             <TouchableOpacity
               onPress={() => navigate('PartyAttenders', { id: party._id })}
             >
@@ -159,7 +177,8 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         </Box>
       </Box>
       <Box flex row center>
-        <Button
+        <FeatureToggledButton
+          ft={FeatureToggleName.UserChangeAttendingState}
           flexGrow={1}
           secondary={isAttender}
           onPress={changeAttendingState}
@@ -177,16 +196,17 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
                 : 'notAttended'
             }`
           )}
-        </Button>
+        </FeatureToggledButton>
         <Box mx={3}>
-          <TouchableOpacity
-            onPress={() => setInviteModalOpen(true)}
-            disabled={!canInvite}
-          >
+          <TouchableOpacity onPress={handleInvitePress} disabled={!canInvite}>
             <Icon
               name="send"
               size={3}
-              color={canInvite ? 'primary' : 'disabled'}
+              color={
+                isSearchFollowersToInviteEnabled && canInvite
+                  ? 'primary'
+                  : 'disabled'
+              }
             />
           </TouchableOpacity>
         </Box>

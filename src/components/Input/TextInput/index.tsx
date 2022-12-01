@@ -6,16 +6,18 @@ import {
 import { useTheme } from '../../../theme';
 import { UiKeys, useStyle } from '../../../ui';
 
-type Props = UiKeys &
-  Pick<RNTextInputProps, 'onChangeText' | 'onBlur' | 'keyboardType'> & {
-    placeholder: string;
-    value: string;
-    contentType?: RNTextInputProps['textContentType'];
-    lines?: number;
-    maxLength?: number;
-  };
+export interface ITextInput
+  extends UiKeys,
+    Pick<RNTextInputProps, 'onChangeText' | 'onBlur' | 'keyboardType'> {
+  placeholder: string;
+  value: string;
+  contentType?: RNTextInputProps['textContentType'];
+  lines?: number;
+  maxLength?: number;
+  isDisabled?: boolean;
+}
 
-export const TextInput: React.FC<Props> = ({
+export const TextInput: React.FC<ITextInput> = ({
   placeholder,
   value,
   keyboardType = 'default',
@@ -24,6 +26,7 @@ export const TextInput: React.FC<Props> = ({
   onBlur,
   lines,
   maxLength,
+  isDisabled,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -56,6 +59,8 @@ export const TextInput: React.FC<Props> = ({
         numberOfLines={lines}
         textAlignVertical={isMultiline ? 'top' : 'center'}
         maxLength={maxLength}
+        editable={!isDisabled}
+        selectTextOnFocus={!isDisabled}
       />
     </>
   );

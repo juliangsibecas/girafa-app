@@ -14,14 +14,6 @@ mutation signIn ($data: AuthSignInInput!) {
   }
 }
 
-mutation signInFromRefreshToken  {
-  signInFromRefreshToken  {
-    userId
-    accessToken
-    refreshToken
-  }
-}
-
 mutation generateRecoveryCode ($data: AuthGenerateRecoveryCodeInput!) {
   generateRecoveryCode(data: $data)
 }

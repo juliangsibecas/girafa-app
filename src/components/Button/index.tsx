@@ -4,28 +4,31 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
+import { GestureResponderEvent } from 'react-native-modal';
+import Toast from 'react-native-toast-message';
 import { useStyle, UiKeys } from '../../ui';
 import { insertObjectIf } from '../../utils';
 import { Spinner } from '../Spinner';
 import { Text } from '../Text';
 
-type Props = UiKeys &
-  TouchableOpacityProps & {
-    children: ReactNode;
-    secondary?: boolean;
-    small?: boolean;
-    isLoading?: boolean;
-    isDisabled?: boolean;
-    textProps?: UiKeys;
-  };
+export interface IButton extends UiKeys, TouchableOpacityProps {
+  children: ReactNode;
+  secondary?: boolean;
+  small?: boolean;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  showAsDisabled?: boolean;
+  textProps?: UiKeys;
+}
 
-export const Button: React.FC<Props> = ({
+export const Button: React.FC<IButton> = ({
   secondary,
   small,
   children,
   onPress,
   isLoading,
   isDisabled,
+  showAsDisabled,
   textProps,
   ...props
 }) => {
@@ -35,6 +38,8 @@ export const Button: React.FC<Props> = ({
       backgroundColor: 'transparent',
     }),
   };
+
+  const isDisabledStyle = Boolean(isDisabled || showAsDisabled);
 
   const style = useStyle(
     {
@@ -46,12 +51,12 @@ export const Button: React.FC<Props> = ({
       ...insertObjectIf(type === 'primary', {
         bgColor: 'primary',
       }),
-      ...insertObjectIf(!isDisabled && type === 'secondary', {
+      ...insertObjectIf(!isDisabledStyle && type === 'secondary', {
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: 'primary',
       }),
-      ...insertObjectIf(Boolean(isDisabled), {
+      ...insertObjectIf(isDisabledStyle, {
         bgColor: 'disabled',
       }),
       ...props,
@@ -59,7 +64,8 @@ export const Button: React.FC<Props> = ({
     buttonStyle
   );
 
-  const color = type === 'primary' || isDisabled ? 'background' : 'primary';
+  const color =
+    isDisabledStyle || type === 'primary' ? 'background' : 'primary';
 
   return (
     <TouchableOpacity

@@ -1,27 +1,40 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Button,
   Container,
+  FeatureToggledButton,
   Icon,
   Logo,
   StateHandler,
 } from '../../../components';
-import { PartyMapPreview, usePartyFindQuery } from '../../../api';
+import {
+  FeatureToggleName,
+  PartyMapPreview,
+  usePartyFindQuery,
+} from '../../../api';
 import { PartyCarousel, PartyMap } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackScreenProps } from '../../../navigation';
-import { isIOS } from '../../../utils';
+import { useFeatureToggle } from '../../featureToggle';
 
 export const MapScreen: React.FC = () => {
   const { navigate } =
     useNavigation<HomeStackScreenProps<'Map'>['navigation']>();
-  const { data, loading: isLoading, error: isError } = usePartyFindQuery();
+  const { isEnabled: isPartyGetEnabled, isLoading: isPartyGetFTLoading } =
+    useFeatureToggle(FeatureToggleName.PartyGet);
+  const {
+    data,
+    loading: isLoading,
+    error: isError,
+  } = usePartyFindQuery({ skip: !isPartyGetEnabled || isPartyGetFTLoading });
+
   const [currentIdx, setCurrentIdx] = useState(-1);
 
   const parties = (data?.partyFind ?? []) as Array<PartyMapPreview>;
 
   const handleIdxChange = (idx: number) => setCurrentIdx(idx);
+
+  const handlePartyCreatePress = () => navigate('PartyCreateForm');
 
   return (
     <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
@@ -49,14 +62,15 @@ export const MapScreen: React.FC = () => {
             style={{ alignItems: 'flex-end' }}
             pointerEvents="auto"
           >
-            <Button
+            <FeatureToggledButton
+              ft={FeatureToggleName.PartyCreate}
               borderRadius={8}
               height={4}
               width={4}
-              onPress={() => navigate('PartyCreateForm')}
+              onPress={handlePartyCreatePress}
             >
               <Icon name="plus" color="background" weight={4} />
-            </Button>
+            </FeatureToggledButton>
           </Box>
         </Box>
         <Box height={24} mb={4}>

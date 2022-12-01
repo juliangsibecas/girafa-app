@@ -5,6 +5,7 @@ import { usePermissions } from 'expo-notifications';
 import { NotificationContext } from './context';
 import { useAuth } from '../auth/hooks';
 import {
+  FeatureToggleName,
   NotificationType,
   useNotificationsGetByUserIdQuery,
   UserNotification,
@@ -12,6 +13,7 @@ import {
 import { Maybe } from 'yup/lib/types';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
+import { useFeatureToggle } from '../featureToggle';
 
 OneSignal.setAppId(env.oneSignalId);
 
@@ -21,8 +23,11 @@ type Props = {
 
 export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   const { isForeground } = useAppStatus();
-  const [permission, askPermission] = usePermissions();
   const { userId, isSignedIn, isLoading: isAuthLoading } = useAuth();
+  const { isEnabled, isLoading: isFeatureFlagLoading } = useFeatureToggle(
+    FeatureToggleName.NotificationGet
+  );
+  const [permission, askPermission] = usePermissions();
 
   const {
     data: query,
@@ -30,7 +35,9 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     error,
     refetch,
     networkStatus,
-  } = useNotificationsGetByUserIdQuery({ skip: isAuthLoading || !isSignedIn });
+  } = useNotificationsGetByUserIdQuery({
+    skip: isAuthLoading || !isSignedIn || isFeatureFlagLoading || !isEnabled,
+  });
 
   const [notifications, setNotifications] = useState<Array<UserNotification>>(
     []

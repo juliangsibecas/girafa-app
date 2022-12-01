@@ -55,7 +55,7 @@ export const StateHandler: React.FC<Props> = ({
     return (
       <Box flexGrow={1} bgColor="background" center>
         {isLoading && <Spinner />}
-        {isError && (
+        {isError && !isLoading && (
           <>
             <Icon name="error" color="error" size={10} />
             <Text mt={2}>{t('general.error')}</Text>

@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Container, Logo } from '../../components';
+import { FeatureToggleName } from '../../api';
+import { Box, Container, FeatureToggledButton, Logo } from '../../components';
 import { Button } from '../../components/Button';
 import { OnboardingSlider } from './components';
 import { OnboardingNavigationProp } from './navigator';
@@ -9,6 +10,9 @@ import { OnboardingNavigationProp } from './navigator';
 export const OnboardingScreen: React.FC = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation<OnboardingNavigationProp<'Onboarding'>>();
+
+  const handleSignInPress = () => navigate('SignIn');
+  const handleSignUpPress = () => navigate('SignUp');
 
   return (
     <Container noHeader noBottomTab>
@@ -19,12 +23,16 @@ export const OnboardingScreen: React.FC = () => {
         <OnboardingSlider />
       </Box>
       <Box>
-        <Button onPress={() => navigate('SignIn')} mb={1}>
+        <Button onPress={handleSignInPress} mb={1}>
           {t('onboarding.screens.Onboarding.signIn')}
         </Button>
-        <Button secondary onPress={() => navigate('SignUp')}>
+        <FeatureToggledButton
+          secondary
+          ft={FeatureToggleName.SignUp}
+          onPress={handleSignUpPress}
+        >
           {t('onboarding.screens.Onboarding.signUp')}
-        </Button>
+        </FeatureToggledButton>
       </Box>
     </Container>
   );

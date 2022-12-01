@@ -39,6 +39,7 @@ export const es = {
       signOut: 'Cerrar sesión',
     },
     api: {
+      featureToggleDisabled: 'Funcionalidad no disponible en este momento.',
       error: 'Hubo un error al realizar la acción',
       success: 'La acción se realizó correctamente',
     },

@@ -14,6 +14,10 @@ import { FontFamily } from '../theme/text/types';
 import { useNotification } from '../modules/notification/hooks';
 import { DiscoverNavigator } from '../modules/discover';
 import { MyProfileNavigator } from '../modules/user';
+import Toast from 'react-native-toast-message';
+import { useFeatureToggle } from '../modules/featureToggle';
+import { FeatureToggleName } from '../api';
+import { useTranslation } from 'react-i18next';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
@@ -32,8 +36,35 @@ export type MainBottomTabScreenProps<T extends keyof MainBottomTabParamList> =
 const BottomTab = createBottomTabNavigator<MainBottomTabParamList>();
 
 export const MainNavigator: React.FC = () => {
+  const { t } = useTranslation();
   const { pendingNotificationsCount } = useNotification();
   const { theme } = useTheme();
+  const {
+    isEnabled: isUserGetEnabled,
+    isLoading: isUserGetFeatureFlagLoading,
+  } = useFeatureToggle(FeatureToggleName.UserGet);
+  const {
+    isEnabled: isPartyGetEnabled,
+    isLoading: isPartyGetFeatureFlagLoading,
+  } = useFeatureToggle(FeatureToggleName.PartyGet);
+  const {
+    isEnabled: isNotificationGetEnabled,
+    isLoading: isNotificationGetFeatureFlagLoading,
+  } = useFeatureToggle(FeatureToggleName.NotificationGet);
+
+  const showFeatureFlagToast = () =>
+    Toast.show({ type: 'error', text1: t('api.featureToggleDisabled') });
+
+  const isDiscoverDisabled =
+    !isUserGetEnabled ||
+    isUserGetFeatureFlagLoading ||
+    !isPartyGetEnabled ||
+    isPartyGetFeatureFlagLoading;
+
+  const isNotificationDisabled =
+    !isNotificationGetEnabled || isNotificationGetFeatureFlagLoading;
+
+  const isProfileDisabled = !isUserGetEnabled || isUserGetFeatureFlagLoading;
 
   return (
     <BottomTab.Navigator
@@ -63,8 +94,20 @@ export const MainNavigator: React.FC = () => {
         component={DiscoverNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="search" size={2.5} color={color} />
+            <Icon
+              name="search"
+              size={2.5}
+              color={isDiscoverDisabled ? 'disabled' : color}
+            />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (isDiscoverDisabled) {
+              e.preventDefault();
+              showFeatureFlagToast();
+            }
+          },
         }}
       />
       <BottomTab.Screen
@@ -72,7 +115,11 @@ export const MainNavigator: React.FC = () => {
         component={NotificationNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="bell" size={2.5} color={color} />
+            <Icon
+              name="bell"
+              size={2.5}
+              color={isNotificationDisabled ? 'disabled' : color}
+            />
           ),
           tabBarBadge:
             pendingNotificationsCount > 0
@@ -91,14 +138,34 @@ export const MainNavigator: React.FC = () => {
             paddingHorizontal: 0,
           },
         }}
+        listeners={{
+          tabPress: (e) => {
+            if (isNotificationDisabled) {
+              e.preventDefault();
+              showFeatureFlagToast();
+            }
+          },
+        }}
       />
       <BottomTab.Screen
         name="MyProfile"
         component={MyProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="user" size={2.5} color={color} />
+            <Icon
+              name="user"
+              size={2.5}
+              color={isProfileDisabled ? 'disabled' : color}
+            />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (isProfileDisabled) {
+              e.preventDefault();
+              showFeatureFlagToast();
+            }
+          },
         }}
       />
     </BottomTab.Navigator>

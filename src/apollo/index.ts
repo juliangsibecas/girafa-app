@@ -117,3 +117,5 @@ export const client = new ApolloClient({
     httpLink,
   ]),
 });
+
+export * from './utils';

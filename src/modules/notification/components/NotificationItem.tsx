@@ -3,11 +3,16 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { NotificationStackScreenProps } from '../navigator';
 import { Box, Text } from '../../../components';
-import { NotificationType, UserNotification } from '../../../api';
+import {
+  FeatureToggleName,
+  NotificationType,
+  UserNotification,
+} from '../../../api';
 import { UserAvatar } from '../../user';
 import { PartyAvatar } from '../../party/components/PartyAvatar';
 import { formatDateTime } from '../../../utils';
 import { useTranslation } from 'react-i18next';
+import { useFeatureToggle } from '../../featureToggle';
 
 type Props = {
   notification: UserNotification;
@@ -15,18 +20,31 @@ type Props = {
 
 export const NotificationItem: React.FC<Props> = ({ notification }) => {
   const { t } = useTranslation();
+  const { handleAction: handleUserGetAction } = useFeatureToggle(
+    FeatureToggleName.UserGet
+  );
+  const { handleAction: handlePartyGetAction } = useFeatureToggle(
+    FeatureToggleName.PartyGet
+  );
   const { navigate } =
     useNavigation<NotificationStackScreenProps<'List'>['navigation']>();
 
   const isFollowInvite = notification.type === NotificationType.Follow;
   const id = isFollowInvite ? notification.from._id : notification.party!._id;
 
+  const handlePress = () =>
+    isFollowInvite
+      ? handleUserGetAction(() =>
+          navigate('UserProfile', { id: notification.from._id })
+        )
+      : handlePartyGetAction(
+          () =>
+            notification.party &&
+            navigate('PartyDetail', { id: notification.party._id })
+        );
+
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigate(isFollowInvite ? 'UserProfile' : 'PartyDetail', { id })
-      }
-    >
+    <TouchableOpacity onPress={handlePress}>
       <Box flex row hcenter mt={2}>
         {isFollowInvite ? <UserAvatar id={id} /> : <PartyAvatar id={id} />}
         <Box ml={2} mr={2} flexGrow={1} flexShrink={1}>
