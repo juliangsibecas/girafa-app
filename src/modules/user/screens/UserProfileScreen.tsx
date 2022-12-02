@@ -2,13 +2,13 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { useUserGetByIdQuery } from '../../../api';
 import { StateHandler } from '../../../components';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 import { UserProfile } from '../comonents';
 
 export const UserProfileScreen: React.FC = () => {
   const {
     params: { id },
-  } = useRoute<HomeStackScreenProps<'UserProfile'>['route']>();
+  } = useRoute<CoreStackGroupScreenProps<'UserProfile'>['route']>();
   const {
     data,
     loading: isLoading,

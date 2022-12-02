@@ -13,17 +13,12 @@ import { useTheme } from '../theme';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { ProfileStackGroup } from '../modules/user/navigator';
 import { Coordinate } from '../api';
+import { CoreStackGroup, CoreStackGroupParamList } from './CoreStackGroup';
 
-export type HomeStackParamList = {
+export type HomeStackParamList = CoreStackGroupParamList & {
   Map: undefined;
   PartyCreateForm: { coordinate: Coordinate } | undefined;
   PartyCreateMap: undefined;
-  PartyDetail: { id: string };
-  PartyAttenders: { id: string };
-  UserProfile: { id: string };
-  UserFollowers: { id: string };
-  UserFollowing: { id: string };
-  UserAttendedParties: { id: string };
 };
 
 export type HomeStackRouteProp<T extends keyof HomeStackParamList> = RouteProp<
@@ -63,8 +58,7 @@ export const HomeNavigator: React.FC = () => {
         component={PartyCreateMapScreen}
         options={{ headerTransparent: true, headerStyle: {} }}
       />
-      {ProfileStackGroup({ Stack })}
-      {PartyDetailStackGroup({ Stack })}
+      {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

@@ -2,11 +2,11 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Container } from '../../../components';
 import { PartyAttenders } from '../components/PartyAttenders';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
 export const PartyAttendersScreen: React.FC = () => {
   const { params } =
-    useRoute<HomeStackScreenProps<'PartyAttenders'>['route']>();
+    useRoute<CoreStackGroupScreenProps<'PartyAttenders'>['route']>();
 
   return (
     <Container>

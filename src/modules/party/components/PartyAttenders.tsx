@@ -5,7 +5,7 @@ import { FlatList, RefreshControl } from 'react-native';
 import { usePartySearchAttendersQuery } from '../../../api';
 import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 import { UserCard, UserRow } from '../../user';
 
 type Props = {
@@ -14,12 +14,12 @@ type Props = {
 
 export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
   const { t } = useTranslation();
-  const { navigate } =
-    useNavigation<HomeStackScreenProps<'PartyAttenders'>['navigation']>();
+  const { push } =
+    useNavigation<CoreStackGroupScreenProps<'PartyAttenders'>['navigation']>();
   const [search, setSearch] = useState('');
   const [isCardsListMode, setCardsListMode] = useState(true);
   const debouncedSearch = useDebounce(search, 500);
-  const goToAttender = (id: string) => navigate('UserProfile', { id });
+  const goToAttender = (id: string) => push('UserProfile', { id });
 
   const {
     data,

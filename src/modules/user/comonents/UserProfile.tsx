@@ -30,7 +30,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { t } = useTranslation();
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
-  const { navigate } =
+  const { push } =
     useNavigation<MyProfileStackScreenProps<'Profile'>['navigation']>();
 
   const { handleAction: handleGetFollowersAction } = useFeatureToggle(
@@ -80,18 +80,18 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   };
 
   const handleFollowingPress = () =>
-    handleGetFollowingAction(() => navigate('UserFollowing', { id: user._id }));
+    handleGetFollowingAction(() => push('UserFollowing', { id: user._id }));
 
   const handleFollowersPress = () =>
-    handleGetFollowersAction(() => navigate('UserFollowers', { id: user._id }));
+    handleGetFollowersAction(() => push('UserFollowers', { id: user._id }));
 
   const handleAttendedPartiesPress = () =>
     handleGetAttendedPartiesAction(() =>
-      navigate('UserAttendedParties', { id: user._id })
+      push('UserAttendedParties', { id: user._id })
     );
 
   const handleEditPress = () =>
-    navigate('UserEdit', {
+    push('UserEdit', {
       fullname: user.fullName,
       nickname: user.nickname,
     });
@@ -111,7 +111,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       />
       <Box mt={7} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
-          <TouchableOpacity onPress={() => navigate('Settings')}>
+          <TouchableOpacity onPress={() => push('Settings')}>
             <Icon name="menu" color="primary" size={3} />
           </TouchableOpacity>
         ) : undefined}

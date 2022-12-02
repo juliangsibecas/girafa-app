@@ -7,20 +7,18 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import {
   MyProfileScreen,
   PasswordChangeScreen,
-  UserAttendedPartiesScreen,
   UserEditScreen,
-  UserFollowersScreen,
-  UserFollowingScreen,
 } from '../screens';
 import { useTheme } from '../../../theme';
 import { SettingsMenuScreen } from '../../settings';
 import { SupportScreen } from '../../support';
+import {
+  CoreStackGroup,
+  CoreStackGroupParamList,
+} from '../../../navigation/CoreStackGroup';
 
-export type MyProfileStackParamList = {
-  Profile: undefined;
-  UserFollowers: { id: string };
-  UserFollowing: { id: string };
-  UserAttendedParties: { id: string };
+export type MyProfileStackParamList = CoreStackGroupParamList & {
+  Me: undefined;
   UserEdit: { fullname: string; nickname: string };
 
   Settings: undefined;
@@ -41,7 +39,7 @@ export const MyProfileNavigator: React.FC = () => {
   const { theme } = useTheme();
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Me"
       screenOptions={{
         headerTitle: '',
         headerBackTitle: '',
@@ -53,20 +51,15 @@ export const MyProfileNavigator: React.FC = () => {
       }}
     >
       <Stack.Screen
-        name="Profile"
+        name="Me"
         component={MyProfileScreen}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen name="UserFollowers" component={UserFollowersScreen} />
-      <Stack.Screen name="UserFollowing" component={UserFollowingScreen} />
-      <Stack.Screen
-        name="UserAttendedParties"
-        component={UserAttendedPartiesScreen}
       />
       <Stack.Screen name="UserEdit" component={UserEditScreen} />
       <Stack.Screen name="Settings" component={SettingsMenuScreen} />
       <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
       <Stack.Screen name="Support" component={SupportScreen} />
+      {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

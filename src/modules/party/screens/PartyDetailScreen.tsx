@@ -3,10 +3,11 @@ import { useRoute } from '@react-navigation/native';
 import { Container, StateHandler } from '../../../components';
 import { PartyGetByIdResponse, usePartyGetByIdQuery } from '../../../api';
 import { PartyDetail } from '../components';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
 export const PartyDetailScreen: React.FC = () => {
-  const { params } = useRoute<HomeStackScreenProps<'PartyDetail'>['route']>();
+  const { params } =
+    useRoute<CoreStackGroupScreenProps<'PartyDetail'>['route']>();
   const {
     data,
     loading: isLoading,

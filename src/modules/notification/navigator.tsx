@@ -6,13 +6,13 @@ import {
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../../theme';
 import { NotificationsScreen } from './screens';
-import { ProfileStackGroup } from '../user';
-import { PartyDetailStackGroup } from '../party';
+import {
+  CoreStackGroup,
+  CoreStackGroupParamList,
+} from '../../navigation/CoreStackGroup';
 
-export type NotificationStackParamList = {
+export type NotificationStackParamList = CoreStackGroupParamList & {
   List: undefined;
-  UserProfile: { id: string };
-  PartyDetail: { id: string };
 };
 
 export type NotificationStackRouteProp<
@@ -42,8 +42,7 @@ export const NotificationNavigator: React.FC = () => {
       }}
     >
       <Stack.Screen name="List" component={NotificationsScreen} />
-      {ProfileStackGroup({ Stack })}
-      {PartyDetailStackGroup({ Stack })}
+      {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

@@ -5,17 +5,19 @@ import { useTranslation } from 'react-i18next';
 
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
 import { Box, Container, StateHandler, Text } from '../../../components';
-import { HomeStackScreenProps } from '../../../navigation';
 
 import { PartyRow } from '../../party/components/PartyRow';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
 export const UserAttendedPartiesScreen: React.FC = () => {
   const { t } = useTranslation();
   const {
     params: { id },
-  } = useRoute<HomeStackScreenProps<'UserAttendedParties'>['route']>();
-  const { navigate } =
-    useNavigation<HomeStackScreenProps<'UserAttendedParties'>['navigation']>();
+  } = useRoute<CoreStackGroupScreenProps<'UserAttendedParties'>['route']>();
+  const { push } =
+    useNavigation<
+      CoreStackGroupScreenProps<'UserAttendedParties'>['navigation']
+    >();
 
   const {
     data,
@@ -45,7 +47,7 @@ export const UserAttendedPartiesScreen: React.FC = () => {
             <Box mb={2}>
               <PartyRow
                 party={party}
-                go={() => navigate('PartyDetail', { id: party._id })}
+                go={() => push('PartyDetail', { id: party._id })}
               />
             </Box>
           )}

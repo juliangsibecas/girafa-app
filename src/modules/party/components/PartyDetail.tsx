@@ -20,7 +20,7 @@ import {
   LabelValue,
   Text,
 } from '../../../components';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 import { FontFamily } from '../../../theme';
 import { formatDate } from '../../../utils';
 
@@ -37,8 +37,8 @@ type Props = {
 
 export const PartyDetail: React.FC<Props> = ({ party }) => {
   const { t } = useTranslation();
-  const { navigate } =
-    useNavigation<HomeStackScreenProps<'PartyDetail'>['navigation']>();
+  const { push } =
+    useNavigation<CoreStackGroupScreenProps<'PartyDetail'>['navigation']>();
   const { userId } = useAuth();
   const { isEnabled: isSearchAttendersEnabled } = useFeatureToggle(
     FeatureToggleName.PartySearchAttenders
@@ -160,7 +160,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           </Text>
           {isSearchAttendersEnabled && attendersCount ? (
             <TouchableOpacity
-              onPress={() => navigate('PartyAttenders', { id: party._id })}
+              onPress={() => push('PartyAttenders', { id: party._id })}
             >
               <Text type="secondary" fontFamily={FontFamily.LIGHT}>
                 {t('general.seeAll')}

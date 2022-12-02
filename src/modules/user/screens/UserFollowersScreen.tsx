@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl } from 'react-native';
 import { useUserGetFollowersByIdQuery } from '../../../api';
 import { Container, StateHandler, Text } from '../../../components';
-import { HomeStackScreenProps } from '../../../navigation';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 import { UserRow } from '../comonents';
 
 export const UserFollowersScreen: React.FC = () => {
   const { t } = useTranslation();
   const {
     params: { id },
-  } = useRoute<HomeStackScreenProps<'UserFollowers'>['route']>();
-  const { navigate } =
-    useNavigation<HomeStackScreenProps<'UserFollowers'>['navigation']>();
+  } = useRoute<CoreStackGroupScreenProps<'UserFollowers'>['route']>();
+  const { push } =
+    useNavigation<CoreStackGroupScreenProps<'UserFollowers'>['navigation']>();
 
   const {
     data,
@@ -41,7 +41,7 @@ export const UserFollowersScreen: React.FC = () => {
           renderItem={({ item: user }) => (
             <UserRow
               user={user}
-              go={() => navigate('UserProfile', { id: user._id })}
+              go={() => push('UserProfile', { id: user._id })}
             />
           )}
         />

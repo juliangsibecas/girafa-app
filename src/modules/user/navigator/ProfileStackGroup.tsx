@@ -6,6 +6,13 @@ import {
   UserProfileScreen,
 } from '../screens';
 
+export type ProfileStackGroupParamList = {
+  UserProfile: { id: string };
+  UserFollowers: { id: string };
+  UserFollowing: { id: string };
+  UserAttendedParties: { id: string };
+};
+
 type Props = {
   Stack: ReturnType<typeof createNativeStackNavigator<any>>;
 };
