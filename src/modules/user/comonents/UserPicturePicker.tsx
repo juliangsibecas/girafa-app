@@ -3,10 +3,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
 
-import { Avatar, Box, Image } from '../../../components';
+import { Box, Image } from '../../../components';
 
 import { useAuth } from '../../auth';
-import { getUserPictureUrl } from '../../picture';
 import { UserAvatar } from './UserAvatar';
 
 interface Props {
@@ -28,6 +27,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
           allowsEditing: true,
           aspect: [9, 16],
           quality: 1,
+          allowsMultipleSelection: false,
         });
 
         if (result.cancelled) {

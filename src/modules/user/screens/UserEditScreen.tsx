@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
 import { GraphQLErrors } from '@apollo/client/errors';
@@ -96,7 +96,7 @@ export const UserEditScreen: React.FC = () => {
 
         updatePictureVersion();
 
-        navigate('Profile');
+        navigate('Me');
 
         return;
       }
@@ -123,10 +123,10 @@ export const UserEditScreen: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ submitForm }) => (
+        {({ submitForm, values }) => (
           <>
             <Box flex flexGrow={1} flexShrink={1} pt={3} pb={5}>
-              <UserPicturePicker id="picture" key={Date.now()} />
+              <UserPicturePicker id="picture" />
               <Text type="hint" pt={6} pb={0.5} pl={0.5}>
                 {t('general.name')}
               </Text>
