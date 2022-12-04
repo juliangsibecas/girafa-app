@@ -7,7 +7,7 @@ export const usePictureUpload = () => {
   const { accessToken } = useAuth();
 
   const upload = async (endpoint: string, uri: string) =>
-    await FileSystem.uploadAsync(endpoint, uri, {
+    FileSystem.uploadAsync(endpoint, uri, {
       httpMethod: 'POST',
       uploadType: FileSystemUploadType.MULTIPART,
       fieldName: 'file',
