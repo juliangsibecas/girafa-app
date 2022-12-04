@@ -5,6 +5,7 @@ export const userTranslationES = {
   confirmPassword: 'Confirmar contraseña',
   newPassword: 'Nueva contraseña',
   follow: 'Seguir',
+  followBack: 'Seguir también',
   followers: 'Seguidores',
   following: 'Siguiendo',
 

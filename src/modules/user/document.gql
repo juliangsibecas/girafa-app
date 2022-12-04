@@ -21,6 +21,7 @@ query userGetById ($id: String!) {
     attendedPartiesCount 
 
     isFollowing
+    isFollower
   }
 }
 

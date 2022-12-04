@@ -74,11 +74,6 @@ export type FeatureToggleChangeValueInput = {
   value: Scalars['Boolean'];
 };
 
-export type FeatureToggleCreateInput = {
-  name: FeatureToggleName;
-  value: Scalars['Boolean'];
-};
-
 export enum FeatureToggleName {
   Mailing = 'MAILING',
   NotificationGet = 'NOTIFICATION_GET',
@@ -99,11 +94,15 @@ export enum FeatureToggleName {
   UserSendPartyInvite = 'USER_SEND_PARTY_INVITE'
 }
 
+export type FeatureTogglePopulateInput = {
+  value?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changePassword: Scalars['Boolean'];
   featureToggleChangeValue: Scalars['Boolean'];
-  featureToggleCreate: Scalars['Boolean'];
+  featureToggleSync: Scalars['Boolean'];
   generateRecoveryCode: Scalars['Boolean'];
   partyCreate: Scalars['String'];
   partyDelete: Scalars['Boolean'];
@@ -130,8 +129,8 @@ export type MutationFeatureToggleChangeValueArgs = {
 };
 
 
-export type MutationFeatureToggleCreateArgs = {
-  data: FeatureToggleCreateInput;
+export type MutationFeatureToggleSyncArgs = {
+  data: FeatureTogglePopulateInput;
 };
 
 
@@ -399,6 +398,7 @@ export type UserGetByIdResponse = {
   followersCount: Scalars['Float'];
   followingCount: Scalars['Float'];
   fullName: Scalars['String'];
+  isFollower: Scalars['Boolean'];
   isFollowing: Scalars['Boolean'];
   nickname: Scalars['String'];
 };
@@ -533,7 +533,7 @@ export type UserGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type UserGetByIdQuery = { __typename?: 'Query', userGetById: { __typename?: 'UserGetByIdResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean } };
+export type UserGetByIdQuery = { __typename?: 'Query', userGetById: { __typename?: 'UserGetByIdResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
 
 export type UserGetFollowingByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1131,6 +1131,7 @@ export const UserGetByIdDocument = gql`
     followingCount
     attendedPartiesCount
     isFollowing
+    isFollower
   }
 }
     `;

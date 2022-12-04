@@ -31,7 +31,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
   const { push } =
-    useNavigation<MyProfileStackScreenProps<'Profile'>['navigation']>();
+    useNavigation<MyProfileStackScreenProps<'Me'>['navigation']>();
 
   const { handleAction: handleGetFollowersAction } = useFeatureToggle(
     FeatureToggleName.UserGetFollowers
@@ -96,6 +96,12 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       nickname: user.nickname,
     });
 
+  const followButtonText = isFollowing
+    ? t('user.following')
+    : user.isFollower
+    ? t('user.followBack')
+    : t('user.follow');
+
   return (
     <Box overflow="hidden" width="screen" flexGrow={1}>
       <UserAvatar
@@ -144,7 +150,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               onPress={changeFollowingState}
               isLoading={isChangeFollowingStateLoading}
             >
-              {isFollowing ? t('user.following') : t('user.follow')}
+              {followButtonText}
             </FeatureToggledButton>
           ) : undefined}
           {isMyProfile ? (
