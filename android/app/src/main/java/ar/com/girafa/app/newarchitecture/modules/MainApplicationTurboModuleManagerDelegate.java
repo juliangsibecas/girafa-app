@@ -1,4 +1,4 @@
-package com.girafa.app.newarchitecture.modules;
+package ar.com.girafa.app.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

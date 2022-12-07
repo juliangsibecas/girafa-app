@@ -20,7 +20,7 @@
     "featureType": "landscape",
     "stylers": [
       {
-        "color": "#1b2855"
+        "color": "#1b1c31"
       }
     ]
   },
@@ -37,7 +37,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#344383"
+        "color": "#1b1c31"
       }
     ]
   },
@@ -55,7 +55,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#2c3a72"
+        "color": "#22244D"
       }
     ]
   },
@@ -107,7 +107,7 @@
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#1b2855"
+        "color": "#22244D"
       }
     ]
   },
@@ -123,7 +123,7 @@
     "featureType": "water",
     "stylers": [
       {
-        "color": "#344383"
+        "color": "#22244D"
       }
     ]
   }

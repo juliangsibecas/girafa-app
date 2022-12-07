@@ -1,4 +1,4 @@
-package com.girafa.app.newarchitecture;
+package ar.com.girafa.app.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.girafa.app.BuildConfig;
-import com.girafa.app.newarchitecture.components.MainComponentsRegistry;
-import com.girafa.app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import ar.com.girafa.app.BuildConfig;
+import ar.com.girafa.app.newarchitecture.components.MainComponentsRegistry;
+import ar.com.girafa.app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

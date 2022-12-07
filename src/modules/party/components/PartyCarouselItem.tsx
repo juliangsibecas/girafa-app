@@ -19,7 +19,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
   return (
     <Box width="screen" center>
       <Box
-        bgColor="background.light"
+        bgColor="disabled"
         borderRadius={1}
         flex
         row

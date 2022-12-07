@@ -32,7 +32,6 @@ export const lightPalette: Palette = {
   },
   background: {
     main: '#FFFFFF',
-    light: '#FFFFFF',
   },
 };
 
@@ -47,25 +46,24 @@ export const darkPalette: Palette = {
     main: '#000000',
   },
   success: {
-    main: '#00FF00',
+    main: '#63FE63',
   },
   warning: {
-    main: '#FFAA00',
+    main: '#F6BC48',
   },
   error: {
-    main: '#E53935',
+    main: '#E75653',
   },
   disabled: {
-    main: '#2C3966',
-    dark: '#2A365F',
+    main: '#222441',
+    dark: '#1F203B',
   },
   text: {
     primary: '#FFFFFF',
-    secondary: '#8096DF',
+    secondary: '#7C90B4',
     disabled: '#B2B2B2',
   },
   background: {
-    main: '#1B2855',
-    light: '#25356b',
+    main: '#1b1c31',
   },
 };

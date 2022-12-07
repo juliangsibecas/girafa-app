@@ -36,7 +36,7 @@ export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
       />
       <Box
         position="absolute"
-        bgColor="background.light"
+        bgColor="disabled"
         flex
         center
         style={{ height: '100%', width: '100%', zIndex: -1 }}

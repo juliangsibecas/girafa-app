@@ -13,7 +13,6 @@ export default {
   splash: {
     image: './src/assets/images/splash.png',
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -28,7 +27,7 @@ export default {
     package: 'ar.com.girafa.app',
     adaptiveIcon: {
       foregroundImage: './src/assets/images/adaptive-icon.png',
-      backgroundColor: '#ffffff',
+      backgroundImage: './src/assets/images/android_background.png',
     },
   },
   web: {
