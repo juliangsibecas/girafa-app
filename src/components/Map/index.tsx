@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import RNMap, {
   MapViewProps as RNMapProps,
@@ -12,6 +12,8 @@ import darkStyle from '../../assets/maps/dark.json';
 
 import { useTheme } from '../../theme';
 import { Icon } from '../Icon';
+import { StateHandler } from '../StateHandler';
+import { Box } from '../Box';
 
 type Props = {
   mapRef?: React.MutableRefObject<RNMap | undefined>;
@@ -37,6 +39,7 @@ export const Map: React.FC<Props> = ({
   markers = [],
   ...props
 }) => {
+  const [isMapLoading, setMapLoading] = useState(true);
   const { isLightMode } = useTheme();
 
   useEffect(() => {
@@ -47,22 +50,29 @@ export const Map: React.FC<Props> = ({
     return () => clearTimeout(timeout);
   }, []);
 
+  const handleMapReady = () => setMapLoading(false);
+
   return (
-    <RNMap
-      ref={ref as React.LegacyRef<RNMap>}
-      provider={PROVIDER_GOOGLE}
-      initialRegion={INITIAL_REGION}
-      showsUserLocation={false}
-      style={{
-        height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width,
-      }}
-      customMapStyle={isLightMode ? lightStyle : darkStyle}
-      {...props}
-    >
-      {markers.map((marker, i) => (
-        <Marker key={i} {...marker} />
-      ))}
-    </RNMap>
+    <Box width="screen" height="screen">
+      <StateHandler isLoading={isMapLoading}>
+        <RNMap
+          ref={ref as React.LegacyRef<RNMap>}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={INITIAL_REGION}
+          showsUserLocation={false}
+          style={{
+            height: Dimensions.get('window').height,
+            width: Dimensions.get('window').width,
+          }}
+          customMapStyle={isLightMode ? lightStyle : darkStyle}
+          onMapReady={handleMapReady}
+          {...props}
+        >
+          {markers.map((marker, i) => (
+            <Marker key={i} {...marker} />
+          ))}
+        </RNMap>
+      </StateHandler>
+    </Box>
   );
 };
