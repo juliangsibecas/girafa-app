@@ -1,5 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { useTheme } from '../../../theme';
+
 import { PartyAttendersScreen, PartyDetailScreen } from '../screens';
 
 export type PartyDetailStackGroupParamList = {

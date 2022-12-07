@@ -4,6 +4,12 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+
+import {
+  CoreStackGroup,
+  CoreStackGroupParamList,
+} from '../../../navigation/CoreStackGroup';
+
 import {
   MyProfileScreen,
   PasswordChangeScreen,
@@ -12,10 +18,6 @@ import {
 import { useTheme } from '../../../theme';
 import { SettingsMenuScreen } from '../../settings';
 import { SupportScreen } from '../../support';
-import {
-  CoreStackGroup,
-  CoreStackGroupParamList,
-} from '../../../navigation/CoreStackGroup';
 
 export type MyProfileStackParamList = CoreStackGroupParamList & {
   Me: undefined;

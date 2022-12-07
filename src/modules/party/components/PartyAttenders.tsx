@@ -6,7 +6,7 @@ import { usePartySearchAttendersQuery } from '../../../api';
 import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
-import { UserCard, UserRow } from '../../user';
+import { UserCard, UserRow } from '../../user/comonents';
 
 type Props = {
   partyId: string;

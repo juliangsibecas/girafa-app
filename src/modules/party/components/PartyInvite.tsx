@@ -8,6 +8,7 @@ import {
   useUserSendPartyInviteMutation,
 } from '../../../api';
 import {
+  BottomModal,
   Box,
   Button,
   Icon,
@@ -15,11 +16,10 @@ import {
   Text,
   TextInput,
 } from '../../../components';
-import { BottomModal } from '../../../components/Modal';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 
 import { FontFamily } from '../../../theme/text/types';
-import { UserAvatar } from '../../user';
+import { UserAvatar } from '../../user/comonents';
 
 type ItemProps = {
   user: any;

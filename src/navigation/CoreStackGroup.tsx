@@ -4,11 +4,15 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { ProfileStackGroup, ProfileStackGroupParamList } from '../modules/user';
+
+import {
+  ProfileStackGroup,
+  ProfileStackGroupParamList,
+} from '../modules/user/navigator/ProfileStackGroup';
 import {
   PartyDetailStackGroup,
   PartyDetailStackGroupParamList,
-} from '../modules/party';
+} from '../modules/party/navigator';
 
 export type CoreStackGroupParamList = ProfileStackGroupParamList &
   PartyDetailStackGroupParamList;

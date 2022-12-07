@@ -26,7 +26,7 @@ import { formatDate } from '../../../utils';
 
 import { useAuth } from '../../auth/hooks';
 import { useFeatureToggle } from '../../featureToggle';
-import { UserAvatar } from '../../user';
+import { UserAvatar } from '../../user/comonents';
 
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
