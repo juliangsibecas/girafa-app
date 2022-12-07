@@ -4,7 +4,6 @@ import {
   Container,
   FeatureToggledButton,
   Icon,
-  Logo,
   StateHandler,
 } from '../../../components';
 import {
@@ -50,10 +49,10 @@ export const MapScreen: React.FC = () => {
         pointerEvents="box-none"
         style={{ justifyContent: 'space-between' }}
       >
-        <Box pointerEvents="box-none" row>
+        <Box pointerEvents="box-none" row center>
           <Box flexGrow={1} />
           <Box hcenter flexGrow={1}>
-            <Logo />
+            <Icon name="logo" color="primary" isFilled size={5} />
           </Box>
           <Box
             flexGrow={1}

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FeatureToggleName } from '../../api';
-import { Box, Container, FeatureToggledButton, Logo } from '../../components';
+import { Box, Container, FeatureToggledButton, Icon } from '../../components';
 import { Button } from '../../components/Button';
 import { OnboardingSlider } from './components';
 import { OnboardingNavigationProp } from './navigator';
@@ -17,7 +17,7 @@ export const OnboardingScreen: React.FC = () => {
   return (
     <Container noHeader noBottomTab>
       <Box center>
-        <Logo />
+        <Icon name="logo" color="primary" isFilled size={6} />
       </Box>
       <Box flex flexGrow={1} vcenter>
         <OnboardingSlider />

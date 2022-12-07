@@ -25,6 +25,7 @@ import { SvgProps } from 'react-native-svg';
 
 import { useTheme } from '../../theme';
 import { UiKeys, useStyle } from '../../ui';
+import LogoIcon from '../../assets/icons/logo.svg';
 import PartyIcon from '../../assets/icons/party.svg';
 import UserCardIcon from '../../assets/icons/user_card.svg';
 
@@ -37,6 +38,7 @@ type Props = UiKeys & {
 };
 
 const dict = {
+  logo: LogoIcon,
   warning: AlertCircle,
   error: XCircle,
   home: Home,
