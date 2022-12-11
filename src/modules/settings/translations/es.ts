@@ -3,6 +3,7 @@ export const settingsTranslationES = {
     SettingMenu: {
       changePassword: 'Cambiar contraseña',
       contactSupport: 'Contactar soporte',
+      userDelete: 'Eliminar cuenta',
       version: 'Versión',
     },
   },

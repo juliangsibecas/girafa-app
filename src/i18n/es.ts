@@ -29,6 +29,7 @@ export const es = {
       save: 'Guardar',
       confirm: 'Confirmar',
       cancel: 'Cancelar',
+      delete: 'Eliminar',
 
       seeAll: 'Ver todos',
       seeMore: 'Ver más',

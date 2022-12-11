@@ -184,6 +184,11 @@ export type MutationUserChangeFollowingStateArgs = {
 };
 
 
+export type MutationUserDeleteArgs = {
+  data: UserDeleteInput;
+};
+
+
 export type MutationUserEditArgs = {
   data: UserEditInput;
 };
@@ -226,7 +231,7 @@ export type Party = {
   isExpired: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
-  organizer: User;
+  organizer?: Maybe<User>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -263,7 +268,7 @@ export type PartyGetByIdResponse = {
   isOrganizer: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
-  organizer: User;
+  organizer?: Maybe<User>;
 };
 
 export type PartyMapPreview = {
@@ -386,6 +391,10 @@ export type UserChangeFollowingStateInput = {
   state: Scalars['Boolean'];
 };
 
+export type UserDeleteInput = {
+  password: Scalars['String'];
+};
+
 export type UserEditInput = {
   fullName: Scalars['String'];
   nickname: Scalars['String'];
@@ -498,7 +507,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, isExpired: boolean, organizer: { __typename?: 'User', nickname: string }, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, isExpired: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -513,13 +522,6 @@ export type SupportSendMessageMutationVariables = Exact<{
 
 
 export type SupportSendMessageMutation = { __typename?: 'Mutation', supportSendMessage: boolean };
-
-export type UserEditMutationVariables = Exact<{
-  data: UserEditInput;
-}>;
-
-
-export type UserEditMutation = { __typename?: 'Mutation', userEdit: boolean };
 
 export type UserSearchQueryVariables = Exact<{
   q?: InputMaybe<Scalars['String']>;
@@ -583,6 +585,20 @@ export type UserSendPartyInviteMutationVariables = Exact<{
 
 
 export type UserSendPartyInviteMutation = { __typename?: 'Mutation', userSendPartyInvite: boolean };
+
+export type UserEditMutationVariables = Exact<{
+  data: UserEditInput;
+}>;
+
+
+export type UserEditMutation = { __typename?: 'Mutation', userEdit: boolean };
+
+export type UserDeleteMutationVariables = Exact<{
+  data: UserDeleteInput;
+}>;
+
+
+export type UserDeleteMutation = { __typename?: 'Mutation', userDelete: boolean };
 
 
 export const SignUpDocument = gql`
@@ -1053,37 +1069,6 @@ export function useSupportSendMessageMutation(baseOptions?: Apollo.MutationHookO
 export type SupportSendMessageMutationHookResult = ReturnType<typeof useSupportSendMessageMutation>;
 export type SupportSendMessageMutationResult = Apollo.MutationResult<SupportSendMessageMutation>;
 export type SupportSendMessageMutationOptions = Apollo.BaseMutationOptions<SupportSendMessageMutation, SupportSendMessageMutationVariables>;
-export const UserEditDocument = gql`
-    mutation userEdit($data: UserEditInput!) {
-  userEdit(data: $data)
-}
-    `;
-export type UserEditMutationFn = Apollo.MutationFunction<UserEditMutation, UserEditMutationVariables>;
-
-/**
- * __useUserEditMutation__
- *
- * To run a mutation, you first call `useUserEditMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUserEditMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userEditMutation, { data, loading, error }] = useUserEditMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useUserEditMutation(baseOptions?: Apollo.MutationHookOptions<UserEditMutation, UserEditMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UserEditMutation, UserEditMutationVariables>(UserEditDocument, options);
-      }
-export type UserEditMutationHookResult = ReturnType<typeof useUserEditMutation>;
-export type UserEditMutationResult = Apollo.MutationResult<UserEditMutation>;
-export type UserEditMutationOptions = Apollo.BaseMutationOptions<UserEditMutation, UserEditMutationVariables>;
 export const UserSearchDocument = gql`
     query userSearch($q: String) {
   userSearch(q: $q) {
@@ -1404,3 +1389,65 @@ export function useUserSendPartyInviteMutation(baseOptions?: Apollo.MutationHook
 export type UserSendPartyInviteMutationHookResult = ReturnType<typeof useUserSendPartyInviteMutation>;
 export type UserSendPartyInviteMutationResult = Apollo.MutationResult<UserSendPartyInviteMutation>;
 export type UserSendPartyInviteMutationOptions = Apollo.BaseMutationOptions<UserSendPartyInviteMutation, UserSendPartyInviteMutationVariables>;
+export const UserEditDocument = gql`
+    mutation userEdit($data: UserEditInput!) {
+  userEdit(data: $data)
+}
+    `;
+export type UserEditMutationFn = Apollo.MutationFunction<UserEditMutation, UserEditMutationVariables>;
+
+/**
+ * __useUserEditMutation__
+ *
+ * To run a mutation, you first call `useUserEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEditMutation, { data, loading, error }] = useUserEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserEditMutation(baseOptions?: Apollo.MutationHookOptions<UserEditMutation, UserEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEditMutation, UserEditMutationVariables>(UserEditDocument, options);
+      }
+export type UserEditMutationHookResult = ReturnType<typeof useUserEditMutation>;
+export type UserEditMutationResult = Apollo.MutationResult<UserEditMutation>;
+export type UserEditMutationOptions = Apollo.BaseMutationOptions<UserEditMutation, UserEditMutationVariables>;
+export const UserDeleteDocument = gql`
+    mutation userDelete($data: UserDeleteInput!) {
+  userDelete(data: $data)
+}
+    `;
+export type UserDeleteMutationFn = Apollo.MutationFunction<UserDeleteMutation, UserDeleteMutationVariables>;
+
+/**
+ * __useUserDeleteMutation__
+ *
+ * To run a mutation, you first call `useUserDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userDeleteMutation, { data, loading, error }] = useUserDeleteMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UserDeleteMutation, UserDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserDeleteMutation, UserDeleteMutationVariables>(UserDeleteDocument, options);
+      }
+export type UserDeleteMutationHookResult = ReturnType<typeof useUserDeleteMutation>;
+export type UserDeleteMutationResult = Apollo.MutationResult<UserDeleteMutation>;
+export type UserDeleteMutationOptions = Apollo.BaseMutationOptions<UserDeleteMutation, UserDeleteMutationVariables>;

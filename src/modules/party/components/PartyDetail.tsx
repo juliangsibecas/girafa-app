@@ -128,7 +128,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         <Box flex flexGrow={1}>
           <LabelValue
             label={t('party.organizer')}
-            value={party.organizer.nickname}
+            value={party.organizer?.nickname}
           />
           <Box mt={4}>
             <LabelValue

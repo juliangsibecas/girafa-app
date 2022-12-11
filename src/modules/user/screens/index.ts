@@ -4,4 +4,5 @@ export * from './UserFollowersScreen';
 export * from './UserFollowingScreen';
 export * from './UserAttendedPartiesScreen';
 export * from './UserEditScreen';
+export * from './UserDeleteScreen';
 export * from './PasswordChangeScreen';

@@ -13,6 +13,10 @@ export const userTranslationES = {
     Edit: {
       title: 'Editar perfil',
     },
+    Delete: {
+      title: 'Eliminar cuenta',
+      subtitle: 'Una vez eliminada tu cuenta ya no vas a poder recuperarla.',
+    },
     PasswordChange: {
       title: 'Cambio de contraseña',
       currentPassword: 'Contraseña actual',

@@ -1,7 +1,3 @@
-mutation userEdit ($data: UserEditInput!) {
-  userEdit(data: $data)   
-}
-
 query userSearch ($q: String) {
   userSearch(q: $q) {
     _id
@@ -67,4 +63,12 @@ mutation userChangeAttendingState ($data: UserChangeAttendingStateInput!) {
 
 mutation userSendPartyInvite ($data: UserSendPartyInviteInput!) {
   userSendPartyInvite (data: $data)
+}
+
+mutation userEdit ($data: UserEditInput!) {
+  userEdit(data: $data)   
+}
+
+mutation userDelete ($data: UserDeleteInput!) {
+  userDelete(data: $data)   
 }

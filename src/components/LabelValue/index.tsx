@@ -12,6 +12,6 @@ export const LabelValue: React.FC<Props> = ({ label, value }) => (
     <Text type="secondary" fontFamily={FontFamily.LIGHT} mb={0.5}>
       {label}
     </Text>
-    <Text>{value}</Text>
+    <Text>{value ?? '-'}</Text>
   </>
 );

@@ -17,12 +17,15 @@ interface IOption {
   label: string;
   to: keyof MyProfileStackParamList;
   handleAction?: (action: () => void) => void;
+  color?: string;
 }
 
 export const SettingsMenuScreen = () => {
   const { t } = useTranslation();
   const { isEnabled: isSupportEnabled, handleAction: handleSupportAction } =
     useFeatureToggle(FeatureToggleName.Mailing);
+  const { isEnabled: isDeleteEnabled, handleAction: handleDeleteAction } =
+    useFeatureToggle(FeatureToggleName.UserDelete);
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'Settings'>['navigation']>();
   const { signOut } = useAuth();
@@ -38,6 +41,13 @@ export const SettingsMenuScreen = () => {
       label: t('settings.screens.SettingMenu.contactSupport'),
       to: 'Support',
       handleAction: handleSupportAction,
+    },
+    {
+      isEnabled: isDeleteEnabled,
+      label: t('settings.screens.SettingMenu.userDelete'),
+      to: 'UserDelete',
+      handleAction: handleSupportAction,
+      color: 'error',
     },
   ];
 
@@ -57,8 +67,10 @@ export const SettingsMenuScreen = () => {
               style={!item.isEnabled && { opacity: 0.3 }}
             >
               <Box flex row py={2}>
-                <Text flexGrow={1}>{item.label}</Text>
-                <Icon name="chevron-right" />
+                <Text flexGrow={1} color={item.color}>
+                  {item.label}
+                </Text>
+                <Icon name="chevron-right" color={item.color} />
               </Box>
             </TouchableOpacity>
           )}

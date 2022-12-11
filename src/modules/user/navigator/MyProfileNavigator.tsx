@@ -10,22 +10,14 @@ import {
   CoreStackGroupParamList,
 } from '../../../navigation/CoreStackGroup';
 
-import {
-  MyProfileScreen,
-  PasswordChangeScreen,
-  UserEditScreen,
-} from '../screens';
+import { MyProfileScreen, UserEditScreen } from '../screens';
 import { useTheme } from '../../../theme';
-import { SettingsMenuScreen } from '../../settings';
-import { SupportScreen } from '../../support';
+import { SettingsNavigator } from '../../settings/navigator';
 
 export type MyProfileStackParamList = CoreStackGroupParamList & {
   Me: undefined;
   UserEdit: { fullname: string; nickname: string };
-
   Settings: undefined;
-  PasswordChange: undefined;
-  Support: undefined;
 };
 
 export type MyProfileStackRouteProp<T extends keyof MyProfileStackParamList> =
@@ -58,9 +50,11 @@ export const MyProfileNavigator: React.FC = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="UserEdit" component={UserEditScreen} />
-      <Stack.Screen name="Settings" component={SettingsMenuScreen} />
-      <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
-      <Stack.Screen name="Support" component={SupportScreen} />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsNavigator}
+        options={{ headerShown: false }}
+      />
       {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );
