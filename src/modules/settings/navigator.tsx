@@ -7,7 +7,7 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 import { useTheme } from '../../theme';
 import { SupportScreen } from '../support';
-import { PasswordChangeScreen, UserDeleteScreen } from '../user';
+import { PasswordChangeScreen, UserDeleteScreen } from '../user/screens';
 import { SettingsMenuScreen } from './screens';
 
 export type SettingsStackParamList = {
