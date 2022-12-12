@@ -1,8 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
-import { GraphQLErrors } from '@apollo/client/errors';
-import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import { useResponse, useUserDeleteMutation } from '../../../api';
@@ -14,7 +12,6 @@ import {
   Header,
 } from '../../../components';
 
-import { SettingsStackScreenProps } from '../../settings';
 import { useAuth } from '../../auth';
 
 type FormValues = {
@@ -23,9 +20,7 @@ type FormValues = {
 
 export const UserDeleteScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { onSuccess, onError } = useResponse();
-  const { navigate } =
-    useNavigation<SettingsStackScreenProps<'UserDelete'>['navigation']>();
+  const { onSuccess, onFormError } = useResponse();
   const [edit, { loading: isLoading }] = useUserDeleteMutation();
   const { signOut } = useAuth();
 
@@ -60,15 +55,9 @@ export const UserDeleteScreen: React.FC = () => {
 
       throw Error();
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
-      const error = errors[0];
+      const { messages } = onFormError(e);
 
-      if (error && error.message === 'VALIDATION_ERROR') {
-        helpers.setErrors(error.extensions);
-        return;
-      }
-
-      onError();
+      messages && helpers.setErrors(messages);
     }
   };
 

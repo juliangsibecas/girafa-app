@@ -62,6 +62,24 @@ export type CoordinateCreateInput = {
   longitude: Scalars['Float'];
 };
 
+export enum ErrorCode {
+  AuthError = 'AUTH_ERROR',
+  FeatureToggleError = 'FEATURE_TOGGLE_ERROR',
+  ForbiddenError = 'FORBIDDEN_ERROR',
+  NotFoundError = 'NOT_FOUND_ERROR',
+  UnknownError = 'UNKNOWN_ERROR',
+  ValidationError = 'VALIDATION_ERROR'
+}
+
+export enum ErrorDescription {
+  EmailNotAvailable = 'EMAIL_NOT_AVAILABLE',
+  EmailNotFound = 'EMAIL_NOT_FOUND',
+  PartyNameNotAvailable = 'PARTY_NAME_NOT_AVAILABLE',
+  PasswordInvalid = 'PASSWORD_INVALID',
+  SignInInvalid = 'SIGN_IN_INVALID',
+  UserNameNotAvailable = 'USER_NAME_NOT_AVAILABLE'
+}
+
 export type FeatureToggle = {
   __typename?: 'FeatureToggle';
   _id: Scalars['String'];
@@ -301,6 +319,7 @@ export type Query = {
   partyGetById: PartyGetByIdResponse;
   partySearch: Array<PartyPreview>;
   partySearchAttenders: Array<UserPreview>;
+  typesSync: TypesSyncResponse;
   userGetAttendedPartiesById: Array<PartyPreview>;
   userGetById: UserGetByIdResponse;
   userGetFollowersById: Array<UserPreview>;
@@ -357,6 +376,12 @@ export type QueryUserSearchFollowersToInviteArgs = {
 export type SupportSendMessageInput = {
   body: Scalars['String'];
   subject: Scalars['String'];
+};
+
+export type TypesSyncResponse = {
+  __typename?: 'TypesSyncResponse';
+  code: ErrorCode;
+  description: ErrorDescription;
 };
 
 export type User = {
@@ -437,6 +462,11 @@ export type UserSendPartyInviteInput = {
   invitedId: Array<Scalars['String']>;
   partyId: Scalars['String'];
 };
+
+export type TypesSyncQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TypesSyncQuery = { __typename?: 'Query', typesSync: { __typename?: 'TypesSyncResponse', code: ErrorCode, description: ErrorDescription } };
 
 export type SignUpMutationVariables = Exact<{
   data: AuthSignUpInput;
@@ -601,6 +631,41 @@ export type UserDeleteMutationVariables = Exact<{
 export type UserDeleteMutation = { __typename?: 'Mutation', userDelete: boolean };
 
 
+export const TypesSyncDocument = gql`
+    query typesSync {
+  typesSync {
+    code
+    description
+  }
+}
+    `;
+
+/**
+ * __useTypesSyncQuery__
+ *
+ * To run a query within a React component, call `useTypesSyncQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTypesSyncQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTypesSyncQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTypesSyncQuery(baseOptions?: Apollo.QueryHookOptions<TypesSyncQuery, TypesSyncQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TypesSyncQuery, TypesSyncQueryVariables>(TypesSyncDocument, options);
+      }
+export function useTypesSyncLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TypesSyncQuery, TypesSyncQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TypesSyncQuery, TypesSyncQueryVariables>(TypesSyncDocument, options);
+        }
+export type TypesSyncQueryHookResult = ReturnType<typeof useTypesSyncQuery>;
+export type TypesSyncLazyQueryHookResult = ReturnType<typeof useTypesSyncLazyQuery>;
+export type TypesSyncQueryResult = Apollo.QueryResult<TypesSyncQuery, TypesSyncQueryVariables>;
 export const SignUpDocument = gql`
     mutation signUp($data: AuthSignUpInput!) {
   signUp(data: $data) {

@@ -20,7 +20,7 @@ type FormValues = {
 
 export const SignInForm: React.FC = () => {
   const { t } = useTranslation();
-  const { onError } = useResponse();
+  const { onFormError } = useResponse();
   const { navigate } = useNavigation<OnboardingNavigationProp<'SignIn'>>();
 
   const { signIn: authSignIn } = useAuth();
@@ -56,18 +56,9 @@ export const SignInForm: React.FC = () => {
 
       throw Error();
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
+      const { messages } = onFormError(e);
 
-      if (errors && errors.length) {
-        const error = errors[0];
-
-        if (error && error.message === 'VALIDATION_ERROR') {
-          helpers.setErrors(error.extensions);
-          return;
-        }
-      }
-
-      onError();
+      messages && helpers.setErrors(messages);
     }
   };
 

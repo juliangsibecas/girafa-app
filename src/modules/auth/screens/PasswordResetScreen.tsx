@@ -1,4 +1,3 @@
-import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
@@ -33,7 +32,7 @@ type FormValues = {
 
 export const PasswordResetScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { onError } = useResponse();
+  const { onError, onFormError } = useResponse();
   const { signIn } = useAuth();
   const { params } = useRoute<OnboardingRouteProp<'CodeGeneration'>>();
   const { navigate } =
@@ -92,18 +91,9 @@ export const PasswordResetScreen: React.FC = () => {
         return;
       }
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
+      const { messages } = onFormError(e);
 
-      if (errors && errors.length) {
-        const error = errors[0];
-
-        if (error && error.message === 'VALIDATION_ERROR') {
-          helpers.setErrors({ code: t('auth.screens.PasswordReset.badCode') });
-          return;
-        }
-      }
-
-      onError();
+      messages && helpers.setErrors(messages);
     }
   };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
-import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
@@ -34,7 +33,7 @@ type FormValues = {
 
 export const UserEditScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { onSuccess, onError } = useResponse();
+  const { onSuccess, onFormError } = useResponse();
   const { userId } = useAuth();
   const { updatePictureVersion } = useUser();
   const { navigate } =
@@ -103,15 +102,9 @@ export const UserEditScreen: React.FC = () => {
 
       throw Error();
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
-      const error = errors[0];
+      const { messages } = onFormError(e);
 
-      if (error && error.message === 'VALIDATION_ERROR') {
-        helpers.setErrors(error.extensions);
-        return;
-      }
-
-      onError();
+      messages && helpers.setErrors(messages);
     }
   };
 
@@ -123,7 +116,7 @@ export const UserEditScreen: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ submitForm, values }) => (
+        {({ submitForm }) => (
           <>
             <Box flex flexGrow={1} flexShrink={1} pt={3} pb={5}>
               <UserPicturePicker id="picture" />

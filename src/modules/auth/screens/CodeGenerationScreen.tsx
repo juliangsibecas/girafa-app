@@ -1,4 +1,3 @@
-import { GraphQLErrors } from '@apollo/client/errors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
@@ -29,7 +28,7 @@ type FormValues = {
 
 export const CodeGenerationScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { onError } = useResponse();
+  const { onFormError } = useResponse();
   const { params } = useRoute<OnboardingRouteProp<'CodeGeneration'>>();
   const { navigate } =
     useNavigation<OnboardingNavigationProp<'CodeGeneration'>>();
@@ -62,21 +61,9 @@ export const CodeGenerationScreen: React.FC = () => {
         return;
       }
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
+      const { messages } = onFormError(e);
 
-      if (errors && errors.length) {
-        const error = errors[0];
-
-        if (error && error.message === 'VALIDATION_ERROR') {
-          helpers.setErrors({
-            email: t('auth.screens.CodeGeneration.badEmail'),
-          });
-
-          return;
-        }
-
-        onError();
-      }
+      messages && helpers.setErrors(messages);
     }
   };
 

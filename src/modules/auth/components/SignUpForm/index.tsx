@@ -2,7 +2,6 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { GraphQLErrors } from '@apollo/client/errors';
 
 import { Box, FormikTextInput } from '../../../../components';
 import { Button } from '../../../../components/Button';
@@ -20,7 +19,7 @@ type FormValues = {
 
 export const SignUpForm: React.FC = () => {
   const { t } = useTranslation();
-  const { onError } = useResponse();
+  const { onFormError } = useResponse();
   const { signIn } = useAuth();
   const [signUp, { loading: isLoading }] = useSignUpMutation();
 
@@ -78,15 +77,9 @@ export const SignUpForm: React.FC = () => {
 
       signIn(data!.signUp);
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
-      const error = errors[0];
+      const { messages } = onFormError(e);
 
-      if (error && error.message === 'VALIDATION_ERROR') {
-        helpers.setErrors(error.extensions);
-        return;
-      }
-
-      onError();
+      messages && helpers.setErrors(messages);
     }
   };
 

@@ -1,0 +1,6 @@
+query typesSync {
+  typesSync {
+      code
+      description
+    }
+}

@@ -20,7 +20,6 @@ import { Maybe } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackScreenProps } from '../../../navigation';
 import { usePictureUpload } from '../../picture';
-import { GraphQLErrors } from '@apollo/client/errors';
 import { useTranslation } from 'react-i18next';
 
 type FormValues = {
@@ -53,7 +52,7 @@ export const PartyCreateForm: React.FC = () => {
     useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
   const [create, { loading: isLoading }] = usePartyCreateMutation();
   const { uploadParty } = usePictureUpload();
-  const { onSuccess, onError } = useResponse();
+  const { onSuccess, onFormError } = useResponse();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -82,7 +81,7 @@ export const PartyCreateForm: React.FC = () => {
 
   const handleSubmit = async (
     values: FormValues,
-    { setErrors }: FormikHelpers<FormValues>
+    helpers: FormikHelpers<FormValues>
   ) => {
     try {
       const { image, ...rest } = values;
@@ -112,17 +111,9 @@ export const PartyCreateForm: React.FC = () => {
 
       navigate('Map');
     } catch (e: any) {
-      const errors = e.graphQLErrors as GraphQLErrors;
-      const error = errors[0];
+      const { messages } = onFormError(e);
 
-      if (error && error.message === 'VALIDATION_ERROR') {
-        setErrors(error.extensions);
-        return;
-      }
-
-      onError();
-
-      console.log(e);
+      messages && helpers.setErrors(messages);
     }
   };
 
