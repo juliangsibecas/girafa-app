@@ -14,6 +14,7 @@ import { useTheme } from '../../theme';
 import { Icon } from '../Icon';
 import { StateHandler } from '../StateHandler';
 import { Box } from '../Box';
+import { Spinner } from '../Spinner';
 
 type Props = {
   mapRef?: React.MutableRefObject<RNMap | undefined>;
@@ -43,36 +44,43 @@ export const Map: React.FC<Props> = ({
   const { isLightMode } = useTheme();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    const readyTimeout = setTimeout(() => {
+      setMapLoading(false);
+    }, 1000);
+
+    const zoomTimeout = setTimeout(() => {
       ref?.current?.animateToRegion(INITIAL_REGION);
     }, 100);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(zoomTimeout);
+      clearTimeout(readyTimeout);
+    };
   }, []);
-
-  const handleMapReady = () => setMapLoading(false);
 
   return (
     <Box width="screen" height="screen">
-      <StateHandler isLoading={isMapLoading}>
-        <RNMap
-          ref={ref as React.LegacyRef<RNMap>}
-          provider={PROVIDER_GOOGLE}
-          initialRegion={INITIAL_REGION}
-          showsUserLocation={false}
-          style={{
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-          }}
-          customMapStyle={isLightMode ? lightStyle : darkStyle}
-          onMapReady={handleMapReady}
-          {...props}
-        >
-          {markers.map((marker, i) => (
-            <Marker key={i} {...marker} />
-          ))}
-        </RNMap>
-      </StateHandler>
+      {isMapLoading && (
+        <Box height="screen" width="screen" bgColor="background" center>
+          <Spinner />
+        </Box>
+      )}
+      <RNMap
+        ref={ref as React.LegacyRef<RNMap>}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={INITIAL_REGION}
+        showsUserLocation={false}
+        style={{
+          height: Dimensions.get('window').height,
+          width: Dimensions.get('window').width,
+        }}
+        customMapStyle={isLightMode ? lightStyle : darkStyle}
+        {...props}
+      >
+        {markers.map((marker, i) => (
+          <Marker key={i} {...marker} />
+        ))}
+      </RNMap>
     </Box>
   );
 };

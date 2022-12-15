@@ -40,7 +40,7 @@
 
 // @generated begin react-native-maps-init - expo prebuild (DO NOT MODIFY) sync-4d648eb831e47c77a0c308106d19f3af36ed7a2e
 #if __has_include(<GoogleMaps/GoogleMaps.h>)
-  [GMSServices provideAPIKey:@"AIzaSyD9bkjjnyhOApKzlJL1l_DnG_4aS1SYjAo"];
+  [GMSServices provideAPIKey:@"AIzaSyDNpoGQyZvEeynkmyYdvokxfIN2M4BP_js"];
 #endif
 // @generated end react-native-maps-init
   RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];

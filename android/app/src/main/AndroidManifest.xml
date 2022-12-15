@@ -19,7 +19,7 @@
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@juliangsibecas/girafa"/>
     <meta-data
      android:name="com.google.android.geo.API_KEY"
-     android:value="AIzaSyD9bkjjnyhOApKzlJL1l_DnG_4aS1SYjAo"/>
+     android:value="AIzaSyDNpoGQyZvEeynkmyYdvokxfIN2M4BP_js"/>
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
