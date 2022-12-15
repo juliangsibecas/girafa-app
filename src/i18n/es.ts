@@ -41,8 +41,8 @@ export const es = {
     },
     api: {
       featureToggleDisabled: 'Funcionalidad no disponible en este momento.',
-      error: 'Hubo un error al realizar la acción',
-      success: 'La acción se realizó correctamente',
+      error: 'Hubo un error al realizar la acción.',
+      success: 'La acción se realizó correctamente.',
       responses: {
         EMAIL_NOT_AVAILABLE: 'Correo electrónico en uso',
         EMAIL_NOT_FOUND: 'Correo electrónico no encontrado',

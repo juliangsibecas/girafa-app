@@ -3,13 +3,20 @@ import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { ErrorCode, ErrorDescription } from './generated';
 
+type ResponseData = {
+  title?: string;
+  description?: string;
+  time?: number;
+};
 export const useResponse = () => {
   const { t } = useTranslation();
 
-  const onSuccess = () => {
+  const onSuccess = (data?: ResponseData) => {
     Toast.show({
       type: 'success',
-      text1: t('api.success'),
+      text1: data?.title ?? t('api.success'),
+      text2: data?.description,
+      visibilityTime: data?.time,
     });
   };
 

@@ -21,7 +21,7 @@ export const partyTranslationES = {
   screens: {
     CreateMap: {
       title: 'Elegí la ubicación',
-      hint: 'Solo dentro de Gran La Plata',
+      hint: 'Solo aceptamos fiestas dentro del Gran La Plata',
     },
   },
   components: {
@@ -31,11 +31,15 @@ export const partyTranslationES = {
     },
     Create: {
       CautionModal: {
-        title: 'Titulo',
-        body: 'Mensaje',
+        title: 'Atención',
+        body: 'Al crear la fiesta validaremos que los datos sean correctos. Mientras tanto no la vas a ver en la plataforma.',
       },
       addressExample: 'Ej: 17 E/ 503 y 504 N2906',
       allowInvitesHelper: 'Mis invitados pueden invitar',
+      success: {
+        title: 'Vamos a estar validado los datos de la fiesta.',
+        description: 'Mientras tanto no la vas a ver en la plataforma.',
+      },
     },
     Invite: {
       invite: 'Invitar',

@@ -107,7 +107,11 @@ export const PartyCreateForm: React.FC = () => {
 
       await uploadParty(res.data!.partyCreate, values.image);
 
-      onSuccess();
+      onSuccess({
+        title: t('party.components.Create.success.title'),
+        description: t('party.components.Create.success.description'),
+        time: 4000,
+      });
 
       navigate('Map');
     } catch (e: any) {

@@ -32,10 +32,10 @@ export const ConfirmationModal: React.FC<Props> = ({
         <Text type="h3" textCenter>
           {title}
         </Text>
-        <Text mt={2} textCenter>
+        <Text mt={3} textCenter>
           {body}
         </Text>
-        <Box flex row center mt={2}>
+        <Box flex row center mt={3}>
           <Button secondary small mr={2} onPress={onCancel} flexGrow={1}>
             {cancel ?? t('general.cancel')}
           </Button>

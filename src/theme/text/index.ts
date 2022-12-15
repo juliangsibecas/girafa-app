@@ -6,7 +6,7 @@ export const text = (palette: Palette) => {
     fontFamily: FontFamily.REGULAR,
     fontSize: 14,
     color: palette.text.primary,
-    lineHeight: 16,
+    lineHeight: 18,
   };
 
   const createFont = (font: Partial<Font>): Font => ({
