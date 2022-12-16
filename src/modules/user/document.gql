@@ -53,6 +53,10 @@ query userSearchFollowersToInvite ($data: UserSearchFollowersToInviteInput!) {
   }
 }
 
+query userCheckPartyValidating {
+  userCheckPartyValidating
+}
+
 mutation userChangeFollowingState ($data: UserChangeFollowingStateInput!) {
   userChangeFollowingState (data: $data)
 }
@@ -72,3 +76,4 @@ mutation userEdit ($data: UserEditInput!) {
 mutation userDelete ($data: UserDeleteInput!) {
   userDelete(data: $data)   
 }
+

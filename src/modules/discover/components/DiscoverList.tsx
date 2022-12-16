@@ -34,7 +34,8 @@ export const DiscoverList: React.FC<Props> = ({
   const PartyItem = PartyRow;
   const UserItem = isCardsListMode ? UserCard : UserRow;
 
-  const go = (id: string) => navigate('UserProfile', { id });
+  const goToUser = (id: string) => navigate('UserProfile', { id });
+  const goToParty = (id: string) => navigate('PartyDetail', { id });
 
   return (
     <>
@@ -60,12 +61,16 @@ export const DiscoverList: React.FC<Props> = ({
           renderItem={({ item }) => (
             <Box mt={2}>
               {isUser ? (
-                <UserItem key={item._id} user={item as UserPreview} go={go} />
+                <UserItem
+                  key={item._id}
+                  user={item as UserPreview}
+                  go={goToUser}
+                />
               ) : (
                 <PartyItem
                   key={item._id}
                   party={item as PartyPreview}
-                  go={go}
+                  go={goToParty}
                 />
               )}
             </Box>
@@ -77,9 +82,17 @@ export const DiscoverList: React.FC<Props> = ({
           .map((item) => (
             <Box mt={2}>
               {isUser ? (
-                <UserRow key={item._id} user={item as UserPreview} go={go} />
+                <UserRow
+                  key={item._id}
+                  user={item as UserPreview}
+                  go={goToUser}
+                />
               ) : (
-                <PartyRow key={item._id} party={item as PartyPreview} go={go} />
+                <PartyRow
+                  key={item._id}
+                  party={item as PartyPreview}
+                  go={goToParty}
+                />
               )}
             </Box>
           ))

@@ -9,6 +9,7 @@ import {
   PartyAvailability,
   PartyGetByIdDocument,
   PartyGetByIdResponse,
+  PartyStatus,
   User,
   UserGetByIdDocument,
   useUserChangeAttendingStateMutation,
@@ -59,7 +60,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
 
   const canInvite =
-    !party.isExpired &&
+    party.status === PartyStatus.Enabled &&
     (party.isOrganizer ||
       party.allowInvites ||
       party.availability === PartyAvailability.Public);
@@ -183,11 +184,11 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           secondary={isAttender}
           onPress={changeAttendingState}
           isLoading={isChangeAttendingStateLoading}
-          isDisabled={party.isOrganizer || party.isExpired}
+          isDisabled={party.isOrganizer || party.status === PartyStatus.Expired}
         >
           {t(
             `party.${
-              !party.isExpired
+              party.status === PartyStatus.Enabled
                 ? isAttender
                   ? 'attending'
                   : 'attend'

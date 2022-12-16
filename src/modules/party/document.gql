@@ -26,6 +26,7 @@ query partySearch ($q: String) {
 query partyGetById ($id: String!) {
   partyGetById (id: $id) {
     _id
+    status
     name    
     organizer {
       nickname
@@ -35,7 +36,6 @@ query partyGetById ($id: String!) {
     date
     openBar
     description
-
     attenders {
       _id
     }
@@ -43,7 +43,6 @@ query partyGetById ($id: String!) {
     allowInvites
     isAttender
     isOrganizer
-    isExpired
   }
 }
 

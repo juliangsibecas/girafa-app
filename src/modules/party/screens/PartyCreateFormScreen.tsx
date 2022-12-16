@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Container } from '../../../components';
+import { useUserCheckPartyValidatingQuery } from '../../../api';
+import { Box, Container, Icon, StateHandler, Text } from '../../../components';
 import { useConfirmationModal } from '../../../hooks';
 import { HomeStackScreenProps } from '../../../navigation';
 import { PartyCreateForm } from '../components/PartyCreateForm';
@@ -18,13 +19,29 @@ export const PartyCreateFormScreen: React.FC = () => {
     cancel: t('general.goBack'),
     onCancel: goBack,
   });
+  const {
+    data,
+    loading: isLoading,
+    error,
+  } = useUserCheckPartyValidatingQuery();
 
   return (
     <Container noBottomGradient>
-      <>
-        {confirmationModal}
-        <PartyCreateForm />
-      </>
+      <StateHandler isLoading={isLoading} isError={Boolean(error)}>
+        {data?.userCheckPartyValidating ? (
+          <Box flexGrow={1} center px={4}>
+            <Icon name="clock" size={10} color="warning" />
+            <Text mt={2} textCenter>
+              {t('party.components.Create.validating')}
+            </Text>
+          </Box>
+        ) : (
+          <>
+            {confirmationModal}
+            <PartyCreateForm />
+          </>
+        )}
+      </StateHandler>
     </Container>
   );
 };

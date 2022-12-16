@@ -245,11 +245,10 @@ export type Party = {
   date: Scalars['Date'];
   description: Scalars['String'];
   invited: Array<User>;
-  isEnabled: Scalars['Boolean'];
-  isExpired: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer?: Maybe<User>;
+  status: PartyStatus;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -282,11 +281,11 @@ export type PartyGetByIdResponse = {
   date: Scalars['Date'];
   description: Scalars['String'];
   isAttender: Scalars['Boolean'];
-  isExpired: Scalars['Boolean'];
   isOrganizer: Scalars['Boolean'];
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer?: Maybe<User>;
+  status: PartyStatus;
 };
 
 export type PartyMapPreview = {
@@ -310,6 +309,12 @@ export type PartySearchAttendersInput = {
   q?: InputMaybe<Scalars['String']>;
 };
 
+export enum PartyStatus {
+  Created = 'CREATED',
+  Enabled = 'ENABLED',
+  Expired = 'EXPIRED'
+}
+
 export type Query = {
   __typename?: 'Query';
   featureToggleGetEnabledNames: Array<FeatureToggleName>;
@@ -320,6 +325,7 @@ export type Query = {
   partySearch: Array<PartyPreview>;
   partySearchAttenders: Array<UserPreview>;
   typesSync: TypesSyncResponse;
+  userCheckPartyValidating: Scalars['Boolean'];
   userGetAttendedPartiesById: Array<PartyPreview>;
   userGetById: UserGetByIdResponse;
   userGetFollowersById: Array<UserPreview>;
@@ -537,7 +543,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, isExpired: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -594,6 +600,11 @@ export type UserSearchFollowersToInviteQueryVariables = Exact<{
 
 
 export type UserSearchFollowersToInviteQuery = { __typename?: 'Query', userSearchFollowersToInvite: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+
+export type UserCheckPartyValidatingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserCheckPartyValidatingQuery = { __typename?: 'Query', userCheckPartyValidating: boolean };
 
 export type UserChangeFollowingStateMutationVariables = Exact<{
   data: UserChangeFollowingStateInput;
@@ -1018,6 +1029,7 @@ export const PartyGetByIdDocument = gql`
     query partyGetById($id: String!) {
   partyGetById(id: $id) {
     _id
+    status
     name
     organizer {
       nickname
@@ -1034,7 +1046,6 @@ export const PartyGetByIdDocument = gql`
     allowInvites
     isAttender
     isOrganizer
-    isExpired
   }
 }
     `;
@@ -1361,6 +1372,38 @@ export function useUserSearchFollowersToInviteLazyQuery(baseOptions?: Apollo.Laz
 export type UserSearchFollowersToInviteQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteQuery>;
 export type UserSearchFollowersToInviteLazyQueryHookResult = ReturnType<typeof useUserSearchFollowersToInviteLazyQuery>;
 export type UserSearchFollowersToInviteQueryResult = Apollo.QueryResult<UserSearchFollowersToInviteQuery, UserSearchFollowersToInviteQueryVariables>;
+export const UserCheckPartyValidatingDocument = gql`
+    query userCheckPartyValidating {
+  userCheckPartyValidating
+}
+    `;
+
+/**
+ * __useUserCheckPartyValidatingQuery__
+ *
+ * To run a query within a React component, call `useUserCheckPartyValidatingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserCheckPartyValidatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserCheckPartyValidatingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserCheckPartyValidatingQuery(baseOptions?: Apollo.QueryHookOptions<UserCheckPartyValidatingQuery, UserCheckPartyValidatingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserCheckPartyValidatingQuery, UserCheckPartyValidatingQueryVariables>(UserCheckPartyValidatingDocument, options);
+      }
+export function useUserCheckPartyValidatingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserCheckPartyValidatingQuery, UserCheckPartyValidatingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserCheckPartyValidatingQuery, UserCheckPartyValidatingQueryVariables>(UserCheckPartyValidatingDocument, options);
+        }
+export type UserCheckPartyValidatingQueryHookResult = ReturnType<typeof useUserCheckPartyValidatingQuery>;
+export type UserCheckPartyValidatingLazyQueryHookResult = ReturnType<typeof useUserCheckPartyValidatingLazyQuery>;
+export type UserCheckPartyValidatingQueryResult = Apollo.QueryResult<UserCheckPartyValidatingQuery, UserCheckPartyValidatingQueryVariables>;
 export const UserChangeFollowingStateDocument = gql`
     mutation userChangeFollowingState($data: UserChangeFollowingStateInput!) {
   userChangeFollowingState(data: $data)

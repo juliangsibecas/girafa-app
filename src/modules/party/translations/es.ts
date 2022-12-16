@@ -36,6 +36,7 @@ export const partyTranslationES = {
       },
       addressExample: 'Ej: 17 E/ 503 y 504 N2906',
       allowInvitesHelper: 'Mis invitados pueden invitar',
+      validating: 'Estamos validando los datos de tu fiesta.',
       success: {
         title: 'Vamos a estar validado los datos de la fiesta.',
         description: 'Mientras tanto no la vas a ver en la plataforma.',
