@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import React, { useState } from 'react';
-import { Pressable, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Formik, FormikHelpers } from 'formik';
 import { useNavigation } from '@react-navigation/native';
@@ -34,6 +34,7 @@ export const SignUpForm: React.FC = () => {
   const [signUp, { loading: isLoading }] = useSignUpMutation();
   const { navigate } = useNavigation<OnboardingNavigationProp<'SignUp'>>();
 
+  const [isAdultChecked, setAdultChecked] = useState(false);
   const [isTermsChecked, setTermsChecked] = useState(false);
 
   const initialValues: FormValues = {
@@ -96,6 +97,9 @@ export const SignUpForm: React.FC = () => {
     }
   };
 
+  const checkAdult = () => setAdultChecked(true);
+  const uncheckAdult = () => setAdultChecked(false);
+
   const checkTerms = () => setTermsChecked(true);
   const uncheckTerms = () => setTermsChecked(false);
 
@@ -142,6 +146,15 @@ export const SignUpForm: React.FC = () => {
             />
             <Box flex row mt={3}>
               <Checkbox
+                isChecked={isAdultChecked}
+                onCheck={checkAdult}
+                onUncheck={uncheckAdult}
+                small
+              />
+              <Text ml={1}>{t('auth.screens.SignUp.imAdult')}</Text>
+            </Box>
+            <Box flex row mt={2}>
+              <Checkbox
                 isChecked={isTermsChecked}
                 onCheck={checkTerms}
                 onUncheck={uncheckTerms}
@@ -156,7 +169,7 @@ export const SignUpForm: React.FC = () => {
             </Box>
           </Box>
           <Button
-            isDisabled={!isTermsChecked}
+            isDisabled={!isAdultChecked || !isTermsChecked}
             isLoading={isLoading}
             onPress={() => submitForm()}
             mt={4}

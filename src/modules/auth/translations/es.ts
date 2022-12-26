@@ -6,6 +6,7 @@ export const authTranslationES = {
       subtitle: 'Completá tus datos y sumate a la gira',
       acceptThe: 'Acepto los ',
       terms: 'términos y condiciones',
+      imAdult: 'Tengo 18 años o más.',
     },
     SignIn: {
       title: '¡Hola de nuevo!',
