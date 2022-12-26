@@ -9,12 +9,14 @@ import { useTheme } from '../../theme';
 import { SupportScreen } from '../support';
 import { PasswordChangeScreen, UserDeleteScreen } from '../user/screens';
 import { SettingsMenuScreen } from './screens';
+import { TermsScreen } from '../legal';
 
 export type SettingsStackParamList = {
   Menu: undefined;
   PasswordChange: undefined;
   Support: undefined;
   UserDelete: undefined;
+  Terms: undefined;
 };
 
 export type SettingsStackRouteProp<T extends keyof SettingsStackParamList> =
@@ -45,6 +47,7 @@ export const SettingsNavigator: React.FC = () => {
       <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} />
       <Stack.Screen name="Support" component={SupportScreen} />
       <Stack.Screen name="UserDelete" component={UserDeleteScreen} />
+      <Stack.Screen name="Terms" component={TermsScreen} />
     </Stack.Navigator>
   );
 };

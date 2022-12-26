@@ -11,6 +11,7 @@ import {
   BottomModal,
   Box,
   Button,
+  Checkbox,
   Icon,
   StateHandler,
   Text,
@@ -36,6 +37,9 @@ const PartyInviteItem: React.FC<ItemProps> = ({
 }) => {
   const isChecked = Boolean(selectedUserIds[user._id]);
 
+  const handleCheck = () => add(user._id);
+  const handleUncheck = () => remove(user._id);
+
   return (
     <View onStartShouldSetResponder={() => true}>
       <Box flex row hcenter mb={1.5}>
@@ -46,21 +50,11 @@ const PartyInviteItem: React.FC<ItemProps> = ({
           </Text>
           <Text ml={2}>{user.fullName}</Text>
         </Box>
-        <TouchableOpacity
-          onPress={() => (isChecked ? remove(user._id) : add(user._id))}
-        >
-          <Box
-            flex
-            center
-            height={3}
-            width={3}
-            borderRadius={3}
-            bgColor={isChecked ? 'primary' : undefined}
-            borderColor="primary"
-          >
-            <Icon name="check" color="background" />
-          </Box>
-        </TouchableOpacity>
+        <Checkbox
+          isChecked={isChecked}
+          onCheck={handleCheck}
+          onUncheck={handleUncheck}
+        />
       </Box>
     </View>
   );

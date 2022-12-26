@@ -7,15 +7,15 @@ import { Box, Button, Container, Icon, Text } from '../../../components';
 import { FontFamily } from '../../../theme';
 
 import { useAuth } from '../../auth';
-import { MyProfileStackParamList, MyProfileStackScreenProps } from '../../user';
 import { useTranslation } from 'react-i18next';
 import { useFeatureToggle } from '../../featureToggle';
 import { FeatureToggleName } from '../../../api';
+import { SettingsStackParamList, SettingsStackScreenProps } from '../navigator';
 
 interface IOption {
   isEnabled: boolean;
   label: string;
-  to: keyof MyProfileStackParamList;
+  to: keyof SettingsStackParamList;
   handleAction?: (action: () => void) => void;
   color?: string;
 }
@@ -27,7 +27,7 @@ export const SettingsMenuScreen = () => {
   const { isEnabled: isDeleteEnabled, handleAction: handleDeleteAction } =
     useFeatureToggle(FeatureToggleName.UserDelete);
   const { navigate } =
-    useNavigation<MyProfileStackScreenProps<'Settings'>['navigation']>();
+    useNavigation<SettingsStackScreenProps<'Menu'>['navigation']>();
   const { signOut } = useAuth();
 
   const options: Array<IOption> = [
@@ -43,10 +43,15 @@ export const SettingsMenuScreen = () => {
       handleAction: handleSupportAction,
     },
     {
+      isEnabled: true,
+      label: t('legal.terms'),
+      to: 'Terms',
+    },
+    {
       isEnabled: isDeleteEnabled,
       label: t('settings.screens.SettingMenu.userDelete'),
       to: 'UserDelete',
-      handleAction: handleSupportAction,
+      handleAction: handleDeleteAction,
       color: 'error',
     },
   ];

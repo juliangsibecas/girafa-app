@@ -1,13 +1,23 @@
-import React from 'react';
 import * as Yup from 'yup';
-import { Formik, FormikHelpers } from 'formik';
+import React, { useState } from 'react';
+import { Pressable, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Formik, FormikHelpers } from 'formik';
+import { useNavigation } from '@react-navigation/native';
 
-import { Box, FormikTextInput } from '../../../../components';
-import { Button } from '../../../../components/Button';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormikTextInput,
+  Text,
+} from '../../../../components';
 import { useResponse, useSignUpMutation } from '../../../../api';
 
 import { useAuth } from '../../hooks';
+
+import { OnboardingNavigationProp } from '../../../onboarding';
+import { FontFamily } from '../../../../theme';
 
 type FormValues = {
   fullName: string;
@@ -22,6 +32,9 @@ export const SignUpForm: React.FC = () => {
   const { onFormError } = useResponse();
   const { signIn } = useAuth();
   const [signUp, { loading: isLoading }] = useSignUpMutation();
+  const { navigate } = useNavigation<OnboardingNavigationProp<'SignUp'>>();
+
+  const [isTermsChecked, setTermsChecked] = useState(false);
 
   const initialValues: FormValues = {
     fullName: '',
@@ -83,6 +96,11 @@ export const SignUpForm: React.FC = () => {
     }
   };
 
+  const checkTerms = () => setTermsChecked(true);
+  const uncheckTerms = () => setTermsChecked(false);
+
+  const handleTermsPress = () => navigate('Terms');
+
   return (
     <Formik
       initialValues={initialValues}
@@ -122,8 +140,27 @@ export const SignUpForm: React.FC = () => {
               contentType="newPassword"
               mt={1}
             />
+            <Box flex row mt={3}>
+              <Checkbox
+                isChecked={isTermsChecked}
+                onCheck={checkTerms}
+                onUncheck={uncheckTerms}
+                small
+              />
+              <Text ml={1}>{t('auth.screens.SignUp.acceptThe')}</Text>
+              <TouchableOpacity onPress={handleTermsPress}>
+                <Text fontFamily={FontFamily.BOLD}>
+                  {t('auth.screens.SignUp.terms')}
+                </Text>
+              </TouchableOpacity>
+            </Box>
           </Box>
-          <Button isLoading={isLoading} onPress={() => submitForm()} mt={4}>
+          <Button
+            isDisabled={!isTermsChecked}
+            isLoading={isLoading}
+            onPress={() => submitForm()}
+            mt={4}
+          >
             {t('auth.components.SignUp.signUp')}
           </Button>
         </>

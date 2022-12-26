@@ -1,5 +1,6 @@
 import { authTranslationES } from '../modules/auth';
 import { discoverTranslationES } from '../modules/discover';
+import { legalTranslationES } from '../modules/legal';
 import { notificationTranslationES } from '../modules/notification';
 import { onboardingTranslationES } from '../modules/onboarding';
 import { partyTranslationES } from '../modules/party';
@@ -60,5 +61,6 @@ export const es = {
     discover: discoverTranslationES,
     support: supportTranslationES,
     settings: settingsTranslationES,
+    legal: legalTranslationES,
   },
 } as const;

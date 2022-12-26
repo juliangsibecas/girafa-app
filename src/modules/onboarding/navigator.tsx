@@ -9,6 +9,7 @@ import {
 } from '../auth';
 import { OnboardingScreen } from './screen';
 import { useTheme } from '../../theme';
+import { TermsScreen } from '../legal';
 
 export type OnboardingStackParamList = {
   Onboarding: undefined;
@@ -16,6 +17,7 @@ export type OnboardingStackParamList = {
   SignIn: undefined;
   CodeGeneration: { email?: string };
   PasswordRecovery: { email: string };
+  Terms: undefined;
 };
 
 export type OnboardingRouteProp<T extends keyof OnboardingStackParamList> =
@@ -50,6 +52,7 @@ export const OnboardingNavigator: React.FC = () => {
       <Stack.Screen name="SignIn" component={SignInScreen} />
       <Stack.Screen name="CodeGeneration" component={CodeGenerationScreen} />
       <Stack.Screen name="PasswordRecovery" component={PasswordResetScreen} />
+      <Stack.Screen name="Terms" component={TermsScreen} />
     </Stack.Navigator>
   );
 };

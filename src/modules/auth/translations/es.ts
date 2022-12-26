@@ -4,6 +4,8 @@ export const authTranslationES = {
     SignUp: {
       title: '¡Bienvenido!',
       subtitle: 'Completá tus datos y sumate a la gira',
+      acceptThe: 'Acepto los ',
+      terms: 'términos y condiciones',
     },
     SignIn: {
       title: '¡Hola de nuevo!',
