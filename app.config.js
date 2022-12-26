@@ -28,7 +28,7 @@ export default {
     package: 'ar.com.girafa.app',
     adaptiveIcon: {
       foregroundImage: './src/assets/images/adaptive-icon.png',
-      backgroundImage: './src/assets/images/android_background.png',
+      backgroundImage: './src/assets/images/adaptive-icon-bg.png',
     },
   },
   web: {
