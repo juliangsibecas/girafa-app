@@ -32,7 +32,7 @@ export const TextInput: React.FC<ITextInput> = ({
   const { theme } = useTheme();
 
   const style = useStyle({
-    py: 2,
+    py: 1.3,
     px: 2,
     bgColor: 'disabled',
     color: 'text.primary',
