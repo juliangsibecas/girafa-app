@@ -15,6 +15,8 @@ import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
 import { useFeatureToggle } from '../featureToggle';
 
+console.log(env.oneSignalId);
+
 OneSignal.setAppId(env.oneSignalId);
 
 type Props = {
@@ -111,6 +113,7 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (userId && permission?.granted) {
+      console.log(userId);
       OneSignal.setExternalUserId(userId);
     } else {
       OneSignal.removeExternalUserId();
@@ -123,10 +126,12 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
       const data = notification.additionalData as UserNotification;
 
       if (
+        data &&
         [NotificationType.Follow, NotificationType.Invite].includes(data.type)
       ) {
         addNotification(data);
       }
+
       notificationReceivedEvent.complete(notification);
     }
   );
