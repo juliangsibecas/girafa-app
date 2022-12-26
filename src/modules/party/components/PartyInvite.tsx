@@ -37,25 +37,22 @@ const PartyInviteItem: React.FC<ItemProps> = ({
 }) => {
   const isChecked = Boolean(selectedUserIds[user._id]);
 
-  const handleCheck = () => add(user._id);
-  const handleUncheck = () => remove(user._id);
+  const handlePress = () => (!isChecked ? add(user._id) : remove(user._id));
 
   return (
     <View onStartShouldSetResponder={() => true}>
-      <Box flex row hcenter mb={1.5}>
-        <UserAvatar id={user._id} />
-        <Box flexGrow={1}>
-          <Text ml={2} fontFamily={FontFamily.BOLD}>
-            {user.nickname}
-          </Text>
-          <Text ml={2}>{user.fullName}</Text>
+      <TouchableOpacity onPress={handlePress}>
+        <Box flex row hcenter mb={1.5}>
+          <UserAvatar id={user._id} />
+          <Box flexGrow={1}>
+            <Text ml={2} fontFamily={FontFamily.BOLD}>
+              {user.nickname}
+            </Text>
+            <Text ml={2}>{user.fullName}</Text>
+          </Box>
+          <Checkbox isChecked={isChecked} />
         </Box>
-        <Checkbox
-          isChecked={isChecked}
-          onCheck={handleCheck}
-          onUncheck={handleUncheck}
-        />
-      </Box>
+      </TouchableOpacity>
     </View>
   );
 };

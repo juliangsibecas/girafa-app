@@ -5,8 +5,8 @@ import { Icon } from '../Icon';
 
 interface ICheckBox {
   isChecked: boolean;
-  onCheck: () => void;
-  onUncheck: () => void;
+  onCheck?: () => void;
+  onUncheck?: () => void;
   small?: boolean;
 }
 
@@ -16,7 +16,7 @@ export const Checkbox: React.FC<ICheckBox> = ({
   onUncheck: handleUncheck,
   small,
 }) => {
-  const handlePress = () => (isChecked ? handleUncheck() : handleCheck());
+  const handlePress = () => (isChecked ? handleUncheck?.() : handleCheck?.());
 
   return (
     <TouchableOpacity onPress={handlePress}>
