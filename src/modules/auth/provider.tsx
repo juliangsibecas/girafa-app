@@ -1,9 +1,12 @@
+import moment from 'moment';
 import { ReactNode, useEffect, useState } from 'react';
-import { AuthContext } from './context';
 import * as SecureStore from 'expo-secure-store';
-import { SignInPayload } from './types';
 import jwtDecode from 'jwt-decode';
+
 import { client } from '../../apollo';
+
+import { AuthContext } from './context';
+import { SignInPayload } from './types';
 
 type Props = {
   children: ReactNode;
@@ -25,7 +28,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           storedAccessToken
         );
 
-        if (Date.now() < exp * 1000) {
+        if (moment.now() < exp * 1000) {
           setUserId(userId);
           setAccessToken(storedAccessToken);
           setLoading(false);

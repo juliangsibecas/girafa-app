@@ -28,9 +28,9 @@ export const DateInput: React.FC<Props> = ({
   const { theme } = useTheme();
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const from = new Date();
-  const to = new Date();
-  to.setMonth(to.getMonth() + 1);
+  const from = moment();
+  const to = moment();
+  to.add(1, 'month');
 
   return (
     <>
@@ -54,8 +54,8 @@ export const DateInput: React.FC<Props> = ({
       <BottomModal isOpen={isModalOpen} onClose={closeModal}>
         <Calendar
           initialDate={value}
-          minDate={from.toLocaleDateString()}
-          maxDate={to.toLocaleDateString()}
+          minDate={from.format('YYYY-MM-DD')}
+          maxDate={to.format('YYYY-MM-DD')}
           hideExtraDays={true}
           renderArrow={(dir) => (
             <Icon name={`chevron-${dir}`} color="primary" />

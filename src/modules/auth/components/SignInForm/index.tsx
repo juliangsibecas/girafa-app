@@ -2,7 +2,6 @@ import React from 'react';
 import * as Yup from 'yup';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { GraphQLErrors } from '@apollo/client/errors';
 import { Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 

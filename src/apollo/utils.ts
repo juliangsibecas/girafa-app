@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { WatchQueryFetchPolicy } from '@apollo/client';
 
 const lastFetch = { value: 0 };
@@ -7,11 +8,11 @@ export const getTimeBasedFetchPolicy = (
 ): WatchQueryFetchPolicy => {
   const { value: lastFetchTimestamp } = lastFetch;
   const diffFromNow = lastFetchTimestamp
-    ? Date.now() - lastFetchTimestamp
+    ? moment.now() - lastFetchTimestamp
     : Number.MAX_SAFE_INTEGER;
 
   if (diffFromNow > expirationMs) {
-    lastFetch.value = Date.now();
+    lastFetch.value = moment.now();
     return 'network-only';
   }
 
