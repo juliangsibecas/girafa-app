@@ -26,9 +26,11 @@ export const SettingsMenuScreen = () => {
     useFeatureToggle(FeatureToggleName.Mailing);
   const { isEnabled: isDeleteEnabled, handleAction: handleDeleteAction } =
     useFeatureToggle(FeatureToggleName.UserDelete);
-  const { navigate } =
+  const navigation =
     useNavigation<SettingsStackScreenProps<'Menu'>['navigation']>();
   const { signOut } = useAuth();
+
+  const { navigate } = navigation;
 
   const options: Array<IOption> = [
     {

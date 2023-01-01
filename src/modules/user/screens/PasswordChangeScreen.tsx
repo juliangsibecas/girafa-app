@@ -12,8 +12,7 @@ import {
   FormikTextInput,
   Header,
 } from '../../../components';
-
-import { MyProfileStackScreenProps } from '../navigator';
+import { SettingsStackScreenProps } from '../../settings';
 
 type FormValues = {
   currentPassword: string;
@@ -25,7 +24,7 @@ export const PasswordChangeScreen: React.FC = () => {
   const { t } = useTranslation();
   const { onSuccess, onError } = useResponse();
   const { navigate } =
-    useNavigation<MyProfileStackScreenProps<'PasswordChange'>['navigation']>();
+    useNavigation<SettingsStackScreenProps<'PasswordChange'>['navigation']>();
   const [changePassword, { loading: isLoading }] = useChangePasswordMutation();
 
   const initialValues: FormValues = {

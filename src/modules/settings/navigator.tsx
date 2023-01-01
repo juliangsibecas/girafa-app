@@ -29,18 +29,11 @@ export type SettingsStackScreenProps<T extends keyof SettingsStackParamList> =
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
 export const SettingsNavigator: React.FC = () => {
-  const { theme } = useTheme();
   return (
     <Stack.Navigator
       initialRouteName="Menu"
       screenOptions={{
-        headerTitle: '',
-        headerBackTitle: '',
-        headerShadowVisible: false,
-        headerTintColor: theme.palette.primary.main,
-        headerStyle: {
-          backgroundColor: theme.palette.background.main,
-        },
+        headerShown: false,
       }}
     >
       <Stack.Screen name="Menu" component={SettingsMenuScreen} />

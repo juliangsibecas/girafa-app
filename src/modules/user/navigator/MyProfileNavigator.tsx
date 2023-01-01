@@ -50,11 +50,7 @@ export const MyProfileNavigator: React.FC = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="UserEdit" component={UserEditScreen} />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsNavigator}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Settings" component={SettingsNavigator} />
       {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );

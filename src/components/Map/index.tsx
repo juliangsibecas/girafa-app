@@ -12,7 +12,6 @@ import darkStyle from '../../assets/maps/dark.json';
 
 import { useTheme } from '../../theme';
 import { Icon } from '../Icon';
-import { StateHandler } from '../StateHandler';
 import { Box } from '../Box';
 import { Spinner } from '../Spinner';
 
@@ -50,7 +49,7 @@ export const Map: React.FC<Props> = ({
 
     const zoomTimeout = setTimeout(() => {
       ref?.current?.animateToRegion(INITIAL_REGION);
-    }, 100);
+    }, 1000);
 
     return () => {
       clearTimeout(zoomTimeout);
