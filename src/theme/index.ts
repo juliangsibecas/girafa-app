@@ -17,7 +17,7 @@ export const theme = (mode: ThemeMode): Theme => {
   };
 };
 
-export { Theme, ThemeMode };
-export { FontFamily } from './text';
-export { ThemeProvider } from './provider';
-export { useTheme } from './hooks';
+export * from './types';
+export * from './text';
+export * from './provider';
+export * from './hooks';

@@ -35,6 +35,11 @@ export const SettingsMenuScreen = () => {
   const options: Array<IOption> = [
     {
       isEnabled: true,
+      label: t('settings.screens.SettingMenu.appearence'),
+      to: 'Appearance',
+    },
+    {
+      isEnabled: true,
       label: t('settings.screens.SettingMenu.changePassword'),
       to: 'PasswordChange',
     },

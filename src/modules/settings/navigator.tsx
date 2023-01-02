@@ -8,7 +8,7 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useTheme } from '../../theme';
 import { SupportScreen } from '../support';
 import { PasswordChangeScreen, UserDeleteScreen } from '../user/screens';
-import { SettingsMenuScreen } from './screens';
+import { AppearanceScreen, SettingsMenuScreen } from './screens';
 import { TermsScreen } from '../legal';
 
 export type SettingsStackParamList = {
@@ -17,6 +17,7 @@ export type SettingsStackParamList = {
   Support: undefined;
   UserDelete: undefined;
   Terms: undefined;
+  Appearance: undefined;
 };
 
 export type SettingsStackRouteProp<T extends keyof SettingsStackParamList> =
@@ -41,6 +42,7 @@ export const SettingsNavigator: React.FC = () => {
       <Stack.Screen name="Support" component={SupportScreen} />
       <Stack.Screen name="UserDelete" component={UserDeleteScreen} />
       <Stack.Screen name="Terms" component={TermsScreen} />
+      <Stack.Screen name="Appearance" component={AppearanceScreen} />
     </Stack.Navigator>
   );
 };

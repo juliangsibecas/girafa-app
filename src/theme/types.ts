@@ -13,13 +13,21 @@ export type Theme = {
   text: Text;
 };
 
+export enum RawThemeMode {
+  AUTO = 'AUTO',
+  LIGHT = 'LIGHT',
+  DARK = 'DARK',
+}
+
 export enum ThemeMode {
   LIGHT = 'LIGHT',
   DARK = 'DARK',
 }
 
 export type ThemeContextValues = {
+  rawMode: RawThemeMode;
   mode: ThemeMode;
   theme: Theme;
   isLightMode: boolean;
+  changeThemeMode: (mode: RawThemeMode | ThemeMode) => void;
 };

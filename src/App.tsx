@@ -3,7 +3,6 @@ import './date';
 import './i18n';
 
 import React from 'react';
-import { Appearance } from 'react-native';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
@@ -17,20 +16,22 @@ import { NotificationsProvider } from './modules/notification';
 import { AuthProvider } from './modules/auth';
 import { UserProvider } from './modules/user';
 import { Navigation } from './navigation';
+import { useThemeMode } from './theme';
 
 const AppComponent = () => {
-  const isLightTheme = Appearance.getColorScheme() === 'light';
-  const isLoadingComplete = useCachedResources();
-  const themeMode = isLightTheme ? ThemeMode.LIGHT : ThemeMode.DARK;
+  const isResourcesLoading = useCachedResources();
+  const { isThemeModeLoading, themeMode } = useThemeMode();
 
-  if (!isLoadingComplete) {
+  const isLoading = isResourcesLoading || isThemeModeLoading;
+
+  if (isLoading) {
     return null;
   } else {
     return (
       <SafeAreaProvider
         style={{ backgroundColor: theme(themeMode).palette.background.main }}
       >
-        <StatusBar style={isLightTheme ? 'dark' : 'light'} />
+        <StatusBar style={themeMode === ThemeMode.LIGHT ? 'dark' : 'light'} />
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme} mode={themeMode}>
             <AuthProvider>

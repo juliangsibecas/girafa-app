@@ -2,9 +2,9 @@ import React from 'react';
 import { View, ViewProps, ViewStyle } from 'react-native';
 import { useStyle, UiKeys } from '../../ui';
 
-type Props = ViewProps & UiKeys;
+export interface IBox extends ViewProps, UiKeys {}
 
-export const Box: React.FC<Props> = ({ children, ...props }) => {
+export const Box: React.FC<IBox> = ({ children, ...props }) => {
   const style = useStyle(props);
 
   return (
