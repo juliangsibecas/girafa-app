@@ -74,7 +74,7 @@ export const DiscoverScreen: React.FC = () => {
     parties.length > 0 && (!isShowingAll || isShowingAll === 'party');
 
   return (
-    <Container keyboardDismiss>
+    <Container headerPlaceholder keyboardDismiss>
       <Box flex row center>
         <Text flexGrow={1} type="h1">
           {t('general.discover')}

@@ -27,7 +27,11 @@ export const PartyDetailStackGroup: React.FC<Props> = ({ Stack }) => {
           },
         }}
       />
-      <Stack.Screen name="PartyAttenders" component={PartyAttendersScreen} />
+      <Stack.Screen
+        name="PartyAttenders"
+        component={PartyAttendersScreen}
+        options={{ headerTransparent: true }}
+      />
     </Stack.Group>
   );
 };

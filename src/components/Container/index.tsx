@@ -1,15 +1,19 @@
 import React from 'react';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { Keyboard, Pressable, ViewProps } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useTheme } from '../../theme';
 
+import { useTheme } from '../../theme';
 import { UiKeys } from '../../ui';
+import { insertObjectIf } from '../../utils';
+
 import { BottomTabGradient } from '../BottomTabGradient';
 import { Box } from '../Box';
 
 type Props = ViewProps &
   UiKeys & {
     noHeader?: boolean;
+    headerPlaceholder?: boolean;
     noBottomTab?: boolean;
     noBottomGradient?: boolean;
     keyboard?: boolean;
@@ -44,6 +48,7 @@ export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => {
 
 export const Container: React.FC<Props> = ({
   noHeader,
+  headerPlaceholder,
   noBottomTab,
   noBottomGradient,
   keyboard,
@@ -51,6 +56,7 @@ export const Container: React.FC<Props> = ({
   children,
   ...props
 }) => {
+  const headerHeight = useHeaderHeight();
   const Wrapper = keyboard
     ? KeyboardScrollWrapper
     : keyboardDismiss
@@ -69,6 +75,11 @@ export const Container: React.FC<Props> = ({
         pb={noBottomTab ? 6 : 1}
         width="screen"
         bgColor="background"
+        style={{
+          ...insertObjectIf(headerPlaceholder, {
+            paddingTop: headerPlaceholder ? headerHeight : undefined,
+          }),
+        }}
         {...props}
       >
         <>

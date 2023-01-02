@@ -1,7 +1,7 @@
-import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { FlatList, RefreshControl, ScrollView } from 'react-native';
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
 
 import { Box, Container, Icon, StateHandler, Text } from '../../../components';
 
@@ -27,7 +27,7 @@ export const NotificationsScreen: React.FC = () => {
   }, [notifications, isFocused]);
 
   return (
-    <Container>
+    <Container headerPlaceholder>
       <Text type="h1" mb={2}>
         {t('general.notifications')}
       </Text>

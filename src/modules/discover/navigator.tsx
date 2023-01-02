@@ -39,7 +39,11 @@ export const DiscoverNavigator: React.FC = () => {
         },
       }}
     >
-      <Stack.Screen name="List" component={DiscoverScreen} />
+      <Stack.Screen
+        name="List"
+        component={DiscoverScreen}
+        options={{ headerTransparent: true }}
+      />
       {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );

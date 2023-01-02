@@ -9,7 +9,7 @@ export const PartyAttendersScreen: React.FC = () => {
     useRoute<CoreStackGroupScreenProps<'PartyAttenders'>['route']>();
 
   return (
-    <Container>
+    <Container headerPlaceholder>
       <PartyAttenders partyId={params.id} />
     </Container>
   );
