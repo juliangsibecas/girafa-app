@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, ViewToken } from 'react-native';
 
-import image from '../../../../assets/images/onboarding.png';
+import djImage from '../../../../assets/images/onboarding/dj.png';
+import speakerImage from '../../../../assets/images/onboarding/speaker.png';
+import calendarImage from '../../../../assets/images/onboarding/calendar.png';
 
 import { Box, Image, Text } from '../../../../components';
 
 type Step = 0 | 1 | 2;
 
+const illustrations = [djImage, speakerImage, calendarImage];
+
 export const OnboardingSlider: React.FC = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'onboarding.screens.Onboarding',
+  });
   const [step, setStep] = useState<Step>(0);
 
   const onViewRef = React.useRef(
@@ -26,13 +34,17 @@ export const OnboardingSlider: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         legacyImplementation={false}
         data={[1, 2, 3]}
-        renderItem={() => (
-          <Box width="screen" center>
-            <Image src={image} />
-            <Text type="h4" mb={1}>
-              Hola
+        renderItem={({ index }) => (
+          <Box width="screen" center px={4}>
+            <Image
+              src={illustrations[index]}
+              height={24}
+              style={{ resizeMode: 'contain' }}
+            />
+            <Text type="h3" textCenter mt={2} mb={1}>
+              {t(`${index as Step}.title`)}
             </Text>
-            <Text>Que onda pa</Text>
+            <Text textCenter>{t(`${index as Step}.description`)}</Text>
           </Box>
         )}
         viewabilityConfig={viewConfigRef.current}
