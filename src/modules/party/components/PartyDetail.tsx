@@ -211,15 +211,17 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             />
           </TouchableOpacity>
         </Box>
-        <Box mr={1}>
-          <TouchableOpacity onPress={share} disabled={!canInvite}>
-            <Icon
-              name="share-2"
-              size={3}
-              color={canInvite ? 'primary' : 'disabled'}
-            />
-          </TouchableOpacity>
-        </Box>
+        {false && (
+          <Box mr={1}>
+            <TouchableOpacity onPress={share} disabled={!canInvite}>
+              <Icon
+                name="share-2"
+                size={3}
+                color={canInvite ? 'primary' : 'disabled'}
+              />
+            </TouchableOpacity>
+          </Box>
+        )}
       </Box>
       <PartyInvite
         partyId={party._id}
