@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { Image as RNImage, ImageStyle } from 'react-native';
 import { UiKeys, useStyle } from '../../ui';
 
@@ -13,7 +12,6 @@ export const Image: React.FC<Props> = ({ src, ...props }) => {
 
   return (
     <RNImage
-      key={moment.now()}
       source={src}
       style={{
         ...style,

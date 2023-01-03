@@ -6,15 +6,17 @@ export const onboardingTranslationES = {
       '0': {
         title: 'Encontrá las mejores fiestas',
         description:
-          'Todas las fiestas de la ciudad en un mismo lugar, con todos los detalles para que elijás a donde salir con tus amigos.',
+          'Todas las fiestas de la ciudad en un solo lugar, con todos los detalles para que elijás a donde salir con tus amigos 😎',
       },
       '1': {
-        title: 'Conocé gente nueva',
-        description: 'TODO',
+        title: 'Conocé nuevas personas',
+        description:
+          'Vas a saber quienes van a la fiesta que querés ir y también los que viste en la fiesta anterior 😏',
       },
       '2': {
         title: 'Organizá tus fiestas',
-        description: 'TODO',
+        description:
+          '¿Tenés un boliche? ¿Querés hacer una fiesta con amigos? Creala y difundila 🥳',
       },
       signIn: 'Iniciar sesión',
       signUp: 'Registrarse',

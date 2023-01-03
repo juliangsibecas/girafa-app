@@ -44,7 +44,9 @@ export const OnboardingSlider: React.FC = () => {
             <Text type="h3" textCenter mt={2} mb={1}>
               {t(`${index as Step}.title`)}
             </Text>
-            <Text textCenter>{t(`${index as Step}.description`)}</Text>
+            <Text textCenter lineHeight={20}>
+              {t(`${index as Step}.description`)}
+            </Text>
           </Box>
         )}
         viewabilityConfig={viewConfigRef.current}
