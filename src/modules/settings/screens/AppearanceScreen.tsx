@@ -42,7 +42,7 @@ const ExampleBox: React.FC<IExampleBox> = ({ palette, mode, ...props }) => {
             <Text type="h3" color={palette.text.primary}>
               {t(`settings.screens.Appearance.${mode}Title`)}
             </Text>
-            <Text color={palette.text.secondary}>
+            <Text type="hint" color={lightPalette.text.secondary} mt={0.5}>
               {t(`settings.screens.Appearance.${mode}Description`)}
             </Text>
           </Box>
@@ -86,7 +86,7 @@ const ExampleAutomaticBox: React.FC<IBox> = (props) => {
               <Text type="h3" color={lightPalette.text.primary}>
                 {t('settings.screens.Appearance.AutoLightTitle')}
               </Text>
-              <Text color={lightPalette.text.secondary}>
+              <Text type="hint" color={lightPalette.text.secondary} mt={0.5}>
                 {t('settings.screens.Appearance.AutoLightDescription')}
               </Text>
             </Box>
@@ -101,7 +101,7 @@ const ExampleAutomaticBox: React.FC<IBox> = (props) => {
               <Text type="h3" color={darkPalette.text.primary}>
                 {t('settings.screens.Appearance.AutoDarkTitle')}
               </Text>
-              <Text color={darkPalette.text.secondary}>
+              <Text type="hint" color={darkPalette.text.secondary} mt={0.5}>
                 {t('settings.screens.Appearance.AutoDarkDescription')}
               </Text>
             </Box>
