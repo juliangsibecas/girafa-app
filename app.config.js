@@ -5,7 +5,7 @@ export default {
   name: 'Girafa',
   slug: 'girafa',
   entryPoint: 'index.js',
-  version: '1.0.0',
+  version: '0.0.1',
   orientation: 'portrait',
   icon: './src/assets/images/icon.png',
   scheme: 'girafa',
