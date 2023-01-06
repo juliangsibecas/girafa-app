@@ -16,5 +16,5 @@ export const env = {
   assetsUrl:
     process.env.NODE_ENV === 'development'
       ? devAssetsUrl
-      : Constants.manifest!.extra!.assetsUrrl,
+      : Constants.manifest!.extra!.assetsUrl,
 } as Env;
