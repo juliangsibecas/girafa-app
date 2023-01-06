@@ -3,7 +3,7 @@ import { Image as RNImage, ImageStyle } from 'react-native';
 import { UiKeys, useStyle } from '../../ui';
 
 type Props = UiKeys & {
-  src: number;
+  src: string | number;
   style?: ImageStyle;
 };
 
@@ -12,7 +12,7 @@ export const Image: React.FC<Props> = ({ src, ...props }) => {
 
   return (
     <RNImage
-      source={src}
+      source={typeof src === 'string' ? { uri: src } : src}
       style={{
         ...style,
         ...props.style,

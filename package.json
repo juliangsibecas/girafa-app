@@ -6,7 +6,7 @@
     "start": "NODE_ENV=development expo start --dev-client",
     "run:android": "NODE_ENV=development expo run:android",
     "run:ios": "NODE_ENV=development expo run:ios",
-    "build:ios": "NODE_ENV=production expo run:ios -d",
+    "build:ios": "NODE_ENV=production expo run:ios",
     "build:android": "NODE_ENV=production expo run:android",
     "web": "expo start --web",
     "eject": "expo eject",
