@@ -38,8 +38,8 @@ export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => {
     <KeyboardAwareScrollView
       contentContainerStyle={{
         flexGrow: 1,
-        backgroundColor: theme.palette.background.main,
       }}
+      style={{ backgroundColor: theme.palette.background.main }}
     >
       <KeyboardDismissWrapper>{children}</KeyboardDismissWrapper>
     </KeyboardAwareScrollView>

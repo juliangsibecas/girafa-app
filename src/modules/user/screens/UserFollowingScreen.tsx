@@ -1,9 +1,17 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList } from 'react-native';
+
 import { useUserGetFollowingByIdQuery } from '../../../api';
-import { Container, StateHandler, Text } from '../../../components';
+import {
+  Container,
+  RefreshControl,
+  StateHandler,
+  Text,
+} from '../../../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
+
 import { UserRow } from '../comonents';
 
 export const UserFollowingScreen: React.FC = () => {
@@ -32,10 +40,10 @@ export const UserFollowingScreen: React.FC = () => {
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList
           refreshControl={
-            <RefreshControl
-              refreshing={networkStatus === 4}
-              onRefresh={refetch}
-            />
+            RefreshControl({
+              isRefreshing: networkStatus === 4,
+              onRefresh: refetch,
+            })!
           }
           data={following}
           renderItem={({ item: user }) => (

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 
 import { useAuth } from '../../modules/auth/hooks';
 import { useTheme } from '../../theme';
 import { Box } from '../Box';
 import { Icon } from '../Icon';
+import { RefreshControl } from '../RefreshControl';
 import { Spinner } from '../Spinner';
 import { Text } from '../Text';
 
@@ -21,17 +22,18 @@ type Props = {
 
 const RefreshControlWrapper: React.FC<
   Pick<Props, 'children' | 'isRefreshing' | 'onRefresh'>
-> = ({ isRefreshing, onRefresh, children }) => {
+> = ({ isRefreshing, onRefresh: handleRefresh, children }) => {
   const { theme } = useTheme();
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
       style={{ backgroundColor: theme.palette.background.main }}
       refreshControl={
-        <RefreshControl
-          refreshing={Boolean(isRefreshing)}
-          onRefresh={onRefresh}
-        />
+        RefreshControl({
+          isRefreshing: isRefreshing!,
+          onRefresh: handleRefresh,
+        })!
       }
     >
       {children}

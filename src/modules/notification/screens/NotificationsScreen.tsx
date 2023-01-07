@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 
-import { Box, Container, Icon, StateHandler, Text } from '../../../components';
+import {
+  Box,
+  Container,
+  Icon,
+  RefreshControl,
+  StateHandler,
+  Text,
+} from '../../../components';
 
 import { NotificationItem } from '../components';
 import { useNotification } from '../hooks';
@@ -37,14 +44,20 @@ export const NotificationsScreen: React.FC = () => {
             data={notifications}
             renderItem={({ item }) => <NotificationItem notification={item} />}
             refreshControl={
-              <RefreshControl refreshing={isRefreshing} onRefresh={refetch} />
+              RefreshControl({
+                isRefreshing,
+                onRefresh: refetch,
+              })!
             }
           />
         ) : (
           <ScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             refreshControl={
-              <RefreshControl refreshing={isRefreshing} onRefresh={refetch} />
+              RefreshControl({
+                isRefreshing,
+                onRefresh: refetch,
+              })!
             }
           >
             <Box flexGrow={1} center>

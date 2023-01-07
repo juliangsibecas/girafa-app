@@ -1,11 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList } from 'react-native';
+
 import { usePartySearchAttendersQuery } from '../../../api';
-import { Box, ListSwitch, StateHandler, TextInput } from '../../../components';
+import {
+  Box,
+  ListSwitch,
+  RefreshControl,
+  StateHandler,
+  TextInput,
+} from '../../../components';
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
+
 import { UserCard, UserRow } from '../../user/comonents';
 
 type Props = {
@@ -55,10 +63,10 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
       <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
         <FlatList
           refreshControl={
-            <RefreshControl
-              refreshing={networkStatus === 4}
-              onRefresh={refetch}
-            />
+            RefreshControl({
+              isRefreshing: networkStatus === 4,
+              onRefresh: refetch,
+            })!
           }
           data={attenders}
           renderItem={({ item }) =>

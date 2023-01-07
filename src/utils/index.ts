@@ -1,5 +1,5 @@
 export function insertObjectIf<T = Record<string, unknown>>(
-  condition: boolean,
+  condition: boolean | undefined,
   obj: T
 ): T | {} {
   return condition ? obj : {};

@@ -1,13 +1,19 @@
 import React from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
-import { Box, Container, StateHandler, Text } from '../../../components';
+import {
+  Box,
+  Container,
+  RefreshControl,
+  StateHandler,
+  Text,
+} from '../../../components';
+import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
 import { PartyRow } from '../../party/components/PartyRow';
-import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
 export const UserAttendedPartiesScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -37,10 +43,10 @@ export const UserAttendedPartiesScreen: React.FC = () => {
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList
           refreshControl={
-            <RefreshControl
-              refreshing={networkStatus === 4}
-              onRefresh={refetch}
-            />
+            RefreshControl({
+              isRefreshing: networkStatus === 4,
+              onRefresh: refetch,
+            })!
           }
           data={parties}
           renderItem={({ item: party }) => (
