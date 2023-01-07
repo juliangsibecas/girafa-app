@@ -22,7 +22,7 @@ type Props = UiKeys & {
 export const DateInput: React.FC<Props> = ({
   placeholder,
   value,
-  onChange,
+  onChange: handleChange,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -62,11 +62,11 @@ export const DateInput: React.FC<Props> = ({
           )}
           firstDay={1}
           onDayPress={(date) => {
-            onChange(date.dateString);
+            handleChange(date.dateString);
             closeModal();
           }}
           markedDates={{
-            [moment(value).format('YYYY-MM-DD')]: { selected: true },
+            [value]: { selected: true },
           }}
           theme={{
             selectedDayBackgroundColor: theme.palette.primary.main,

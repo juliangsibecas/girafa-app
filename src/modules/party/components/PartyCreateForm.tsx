@@ -61,7 +61,8 @@ export const PartyCreateForm: React.FC = () => {
       .max(25)
       .matches(
         /^[A-Za-z0-9\s]+$/g,
-        'Solo puede contener letras, numeros y espacios.'
+        // TODO
+        'Solo puede contener letras, números y espacios.'
       ),
     availability: Yup.string().nullable().required(),
     date: Yup.string().required(),
@@ -71,7 +72,8 @@ export const PartyCreateForm: React.FC = () => {
       .max(30)
       .matches(
         /^[A-Za-z0-9\s]+$/g,
-        'Solo puede contener letras, numeros y espacios.'
+        // TODO
+        'Solo puede contener letras, números y espacios.'
       ),
     openBar: Yup.string().required(),
     description: Yup.string().required().min(20).max(100),

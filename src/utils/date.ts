@@ -7,7 +7,7 @@ const isYesterday = (date: Moment) =>
 const isTomorrow = (date: Moment) => moment().add(1, 'day').isSame(date, 'day');
 
 export const formatDate = (str: string) => {
-  const date = moment(str).locale('es-AR');
+  const date = moment(str);
 
   if (isToday(date)) {
     return 'Hoy';
