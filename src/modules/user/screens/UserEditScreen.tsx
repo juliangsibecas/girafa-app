@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -39,7 +39,8 @@ export const UserEditScreen: React.FC = () => {
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'UserEdit'>['navigation']>();
   const { params } = useRoute<MyProfileStackScreenProps<'UserEdit'>['route']>();
-  const [edit, { loading: isLoading }] = useUserEditMutation({
+  const [isLoading, setLoading] = useState(false);
+  const [edit] = useUserEditMutation({
     refetchQueries: [
       {
         query: UserGetByIdDocument,
@@ -77,6 +78,7 @@ export const UserEditScreen: React.FC = () => {
     helpers: FormikHelpers<FormValues>
   ) => {
     try {
+      setLoading(true);
       const { data } = await edit({
         variables: {
           data: {
@@ -94,6 +96,7 @@ export const UserEditScreen: React.FC = () => {
         }
 
         updatePictureVersion();
+        setLoading(false);
 
         navigate('Me');
 
@@ -105,6 +108,7 @@ export const UserEditScreen: React.FC = () => {
       const { messages } = onFormError(e);
 
       messages && helpers.setErrors(messages);
+      setLoading(false);
     }
   };
 

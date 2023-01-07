@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, FormikHelpers } from 'formik';
 import {
@@ -47,10 +47,11 @@ const initialValues: FormValues = {
 };
 
 export const PartyCreateForm: React.FC = () => {
+  const [isLoading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
-  const [create, { loading: isLoading }] = usePartyCreateMutation();
+  const [create] = usePartyCreateMutation();
   const { uploadParty } = usePictureUpload();
   const { onSuccess, onFormError } = useResponse();
 
@@ -86,6 +87,7 @@ export const PartyCreateForm: React.FC = () => {
     helpers: FormikHelpers<FormValues>
   ) => {
     try {
+      setLoading(true);
       const { image, ...rest } = values;
 
       const res = await create({
@@ -114,6 +116,7 @@ export const PartyCreateForm: React.FC = () => {
         description: t('party.components.Create.success.description'),
         time: 4000,
       });
+      setLoading(false);
 
       navigate('Map');
     } catch (e: any) {
