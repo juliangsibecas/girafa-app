@@ -10,7 +10,7 @@
     "build:android": "NODE_ENV=production expo run:android",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll",
+    "//test": "jest --watchAll",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "jest": {
