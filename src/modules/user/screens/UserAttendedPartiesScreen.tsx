@@ -31,7 +31,10 @@ export const UserAttendedPartiesScreen: React.FC = () => {
     error,
     refetch,
     networkStatus,
-  } = useUserGetAttendedPartiesByIdQuery({ variables: { id } });
+  } = useUserGetAttendedPartiesByIdQuery({
+    variables: { id },
+    notifyOnNetworkStatusChange: true,
+  });
 
   const parties = data?.userGetAttendedPartiesById ?? [];
 

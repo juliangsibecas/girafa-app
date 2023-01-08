@@ -37,6 +37,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
     networkStatus,
   } = usePartySearchAttendersQuery({
     variables: { data: { id: partyId } },
+    notifyOnNetworkStatusChange: true,
   });
 
   const attenders = data?.partySearchAttenders ?? [];

@@ -78,6 +78,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
       },
     },
     skip: !isOpen,
+    notifyOnNetworkStatusChange: true,
   });
 
   const [sendInvite, { loading: isSendInviteLoading }] =

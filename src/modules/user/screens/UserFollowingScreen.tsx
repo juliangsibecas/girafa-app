@@ -28,7 +28,10 @@ export const UserFollowingScreen: React.FC = () => {
     error,
     refetch,
     networkStatus,
-  } = useUserGetFollowingByIdQuery({ variables: { id } });
+  } = useUserGetFollowingByIdQuery({
+    variables: { id },
+    notifyOnNetworkStatusChange: true,
+  });
 
   const following = data?.userGetFollowingById ?? [];
 

@@ -37,6 +37,7 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     networkStatus,
   } = useNotificationsGetByUserIdQuery({
     skip: isAuthLoading || !isSignedIn || isFeatureFlagLoading || !isEnabled,
+    notifyOnNetworkStatusChange: true,
   });
 
   const [notifications, setNotifications] = useState<Array<UserNotification>>(

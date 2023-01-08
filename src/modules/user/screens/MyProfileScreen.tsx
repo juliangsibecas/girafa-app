@@ -12,7 +12,10 @@ export const MyProfileScreen: React.FC = () => {
     error,
     refetch,
     networkStatus,
-  } = useUserGetByIdQuery({ variables: { id: userId } });
+  } = useUserGetByIdQuery({
+    variables: { id: userId },
+    notifyOnNetworkStatusChange: true,
+  });
 
   const user = data?.userGetById!;
 
@@ -22,7 +25,9 @@ export const MyProfileScreen: React.FC = () => {
       isError={Boolean(error)}
       isRefreshEnabled
       isRefreshing={networkStatus === 4}
-      onRefresh={refetch}
+      onRefresh={() => {
+        refetch();
+      }}
       showSignOutOnError
     >
       <UserProfile user={user} isMyProfile={true} />

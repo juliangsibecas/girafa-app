@@ -16,6 +16,8 @@ export const PartyDetailScreen: React.FC = () => {
     networkStatus,
   } = usePartyGetByIdQuery({ variables: { id: params.id } });
 
+  console.log(data);
+
   return (
     <StateHandler
       isLoading={isLoading}
