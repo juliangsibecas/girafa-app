@@ -15,11 +15,16 @@ type Props = {
   pickCoordinate: () => void;
 };
 
-export const CoordinateInput: React.FC<Props> = ({ id, pickCoordinate }) => {
+export const FormikCoordinateInput: React.FC<Props> = ({
+  id,
+  pickCoordinate,
+}) => {
   const { t } = useTranslation();
   const { params } =
     useRoute<HomeStackScreenProps<'PartyCreateForm'>['route']>();
-  const { handleChange } = useFormikContext();
+  const { values, handleChange } = useFormikContext();
+  const value = (values as Record<string, string>)[id] ?? '';
+  const textColor = value ? 'background' : 'primary';
 
   useEffect(() => {
     if (!params || !params.coordinate) return;
@@ -29,10 +34,10 @@ export const CoordinateInput: React.FC<Props> = ({ id, pickCoordinate }) => {
 
   return (
     <>
-      <Button small onPress={pickCoordinate}>
+      <Button secondary={!value} small onPress={pickCoordinate}>
         <Box flex row>
-          <Icon name="map-pin" color="background" weight={2.5} />
-          <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
+          <Icon name="map-pin" color={textColor} weight={2.5} />
+          <Text ml={1} color={textColor} fontFamily={FontFamily.BOLD}>
             {t('party.location')}
           </Text>
         </Box>

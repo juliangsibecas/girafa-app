@@ -14,7 +14,7 @@ import {
   FormikSelect,
   FormikDateInput,
   FormikImageInput,
-  CoordinateInput,
+  FormikCoordinateInput,
 } from '../../../components';
 import { Maybe } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
@@ -199,7 +199,7 @@ export const PartyCreateForm: React.FC = () => {
                 <FormikImageInput id="image" />
               </Box>
               <Box flexGrow={1}>
-                <CoordinateInput
+                <FormikCoordinateInput
                   id="coordinate"
                   pickCoordinate={pickCoordinate}
                 />

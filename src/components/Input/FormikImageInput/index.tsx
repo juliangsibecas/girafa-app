@@ -11,11 +11,13 @@ interface Props extends UiKeys {
 }
 
 export const FormikImageInput: React.FC<Props> = ({ id, ...props }) => {
-  const { handleBlur, handleChange } = useFormikContext();
+  const { values, handleBlur, handleChange } = useFormikContext();
+  const value = (values as Record<string, string>)[id] ?? '';
 
   return (
     <>
       <ImageInput
+        value={value}
         onChange={handleChange(id)}
         onBlur={handleBlur(id)}
         {...props}

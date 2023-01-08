@@ -8,11 +8,12 @@ import { Text } from '../../Text';
 import { FontFamily } from '../../../theme/text/types';
 
 type Props = {
+  value?: string;
   onChange: (uri: string) => void;
   onBlur: (e: any) => void;
 };
 
-export const ImageInput: React.FC<Props> = ({ onChange, onBlur }) => {
+export const ImageInput: React.FC<Props> = ({ value, onChange, onBlur }) => {
   const { t } = useTranslation();
   const pickImage = async () => {
     try {
@@ -39,11 +40,13 @@ export const ImageInput: React.FC<Props> = ({ onChange, onBlur }) => {
     }
   };
 
+  const textColor = value ? 'background' : 'primary';
+
   return (
-    <Button small onPress={pickImage}>
+    <Button small secondary={!value} onPress={pickImage}>
       <Box flex row>
-        <Icon name="image" color="background" weight={2.5} />
-        <Text ml={1} color="background" fontFamily={FontFamily.BOLD}>
+        <Icon name="image" color={textColor} weight={2.5} />
+        <Text ml={1} color={textColor} fontFamily={FontFamily.BOLD}>
           {t('general.photo')}
         </Text>
       </Box>

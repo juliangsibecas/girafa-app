@@ -6,4 +6,4 @@ export * from './DateInput';
 export * from './FormikDateInput';
 export * from './ImageInput';
 export * from './FormikImageInput';
-export * from './CoordinateInput';
+export * from './FormikCoordinateInput';
