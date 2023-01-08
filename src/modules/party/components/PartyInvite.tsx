@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, TouchableOpacity, View } from 'react-native';
 
 import {
   useResponse,
@@ -42,7 +42,7 @@ const PartyInviteItem: React.FC<ItemProps> = ({
   return (
     <View onStartShouldSetResponder={() => true}>
       <TouchableOpacity onPress={handlePress}>
-        <Box flex row hcenter mb={1.5}>
+        <Box flex row hcenter mb={1.5} pointerEvents="none">
           <UserAvatar id={user._id} />
           <Box flexGrow={1}>
             <Text ml={2} fontFamily={FontFamily.BOLD}>
@@ -129,51 +129,58 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
 
   return (
     <BottomModal isOpen={isOpen} onClose={onClose}>
-      <Box flex row mb={2} style={{ alignItems: 'baseline' }}>
-        <Text type="h2" flexGrow={1}>
-          {t('party.components.Invite.invite')}
-        </Text>
-        <Text type="secondary">
-          {t('party.components.Invite.onlyFollowersAllowed')}
-        </Text>
-      </Box>
-      <TextInput
-        placeholder={t('general.searchEllipsis')}
-        value={search}
-        onChangeText={(text) => setSearch(text)}
-        mb={4}
-      />
-      <StateHandler isLoading={isLoading} isError={Boolean(error)}>
-        <Box height={15} center>
-          {users.length ? (
-            <FlatList
-              style={{ height: '100%', width: '100%' }}
-              data={users}
-              renderItem={({ item }) => (
-                <PartyInviteItem
-                  user={item}
-                  selectedUserIds={selectedUsersId}
-                  add={addUserId}
-                  remove={removeUserId}
-                />
-              )}
-            />
-          ) : (
-            <Box flex row>
-              <Icon name="warning" color="warning" mr={1} />
-              <Text>{t('party.components.Invite.emptyText')}</Text>
-            </Box>
-          )}
+      <Box flex style={{ height: Dimensions.get('screen').height * 0.6 }}>
+        <Box>
+          <Box flex row mb={2} style={{ alignItems: 'baseline' }}>
+            <Text type="h2" flexGrow={1}>
+              {t('party.components.Invite.invite')}
+            </Text>
+            <Text type="secondary">
+              {t('party.components.Invite.onlyFollowersAllowed')}
+            </Text>
+          </Box>
+          <TextInput
+            placeholder={t('general.searchEllipsis')}
+            value={search}
+            onChangeText={(text) => setSearch(text)}
+            mb={4}
+          />
         </Box>
-      </StateHandler>
-      <Button
-        mt={4}
-        isLoading={isSendInviteLoading}
-        onPress={handleSubmit}
-        isDisabled={Object.keys(selectedUsersId).length === 0}
-      >
-        {t('party.components.Invite.sendInvitations')}
-      </Button>
+        <Box flexGrow={1} center={!Boolean(users.length)}>
+          <StateHandler isLoading={isLoading} isError={Boolean(error)}>
+            <Box center>
+              {users.length ? (
+                <FlatList
+                  style={{ width: '100%' }}
+                  data={users}
+                  renderItem={({ item }) => (
+                    <PartyInviteItem
+                      user={item}
+                      selectedUserIds={selectedUsersId}
+                      add={addUserId}
+                      remove={removeUserId}
+                    />
+                  )}
+                  showsVerticalScrollIndicator={false}
+                />
+              ) : (
+                <Box flex center>
+                  <Icon name="warning" color="warning" size={5} mb={1} />
+                  <Text>{t('party.components.Invite.emptyText')}</Text>
+                </Box>
+              )}
+            </Box>
+          </StateHandler>
+        </Box>
+        <Button
+          mt={4}
+          isLoading={isSendInviteLoading}
+          onPress={handleSubmit}
+          isDisabled={Object.keys(selectedUsersId).length === 0}
+        >
+          {t('party.components.Invite.sendInvitations')}
+        </Button>
+      </Box>
     </BottomModal>
   );
 };
