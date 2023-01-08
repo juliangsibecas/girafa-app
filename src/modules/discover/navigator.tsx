@@ -34,16 +34,10 @@ export const DiscoverNavigator: React.FC = () => {
         headerBackTitle: '',
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
-        headerStyle: {
-          backgroundColor: theme.palette.background.main,
-        },
+        headerTransparent: true,
       }}
     >
-      <Stack.Screen
-        name="List"
-        component={DiscoverScreen}
-        options={{ headerTransparent: true }}
-      />
+      <Stack.Screen name="List" component={DiscoverScreen} />
       {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );

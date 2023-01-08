@@ -39,7 +39,7 @@ export const UserAttendedPartiesScreen: React.FC = () => {
   const parties = data?.userGetAttendedPartiesById ?? [];
 
   return (
-    <Container>
+    <Container headerPlaceholder>
       <Text type="h1" mb={4}>
         {t('general.parties')}
       </Text>

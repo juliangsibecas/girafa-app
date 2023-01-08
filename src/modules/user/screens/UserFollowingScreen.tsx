@@ -36,7 +36,7 @@ export const UserFollowingScreen: React.FC = () => {
   const following = data?.userGetFollowingById ?? [];
 
   return (
-    <Container>
+    <Container headerPlaceholder>
       <Text type="h1" mb={4}>
         {t('user.following')}
       </Text>

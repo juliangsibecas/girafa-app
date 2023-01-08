@@ -31,7 +31,7 @@ export const UserFollowersScreen: React.FC = () => {
   const followers = data?.userGetFollowersById ?? [];
 
   return (
-    <Container>
+    <Container headerPlaceholder>
       <Text type="h1" mb={4}>
         {t('user.followers')}
       </Text>

@@ -17,21 +17,9 @@ export const PartyDetailStackGroup: React.FC<Props> = ({ Stack }) => {
   const { theme } = useTheme();
 
   return (
-    <Stack.Group>
-      <Stack.Screen
-        name="PartyDetail"
-        component={PartyDetailScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: theme.palette.background.main,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="PartyAttenders"
-        component={PartyAttendersScreen}
-        options={{ headerTransparent: true }}
-      />
+    <Stack.Group screenOptions={{ headerTransparent: true }}>
+      <Stack.Screen name="PartyDetail" component={PartyDetailScreen} />
+      <Stack.Screen name="PartyAttenders" component={PartyAttendersScreen} />
     </Stack.Group>
   );
 };

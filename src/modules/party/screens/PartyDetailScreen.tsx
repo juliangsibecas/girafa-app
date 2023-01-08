@@ -26,7 +26,7 @@ export const PartyDetailScreen: React.FC = () => {
       isRefreshing={networkStatus === 4}
       onRefresh={refetch}
     >
-      <Container noBottomGradient>
+      <Container headerPlaceholder noBottomGradient>
         <PartyDetail party={data?.partyGetById as PartyGetByIdResponse} />
       </Container>
     </StateHandler>

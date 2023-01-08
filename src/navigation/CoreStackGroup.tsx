@@ -29,7 +29,7 @@ interface ICoreStackGroup {
 }
 
 export const CoreStackGroup: React.FC<ICoreStackGroup> = ({ Stack }) => (
-  <Stack.Group>
+  <Stack.Group screenOptions={{ headerTransparent: true }}>
     {ProfileStackGroup({ Stack })}
     {PartyDetailStackGroup({ Stack })}
   </Stack.Group>

@@ -31,6 +31,7 @@ const Stack = createNativeStackNavigator<MyProfileStackParamList>();
 
 export const MyProfileNavigator: React.FC = () => {
   const { theme } = useTheme();
+
   return (
     <Stack.Navigator
       initialRouteName="Me"
