@@ -143,7 +143,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
           {!isMe ? (
             <FeatureToggledButton
               ft={FeatureToggleName.UserChangeFollowingState}
-              secondary={user.isFollowing}
+              secondary={isFollowing}
               width={12}
               height={4}
               textProps={{ fontSize: 12 }}
