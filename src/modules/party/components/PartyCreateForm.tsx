@@ -5,6 +5,7 @@ import {
   Coordinate,
   PartyAvailability,
   usePartyCreateMutation,
+  UserCheckPartyValidatingDocument,
   useResponse,
 } from '../../../api';
 import {
@@ -51,7 +52,9 @@ export const PartyCreateForm: React.FC = () => {
   const { t } = useTranslation();
   const { navigate } =
     useNavigation<HomeStackScreenProps<'PartyCreateForm'>['navigation']>();
-  const [create] = usePartyCreateMutation();
+  const [create] = usePartyCreateMutation({
+    refetchQueries: [{ query: UserCheckPartyValidatingDocument }],
+  });
   const { uploadParty } = usePictureUpload();
   const { onSuccess, onFormError } = useResponse();
 
@@ -117,8 +120,6 @@ export const PartyCreateForm: React.FC = () => {
         time: 4000,
       });
       setLoading(false);
-
-      navigate('Map');
     } catch (e: any) {
       const { messages } = onFormError(e);
 
