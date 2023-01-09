@@ -14,9 +14,10 @@ export const PartyDetailScreen: React.FC = () => {
     error: isError,
     refetch,
     networkStatus,
-  } = usePartyGetByIdQuery({ variables: { id: params.id } });
-
-  console.log(data);
+  } = usePartyGetByIdQuery({
+    variables: { id: params.id },
+    notifyOnNetworkStatusChange: true,
+  });
 
   return (
     <StateHandler
