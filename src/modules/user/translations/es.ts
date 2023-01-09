@@ -24,6 +24,9 @@ export const userTranslationES = {
       changePassword: 'Cambiar contraseña',
       badCurrentPassword: 'La contraseña actual es incorrecta',
     },
+    UserAttendedParties: {
+      emptyText: 'No hay fiestas públicas para mostrar',
+    },
   },
   components: {
     Profile: {

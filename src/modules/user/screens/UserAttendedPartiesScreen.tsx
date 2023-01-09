@@ -3,10 +3,13 @@ import { FlatList } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
+import emptyImage from '../../../assets/images/onboarding/dj.png';
+
 import { useUserGetAttendedPartiesByIdQuery } from '../../../api';
 import {
   Box,
   Container,
+  Image,
   RefreshControl,
   StateHandler,
   Text,
@@ -40,27 +43,35 @@ export const UserAttendedPartiesScreen: React.FC = () => {
 
   return (
     <Container headerPlaceholder>
-      <Text type="h1" mb={4}>
-        {t('general.parties')}
-      </Text>
+      <Text type="h1">{t('general.parties')}</Text>
+      <Text>{t('general.publics')}</Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
-        <FlatList
-          refreshControl={
-            RefreshControl({
-              isRefreshing: networkStatus === 4,
-              onRefresh: refetch,
-            })!
-          }
-          data={parties}
-          renderItem={({ item: party }) => (
-            <Box mb={2}>
-              <PartyRow
-                party={party}
-                go={() => push('PartyDetail', { id: party._id })}
-              />
-            </Box>
-          )}
-        />
+        {data?.userGetAttendedPartiesById.length ? (
+          <Box mt={4}>
+            <FlatList
+              refreshControl={
+                RefreshControl({
+                  isRefreshing: networkStatus === 4,
+                  onRefresh: refetch,
+                })!
+              }
+              data={parties}
+              renderItem={({ item: party }) => (
+                <Box mb={2}>
+                  <PartyRow
+                    party={party}
+                    go={() => push('PartyDetail', { id: party._id })}
+                  />
+                </Box>
+              )}
+            />
+          </Box>
+        ) : (
+          <Box flexGrow={1} center>
+            <Image src={emptyImage} height={20} mb={2} />
+            <Text>{t('user.screens.UserAttendedParties.emptyText')}</Text>
+          </Box>
+        )}
       </StateHandler>
     </Container>
   );

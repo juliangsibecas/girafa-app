@@ -39,6 +39,8 @@ export const es = {
       error: 'Ocurrio un error inesperado',
 
       signOut: 'Cerrar sesión',
+
+      publics: 'Públicas',
     },
     api: {
       featureToggleDisabled: 'Funcionalidad no disponible en este momento.',
