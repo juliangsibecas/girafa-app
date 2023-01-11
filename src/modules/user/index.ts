@@ -1,5 +1,5 @@
 export * from './navigator';
 export * from './screens';
-export * from './comonents';
+export * from './components';
 export * from './translations';
 export * from './provider';

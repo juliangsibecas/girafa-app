@@ -3,7 +3,7 @@ import React from 'react';
 import { useUserGetByIdQuery } from '../../../api';
 import { StateHandler } from '../../../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
-import { UserProfile } from '../comonents';
+import { UserProfile } from '../components';
 
 export const UserProfileScreen: React.FC = () => {
   const {

@@ -10,7 +10,12 @@ import {
   UserGetByIdResponse,
   useUserChangeFollowingStateMutation,
 } from '../../../api';
-import { Box, FeatureToggledButton, Icon, Text } from '../../../components';
+import {
+  Box,
+  FeatureToggledButton,
+  Hamburger,
+  Text,
+} from '../../../components';
 
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
@@ -115,11 +120,9 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         style={{ height: '100%' }}
         placeholderSize={Dimensions.get('screen').width / 18}
       />
-      <Box mt={7} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
+      <Box mt={10} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
-          <TouchableOpacity onPress={() => push('Settings')}>
-            <Icon name="menu" color="primary" size={3} />
-          </TouchableOpacity>
+          <Hamburger onPress={() => push('Settings')} />
         ) : undefined}
       </Box>
       <Box

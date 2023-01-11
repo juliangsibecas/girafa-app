@@ -12,7 +12,7 @@ import {
 } from '../../../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
-import { UserRow } from '../comonents';
+import { UserRow } from '../components';
 
 export const UserFollowingScreen: React.FC = () => {
   const { t } = useTranslation();

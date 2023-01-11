@@ -14,7 +14,7 @@ import {
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 
-import { UserCard, UserRow } from '../../user/comonents';
+import { UserCard, UserRow } from '../../user/components';
 
 type Props = {
   partyId: string;

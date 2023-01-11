@@ -22,7 +22,7 @@ import { useAuth } from '../../auth';
 import { usePictureUpload } from '../../picture';
 
 import { MyProfileStackScreenProps } from '../navigator';
-import { UserPicturePicker } from '../comonents';
+import { UserPicturePicker } from '../components';
 import { useUser } from '../hooks';
 
 type FormValues = {

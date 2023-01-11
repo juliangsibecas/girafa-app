@@ -20,7 +20,7 @@ import {
 import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
 
 import { FontFamily } from '../../../theme/text/types';
-import { UserAvatar } from '../../user/comonents';
+import { UserAvatar } from '../../user/components';
 
 type ItemProps = {
   user: any;
