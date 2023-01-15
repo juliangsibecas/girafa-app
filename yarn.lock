@@ -1611,6 +1611,23 @@
     semver "7.3.2"
     tempy "0.3.0"
 
+"@expo/image-utils@^0.3.22":
+  version "0.3.23"
+  resolved "https://registry.yarnpkg.com/@expo/image-utils/-/image-utils-0.3.23.tgz#f14fd7e1f5ff6f8e4911a41e27dd274470665c3f"
+  integrity sha512-nhUVvW0TrRE4jtWzHQl8TR4ox7kcmrc2I0itaeJGjxF5A54uk7avgA0wRt7jP1rdvqQo1Ke1lXyLYREdhN9tPw==
+  dependencies:
+    "@expo/spawn-async" "1.5.0"
+    chalk "^4.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    jimp-compact "0.16.1"
+    mime "^2.4.4"
+    node-fetch "^2.6.0"
+    parse-png "^2.1.0"
+    resolve-from "^5.0.0"
+    semver "7.3.2"
+    tempy "0.3.0"
+
 "@expo/json-file@8.2.36", "@expo/json-file@^8.2.35":
   version "8.2.36"
   resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.36.tgz#62a505cb7f30a34d097386476794680a3f7385ff"
@@ -7481,11 +7498,12 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0:
   dependencies:
     wrappy "1"
 
-onesignal-expo-plugin@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/onesignal-expo-plugin/-/onesignal-expo-plugin-1.0.2.tgz#aca816c8f1be3a760bb9b007b2fde9f8ddb0065e"
-  integrity sha512-BFfM9oxAGAxeMd2POh3vo+jjSGX02ZgWszO8m0goIOkwtFecSPRGEXePL/ZxglYm5SntPYVpqKd5/rrtKlrSsw==
+onesignal-expo-plugin@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/onesignal-expo-plugin/-/onesignal-expo-plugin-1.3.0.tgz#3029ddf7492249937da8d42d26403bda4eb8529f"
+  integrity sha512-Ol2mFOUKl1MW0rYq5psGDnnS8NWsBVb/toU0oTSipm/u/T/hBARNZufbw/RsyvMf9xXoj/ZQWeblGbueAdJ3bQ==
   dependencies:
+    "@expo/image-utils" "^0.3.22"
     xcode "^3.0.1"
 
 onetime@^2.0.0:
@@ -7844,13 +7862,21 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-plist@^3.0.2, plist@^3.0.5:
+plist@^3.0.2:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.5.tgz#2cbeb52d10e3cdccccf0c11a63a85d830970a987"
   integrity sha512-83vX4eYdQp3vP9SxuYgEM/G/pJQqLUz/V/xzPrzruLs7fz7jxGQ1msZ/mg1nwZxUSuOp4sb+/bEIbRrbzZRxDA==
   dependencies:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
+
+plist@^3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.6.tgz#7cfb68a856a7834bca6dbfe3218eb9c7740145d3"
+  integrity sha512-WiIVYyrp8TD4w8yCvyeIr+lkmrGRd5u0VbRnU+tP/aRLxP/YadJUYOMZJ/6hIa3oUyVCsycXvtNRgd5XBJIbiA==
+  dependencies:
+    base64-js "^1.5.1"
+    xmlbuilder "^15.1.1"
 
 pngjs@^3.3.0:
   version "3.4.0"
@@ -8174,10 +8200,10 @@ react-native-modal@^13.0.1:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
-react-native-onesignal@^4.3.11:
-  version "4.3.11"
-  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-4.3.11.tgz#ad017f8daf0f1674babf19eb10f70b2bda80e32d"
-  integrity sha512-sBIFu6/+I/fXeH+GAOP1zUYUy2eJmchPOPj7RRDsArURTGcSR5jcGgoFjo9b6BT2tHkIeo39GkeojQD7pIvPzA==
+react-native-onesignal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-4.5.0.tgz#a5fef4348d429903bf3691e480d95a3ddf7bf5c1"
+  integrity sha512-9rocNYJXrAFUk1yG50vu0D7aYEeX8imEA3qDeBT+iwyFpy6E1xXNy3z9OPazzeuGi9/YaseEAiswpKBlaoJV3A==
   dependencies:
     invariant "^2.2.2"
 
@@ -10053,6 +10079,11 @@ xmlbuilder@^14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-14.0.0.tgz#876b5aec4f05ffd5feb97b0a871c855d16fbeb8c"
   integrity sha512-ts+B2rSe4fIckR6iquDjsKbQFK2NlUk6iG5nf14mDEyldgoc2nEKZ3jZWMPTxGQwVgToSjt6VGIho1H8/fNFTg==
+
+xmlbuilder@^15.1.1:
+  version "15.1.1"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
+  integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
 
 xmlbuilder@^9.0.7:
   version "9.0.7"

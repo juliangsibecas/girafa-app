@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: `.env.${process.env.NODE_ENV ?? 'production'}` });
+
+const env = process.env.NODE_ENV ?? 'production';
+dotenv.config({ path: `.env.${env}` });
 
 export default {
   name: 'Girafa',
@@ -38,7 +40,7 @@ export default {
     [
       'onesignal-expo-plugin',
       {
-        mode: 'development',
+        mode: env.toLowerCase(),
       },
     ],
   ],
