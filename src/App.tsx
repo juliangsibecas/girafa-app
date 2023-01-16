@@ -7,6 +7,7 @@ import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 
 import { useCachedResources } from './hooks';
@@ -17,6 +18,7 @@ import { AuthProvider } from './modules/auth';
 import { UserProvider } from './modules/user';
 import { Navigation } from './navigation';
 import { useThemeMode } from './theme';
+import { linking } from './navigation';
 
 const AppComponent = () => {
   const isResourcesLoading = useCachedResources();
@@ -34,14 +36,16 @@ const AppComponent = () => {
         <StatusBar style={themeMode === ThemeMode.LIGHT ? 'dark' : 'light'} />
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme} mode={themeMode}>
-            <AuthProvider>
-              <UserProvider>
-                <NotificationsProvider>
-                  <Navigation />
-                  <Toast position="bottom" />
-                </NotificationsProvider>
-              </UserProvider>
-            </AuthProvider>
+            <NavigationContainer linking={linking}>
+              <AuthProvider>
+                <UserProvider>
+                  <NotificationsProvider>
+                    <Navigation />
+                    <Toast position="bottom" />
+                  </NotificationsProvider>
+                </UserProvider>
+              </AuthProvider>
+            </NavigationContainer>
           </ThemeProvider>
         </ApolloProvider>
       </SafeAreaProvider>

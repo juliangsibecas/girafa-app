@@ -14,6 +14,8 @@ import { Maybe } from 'yup/lib/types';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
 import { useFeatureToggle } from '../featureToggle';
+import { useNavigation } from '@react-navigation/native';
+import { HomeStackNavigationProp } from '../../navigation';
 
 OneSignal.setAppId(env.oneSignalId);
 
@@ -23,6 +25,7 @@ type Props = {
 
 export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   const { isForeground } = useAppStatus();
+  const { navigate } = useNavigation<HomeStackNavigationProp>();
   const { userId, isSignedIn, isLoading: isAuthLoading } = useAuth();
   const { isEnabled, isLoading: isFeatureFlagLoading } = useFeatureToggle(
     FeatureToggleName.NotificationGet
@@ -133,6 +136,18 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
       notificationReceivedEvent.complete(notification);
     }
   );
+
+  OneSignal.setNotificationOpenedHandler((evt) => {
+    const data = evt.notification.additionalData as UserNotification;
+
+    if (data.type === NotificationType.Follow) {
+      navigate('UserProfile', { id: data.from._id });
+    }
+
+    if (data.type === NotificationType.Invite && data.party) {
+      navigate('PartyDetail', { id: data.party._id });
+    }
+  });
 
   return (
     <NotificationContext.Provider
