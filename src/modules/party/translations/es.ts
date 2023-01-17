@@ -34,7 +34,8 @@ export const partyTranslationES = {
         title: 'Atención',
         body: 'Al crear la fiesta validaremos que los datos sean correctos. Mientras tanto no la vas a ver en la plataforma.',
       },
-      addressExample: 'Ej: 17 E/ 503 y 504 N2906',
+      partyName: 'Nombre de la fiesta',
+      addressExample: 'Ej: 1 Entre 55 y 57 N1100',
       allowInvitesHelper: 'Mis invitados pueden invitar',
       validating: 'Estamos validando los datos de tu fiesta.',
       success: {

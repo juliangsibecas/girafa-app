@@ -145,7 +145,11 @@ export const PartyCreateForm: React.FC = () => {
       {({ values, submitForm }) => (
         <>
           <Box flex flexGrow={1}>
-            <FormikTextInput id="name" placeholder={t('general.name')} mt={1} />
+            <FormikTextInput
+              id="name"
+              placeholder={t('party.components.Create.partyName')}
+              mt={1}
+            />
             <Box flex row mt={1}>
               <FormikSelect
                 id="availability"
