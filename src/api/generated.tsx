@@ -450,6 +450,7 @@ export type UserNotification = {
   from: UserPreview;
   party?: Maybe<PartyPreview>;
   type: NotificationType;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type UserPreview = {

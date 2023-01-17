@@ -1,21 +1,23 @@
+import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OneSignal from 'react-native-onesignal';
 import { useEffect, useState } from 'react';
 import { usePermissions } from 'expo-notifications';
-import { NotificationContext } from './context';
-import { useAuth } from '../auth/hooks';
+import { Maybe } from 'yup/lib/types';
+
 import {
   FeatureToggleName,
   NotificationType,
   useNotificationsGetByUserIdQuery,
   UserNotification,
 } from '../../api';
-import { Maybe } from 'yup/lib/types';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
 import { useFeatureToggle } from '../featureToggle';
-import { useNavigation } from '@react-navigation/native';
-import { HomeStackNavigationProp } from '../../navigation';
+
+import { useAuth } from '../auth/hooks';
+
+import { NotificationContext } from './context';
 
 OneSignal.setAppId(env.oneSignalId);
 
@@ -25,7 +27,6 @@ type Props = {
 
 export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   const { isForeground } = useAppStatus();
-  const { navigate } = useNavigation<HomeStackNavigationProp>();
   const { userId, isSignedIn, isLoading: isAuthLoading } = useAuth();
   const { isEnabled, isLoading: isFeatureFlagLoading } = useFeatureToggle(
     FeatureToggleName.NotificationGet
@@ -137,15 +138,11 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
     }
   );
 
-  OneSignal.setNotificationOpenedHandler((evt) => {
+  OneSignal.setNotificationOpenedHandler(async (evt) => {
     const data = evt.notification.additionalData as UserNotification;
 
-    if (data.type === NotificationType.Follow) {
-      navigate('UserProfile', { id: data.from._id });
-    }
-
-    if (data.type === NotificationType.Invite && data.party) {
-      navigate('PartyDetail', { id: data.party._id });
+    if (data.url && (await Linking.canOpenURL(data.url))) {
+      Linking.openURL(data.url);
     }
   });
 
