@@ -97,11 +97,9 @@ export const SignUpForm: React.FC = () => {
     }
   };
 
-  const checkAdult = () => setAdultChecked(true);
-  const uncheckAdult = () => setAdultChecked(false);
+  const toggleAdult = () => setAdultChecked(!isAdultChecked);
 
-  const checkTerms = () => setTermsChecked(true);
-  const uncheckTerms = () => setTermsChecked(false);
+  const toggleTerms = () => setTermsChecked(!isTermsChecked);
 
   const handleTermsPress = () => navigate('Terms');
 
@@ -144,29 +142,23 @@ export const SignUpForm: React.FC = () => {
               contentType="newPassword"
               mt={1}
             />
-            <Box flex row mt={3}>
-              <Checkbox
-                isChecked={isAdultChecked}
-                onCheck={checkAdult}
-                onUncheck={uncheckAdult}
-                small
-              />
-              <Text ml={1}>{t('auth.screens.SignUp.imAdult')}</Text>
-            </Box>
-            <Box flex row mt={2}>
-              <Checkbox
-                isChecked={isTermsChecked}
-                onCheck={checkTerms}
-                onUncheck={uncheckTerms}
-                small
-              />
-              <Text ml={1}>{t('auth.screens.SignUp.acceptThe')}</Text>
-              <TouchableOpacity onPress={handleTermsPress}>
-                <Text fontFamily={FontFamily.BOLD}>
-                  {t('auth.screens.SignUp.terms')}
-                </Text>
-              </TouchableOpacity>
-            </Box>
+            <TouchableOpacity onPress={toggleAdult}>
+              <Box flex row mt={3}>
+                <Checkbox isChecked={isAdultChecked} small />
+                <Text ml={1}>{t('auth.screens.SignUp.imAdult')}</Text>
+              </Box>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleTerms}>
+              <Box flex row mt={2}>
+                <Checkbox isChecked={isTermsChecked} small />
+                <Text ml={1}>{t('auth.screens.SignUp.acceptThe')}</Text>
+                <TouchableOpacity onPress={handleTermsPress}>
+                  <Text fontFamily={FontFamily.BOLD}>
+                    {t('auth.screens.SignUp.terms')}
+                  </Text>
+                </TouchableOpacity>
+              </Box>
+            </TouchableOpacity>
           </Box>
           <Button
             isDisabled={!isAdultChecked || !isTermsChecked}

@@ -51,7 +51,7 @@ export const TextInput: React.FC<ITextInput> = ({
         placeholderTextColor={theme.palette.text.secondary}
         style={style}
         placeholder={placeholder}
-        autoCapitalize="none"
+        autoCapitalize={contentType === 'name' ? 'words' : 'none'}
         value={value}
         onChangeText={onChangeText}
         onBlur={onBlur}
