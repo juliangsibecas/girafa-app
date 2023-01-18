@@ -6,7 +6,7 @@ export const onboardingTranslationES = {
       '0': {
         title: 'Encontrá las mejores fiestas',
         description:
-          'Todas las fiestas de la ciudad en un solo lugar, con todos los detalles para que elijás a donde salir con tus amigos 😎',
+          'Todas las fiestas de la ciudad en un solo lugar, con la info que necesitas para elegir a donde salir con tus amigos 😎',
       },
       '1': {
         title: 'Conocé nuevas personas',
