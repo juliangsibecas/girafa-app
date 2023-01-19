@@ -5,12 +5,14 @@ import { useFeatureToggle } from '../../modules/featureToggle';
 
 interface IFeatureToggledButton extends IButton {
   ft: FeatureToggleName;
+  hide?: boolean;
 }
 
 export const FeatureToggledButton: React.FC<IFeatureToggledButton> = ({
   ft,
   isLoading,
   onPress,
+  hide,
   ...props
 }) => {
   const {
@@ -20,6 +22,10 @@ export const FeatureToggledButton: React.FC<IFeatureToggledButton> = ({
   } = useFeatureToggle(ft);
 
   const handlePress = () => handleAction(onPress as () => void);
+
+  if (!isFTEnabled && hide) {
+    return null;
+  }
 
   return (
     <Button

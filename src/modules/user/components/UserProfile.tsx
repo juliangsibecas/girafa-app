@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, Share, TouchableOpacity } from 'react-native';
 
 import {
   FeatureToggleName,
   useResponse,
-  UserGetByIdDocument,
-  UserGetByIdResponse,
+  UserGetDocument,
+  UserGetResponse,
   useUserChangeFollowingStateMutation,
 } from '../../../api';
 import {
   Box,
   FeatureToggledButton,
   Hamburger,
+  Icon,
   Text,
 } from '../../../components';
 
@@ -27,7 +28,7 @@ import { MyProfileStackScreenProps } from '../navigator';
 import { UserAvatar } from './UserAvatar';
 
 type Props = {
-  user: UserGetByIdResponse;
+  user: UserGetResponse;
   isMyProfile?: boolean;
 };
 
@@ -64,8 +65,8 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       const res = await changeFollowingStateMutation({
         variables: { data: { followingId: user._id, state: !isFollowing } },
         refetchQueries: [
-          { query: UserGetByIdDocument, variables: { id: myId } },
-          { query: UserGetByIdDocument, variables: { id: user._id } },
+          { query: UserGetDocument, variables: { id: myId } },
+          { query: UserGetDocument, variables: { id: user._id } },
         ],
       });
 
@@ -99,6 +100,11 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     push('UserEdit', {
       fullname: user.fullName,
       nickname: user.nickname,
+    });
+
+  const handleSharePress = () =>
+    Share.share({
+      message: t('user.components.Profile.share', { nickname: user.nickname }),
     });
 
   const followButtonText = isFollowing
@@ -156,18 +162,33 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               {followButtonText}
             </FeatureToggledButton>
           ) : undefined}
-          {isMyProfile ? (
-            <FeatureToggledButton
-              secondary
-              ft={FeatureToggleName.UserEdit}
-              width={12}
-              height={4}
-              textProps={{ fontSize: 12 }}
-              onPress={handleEditPress}
-            >
-              {t('user.components.Profile.editProfile')}
-            </FeatureToggledButton>
-          ) : undefined}
+          {!!isMyProfile && (
+            <Box row>
+              <FeatureToggledButton
+                secondary
+                ft={FeatureToggleName.UserEdit}
+                width={12}
+                height={4}
+                textProps={{ fontSize: 12 }}
+                onPress={handleEditPress}
+              >
+                {t('user.components.Profile.editProfile')}
+              </FeatureToggledButton>
+              <FeatureToggledButton
+                secondary
+                ft={FeatureToggleName.UserShare}
+                width={4}
+                height={4}
+                textProps={{ fontSize: 12 }}
+                onPress={handleSharePress}
+                ml={1}
+                borderWidth={0}
+                hide
+              >
+                <Icon name="share-2" color="primary" />
+              </FeatureToggledButton>
+            </Box>
+          )}
         </Box>
         <Box flex row style={{ justifyContent: 'space-between' }}>
           <TouchableOpacity

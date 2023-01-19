@@ -1,21 +1,26 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { useUserGetByIdQuery } from '../../../api';
+import { useUserGetQuery } from '../../../api';
 import { StateHandler } from '../../../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
+import { getIdOrField } from '../../../utils';
 import { UserProfile } from '../components';
 
 export const UserProfileScreen: React.FC = () => {
   const {
-    params: { id },
+    params: { id, idOrNickname },
   } = useRoute<CoreStackGroupScreenProps<'UserProfile'>['route']>();
   const {
     data,
     loading: isLoading,
     error,
-  } = useUserGetByIdQuery({ variables: { id: id } });
+  } = useUserGetQuery({
+    variables: {
+      data: getIdOrField({ id, str: idOrNickname, field: 'nickname' }),
+    },
+  });
 
-  const user = data?.userGetById!;
+  const user = data?.userGet!;
 
   return (
     <StateHandler isLoading={isLoading} isError={Boolean(error)}>

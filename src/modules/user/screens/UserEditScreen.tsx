@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import {
   useResponse,
-  UserGetByIdDocument,
+  UserGetDocument,
   useUserEditMutation,
 } from '../../../api';
 import {
@@ -43,7 +43,7 @@ export const UserEditScreen: React.FC = () => {
   const [edit] = useUserEditMutation({
     refetchQueries: [
       {
-        query: UserGetByIdDocument,
+        query: UserGetDocument,
         variables: { id: userId },
       },
     ],

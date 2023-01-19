@@ -30,6 +30,8 @@ export const userTranslationES = {
   },
   components: {
     Profile: {
+      share:
+        'Mirá mi perfil en Girafa 🤘 https://girafa.com.ar/app/user/{{nickname}}',
       editProfile: 'Editar perfil',
     },
   },

@@ -7,7 +7,7 @@ import {
 } from '../screens';
 
 export type ProfileStackGroupParamList = {
-  UserProfile: { id: string };
+  UserProfile: { id?: string; idOrNickname?: string };
   UserFollowers: { id: string };
   UserFollowing: { id: string };
   UserAttendedParties: { id: string };

@@ -109,7 +109,8 @@ export enum FeatureToggleName {
   UserGetFollowers = 'USER_GET_FOLLOWERS',
   UserGetFollowing = 'USER_GET_FOLLOWING',
   UserSearchFollowersToInvite = 'USER_SEARCH_FOLLOWERS_TO_INVITE',
-  UserSendPartyInvite = 'USER_SEND_PARTY_INVITE'
+  UserSendPartyInvite = 'USER_SEND_PARTY_INVITE',
+  UserShare = 'USER_SHARE'
 }
 
 export type FeatureTogglePopulateInput = {
@@ -326,8 +327,8 @@ export type Query = {
   partySearchAttenders: Array<UserPreview>;
   typesSync: TypesSyncResponse;
   userCheckPartyValidating: Scalars['Boolean'];
+  userGet: UserGetResponse;
   userGetAttendedPartiesById: Array<PartyPreview>;
-  userGetById: UserGetByIdResponse;
   userGetFollowersById: Array<UserPreview>;
   userGetFollowingById: Array<UserPreview>;
   userSearch: Array<UserPreview>;
@@ -350,12 +351,12 @@ export type QueryPartySearchAttendersArgs = {
 };
 
 
-export type QueryUserGetAttendedPartiesByIdArgs = {
-  id: Scalars['String'];
+export type QueryUserGetArgs = {
+  data: UserGetInput;
 };
 
 
-export type QueryUserGetByIdArgs = {
+export type QueryUserGetAttendedPartiesByIdArgs = {
   id: Scalars['String'];
 };
 
@@ -431,8 +432,13 @@ export type UserEditInput = {
   nickname: Scalars['String'];
 };
 
-export type UserGetByIdResponse = {
-  __typename?: 'UserGetByIdResponse';
+export type UserGetInput = {
+  id?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']>;
+};
+
+export type UserGetResponse = {
+  __typename?: 'UserGetResponse';
   _id: Scalars['String'];
   attendedPartiesCount: Scalars['Float'];
   followersCount: Scalars['Float'];
@@ -567,12 +573,12 @@ export type UserSearchQueryVariables = Exact<{
 
 export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
 
-export type UserGetByIdQueryVariables = Exact<{
-  id: Scalars['String'];
+export type UserGetQueryVariables = Exact<{
+  data: UserGetInput;
 }>;
 
 
-export type UserGetByIdQuery = { __typename?: 'Query', userGetById: { __typename?: 'UserGetByIdResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
+export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
 
 export type UserGetFollowingByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1183,9 +1189,9 @@ export function useUserSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type UserSearchQueryHookResult = ReturnType<typeof useUserSearchQuery>;
 export type UserSearchLazyQueryHookResult = ReturnType<typeof useUserSearchLazyQuery>;
 export type UserSearchQueryResult = Apollo.QueryResult<UserSearchQuery, UserSearchQueryVariables>;
-export const UserGetByIdDocument = gql`
-    query userGetById($id: String!) {
-  userGetById(id: $id) {
+export const UserGetDocument = gql`
+    query userGet($data: UserGetInput!) {
+  userGet(data: $data) {
     _id
     nickname
     fullName
@@ -1199,32 +1205,32 @@ export const UserGetByIdDocument = gql`
     `;
 
 /**
- * __useUserGetByIdQuery__
+ * __useUserGetQuery__
  *
- * To run a query within a React component, call `useUserGetByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserGetByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserGetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserGetQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserGetByIdQuery({
+ * const { data, loading, error } = useUserGetQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      data: // value for 'data'
  *   },
  * });
  */
-export function useUserGetByIdQuery(baseOptions: Apollo.QueryHookOptions<UserGetByIdQuery, UserGetByIdQueryVariables>) {
+export function useUserGetQuery(baseOptions: Apollo.QueryHookOptions<UserGetQuery, UserGetQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserGetByIdQuery, UserGetByIdQueryVariables>(UserGetByIdDocument, options);
+        return Apollo.useQuery<UserGetQuery, UserGetQueryVariables>(UserGetDocument, options);
       }
-export function useUserGetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetByIdQuery, UserGetByIdQueryVariables>) {
+export function useUserGetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserGetQuery, UserGetQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserGetByIdQuery, UserGetByIdQueryVariables>(UserGetByIdDocument, options);
+          return Apollo.useLazyQuery<UserGetQuery, UserGetQueryVariables>(UserGetDocument, options);
         }
-export type UserGetByIdQueryHookResult = ReturnType<typeof useUserGetByIdQuery>;
-export type UserGetByIdLazyQueryHookResult = ReturnType<typeof useUserGetByIdLazyQuery>;
-export type UserGetByIdQueryResult = Apollo.QueryResult<UserGetByIdQuery, UserGetByIdQueryVariables>;
+export type UserGetQueryHookResult = ReturnType<typeof useUserGetQuery>;
+export type UserGetLazyQueryHookResult = ReturnType<typeof useUserGetLazyQuery>;
+export type UserGetQueryResult = Apollo.QueryResult<UserGetQuery, UserGetQueryVariables>;
 export const UserGetFollowingByIdDocument = gql`
     query userGetFollowingById($id: String!) {
   userGetFollowingById(id: $id) {

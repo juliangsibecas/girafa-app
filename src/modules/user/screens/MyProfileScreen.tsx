@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUserGetByIdQuery } from '../../../api';
+import { useUserGetQuery } from '../../../api';
 import { StateHandler } from '../../../components';
 import { useAuth } from '../../auth';
 import { UserProfile } from '../components';
@@ -12,12 +12,12 @@ export const MyProfileScreen: React.FC = () => {
     error,
     refetch,
     networkStatus,
-  } = useUserGetByIdQuery({
-    variables: { id: userId },
+  } = useUserGetQuery({
+    variables: { data: { id: userId } },
     notifyOnNetworkStatusChange: true,
   });
 
-  const user = data?.userGetById!;
+  const user = data?.userGet!;
 
   return (
     <StateHandler

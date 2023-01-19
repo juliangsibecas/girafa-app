@@ -6,8 +6,8 @@ query userSearch ($q: String) {
   }
 }
 
-query userGetById ($id: String!) {
-  userGetById(id: $id) {
+query userGet ($data: UserGetInput!) {
+  userGet (data: $data) {
     _id
     nickname
     fullName
