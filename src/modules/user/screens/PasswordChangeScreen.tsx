@@ -59,7 +59,7 @@ export const PasswordChangeScreen: React.FC = () => {
       if (data?.changePassword) {
         onSuccess();
 
-        navigate('Settings');
+        navigate('Menu');
         return;
       }
 

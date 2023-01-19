@@ -11,10 +11,8 @@ import {
   Container,
   FormikTextInput,
   Header,
-  Text,
 } from '../../components';
-
-import { MyProfileStackScreenProps } from '../user';
+import { SettingsStackScreenProps } from '../settings';
 
 type FormValues = {
   subject: string;
@@ -25,7 +23,7 @@ export const SupportScreen: React.FC = () => {
   const { t } = useTranslation();
   const { onSuccess, onError } = useResponse();
   const { navigate } =
-    useNavigation<MyProfileStackScreenProps<'Support'>['navigation']>();
+    useNavigation<SettingsStackScreenProps<'Support'>['navigation']>();
   const [sendMessage, { loading: isLoading }] = useSupportSendMessageMutation();
 
   const initialValues: FormValues = {
@@ -49,7 +47,7 @@ export const SupportScreen: React.FC = () => {
       if (data?.supportSendMessage) {
         onSuccess();
 
-        navigate('Settings');
+        navigate('Menu');
         return;
       }
 
