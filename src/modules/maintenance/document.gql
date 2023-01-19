@@ -1,0 +1,3 @@
+query appInfoMeetMinVersion ($version: String!) {
+  appInfoMeetMinVersion (version: $version) 
+}
