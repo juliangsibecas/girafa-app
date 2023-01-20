@@ -109,7 +109,8 @@ export enum FeatureToggleName {
   UserGetFollowers = 'USER_GET_FOLLOWERS',
   UserGetFollowing = 'USER_GET_FOLLOWING',
   UserSearchFollowersToInvite = 'USER_SEARCH_FOLLOWERS_TO_INVITE',
-  UserSendPartyInvite = 'USER_SEND_PARTY_INVITE'
+  UserSendPartyInvite = 'USER_SEND_PARTY_INVITE',
+  UserShare = 'USER_SHARE'
 }
 
 export type FeatureTogglePopulateInput = {
@@ -533,6 +534,13 @@ export type FeatureToggleGetEnabledNamesQueryVariables = Exact<{ [key: string]: 
 
 export type FeatureToggleGetEnabledNamesQuery = { __typename?: 'Query', featureToggleGetEnabledNames: Array<FeatureToggleName> };
 
+export type AppInfoMeetMinVersionQueryVariables = Exact<{
+  version: Scalars['String'];
+}>;
+
+
+export type AppInfoMeetMinVersionQuery = { __typename?: 'Query', appInfoMeetMinVersion: boolean };
+
 export type NotificationsGetByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -659,13 +667,6 @@ export type UserDeleteMutationVariables = Exact<{
 
 
 export type UserDeleteMutation = { __typename?: 'Mutation', userDelete: boolean };
-
-export type AppInfoMeetMinVersionQueryVariables = Exact<{
-  version: Scalars['String'];
-}>;
-
-
-export type AppInfoMeetMinVersionQuery = { __typename?: 'Query', appInfoMeetMinVersion: boolean };
 
 
 export const TypesSyncDocument = gql`
@@ -898,6 +899,39 @@ export function useFeatureToggleGetEnabledNamesLazyQuery(baseOptions?: Apollo.La
 export type FeatureToggleGetEnabledNamesQueryHookResult = ReturnType<typeof useFeatureToggleGetEnabledNamesQuery>;
 export type FeatureToggleGetEnabledNamesLazyQueryHookResult = ReturnType<typeof useFeatureToggleGetEnabledNamesLazyQuery>;
 export type FeatureToggleGetEnabledNamesQueryResult = Apollo.QueryResult<FeatureToggleGetEnabledNamesQuery, FeatureToggleGetEnabledNamesQueryVariables>;
+export const AppInfoMeetMinVersionDocument = gql`
+    query appInfoMeetMinVersion($version: String!) {
+  appInfoMeetMinVersion(version: $version)
+}
+    `;
+
+/**
+ * __useAppInfoMeetMinVersionQuery__
+ *
+ * To run a query within a React component, call `useAppInfoMeetMinVersionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppInfoMeetMinVersionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppInfoMeetMinVersionQuery({
+ *   variables: {
+ *      version: // value for 'version'
+ *   },
+ * });
+ */
+export function useAppInfoMeetMinVersionQuery(baseOptions: Apollo.QueryHookOptions<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>(AppInfoMeetMinVersionDocument, options);
+      }
+export function useAppInfoMeetMinVersionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>(AppInfoMeetMinVersionDocument, options);
+        }
+export type AppInfoMeetMinVersionQueryHookResult = ReturnType<typeof useAppInfoMeetMinVersionQuery>;
+export type AppInfoMeetMinVersionLazyQueryHookResult = ReturnType<typeof useAppInfoMeetMinVersionLazyQuery>;
+export type AppInfoMeetMinVersionQueryResult = Apollo.QueryResult<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>;
 export const NotificationsGetByUserIdDocument = gql`
     query notificationsGetByUserId {
   notificationsGetByUserId {
@@ -1585,36 +1619,3 @@ export function useUserDeleteMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UserDeleteMutationHookResult = ReturnType<typeof useUserDeleteMutation>;
 export type UserDeleteMutationResult = Apollo.MutationResult<UserDeleteMutation>;
 export type UserDeleteMutationOptions = Apollo.BaseMutationOptions<UserDeleteMutation, UserDeleteMutationVariables>;
-export const AppInfoMeetMinVersionDocument = gql`
-    query appInfoMeetMinVersion($version: String!) {
-  appInfoMeetMinVersion(version: $version)
-}
-    `;
-
-/**
- * __useAppInfoMeetMinVersionQuery__
- *
- * To run a query within a React component, call `useAppInfoMeetMinVersionQuery` and pass it any options that fit your needs.
- * When your component renders, `useAppInfoMeetMinVersionQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAppInfoMeetMinVersionQuery({
- *   variables: {
- *      version: // value for 'version'
- *   },
- * });
- */
-export function useAppInfoMeetMinVersionQuery(baseOptions: Apollo.QueryHookOptions<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>(AppInfoMeetMinVersionDocument, options);
-      }
-export function useAppInfoMeetMinVersionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>(AppInfoMeetMinVersionDocument, options);
-        }
-export type AppInfoMeetMinVersionQueryHookResult = ReturnType<typeof useAppInfoMeetMinVersionQuery>;
-export type AppInfoMeetMinVersionLazyQueryHookResult = ReturnType<typeof useAppInfoMeetMinVersionLazyQuery>;
-export type AppInfoMeetMinVersionQueryResult = Apollo.QueryResult<AppInfoMeetMinVersionQuery, AppInfoMeetMinVersionQueryVariables>;
