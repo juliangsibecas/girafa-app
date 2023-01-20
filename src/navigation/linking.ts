@@ -10,6 +10,7 @@ export const linking: LinkingOptions<any> = {
   config: {
     screens: {
       Home: {
+        initialRouteName: 'Map',
         screens: {
           PartyDetail: 'party/:idOrSlug',
           UserProfile: 'user/:idOrNickname',

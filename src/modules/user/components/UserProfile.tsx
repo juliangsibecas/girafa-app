@@ -157,59 +157,61 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             </Text>
             <Text>{user.fullName}</Text>
           </Box>
-          {!!!isMe && (
-            <FeatureToggledButton
-              ft={FeatureToggleName.UserChangeFollowingState}
-              secondary={isFollowing}
-              width={12}
-              height={4}
-              textProps={{ fontSize: 12 }}
-              onPress={changeFollowingState}
-              isLoading={isChangeFollowingStateLoading}
-            >
-              {followButtonText}
-            </FeatureToggledButton>
-          )}
-          {!!isMyProfile && (
-            <Box row>
+          <Box row>
+            {!!!isMe && (
               <FeatureToggledButton
-                secondary
-                ft={FeatureToggleName.UserEdit}
-                width={4}
-                height={4}
-                borderWidth={0}
-                textProps={{ fontSize: 12 }}
-                onPress={handleEditPress}
-              >
-                <Icon name="edit" color="primary" />
-              </FeatureToggledButton>
-              <FeatureToggledButton
-                secondary
-                ft={FeatureToggleName.UserShare}
-                width={4}
+                ft={FeatureToggleName.UserChangeFollowingState}
+                secondary={isFollowing}
+                width={12}
                 height={4}
                 textProps={{ fontSize: 12 }}
-                onPress={handleSharePress}
-                ml={1}
-                borderWidth={0}
-                hide
+                onPress={changeFollowingState}
+                isLoading={isChangeFollowingStateLoading}
               >
-                <Icon name="share-2" color="primary" />
+                {followButtonText}
               </FeatureToggledButton>
-              {!!user.instagramUsername && (
-                <Button
+            )}
+            {!!isMyProfile && (
+              <>
+                <FeatureToggledButton
                   secondary
+                  ft={FeatureToggleName.UserEdit}
                   width={4}
                   height={4}
                   borderWidth={0}
-                  ml={1}
-                  onPress={handleInstagramPress}
+                  textProps={{ fontSize: 12 }}
+                  onPress={handleEditPress}
                 >
-                  <Icon name="instagram" color="primary" />
-                </Button>
-              )}
-            </Box>
-          )}
+                  <Icon name="edit" color="primary" size={2.5} />
+                </FeatureToggledButton>
+                <FeatureToggledButton
+                  secondary
+                  ft={FeatureToggleName.UserShare}
+                  width={4}
+                  height={4}
+                  textProps={{ fontSize: 12 }}
+                  onPress={handleSharePress}
+                  ml={1}
+                  borderWidth={0}
+                  hide
+                >
+                  <Icon name="share-2" color="primary" size={2.5} />
+                </FeatureToggledButton>
+              </>
+            )}
+            {!!user.instagramUsername && (
+              <Button
+                secondary
+                width={4}
+                height={4}
+                borderWidth={0}
+                ml={1}
+                onPress={handleInstagramPress}
+              >
+                <Icon name="instagram" color="primary" size={2.5} />
+              </Button>
+            )}
+          </Box>
         </Box>
         <Box flex row style={{ justifyContent: 'space-between' }}>
           <TouchableOpacity
