@@ -19,20 +19,12 @@ import { UserProvider } from './modules/user';
 import { Navigation } from './navigation';
 import { useThemeMode } from './theme';
 import { linking } from './navigation';
-import * as Linking from 'expo-linking';
 
 const AppComponent = () => {
-  const url = Linking.useURL();
   const isResourcesLoading = useCachedResources();
   const { isThemeModeLoading, themeMode } = useThemeMode();
 
   const isLoading = isResourcesLoading || isThemeModeLoading;
-
-  useEffect(() => {
-    if (!url) return;
-
-    Linking.canOpenURL(url).then(() => Linking.openURL(url));
-  }, [url]);
 
   if (isLoading) {
     return null;
