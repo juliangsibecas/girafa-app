@@ -12,6 +12,8 @@ export const userTranslationES = {
   screens: {
     Edit: {
       title: 'Editar perfil',
+      instagramUser: 'Usuario de Instagram',
+      instagramUserExample: 'Ej: juliangsibecas',
     },
     Delete: {
       title: 'Eliminar cuenta',

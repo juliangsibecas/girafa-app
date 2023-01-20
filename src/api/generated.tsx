@@ -417,6 +417,7 @@ export type User = {
   following: Array<User>;
   followingCount: Scalars['Float'];
   fullName: Scalars['String'];
+  instagramUsername?: Maybe<Scalars['String']>;
   invites: Array<Party>;
   nickname: Scalars['String'];
   notifications: Array<Notification>;
@@ -442,6 +443,7 @@ export type UserDeleteInput = {
 
 export type UserEditInput = {
   fullName: Scalars['String'];
+  instagramUsername?: InputMaybe<Scalars['String']>;
   nickname: Scalars['String'];
 };
 
@@ -457,6 +459,7 @@ export type UserGetResponse = {
   followersCount: Scalars['Float'];
   followingCount: Scalars['Float'];
   fullName: Scalars['String'];
+  instagramUsername?: Maybe<Scalars['String']>;
   isFollower: Scalars['Boolean'];
   isFollowing: Scalars['Boolean'];
   nickname: Scalars['String'];
@@ -598,7 +601,7 @@ export type UserGetQueryVariables = Exact<{
 }>;
 
 
-export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
+export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, instagramUsername?: string | null, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
 
 export type UserGetFollowingByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1248,6 +1251,7 @@ export const UserGetDocument = gql`
     _id
     nickname
     fullName
+    instagramUsername
     followersCount
     followingCount
     attendedPartiesCount

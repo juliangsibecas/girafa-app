@@ -17,6 +17,7 @@ import {
   Header,
   Text,
 } from '../../../components';
+import { Maybe } from '../../../types';
 
 import { useAuth } from '../../auth';
 import { usePictureUpload } from '../../picture';
@@ -29,6 +30,7 @@ type FormValues = {
   picture?: string;
   fullName: string;
   nickname: string;
+  instagramUsername: Maybe<string>;
 };
 
 export const UserEditScreen: React.FC = () => {
@@ -44,7 +46,7 @@ export const UserEditScreen: React.FC = () => {
     refetchQueries: [
       {
         query: UserGetDocument,
-        variables: { id: userId },
+        variables: { data: { id: userId } },
       },
     ],
   });
@@ -53,6 +55,7 @@ export const UserEditScreen: React.FC = () => {
   const initialValues: FormValues = {
     fullName: params.fullname,
     nickname: params.nickname,
+    instagramUsername: params.instagramUsername,
   };
 
   const validationSchema = Yup.object().shape({
@@ -69,8 +72,9 @@ export const UserEditScreen: React.FC = () => {
       // TODO
       .matches(
         /^[a-zA-Z0-9_]{3,15}$/,
-        'Solo puede contener letras, numeros y guiones bajos.'
+        'Solo puede contener letras, números y guiones bajos.'
       ),
+    instagramUsername: Yup.string().max(30),
   });
 
   const handleSubmit = async (
@@ -84,6 +88,7 @@ export const UserEditScreen: React.FC = () => {
           data: {
             fullName: values.fullName,
             nickname: values.nickname,
+            instagramUsername: values.instagramUsername,
           },
         },
       });
@@ -138,6 +143,14 @@ export const UserEditScreen: React.FC = () => {
               <FormikTextInput
                 id="nickname"
                 placeholder={t('user.nickname')}
+                contentType="username"
+              />
+              <Text type="hint" pt={2} pb={0.5} pl={0.5}>
+                {t('user.screens.Edit.instagramUser')}
+              </Text>
+              <FormikTextInput
+                id="instagramUsername"
+                placeholder={t('user.screens.Edit.instagramUserExample')}
                 contentType="username"
               />
             </Box>

@@ -11,6 +11,7 @@ query userGet ($data: UserGetInput!) {
     _id
     nickname
     fullName
+    instagramUsername
 
     followersCount
     followingCount

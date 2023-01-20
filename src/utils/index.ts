@@ -9,3 +9,5 @@ export * from './id';
 export * from './object';
 export * from './platform';
 export * from './date';
+export * from './url';
+export * from './string';

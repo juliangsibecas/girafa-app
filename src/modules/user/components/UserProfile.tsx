@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, Share, TouchableOpacity } from 'react-native';
 
@@ -12,6 +12,7 @@ import {
 } from '../../../api';
 import {
   Box,
+  Button,
   FeatureToggledButton,
   Hamburger,
   Icon,
@@ -26,6 +27,8 @@ import { useUser } from '../hooks';
 import { MyProfileStackScreenProps } from '../navigator';
 
 import { UserAvatar } from './UserAvatar';
+import { Maybe } from '../../../types';
+import { openUrl } from '../../../utils';
 
 type Props = {
   user: UserGetResponse;
@@ -65,8 +68,8 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       const res = await changeFollowingStateMutation({
         variables: { data: { followingId: user._id, state: !isFollowing } },
         refetchQueries: [
-          { query: UserGetDocument, variables: { id: myId } },
-          { query: UserGetDocument, variables: { id: user._id } },
+          { query: UserGetDocument, variables: { data: { id: myId } } },
+          { query: UserGetDocument, variables: { data: { id: user._id } } },
         ],
       });
 
@@ -100,12 +103,17 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     push('UserEdit', {
       fullname: user.fullName,
       nickname: user.nickname,
+      instagramUsername: user.instagramUsername as Maybe<string>,
     });
 
   const handleSharePress = () =>
     Share.share({
       message: t('user.components.Profile.share', { nickname: user.nickname }),
     });
+
+  const handleInstagramPress = async () => {
+    await openUrl(`https://instagram.com/${user.instagramUsername}`);
+  };
 
   const followButtonText = isFollowing
     ? t('user.following')
@@ -149,7 +157,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             </Text>
             <Text>{user.fullName}</Text>
           </Box>
-          {!isMe ? (
+          {!!!isMe && (
             <FeatureToggledButton
               ft={FeatureToggleName.UserChangeFollowingState}
               secondary={isFollowing}
@@ -161,18 +169,19 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             >
               {followButtonText}
             </FeatureToggledButton>
-          ) : undefined}
+          )}
           {!!isMyProfile && (
             <Box row>
               <FeatureToggledButton
                 secondary
                 ft={FeatureToggleName.UserEdit}
-                width={12}
+                width={4}
                 height={4}
+                borderWidth={0}
                 textProps={{ fontSize: 12 }}
                 onPress={handleEditPress}
               >
-                {t('user.components.Profile.editProfile')}
+                <Icon name="edit" color="primary" />
               </FeatureToggledButton>
               <FeatureToggledButton
                 secondary
@@ -187,6 +196,18 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               >
                 <Icon name="share-2" color="primary" />
               </FeatureToggledButton>
+              {!!user.instagramUsername && (
+                <Button
+                  secondary
+                  width={4}
+                  height={4}
+                  borderWidth={0}
+                  ml={1}
+                  onPress={handleInstagramPress}
+                >
+                  <Icon name="instagram" color="primary" />
+                </Button>
+              )}
             </Box>
           )}
         </Box>

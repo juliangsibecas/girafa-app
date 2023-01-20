@@ -21,6 +21,8 @@ import {
   Square,
   User,
   Clock,
+  Edit,
+  Instagram,
 } from 'react-native-feather';
 import { SvgProps } from 'react-native-svg';
 
@@ -57,6 +59,8 @@ const dict = {
   image: Image,
   check: Check,
   clock: Clock,
+  edit: Edit,
+  instagram: Instagram,
 
   share: Share,
   'share-2': Share2,

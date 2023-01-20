@@ -71,7 +71,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         variables: { data: { partyId: party._id, state: !isAttender } },
         refetchQueries: [
           { query: PartyGetByIdDocument, variables: { id: party._id } },
-          { query: UserGetDocument, variables: { id: userId } },
+          { query: UserGetDocument, variables: { data: { id: userId } } },
         ],
       });
 

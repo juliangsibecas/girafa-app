@@ -9,14 +9,20 @@ import {
   CoreStackGroup,
   CoreStackGroupParamList,
 } from '../../../navigation/CoreStackGroup';
+import { useTheme } from '../../../theme';
+import { Maybe } from '../../../types';
+
+import { SettingsNavigator } from '../../settings/navigator';
 
 import { MyProfileScreen, UserEditScreen } from '../screens';
-import { useTheme } from '../../../theme';
-import { SettingsNavigator } from '../../settings/navigator';
 
 export type MyProfileStackParamList = CoreStackGroupParamList & {
   Me: undefined;
-  UserEdit: { fullname: string; nickname: string };
+  UserEdit: {
+    fullname: string;
+    nickname: string;
+    instagramUsername: Maybe<string>;
+  };
   Settings: undefined;
 };
 
