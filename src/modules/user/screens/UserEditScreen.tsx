@@ -150,7 +150,7 @@ export const UserEditScreen: React.FC = () => {
               </Text>
               <FormikTextInput
                 id="instagramUsername"
-                placeholder={t('user.screens.Edit.instagramUserExample')}
+                placeholder={t('user.screens.Edit.instagramUser')}
                 contentType="username"
               />
             </Box>
