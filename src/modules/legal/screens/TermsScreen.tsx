@@ -14,8 +14,8 @@ export const TermsScreen = () => {
       <Text type="h3" mb={2}>
         {t('terms')}
       </Text>
-      <ScrollView>
-        <Text type="hint" lineHeight={16}>
+      <ScrollView style={{ flex: 1 }}>
+        <Text type="hint" lineHeight={16} color="text.secondary">
           {terms}
         </Text>
       </ScrollView>
