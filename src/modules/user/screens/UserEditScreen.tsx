@@ -74,7 +74,7 @@ export const UserEditScreen: React.FC = () => {
         /^[a-zA-Z0-9_]{3,15}$/,
         'Solo puede contener letras, números y guiones bajos.'
       ),
-    instagramUsername: Yup.string().max(30),
+    instagramUsername: Yup.string().nullable().max(30),
   });
 
   const handleSubmit = async (
