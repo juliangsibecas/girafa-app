@@ -42,7 +42,7 @@ const PartyInviteItem: React.FC<ItemProps> = ({
   return (
     <View onStartShouldSetResponder={() => true}>
       <TouchableOpacity onPress={handlePress}>
-        <Box flex row hcenter mb={1.5} pointerEvents="none">
+        <Box flex row hcenter mb={1.5}>
           <UserAvatar id={user._id} />
           <Box flexGrow={1}>
             <Text ml={2} fontFamily={FontFamily.BOLD}>

@@ -19,7 +19,10 @@ export const Checkbox: React.FC<ICheckBox> = ({
   const handlePress = () => (isChecked ? handleUncheck?.() : handleCheck?.());
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity
+      onPress={handlePress}
+      disabled={!handleCheck && !handleUncheck}
+    >
       <Box
         flex
         center
