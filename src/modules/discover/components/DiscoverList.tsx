@@ -37,6 +37,9 @@ export const DiscoverList: React.FC<Props> = ({
   const goToUser = (id: string) => navigate('UserProfile', { id });
   const goToParty = (id: string) => navigate('PartyDetail', { id });
 
+  console.log('isShowingAll', isShowingAll);
+  console.log('isOnly', !isOnly);
+
   return (
     <>
       <Box
@@ -46,7 +49,7 @@ export const DiscoverList: React.FC<Props> = ({
         <Text type="h4">
           {isUser ? t('general.users') : t('general.parties')}
         </Text>
-        {data.length > 4 || !isOnly ? (
+        {data.length > 4 ? (
           <TouchableOpacity onPress={() => showAll(!isShowingAll)}>
             <Text type="hint">
               {isShowingAll ? t('general.seeLess') : t('general.seeMore')}
