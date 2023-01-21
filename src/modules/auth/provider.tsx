@@ -77,13 +77,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const signOut = async () => {
     setLoading(true);
+    await client.clearStore();
     await SecureStore.setItemAsync('accessToken', '');
     await SecureStore.setItemAsync('refreshToken', '');
     setUserId('');
     setAccessToken('');
     setLoading(false);
-
-    await client.clearStore();
   };
 
   return (
