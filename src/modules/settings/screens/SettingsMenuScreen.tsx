@@ -65,7 +65,7 @@ export const SettingsMenuScreen = () => {
 
   return (
     <Container noBottomGradient>
-      <Box flexGrow={1}>
+      <Box flex={1}>
         <FlatList
           data={options}
           renderItem={({ item, index }) => (
@@ -78,8 +78,8 @@ export const SettingsMenuScreen = () => {
               }
               style={!item.isEnabled && { opacity: 0.3 }}
             >
-              <Box flex row py={2}>
-                <Text flexGrow={1} color={item.color}>
+              <Box row py={2}>
+                <Text flex={1} color={item.color}>
                   {item.label}
                 </Text>
                 <Icon name="chevron-right" color={item.color} />

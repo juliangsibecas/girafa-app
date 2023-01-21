@@ -67,7 +67,7 @@ export const UserAttendedPartiesScreen: React.FC = () => {
             />
           </Box>
         ) : (
-          <Box flexGrow={1} center>
+          <Box flex={1} center>
             <Image src={emptyImage} height={20} mb={2} />
             <Text>{t('user.screens.UserAttendedParties.emptyText')}</Text>
           </Box>

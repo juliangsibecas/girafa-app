@@ -1,5 +1,5 @@
-import { useRoute } from '@react-navigation/native';
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
 import { useUserGetQuery } from '../../../api';
 import { StateHandler } from '../../../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';

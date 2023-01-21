@@ -45,9 +45,9 @@ export const NotificationItem: React.FC<Props> = ({ notification }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Box flex row hcenter mt={2}>
+      <Box row hcenter mt={2}>
         {isFollowInvite ? <UserAvatar id={id} /> : <PartyAvatar id={id} />}
-        <Box ml={2} mr={2} flexGrow={1} flexShrink={1}>
+        <Box ml={2} mr={2} flex={1}>
           {isFollowInvite ? (
             <Text>
               {t(

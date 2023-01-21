@@ -29,7 +29,6 @@ export const UserCard: React.FC<Props> = ({ user, go }) => {
         }}
       />
       <Box
-        flex
         row
         hcenter
         bgColor="primary"
@@ -38,7 +37,7 @@ export const UserCard: React.FC<Props> = ({ user, go }) => {
         borderRadius={2}
         mt={-10}
       >
-        <Box flexGrow={1}>
+        <Box flex={1}>
           <Text
             color="background"
             type="h4"

@@ -35,7 +35,7 @@ export const FormikCoordinateInput: React.FC<Props> = ({
   return (
     <>
       <Button secondary={!value} small onPress={pickCoordinate}>
-        <Box flex row>
+        <Box row>
           <Icon name="map-pin" color={textColor} weight={2.5} />
           <Text ml={1} color={textColor} fontFamily={FontFamily.BOLD}>
             {t('party.location')}

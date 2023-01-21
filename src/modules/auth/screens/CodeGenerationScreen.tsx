@@ -85,7 +85,7 @@ export const CodeGenerationScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1}>
+            <Box flex={1}>
               <FormikTextInput
                 id="email"
                 placeholder={t('user.email')}

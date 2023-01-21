@@ -23,7 +23,7 @@ export const FormikSelect: React.FC<Props> = ({
   const value = (values as Record<string, string>)[id] ?? '';
 
   return (
-    <Box flex flexGrow={1}>
+    <Box flex={1}>
       <Select
         placeholder={placeholder}
         value={value}

@@ -40,7 +40,6 @@ export const DiscoverList: React.FC<Props> = ({
   return (
     <>
       <Box
-        flex
         row
         style={{ justifyContent: 'space-between', alignItems: 'baseline' }}
       >

@@ -38,7 +38,6 @@ export const PartyCarousel: React.FC<Props> = ({
           return (
             <Box center width="screen" style={{ height: '100%' }}>
               <Box
-                flex
                 row
                 center
                 py={1}

@@ -52,7 +52,7 @@ export const NotificationsScreen: React.FC = () => {
           />
         ) : (
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{ flex: 1 }}
             refreshControl={
               RefreshControl({
                 isRefreshing,
@@ -60,7 +60,7 @@ export const NotificationsScreen: React.FC = () => {
               })!
             }
           >
-            <Box flexGrow={1} center>
+            <Box flex={1} center>
               <Icon name="bell" color="primary" size={12} />
               <Text mt={2}>
                 {t('notification.screens.Notifications.emptyText')}

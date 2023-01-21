@@ -24,7 +24,7 @@ export const PartyCreateMapScreen: React.FC = () => {
         />
       </Box>
       <Container noHeader bgColor={undefined} pointerEvents="box-none">
-        <Box flexGrow={1} pointerEvents="box-none">
+        <Box flex={1} pointerEvents="box-none">
           <Text type="h3" textCenter>
             {t('party.screens.CreateMap.title')}
           </Text>

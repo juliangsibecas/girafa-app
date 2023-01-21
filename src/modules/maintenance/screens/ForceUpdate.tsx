@@ -16,7 +16,7 @@ export const ForceUpdateScreen = () => {
   };
 
   return (
-    <Box center px={4} style={{ flex: 1 }}>
+    <Box flex={1} center px={4}>
       <Image src={illustration} height={30} style={{ resizeMode: 'contain' }} />
       <Text type="h3" textCenter>
         {t('title')}

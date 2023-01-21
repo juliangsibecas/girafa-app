@@ -4,8 +4,6 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
-import { GestureResponderEvent } from 'react-native-modal';
-import Toast from 'react-native-toast-message';
 import { useStyle, UiKeys } from '../../ui';
 import { insertObjectIf } from '../../utils';
 import { Spinner } from '../Spinner';
@@ -43,7 +41,6 @@ export const Button: React.FC<IButton> = ({
 
   const style = useStyle(
     {
-      flex: true,
       center: true,
       fullWidth: true,
       borderRadius: 1,

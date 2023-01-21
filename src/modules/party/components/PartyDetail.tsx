@@ -111,7 +111,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
 
   return (
     <>
-      <Box flex row hcenter mt={2}>
+      <Box row hcenter mt={2}>
         <PartyAvatar
           id={party._id}
           height={10}
@@ -125,8 +125,8 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           </Text>
         </Box>
       </Box>
-      <Box flex row mt={6}>
-        <Box flex flexGrow={1}>
+      <Box row mt={6}>
+        <Box flex={1}>
           <LabelValue
             label={t('party.organizer')}
             value={party.organizer?.nickname}
@@ -138,7 +138,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             />
           </Box>
         </Box>
-        <Box flex flexGrow={1}>
+        <Box flex={1}>
           <LabelValue label={t('party.address')} value={party.address} />
           <Box mt={4}>
             <LabelValue
@@ -151,12 +151,12 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
       <Box mt={4}>
         <LabelValue label={t('party.description')} value={party.description} />
       </Box>
-      <Box mt={4} flexGrow={1}>
-        <Box flex row fullWidth>
+      <Box mt={4} flex={1}>
+        <Box row fullWidth>
           <Text fontFamily={FontFamily.LIGHT} type="secondary" mb={0.5}>
             {t('party.willAttend')}
           </Text>
-          <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flexGrow={1}>
+          <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flex={1}>
             {attendersCount}
           </Text>
           {isSearchAttendersEnabled && attendersCount ? (
@@ -169,7 +169,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             </TouchableOpacity>
           ) : undefined}
         </Box>
-        <Box flex row mt={0.5}>
+        <Box mt={0.5}>
           {attenders.map(({ _id }) => (
             <Box mr={0.5} key={_id}>
               <UserAvatar id={_id} />
@@ -177,10 +177,10 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           ))}
         </Box>
       </Box>
-      <Box flex row center>
+      <Box row center>
         <FeatureToggledButton
           ft={FeatureToggleName.UserChangeAttendingState}
-          flexGrow={1}
+          flex={1}
           secondary={isAttender}
           onPress={changeAttendingState}
           isLoading={isChangeAttendingStateLoading}

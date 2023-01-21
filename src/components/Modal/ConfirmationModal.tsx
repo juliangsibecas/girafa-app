@@ -35,11 +35,11 @@ export const ConfirmationModal: React.FC<Props> = ({
         <Text mt={3} textCenter>
           {body}
         </Text>
-        <Box flex row center mt={3}>
-          <Button secondary small mr={2} onPress={onCancel} flexGrow={1}>
+        <Box row center mt={3}>
+          <Button secondary small mr={2} onPress={onCancel} flex={1}>
             {cancel ?? t('general.cancel')}
           </Button>
-          <Button small onPress={onConfirm} flexGrow={1}>
+          <Button small onPress={onConfirm} flex={1}>
             {confirm ?? t('general.confirm')}
           </Button>
         </Box>

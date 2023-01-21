@@ -122,7 +122,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     : t('user.follow');
 
   return (
-    <Box overflow="hidden" width="screen" flexGrow={1}>
+    <Box overflow="hidden" width="screen" flex={1}>
       <UserAvatar
         id={user._id}
         key={pictureVersion}
@@ -134,7 +134,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         style={{ height: '100%' }}
         placeholderSize={Dimensions.get('screen').width / 18}
       />
-      <Box mt={10} px={2} flexGrow={1} style={{ alignItems: 'flex-end' }}>
+      <Box mt={10} px={2} flex={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
           <Hamburger onPress={() => push('Settings')} />
         ) : undefined}
@@ -144,13 +144,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         bgColor="background"
         style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
       >
-        <Box
-          flex
-          row
-          mb={4}
-          hcenter
-          style={{ justifyContent: 'space-between' }}
-        >
+        <Box row mb={4} hcenter style={{ justifyContent: 'space-between' }}>
           <Box>
             <Text type="h4" fontFamily={FontFamily.BOLD}>
               {user.nickname}
@@ -213,7 +207,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             )}
           </Box>
         </Box>
-        <Box flex row style={{ justifyContent: 'space-between' }}>
+        <Box row style={{ justifyContent: 'space-between' }}>
           <TouchableOpacity
             disabled={user.followingCount === 0}
             onPress={handleFollowingPress}

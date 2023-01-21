@@ -18,9 +18,9 @@ export const PartyRow: React.FC<Props> = ({ party, go }) => {
   const handlePress = () => handlePartyGetAction(() => go(party._id));
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Box flex row hcenter>
+      <Box row hcenter>
         <PartyAvatar id={party._id} width={6} height={6} placeholderSize={4} />
-        <Box ml={2} flexGrow={1}>
+        <Box ml={2} flex={1}>
           <Text type="h4" fontFamily={FontFamily.BOLD}>
             {party.name}
           </Text>

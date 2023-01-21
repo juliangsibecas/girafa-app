@@ -52,7 +52,7 @@ export const OnboardingSlider: React.FC = () => {
         viewabilityConfig={viewConfigRef.current}
         onViewableItemsChanged={onViewRef.current}
       />
-      <Box flex row center mt={5}>
+      <Box row center mt={5}>
         <Box
           height={1}
           width={1}

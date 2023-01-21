@@ -24,7 +24,6 @@ export const Checkbox: React.FC<ICheckBox> = ({
       disabled={!handleCheck && !handleUncheck}
     >
       <Box
-        flex
         center
         height={small ? 2 : 3}
         width={small ? 2 : 3}

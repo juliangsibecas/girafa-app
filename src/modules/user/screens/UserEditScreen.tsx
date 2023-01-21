@@ -127,7 +127,7 @@ export const UserEditScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1} flexShrink={1} pt={3} pb={5}>
+            <Box flex={1} pt={3} pb={5}>
               <UserPicturePicker id="picture" />
               <Text type="hint" pt={6} pb={0.5} pl={0.5}>
                 {t('general.name')}

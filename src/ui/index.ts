@@ -57,7 +57,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
   style.paddingRight = spacing(keys.px ?? keys.pr);
   style.paddingLeft = spacing(keys.px ?? keys.pl);
 
-  style.display = keys.flex ? 'flex' : undefined;
+  style.flex = keys.flex;
   style.flexGrow = keys.flexGrow;
   style.flexShrink = keys.flexShrink;
   style.flexDirection = keys.column ? 'column' : keys.row ? 'row' : undefined;

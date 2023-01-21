@@ -81,7 +81,7 @@ export const PasswordChangeScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1} mt={6}>
+            <Box flex={1} mt={6}>
               <FormikTextInput
                 id="currentPassword"
                 placeholder={t('user.screens.PasswordChange.currentPassword')}

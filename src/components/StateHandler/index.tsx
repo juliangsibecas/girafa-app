@@ -27,7 +27,7 @@ const RefreshControlWrapper: React.FC<
 
   return (
     <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flex: 1 }}
       style={{ backgroundColor: theme.palette.background.main }}
       refreshControl={
         RefreshControl({
@@ -55,7 +55,7 @@ export const StateHandler: React.FC<Props> = ({
 
   if (isLoading || isError) {
     return (
-      <Box flexGrow={1} bgColor="background" center>
+      <Box flex={1} bgColor="background" center>
         {isLoading && <Spinner />}
         {isError && !isLoading && (
           <>

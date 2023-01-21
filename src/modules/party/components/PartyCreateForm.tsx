@@ -144,13 +144,13 @@ export const PartyCreateForm: React.FC = () => {
     >
       {({ values, submitForm }) => (
         <>
-          <Box flex flexGrow={1}>
+          <Box flex={1}>
             <FormikTextInput
               id="name"
               placeholder={t('party.components.Create.partyName')}
               mt={1}
             />
-            <Box flex row mt={1}>
+            <Box row mt={1}>
               <FormikSelect
                 id="availability"
                 placeholder={t('party.availability')}
@@ -167,7 +167,7 @@ export const PartyCreateForm: React.FC = () => {
               )})`}
               mt={1}
             />
-            <Box flex row mt={1}>
+            <Box row mt={1}>
               <FormikSelect
                 id="openBar"
                 placeholder={t('party.openBar')}
@@ -177,12 +177,12 @@ export const PartyCreateForm: React.FC = () => {
                 ]}
                 mr={1}
               />
-              <Box flexGrow={1}>
+              <Box flex={1}>
                 <FormikDateInput id="date" placeholder={t('general.date')} />
               </Box>
             </Box>
             {values.availability !== PartyAvailability.Public && (
-              <Box flex row mt={1}>
+              <Box row mt={1} style={{ width: '100%' }}>
                 <FormikSelect
                   id="allowInvites"
                   placeholder={t('party.components.Create.allowInvitesHelper')}
@@ -199,11 +199,11 @@ export const PartyCreateForm: React.FC = () => {
               mt={1}
               lines={4}
             />
-            <Box flex row mt={1}>
-              <Box mr={1} flexGrow={1}>
+            <Box row mt={1}>
+              <Box mr={1} flex={1}>
                 <FormikImageInput id="image" />
               </Box>
-              <Box flexGrow={1}>
+              <Box flex={1}>
                 <FormikCoordinateInput
                   id="coordinate"
                   pickCoordinate={pickCoordinate}

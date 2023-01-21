@@ -13,7 +13,7 @@ export const SignUpScreen: React.FC = () => {
         title={t('auth.screens.SignUp.title')}
         subtitle={t('auth.screens.SignUp.subtitle')}
       />
-      <Box flexGrow={1}>
+      <Box flex={1}>
         <SignUpForm />
       </Box>
     </Container>

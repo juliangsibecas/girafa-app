@@ -48,12 +48,12 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
 
   return (
     <>
-      <Box flex row center mb={4}>
+      <Box row center mb={4}>
         <TextInput
           placeholder={t('general.searchEllipsis')}
           value={search}
           onChangeText={(text) => setSearch(text)}
-          flexGrow={1}
+          flex={1}
           mr={2}
         />
         <ListSwitch

@@ -36,7 +36,6 @@ export const DateInput: React.FC<Props> = ({
     <>
       <TouchableOpacity onPress={openModal} style={{ flexGrow: 1 }}>
         <Box
-          flex
           borderRadius={1}
           overflow="hidden"
           bgColor="disabled"

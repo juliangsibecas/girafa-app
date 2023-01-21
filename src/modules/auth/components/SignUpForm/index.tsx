@@ -111,7 +111,7 @@ export const SignUpForm: React.FC = () => {
     >
       {({ submitForm }) => (
         <>
-          <Box flex flexGrow={1}>
+          <Box flex={1}>
             <FormikTextInput
               id="fullName"
               placeholder={t('general.name')}
@@ -143,13 +143,13 @@ export const SignUpForm: React.FC = () => {
               mt={1}
             />
             <TouchableOpacity onPress={toggleAdult}>
-              <Box flex row mt={3}>
+              <Box row mt={3}>
                 <Checkbox isChecked={isAdultChecked} small />
                 <Text ml={1}>{t('auth.screens.SignUp.imAdult')}</Text>
               </Box>
             </TouchableOpacity>
             <TouchableOpacity onPress={toggleTerms}>
-              <Box flex row mt={2}>
+              <Box row mt={2}>
                 <Checkbox isChecked={isTermsChecked} small />
                 <Text ml={1}>{t('auth.screens.SignUp.acceptThe')}</Text>
                 <TouchableOpacity onPress={handleTermsPress}>

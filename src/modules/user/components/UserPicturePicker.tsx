@@ -42,7 +42,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
   };
 
   return (
-    <Box flex center>
+    <Box center>
       <TouchableOpacity onPress={pickImage}>
         {values[id] ? (
           <Image

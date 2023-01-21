@@ -69,7 +69,7 @@ export const SignInForm: React.FC = () => {
     >
       {({ submitForm, values }) => (
         <>
-          <Box flex flexGrow={1}>
+          <Box flex={1}>
             <FormikTextInput
               id="email"
               placeholder={t('user.email')}
@@ -87,7 +87,7 @@ export const SignInForm: React.FC = () => {
                 navigate('CodeGeneration', { email: values.email })
               }
             >
-              <Box flex row mt={2}>
+              <Box row mt={2}>
                 <Text>{t('auth.components.SignIn.forgotPassword')} </Text>
               </Box>
             </TouchableOpacity>

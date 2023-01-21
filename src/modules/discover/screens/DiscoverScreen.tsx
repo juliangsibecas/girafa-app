@@ -75,11 +75,11 @@ export const DiscoverScreen: React.FC = () => {
 
   return (
     <Container headerPlaceholder keyboardDismiss>
-      <Box flex row center>
-        <Text flexGrow={1} type="h1">
+      <Box row center>
+        <Text flex={1} type="h1">
           {t('general.discover')}
         </Text>
-        <Box flex center>
+        <Box center>
           <ListSwitch
             isCards={isCardsListMode}
             onSwitch={() => setCardsListMode(!isCardsListMode)}

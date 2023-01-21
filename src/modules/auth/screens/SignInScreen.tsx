@@ -13,7 +13,7 @@ export const SignInScreen: React.FC = () => {
         title={t('auth.screens.SignIn.title')}
         subtitle={t('auth.screens.SignIn.subtitle')}
       />
-      <Box flexGrow={1}>
+      <Box flex={1}>
         <SignInForm />
       </Box>
     </Container>

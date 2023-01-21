@@ -44,7 +44,6 @@ export const Select: React.FC<Props> = ({
     <>
       <TouchableOpacity style={{ flexGrow: 1 }} onPress={openModal}>
         <Box
-          flex
           borderRadius={1}
           overflow="hidden"
           bgColor="disabled"
@@ -53,7 +52,7 @@ export const Select: React.FC<Props> = ({
           row
           {...props}
         >
-          <Text type={label ? 'primary' : 'secondary'} flexGrow={1}>
+          <Text type={label ? 'primary' : 'secondary'} flex={1}>
             {label ?? placeholder}
           </Text>
           <Icon name="chevron-down" color="primary" />

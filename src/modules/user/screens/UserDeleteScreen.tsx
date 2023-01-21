@@ -74,7 +74,7 @@ export const UserDeleteScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1} flexShrink={1} pt={3} pb={5}>
+            <Box flex={1} pt={3} pb={5}>
               <FormikTextInput
                 id="password"
                 placeholder={t('user.password')}

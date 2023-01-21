@@ -81,7 +81,7 @@ const ExampleAutomaticBox: React.FC<IBox> = (props) => {
         {...props}
       >
         <Box row>
-          <Box p={2} flexGrow={1} bgColor={lightPalette.disabled.main}>
+          <Box p={2} flex={1} bgColor={lightPalette.disabled.main}>
             <Box p={2} bgColor={lightPalette.background.main} borderRadius={1}>
               <Text type="h3" color={lightPalette.text.primary}>
                 {t('settings.screens.Appearance.AutoLightTitle')}
@@ -91,9 +91,9 @@ const ExampleAutomaticBox: React.FC<IBox> = (props) => {
               </Text>
             </Box>
           </Box>
-          <Box p={2} flexGrow={1} bgColor={darkPalette.disabled.main}>
+          <Box p={2} flex={1} bgColor={darkPalette.disabled.main}>
             <Box
-              flexGrow={1}
+              flex={1}
               p={2}
               bgColor={darkPalette.background.main}
               borderRadius={1}

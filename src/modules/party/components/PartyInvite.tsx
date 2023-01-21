@@ -42,9 +42,9 @@ const PartyInviteItem: React.FC<ItemProps> = ({
   return (
     <View onStartShouldSetResponder={() => true}>
       <TouchableOpacity onPress={handlePress}>
-        <Box flex row hcenter mb={1.5}>
+        <Box row hcenter mb={1.5}>
           <UserAvatar id={user._id} />
-          <Box flexGrow={1}>
+          <Box flex={1}>
             <Text ml={2} fontFamily={FontFamily.BOLD}>
               {user.nickname}
             </Text>
@@ -129,10 +129,10 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
 
   return (
     <BottomModal isOpen={isOpen} onClose={onClose}>
-      <Box flex style={{ height: Dimensions.get('screen').height * 0.6 }}>
+      <Box style={{ height: Dimensions.get('screen').height * 0.6 }}>
         <Box>
-          <Box flex row mb={2} style={{ alignItems: 'baseline' }}>
-            <Text type="h2" flexGrow={1}>
+          <Box row mb={2} style={{ alignItems: 'baseline' }}>
+            <Text type="h2" flex={1}>
               {t('party.components.Invite.invite')}
             </Text>
             <Text type="secondary">
@@ -146,7 +146,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
             mb={4}
           />
         </Box>
-        <Box flexGrow={1} center={!Boolean(users.length)}>
+        <Box flex={1} center={!Boolean(users.length)}>
           <StateHandler isLoading={isLoading} isError={Boolean(error)}>
             <Box center>
               {users.length ? (
@@ -164,7 +164,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
                   showsVerticalScrollIndicator={false}
                 />
               ) : (
-                <Box flex center>
+                <Box center>
                   <Icon name="warning" color="warning" size={5} mb={1} />
                   <Text>{t('party.components.Invite.emptyText')}</Text>
                 </Box>

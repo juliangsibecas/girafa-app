@@ -21,7 +21,6 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
       <Box
         bgColor="disabled"
         borderRadius={1}
-        flex
         row
         height={20}
         my={2}
@@ -49,7 +48,6 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
           </Box>
         </Box>
         <Box
-          flex
           pl={12}
           py={3}
           pr={2}
@@ -57,7 +55,7 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
             minWidth: Dimensions.get('screen').width - theme.spacing(20),
           }}
         >
-          <Box flexGrow={1}>
+          <Box flex={1}>
             <Text type="h2">{party.name}</Text>
             <Text>{party.organizerNickname}</Text>
           </Box>

@@ -71,7 +71,7 @@ export const SupportScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1}>
+            <Box flex={1}>
               <FormikTextInput
                 id="subject"
                 placeholder={t('support.screens.Support.subject')}

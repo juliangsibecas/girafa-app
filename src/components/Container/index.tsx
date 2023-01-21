@@ -37,7 +37,7 @@ export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
-        flexGrow: 1,
+        flex: 1,
       }}
       style={{ backgroundColor: theme.palette.background.main }}
     >
@@ -66,10 +66,7 @@ export const Container: React.FC<Props> = ({
   return (
     <Wrapper>
       <Box
-        flex
-        column
         flexGrow={1}
-        flexShrink={1}
         px={2}
         pt={noHeader ? 10 : 2}
         pb={noBottomTab ? 6 : 1}

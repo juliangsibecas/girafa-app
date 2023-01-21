@@ -18,7 +18,7 @@ export const BottomModal: React.FC<Props> = ({ children, isOpen, onClose }) => (
     style={{ justifyContent: 'flex-end', margin: 0 }}
   >
     <Box bgColor="background" borderRadius={2} px={4} pb={4}>
-      <Box flex center mt={2}>
+      <Box center mt={2}>
         <Box width={4} height={0.5} borderRadius={1} bgColor="text.secondary" />
       </Box>
       <Box mt={2}>{children}</Box>

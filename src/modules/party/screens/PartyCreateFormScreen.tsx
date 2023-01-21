@@ -29,7 +29,7 @@ export const PartyCreateFormScreen: React.FC = () => {
     <Container noBottomGradient>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         {data?.userCheckPartyValidating ? (
-          <Box flexGrow={1} center px={4}>
+          <Box flex={1} center px={4}>
             <Icon name="clock" size={10} color="warning" />
             <Text mt={2} textCenter>
               {t('party.components.Create.validating')}

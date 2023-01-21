@@ -111,7 +111,7 @@ export const PasswordResetScreen: React.FC = () => {
       >
         {({ submitForm }) => (
           <>
-            <Box flex flexGrow={1}>
+            <Box flex={1}>
               <FormikTextInput
                 id="code"
                 placeholder={t('auth.code')}

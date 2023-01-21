@@ -19,7 +19,7 @@ export const OnboardingScreen: React.FC = () => {
       <Box center>
         <Icon name="logo" color="primary" isFilled size={6} />
       </Box>
-      <Box flex flexGrow={1} vcenter>
+      <Box flex={1} vcenter>
         <OnboardingSlider />
       </Box>
       <Box>

@@ -44,7 +44,7 @@ export const ImageInput: React.FC<Props> = ({ value, onChange, onBlur }) => {
 
   return (
     <Button small secondary={!value} onPress={pickImage}>
-      <Box flex row>
+      <Box row>
         <Icon name="image" color={textColor} weight={2.5} />
         <Text ml={1} color={textColor} fontFamily={FontFamily.BOLD}>
           {t('general.photo')}

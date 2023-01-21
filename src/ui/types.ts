@@ -25,7 +25,7 @@ export type UiKeys = Partial<{
   px: number;
   py: number;
 
-  flex: boolean;
+  flex: number;
   flexGrow: number;
   flexShrink: number;
   row: boolean;
