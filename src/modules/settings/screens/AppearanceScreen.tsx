@@ -29,6 +29,7 @@ const ExampleBox: React.FC<IExampleBox> = ({ palette, mode, ...props }) => {
         borderWidth={isActive ? 1 : undefined}
         borderColor={isActive ? palette.success.main : undefined}
         bgColor={palette.disabled.main}
+        pointerEvents="none"
         {...props}
       >
         <Box
