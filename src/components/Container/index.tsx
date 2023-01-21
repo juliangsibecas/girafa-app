@@ -22,7 +22,7 @@ type Props = ViewProps &
 
 export const KeyboardDismissWrapper: React.FC<Props> = ({ children }) => (
   <Pressable
-    style={{ flex: 1 }}
+    style={{ flexGrow: 1 }}
     onPress={() => {
       Keyboard.dismiss();
     }}
@@ -37,7 +37,7 @@ export const KeyboardScrollWrapper: React.FC<Props> = ({ children }) => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
-        flex: 1,
+        flexGrow: 1,
       }}
       style={{ backgroundColor: theme.palette.background.main }}
     >
