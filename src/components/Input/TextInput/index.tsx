@@ -12,6 +12,7 @@ export interface ITextInput
   placeholder: string;
   value: string;
   contentType?: RNTextInputProps['textContentType'];
+  secureText?: boolean;
   lines?: number;
   maxLength?: number;
   isDisabled?: boolean;
@@ -22,6 +23,7 @@ export const TextInput: React.FC<ITextInput> = ({
   value,
   keyboardType = 'default',
   contentType = 'none',
+  secureText,
   onChangeText,
   onBlur,
   lines,
@@ -46,7 +48,7 @@ export const TextInput: React.FC<ITextInput> = ({
     <>
       <RNTextInput
         keyboardType={keyboardType}
-        secureTextEntry={['password', 'newPassword'].includes(contentType)}
+        secureTextEntry={secureText}
         textContentType={contentType}
         placeholderTextColor={theme.palette.text.secondary}
         style={style}

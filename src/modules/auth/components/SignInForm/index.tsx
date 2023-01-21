@@ -5,7 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-import { Box, Button, FormikTextInput, Text } from '../../../../components';
+import {
+  Box,
+  Button,
+  FormikPasswordInput,
+  FormikTextInput,
+  Text,
+} from '../../../../components';
 import { useResponse, useSignInMutation } from '../../../../api';
 
 import { OnboardingNavigationProp } from '../../../onboarding';
@@ -76,7 +82,7 @@ export const SignInForm: React.FC = () => {
               keyboardType="email-address"
               contentType="emailAddress"
             />
-            <FormikTextInput
+            <FormikPasswordInput
               id="password"
               placeholder={t('user.password')}
               contentType="password"

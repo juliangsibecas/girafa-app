@@ -7,3 +7,4 @@ export * from './FormikDateInput';
 export * from './ImageInput';
 export * from './FormikImageInput';
 export * from './FormikCoordinateInput';
+export * from './FormikPasswordInput';

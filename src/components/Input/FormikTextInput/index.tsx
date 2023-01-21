@@ -8,7 +8,7 @@ import { FormikError } from '../FormikError';
 import { TextInput } from '../TextInput';
 import { Box } from '../../Box';
 
-interface Props extends UiKeys {
+export interface IFormikTextInput extends UiKeys {
   id: string;
   placeholder: string;
   keyboardType?: RNTextInputProps['keyboardType'];
@@ -17,7 +17,7 @@ interface Props extends UiKeys {
   maxLength?: number;
 }
 
-export const FormikTextInput: React.FC<Props> = ({
+export const FormikTextInput: React.FC<IFormikTextInput> = ({
   id,
   placeholder,
   keyboardType = 'default',

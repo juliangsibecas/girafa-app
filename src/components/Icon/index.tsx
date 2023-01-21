@@ -23,6 +23,8 @@ import {
   Clock,
   Edit,
   Instagram,
+  Eye,
+  EyeOff,
 } from 'react-native-feather';
 import { SvgProps } from 'react-native-svg';
 
@@ -60,10 +62,12 @@ const dict = {
   check: Check,
   clock: Clock,
   edit: Edit,
-  instagram: Instagram,
+  eye: Eye,
+  'eye-off': EyeOff,
 
   share: Share,
   'share-2': Share2,
+  instagram: Instagram,
 
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,

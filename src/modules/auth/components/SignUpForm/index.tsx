@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   Checkbox,
+  FormikPasswordInput,
   FormikTextInput,
   Text,
 } from '../../../../components';
@@ -63,10 +64,6 @@ export const SignUpForm: React.FC = () => {
         'Solo puede contener letras, numeros y guiones bajos.'
       ),
     password: Yup.string().required().min(4),
-    // TODO
-    confirmPassword: Yup.string()
-      .required()
-      .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden.'),
   });
 
   const handleSubmit = async (
@@ -130,17 +127,12 @@ export const SignUpForm: React.FC = () => {
               contentType="username"
               mt={1}
             />
-            <FormikTextInput
+            <FormikPasswordInput
               id="password"
               placeholder={t('user.password')}
               contentType="newPassword"
               mt={1}
-            />
-            <FormikTextInput
-              id="confirmPassword"
-              placeholder={t('user.confirmPassword')}
-              contentType="newPassword"
-              mt={1}
+              isNewPassword
             />
             <TouchableOpacity onPress={toggleAdult}>
               <Box row mt={3}>
