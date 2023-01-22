@@ -19,7 +19,7 @@ export const getIdOrField = ({
   if (str) {
     if (isId(str)) {
       return {
-        id,
+        id: str,
       };
     }
 

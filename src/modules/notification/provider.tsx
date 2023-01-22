@@ -18,6 +18,7 @@ import { useFeatureToggle } from '../featureToggle';
 import { useAuth } from '../auth/hooks';
 
 import { NotificationContext } from './context';
+import { openUrl } from '../../utils';
 
 OneSignal.setAppId(env.oneSignalId);
 
@@ -141,8 +142,8 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   OneSignal.setNotificationOpenedHandler(async (evt) => {
     const data = evt.notification.additionalData as UserNotification;
 
-    if (data.url && (await Linking.canOpenURL(data.url))) {
-      Linking.openURL(data.url);
+    if (data.url) {
+      await openUrl(data.url);
     }
   });
 
