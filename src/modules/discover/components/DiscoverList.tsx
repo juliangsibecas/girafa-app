@@ -37,9 +37,6 @@ export const DiscoverList: React.FC<Props> = ({
   const goToUser = (id: string) => navigate('UserProfile', { id });
   const goToParty = (id: string) => navigate('PartyDetail', { id });
 
-  console.log('isShowingAll', isShowingAll);
-  console.log('isOnly', !isOnly);
-
   return (
     <>
       <Box
