@@ -22,7 +22,7 @@ export const UserCard: React.FC<Props> = ({ user, go }) => {
   return (
     <TouchableOpacity onPress={handlePress}>
       <UserAvatar
-        id={user._id}
+        id={user.pictureId}
         placeholderSize={Dimensions.get('screen').width / 18}
         style={{
           height: Dimensions.get('screen').width - theme.spacing(4),

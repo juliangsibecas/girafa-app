@@ -1,7 +1,7 @@
 import { env } from '../../env';
 
-export const getUserPictureUrl = (id: string, version?: number) =>
-  `${env.assetsUrl}/user-pictures/${id}.jpeg${version ? `?v=${version}` : ''}`;
+export const getUserPictureUrl = (id: string) =>
+  `${env.assetsUrl}/user-pictures/${id}.jpeg`;
 
 export const getUploadUserPictureUrl = () =>
   `${env.apiUrl}/images/user-picture`;

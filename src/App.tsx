@@ -2,7 +2,7 @@ import './yup';
 import './date';
 import './i18n';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
@@ -15,7 +15,6 @@ import { theme, ThemeMode, ThemeProvider } from './theme';
 import { client } from './apollo';
 import { NotificationsProvider } from './modules/notification';
 import { AuthProvider } from './modules/auth';
-import { UserProvider } from './modules/user';
 import { Navigation } from './navigation';
 import { useThemeMode } from './theme';
 import { linking } from './navigation';
@@ -38,12 +37,10 @@ const AppComponent = () => {
           <ThemeProvider theme={theme} mode={themeMode}>
             <NavigationContainer linking={linking}>
               <AuthProvider>
-                <UserProvider>
-                  <NotificationsProvider>
-                    <Navigation />
-                    <Toast position="bottom" />
-                  </NotificationsProvider>
-                </UserProvider>
+                <NotificationsProvider>
+                  <Navigation />
+                  <Toast position="bottom" />
+                </NotificationsProvider>
               </AuthProvider>
             </NavigationContainer>
           </ThemeProvider>

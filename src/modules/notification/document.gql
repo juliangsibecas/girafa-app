@@ -5,6 +5,7 @@ query notificationsGetByUserId {
     from {
       _id
       nickname
+      pictureId
     }
     party {
       _id

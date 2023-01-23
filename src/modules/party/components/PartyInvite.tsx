@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Dimensions, FlatList, TouchableOpacity, View } from 'react-native';
 
 import {
+  User,
   useResponse,
   useUserSearchFollowersToInviteQuery,
   useUserSendPartyInviteMutation,
@@ -23,7 +24,7 @@ import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from '../../user/components';
 
 type ItemProps = {
-  user: any;
+  user: User;
   selectedUserIds: Record<string, boolean>;
   add: (userId: string) => void;
   remove: (userId: string) => void;
@@ -43,7 +44,7 @@ const PartyInviteItem: React.FC<ItemProps> = ({
     <View onStartShouldSetResponder={() => true}>
       <TouchableOpacity onPress={handlePress}>
         <Box row hcenter mb={1.5}>
-          <UserAvatar id={user._id} />
+          <UserAvatar id={user.pictureId} />
           <Box flex={1}>
             <Text ml={2} fontFamily={FontFamily.BOLD}>
               {user.nickname}
@@ -152,7 +153,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
               {users.length ? (
                 <FlatList
                   style={{ width: '100%' }}
-                  data={users}
+                  data={users as Array<User>}
                   renderItem={({ item }) => (
                     <PartyInviteItem
                       user={item}

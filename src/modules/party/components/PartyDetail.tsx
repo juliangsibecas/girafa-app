@@ -170,9 +170,9 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           ) : undefined}
         </Box>
         <Box mt={0.5}>
-          {attenders.map(({ _id }) => (
-            <Box mr={0.5} key={_id}>
-              <UserAvatar id={_id} />
+          {attenders.map(({ pictureId }) => (
+            <Box mr={0.5} key={pictureId}>
+              <UserAvatar id={pictureId} />
             </Box>
           ))}
         </Box>

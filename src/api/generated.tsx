@@ -128,10 +128,12 @@ export type Mutation = {
   partyCreate: Scalars['String'];
   partyDelete: Scalars['Boolean'];
   partyEnable: Scalars['Boolean'];
+  partyReject: Scalars['Boolean'];
   recoverPassword: Scalars['Boolean'];
   signIn: AuthSignInResponse;
   signUp: AuthSignInResponse;
   supportSendMessage: Scalars['Boolean'];
+  userBan: Scalars['Boolean'];
   userChangeAttendingState: Scalars['Boolean'];
   userChangeFollowingState: Scalars['Boolean'];
   userDelete: Scalars['Boolean'];
@@ -180,6 +182,11 @@ export type MutationPartyEnableArgs = {
 };
 
 
+export type MutationPartyRejectArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationRecoverPasswordArgs = {
   data: AuthRecoverPasswordInput;
 };
@@ -197,6 +204,11 @@ export type MutationSignUpArgs = {
 
 export type MutationSupportSendMessageArgs = {
   data: SupportSendMessageInput;
+};
+
+
+export type MutationUserBanArgs = {
+  data: UserBanInput;
 };
 
 
@@ -422,9 +434,14 @@ export type User = {
   nickname: Scalars['String'];
   notifications: Array<Notification>;
   password?: Maybe<Scalars['String']>;
+  pictureId?: Maybe<Scalars['String']>;
   recoveryCode?: Maybe<Scalars['String']>;
   refreshToken?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserBanInput = {
+  id: Scalars['String'];
 };
 
 export type UserChangeAttendingStateInput = {
@@ -463,6 +480,7 @@ export type UserGetResponse = {
   isFollower: Scalars['Boolean'];
   isFollowing: Scalars['Boolean'];
   nickname: Scalars['String'];
+  pictureId?: Maybe<Scalars['String']>;
 };
 
 export type UserNotification = {
@@ -480,6 +498,7 @@ export type UserPreview = {
   _id: Scalars['String'];
   fullName?: Maybe<Scalars['String']>;
   nickname: Scalars['String'];
+  pictureId?: Maybe<Scalars['String']>;
 };
 
 export type UserSearchFollowersToInviteInput = {
@@ -547,7 +566,7 @@ export type AppInfoMeetMinVersionQuery = { __typename?: 'Query', appInfoMeetMinV
 export type NotificationsGetByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NotificationsGetByUserIdQuery = { __typename?: 'Query', notificationsGetByUserId: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
+export type NotificationsGetByUserIdQuery = { __typename?: 'Query', notificationsGetByUserId: Array<{ __typename?: 'UserNotification', _id: string, type: NotificationType, createdAt: any, from: { __typename?: 'UserPreview', _id: string, nickname: string, pictureId?: string | null }, party?: { __typename?: 'PartyPreview', _id: string, name: string } | null }> };
 
 export type PartyCreateMutationVariables = Exact<{
   data: PartyCreateInput;
@@ -573,14 +592,14 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', pictureId?: string | null }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
 }>;
 
 
-export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+export type PartySearchAttendersQuery = { __typename?: 'Query', partySearchAttenders: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null, pictureId?: string | null }> };
 
 export type SupportSendMessageMutationVariables = Exact<{
   data: SupportSendMessageInput;
@@ -594,28 +613,28 @@ export type UserSearchQueryVariables = Exact<{
 }>;
 
 
-export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+export type UserSearchQuery = { __typename?: 'Query', userSearch: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null, pictureId?: string | null }> };
 
 export type UserGetQueryVariables = Exact<{
   data: UserGetInput;
 }>;
 
 
-export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, instagramUsername?: string | null, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
+export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, pictureId?: string | null, instagramUsername?: string | null, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
 
 export type UserGetFollowingByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type UserGetFollowingByIdQuery = { __typename?: 'Query', userGetFollowingById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+export type UserGetFollowingByIdQuery = { __typename?: 'Query', userGetFollowingById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null, pictureId?: string | null }> };
 
 export type UserGetFollowersByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type UserGetFollowersByIdQuery = { __typename?: 'Query', userGetFollowersById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null }> };
+export type UserGetFollowersByIdQuery = { __typename?: 'Query', userGetFollowersById: Array<{ __typename?: 'UserPreview', _id: string, nickname: string, fullName?: string | null, pictureId?: string | null }> };
 
 export type UserGetAttendedPartiesByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -629,7 +648,7 @@ export type UserSearchFollowersToInviteQueryVariables = Exact<{
 }>;
 
 
-export type UserSearchFollowersToInviteQuery = { __typename?: 'Query', userSearchFollowersToInvite: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string }> };
+export type UserSearchFollowersToInviteQuery = { __typename?: 'Query', userSearchFollowersToInvite: Array<{ __typename?: 'User', _id: string, nickname: string, fullName: string, pictureId?: string | null }> };
 
 export type UserCheckPartyValidatingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -943,6 +962,7 @@ export const NotificationsGetByUserIdDocument = gql`
     from {
       _id
       nickname
+      pictureId
     }
     party {
       _id
@@ -1103,7 +1123,7 @@ export const PartyGetByIdDocument = gql`
     openBar
     description
     attenders {
-      _id
+      pictureId
     }
     attendersCount
     allowInvites
@@ -1146,6 +1166,7 @@ export const PartySearchAttendersDocument = gql`
     _id
     nickname
     fullName
+    pictureId
   }
 }
     `;
@@ -1214,6 +1235,7 @@ export const UserSearchDocument = gql`
     _id
     nickname
     fullName
+    pictureId
   }
 }
     `;
@@ -1251,6 +1273,7 @@ export const UserGetDocument = gql`
     _id
     nickname
     fullName
+    pictureId
     instagramUsername
     followersCount
     followingCount
@@ -1294,6 +1317,7 @@ export const UserGetFollowingByIdDocument = gql`
     _id
     nickname
     fullName
+    pictureId
   }
 }
     `;
@@ -1331,6 +1355,7 @@ export const UserGetFollowersByIdDocument = gql`
     _id
     nickname
     fullName
+    pictureId
   }
 }
     `;
@@ -1405,6 +1430,7 @@ export const UserSearchFollowersToInviteDocument = gql`
     _id
     nickname
     fullName
+    pictureId
   }
 }
     `;

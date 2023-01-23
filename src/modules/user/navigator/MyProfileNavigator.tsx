@@ -21,6 +21,7 @@ export type MyProfileStackParamList = CoreStackGroupParamList & {
   UserEdit: {
     fullname: string;
     nickname: string;
+    pictureId?: Maybe<string>;
     instagramUsername: Maybe<string>;
   };
   Settings: undefined;

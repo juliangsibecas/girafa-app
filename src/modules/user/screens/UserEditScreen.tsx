@@ -24,7 +24,6 @@ import { usePictureUpload } from '../../picture';
 
 import { MyProfileStackScreenProps } from '../navigator';
 import { UserPicturePicker } from '../components';
-import { useUser } from '../hooks';
 
 type FormValues = {
   picture?: string;
@@ -37,7 +36,6 @@ export const UserEditScreen: React.FC = () => {
   const { t } = useTranslation();
   const { onSuccess, onFormError } = useResponse();
   const { userId } = useAuth();
-  const { updatePictureVersion } = useUser();
   const { navigate } =
     useNavigation<MyProfileStackScreenProps<'UserEdit'>['navigation']>();
   const { params } = useRoute<MyProfileStackScreenProps<'UserEdit'>['route']>();
@@ -83,6 +81,10 @@ export const UserEditScreen: React.FC = () => {
   ) => {
     try {
       setLoading(true);
+      if (values.picture) {
+        await uploadUser(values.picture);
+      }
+
       const { data } = await edit({
         variables: {
           data: {
@@ -96,11 +98,6 @@ export const UserEditScreen: React.FC = () => {
       if (data?.userEdit) {
         onSuccess();
 
-        if (values.picture) {
-          await uploadUser(values.picture);
-        }
-
-        updatePictureVersion();
         setLoading(false);
 
         navigate('Me');
@@ -128,7 +125,7 @@ export const UserEditScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex={1} pt={3} pb={5}>
-              <UserPicturePicker id="picture" />
+              <UserPicturePicker id="picture" pictureId={params.pictureId} />
               <Text type="hint" pt={6} pb={0.5} pl={0.5}>
                 {t('general.name')}
               </Text>

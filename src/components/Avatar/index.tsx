@@ -7,7 +7,7 @@ import { Icon } from '../Icon';
 
 type Props = UiKeys & {
   type: 'user' | 'party';
-  src: string;
+  src?: string;
   placeholderSize?: number;
   style?: ImageStyle;
 };
@@ -27,13 +27,15 @@ export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
       overflow="hidden"
       style={{ ...style, ...props.style, ...{ aspectRatio: 1 } }}
     >
-      <ExternalImage
-        src={src}
-        height={height}
-        width={width}
-        borderRadius={borderRadius}
-        style={{ ...style, ...props.style }}
-      />
+      {src && (
+        <ExternalImage
+          src={src}
+          height={height}
+          width={width}
+          borderRadius={borderRadius}
+          style={{ ...style, ...props.style }}
+        />
+      )}
       <Box
         position="absolute"
         bgColor="disabled"

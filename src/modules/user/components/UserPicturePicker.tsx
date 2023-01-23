@@ -5,15 +5,15 @@ import { useFormikContext } from 'formik';
 
 import { Box, Image } from '../../../components';
 
-import { useAuth } from '../../auth';
 import { UserAvatar } from './UserAvatar';
+import { Maybe } from '../../../types';
 
 interface Props {
   id: string;
+  pictureId?: Maybe<string>;
 }
 
-export const UserPicturePicker: React.FC<Props> = ({ id }) => {
-  const { userId } = useAuth();
+export const UserPicturePicker: React.FC<Props> = ({ id, pictureId }) => {
   const { handleChange, values } = useFormikContext<Record<string, string>>();
 
   const pickImage = async () => {
@@ -53,7 +53,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id }) => {
           />
         ) : (
           <UserAvatar
-            id={userId}
+            id={pictureId}
             width={15}
             height={15}
             placeholderSize={8}

@@ -22,7 +22,6 @@ import {
 import { FontFamily } from '../../../theme';
 import { useAuth } from '../../auth';
 import { useFeatureToggle } from '../../featureToggle';
-import { useUser } from '../hooks';
 
 import { MyProfileStackScreenProps } from '../navigator';
 
@@ -56,7 +55,6 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     changeFollowingStateMutation,
     { loading: isChangeFollowingStateLoading },
   ] = useUserChangeFollowingStateMutation();
-  const { pictureVersion } = useUser();
 
   const [isFollowing, setFollowing] = useState(user.isFollowing);
   const [followersCount, setFollowersCount] = useState(user.followersCount);
@@ -104,6 +102,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       fullname: user.fullName,
       nickname: user.nickname,
       instagramUsername: user.instagramUsername as Maybe<string>,
+      pictureId: user.pictureId,
     });
 
   const handleSharePress = () =>
@@ -124,8 +123,8 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   return (
     <Box overflow="hidden" width="screen" flex={1}>
       <UserAvatar
-        id={user._id}
-        key={pictureVersion}
+        id={user.pictureId}
+        key={user.pictureId}
         width="screen"
         position="absolute"
         top={0}

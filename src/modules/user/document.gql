@@ -3,6 +3,7 @@ query userSearch ($q: String) {
     _id
     nickname
     fullName
+    pictureId
   }
 }
 
@@ -11,6 +12,7 @@ query userGet ($data: UserGetInput!) {
     _id
     nickname
     fullName
+    pictureId
     instagramUsername
 
     followersCount
@@ -27,6 +29,7 @@ query userGetFollowingById ($id: String!) {
     _id
     nickname
     fullName
+    pictureId
   }
 }
 
@@ -35,6 +38,7 @@ query userGetFollowersById ($id: String!) {
     _id
     nickname
     fullName
+    pictureId
   }
 }
 
@@ -51,6 +55,7 @@ query userSearchFollowersToInvite ($data: UserSearchFollowersToInviteInput!) {
     _id
     nickname    
     fullName
+    pictureId
   }
 }
 

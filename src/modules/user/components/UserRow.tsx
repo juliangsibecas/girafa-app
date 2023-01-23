@@ -20,7 +20,12 @@ export const UserRow: React.FC<Props> = ({ user, go }) => {
   return (
     <TouchableOpacity onPress={handlePress}>
       <Box row hcenter my={0.5}>
-        <UserAvatar id={user._id} height={6} width={6} placeholderSize={4} />
+        <UserAvatar
+          id={user.pictureId}
+          height={6}
+          width={6}
+          placeholderSize={4}
+        />
         <Box ml={2} flex={1}>
           <Text type="h4" fontFamily={FontFamily.BOLD}>
             {user.nickname}
