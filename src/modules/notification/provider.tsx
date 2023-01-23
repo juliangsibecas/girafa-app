@@ -142,7 +142,7 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
   OneSignal.setNotificationOpenedHandler(async (evt) => {
     const data = evt.notification.additionalData as UserNotification;
 
-    if (data.url) {
+    if (data && data.url) {
       await openUrl(data.url);
     }
   });
