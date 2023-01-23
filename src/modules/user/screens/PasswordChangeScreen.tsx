@@ -9,7 +9,7 @@ import {
   Box,
   Button,
   Container,
-  FormikTextInput,
+  FormikPasswordInput,
   Header,
 } from '../../../components';
 import { SettingsStackScreenProps } from '../../settings';
@@ -36,10 +36,6 @@ export const PasswordChangeScreen: React.FC = () => {
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required(),
     newPassword: Yup.string().required().min(4),
-    // TODO
-    confirmPassword: Yup.string()
-      .required()
-      .oneOf([Yup.ref('newPassword'), null], 'Las contraseñas no coinciden.'),
   });
 
   const handleSubmit = async (
@@ -82,20 +78,14 @@ export const PasswordChangeScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex={1} mt={6}>
-              <FormikTextInput
+              <FormikPasswordInput
                 id="currentPassword"
                 placeholder={t('user.screens.PasswordChange.currentPassword')}
                 contentType="password"
               />
-              <FormikTextInput
+              <FormikPasswordInput
                 id="newPassword"
                 placeholder={t('user.screens.PasswordChange.newPassword')}
-                contentType="password"
-                mt={4}
-              />
-              <FormikTextInput
-                id="confirmPassword"
-                placeholder={t('user.confirmPassword')}
                 contentType="password"
                 mt={1}
               />

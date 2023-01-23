@@ -8,7 +8,7 @@ import {
   Box,
   Button,
   Container,
-  FormikTextInput,
+  FormikPasswordInput,
   Header,
 } from '../../../components';
 
@@ -75,7 +75,7 @@ export const UserDeleteScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex={1} pt={3} pb={5}>
-              <FormikTextInput
+              <FormikPasswordInput
                 id="password"
                 placeholder={t('user.password')}
                 contentType="password"
