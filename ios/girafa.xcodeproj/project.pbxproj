@@ -261,11 +261,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "girafa" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Girafa" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				"es-419",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
@@ -471,6 +472,8 @@
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
@@ -511,6 +514,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
+				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Girafa/Info.plist;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -545,6 +550,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
+				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = "OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -686,6 +693,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
+				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -724,7 +733,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "girafa" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Girafa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
