@@ -80,7 +80,7 @@ export const PartyCreateForm: React.FC = () => {
         'Solo puede contener letras, números y espacios.'
       ),
     openBar: Yup.string().required(),
-    description: Yup.string().required().min(20).max(100),
+    description: Yup.string().required().min(20).max(250),
     image: Yup.string().required(),
     coordinate: Yup.object().nullable().required(),
   });
@@ -199,7 +199,7 @@ export const PartyCreateForm: React.FC = () => {
               mt={1}
               lines={4}
             />
-            <Box row mt={1}>
+            <Box row mt={1} mb={1}>
               <Box mr={1} flex={1}>
                 <FormikImageInput id="image" />
               </Box>

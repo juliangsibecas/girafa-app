@@ -26,7 +26,7 @@ export const PartyCreateFormScreen: React.FC = () => {
   } = useUserCheckPartyValidatingQuery();
 
   return (
-    <Container noBottomGradient>
+    <Container noBottomGradient keyboard>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         {data?.userCheckPartyValidating ? (
           <Box flex={1} center px={4}>

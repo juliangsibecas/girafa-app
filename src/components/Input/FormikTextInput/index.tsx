@@ -22,6 +22,8 @@ export const FormikTextInput: React.FC<IFormikTextInput> = ({
   placeholder,
   keyboardType = 'default',
   contentType = 'none',
+  lines,
+  maxLength,
   ...props
 }) => {
   const { values, handleBlur, handleChange } = useFormikContext();
@@ -36,6 +38,8 @@ export const FormikTextInput: React.FC<IFormikTextInput> = ({
         contentType={contentType}
         onChangeText={handleChange(id)}
         onBlur={handleBlur(id)}
+        lines={lines}
+        maxLength={maxLength}
       />
       <FormikError id={id} />
     </Box>
