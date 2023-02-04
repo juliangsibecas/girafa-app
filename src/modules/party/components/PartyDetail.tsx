@@ -27,6 +27,7 @@ import { formatDate } from '../../../utils';
 
 import { useAuth } from '../../auth/hooks';
 import { useFeatureToggle } from '../../featureToggle';
+import { useUser } from '../../user/hooks';
 import { UserAvatar } from '../../user/components';
 
 import { PartyAvatar } from './PartyAvatar';
@@ -41,6 +42,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const { push } =
     useNavigation<CoreStackGroupScreenProps<'PartyDetail'>['navigation']>();
   const { userId } = useAuth();
+  const { user } = useUser();
   const { isEnabled: isSearchAttendersEnabled } = useFeatureToggle(
     FeatureToggleName.PartySearchAttenders
   );
@@ -67,6 +69,8 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
 
   const changeAttendingState = async () => {
     try {
+      if (!user) return;
+
       const res = await changeAttendingStateMutation({
         variables: { data: { partyId: party._id, state: !isAttender } },
         refetchQueries: [
@@ -81,7 +85,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
 
       if (res.data?.userChangeAttendingState) {
         if (!isAttender) {
-          setAttenders((attenders) => [{ _id: userId } as User, ...attenders]);
+          setAttenders((attenders) => [user as unknown as User, ...attenders]);
           setAttendersCount((attendersCount) => attendersCount + 1);
         } else {
           setAttenders((attenders) =>
@@ -159,7 +163,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flex={1}>
             {attendersCount}
           </Text>
-          {isSearchAttendersEnabled && attendersCount ? (
+          {!!(isSearchAttendersEnabled && attendersCount) && (
             <TouchableOpacity
               onPress={() => push('PartyAttenders', { id: party._id })}
             >
@@ -167,11 +171,11 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
                 {t('general.seeAll')}
               </Text>
             </TouchableOpacity>
-          ) : undefined}
+          )}
         </Box>
-        <Box mt={0.5}>
-          {attenders.map(({ pictureId }) => (
-            <Box mr={0.5} key={pictureId}>
+        <Box row mt={0.5}>
+          {attenders.map(({ _id, pictureId }) => (
+            <Box mr={0.5} key={_id}>
               <UserAvatar id={pictureId} />
             </Box>
           ))}

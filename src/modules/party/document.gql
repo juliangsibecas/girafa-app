@@ -37,6 +37,7 @@ query partyGetById ($id: String!) {
     openBar
     description
     attenders {
+      _id
       pictureId
     }
     attendersCount 

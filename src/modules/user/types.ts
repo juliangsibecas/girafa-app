@@ -1,4 +1,5 @@
+import { UserGetResponse } from '../../api';
+
 export type UserContextValues = {
-  pictureVersion: number;
-  updatePictureVersion: () => void;
+  user: UserGetResponse;
 };

@@ -117,8 +117,15 @@ export type FeatureTogglePopulateInput = {
   value?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type GroupedCount = {
+  __typename?: 'GroupedCount';
+  _id: Scalars['String'];
+  count: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  adminSignIn: AuthSignInResponse;
   appInfoChangeMinVersion: Scalars['Boolean'];
   appInfoInitialize: Scalars['Boolean'];
   changePassword: Scalars['Boolean'];
@@ -139,6 +146,11 @@ export type Mutation = {
   userDelete: Scalars['Boolean'];
   userEdit: Scalars['Boolean'];
   userSendPartyInvite: Scalars['Boolean'];
+};
+
+
+export type MutationAdminSignInArgs = {
+  data: AuthSignInInput;
 };
 
 
@@ -337,6 +349,11 @@ export enum PartyStatus {
 
 export type Query = {
   __typename?: 'Query';
+  adminPartyGetCount: Scalars['Float'];
+  adminPartyGetPendingCount: Scalars['Float'];
+  adminSupportGetCount: Scalars['Float'];
+  adminUserGetCount: Scalars['Float'];
+  adminUserGetCreatedByDayCount: Array<GroupedCount>;
   appInfoMeetMinVersion: Scalars['Boolean'];
   featureToggleGetEnabledNames: Array<FeatureToggleName>;
   featureToggleList: Array<FeatureToggle>;
@@ -592,7 +609,7 @@ export type PartyGetByIdQueryVariables = Exact<{
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', pictureId?: string | null }> } };
+export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string, pictureId?: string | null }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -1123,6 +1140,7 @@ export const PartyGetByIdDocument = gql`
     openBar
     description
     attenders {
+      _id
       pictureId
     }
     attendersCount
