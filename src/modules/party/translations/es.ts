@@ -43,6 +43,10 @@ export const partyTranslationES = {
         description: 'Mientras tanto no la vas a ver en la plataforma.',
       },
     },
+    Detail: {
+      share:
+        'Mirá esta fiesta en Girafa 🤘 https://girafa.com.ar/app/party/{{slug}}',
+    },
     Invite: {
       invite: 'Invitar',
       onlyFollowersAllowed: 'Solo podes invitar seguidores',

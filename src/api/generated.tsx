@@ -280,6 +280,7 @@ export type Party = {
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer?: Maybe<User>;
+  slug: Scalars['String'];
   status: PartyStatus;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -302,8 +303,13 @@ export type PartyCreateInput = {
   openBar: Scalars['Boolean'];
 };
 
-export type PartyGetByIdResponse = {
-  __typename?: 'PartyGetByIdResponse';
+export type PartyGetInput = {
+  id?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
+};
+
+export type PartyGetResponse = {
+  __typename?: 'PartyGetResponse';
   _id: Scalars['String'];
   address: Scalars['String'];
   allowInvites: Scalars['Boolean'];
@@ -317,6 +323,7 @@ export type PartyGetByIdResponse = {
   name: Scalars['String'];
   openBar: Scalars['Boolean'];
   organizer?: Maybe<User>;
+  slug: Scalars['String'];
   status: PartyStatus;
 };
 
@@ -359,7 +366,7 @@ export type Query = {
   featureToggleList: Array<FeatureToggle>;
   notificationsGetByUserId: Array<UserNotification>;
   partyFind: Array<PartyMapPreview>;
-  partyGetById: PartyGetByIdResponse;
+  partyGet: PartyGetResponse;
   partySearch: Array<PartyPreview>;
   partySearchAttenders: Array<UserPreview>;
   typesSync: TypesSyncResponse;
@@ -378,8 +385,8 @@ export type QueryAppInfoMeetMinVersionArgs = {
 };
 
 
-export type QueryPartyGetByIdArgs = {
-  id: Scalars['String'];
+export type QueryPartyGetArgs = {
+  data: PartyGetInput;
 };
 
 
@@ -604,12 +611,12 @@ export type PartySearchQueryVariables = Exact<{
 
 export type PartySearchQuery = { __typename?: 'Query', partySearch: Array<{ __typename?: 'PartyPreview', _id: string, name: string, organizerNickname?: string | null }> };
 
-export type PartyGetByIdQueryVariables = Exact<{
-  id: Scalars['String'];
+export type PartyGetQueryVariables = Exact<{
+  data: PartyGetInput;
 }>;
 
 
-export type PartyGetByIdQuery = { __typename?: 'Query', partyGetById: { __typename?: 'PartyGetByIdResponse', _id: string, status: PartyStatus, name: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string, pictureId?: string | null }> } };
+export type PartyGetQuery = { __typename?: 'Query', partyGet: { __typename?: 'PartyGetResponse', _id: string, status: PartyStatus, name: string, slug: string, availability: PartyAvailability, address: string, date: any, openBar: boolean, description: string, attendersCount: number, allowInvites: boolean, isAttender: boolean, isOrganizer: boolean, organizer?: { __typename?: 'User', nickname: string } | null, attenders: Array<{ __typename?: 'User', _id: string, pictureId?: string | null }> } };
 
 export type PartySearchAttendersQueryVariables = Exact<{
   data: PartySearchAttendersInput;
@@ -1125,12 +1132,13 @@ export function usePartySearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type PartySearchQueryHookResult = ReturnType<typeof usePartySearchQuery>;
 export type PartySearchLazyQueryHookResult = ReturnType<typeof usePartySearchLazyQuery>;
 export type PartySearchQueryResult = Apollo.QueryResult<PartySearchQuery, PartySearchQueryVariables>;
-export const PartyGetByIdDocument = gql`
-    query partyGetById($id: String!) {
-  partyGetById(id: $id) {
+export const PartyGetDocument = gql`
+    query partyGet($data: PartyGetInput!) {
+  partyGet(data: $data) {
     _id
     status
     name
+    slug
     organizer {
       nickname
     }
@@ -1152,32 +1160,32 @@ export const PartyGetByIdDocument = gql`
     `;
 
 /**
- * __usePartyGetByIdQuery__
+ * __usePartyGetQuery__
  *
- * To run a query within a React component, call `usePartyGetByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `usePartyGetByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `usePartyGetQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePartyGetQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = usePartyGetByIdQuery({
+ * const { data, loading, error } = usePartyGetQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      data: // value for 'data'
  *   },
  * });
  */
-export function usePartyGetByIdQuery(baseOptions: Apollo.QueryHookOptions<PartyGetByIdQuery, PartyGetByIdQueryVariables>) {
+export function usePartyGetQuery(baseOptions: Apollo.QueryHookOptions<PartyGetQuery, PartyGetQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PartyGetByIdQuery, PartyGetByIdQueryVariables>(PartyGetByIdDocument, options);
+        return Apollo.useQuery<PartyGetQuery, PartyGetQueryVariables>(PartyGetDocument, options);
       }
-export function usePartyGetByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartyGetByIdQuery, PartyGetByIdQueryVariables>) {
+export function usePartyGetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PartyGetQuery, PartyGetQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PartyGetByIdQuery, PartyGetByIdQueryVariables>(PartyGetByIdDocument, options);
+          return Apollo.useLazyQuery<PartyGetQuery, PartyGetQueryVariables>(PartyGetDocument, options);
         }
-export type PartyGetByIdQueryHookResult = ReturnType<typeof usePartyGetByIdQuery>;
-export type PartyGetByIdLazyQueryHookResult = ReturnType<typeof usePartyGetByIdLazyQuery>;
-export type PartyGetByIdQueryResult = Apollo.QueryResult<PartyGetByIdQuery, PartyGetByIdQueryVariables>;
+export type PartyGetQueryHookResult = ReturnType<typeof usePartyGetQuery>;
+export type PartyGetLazyQueryHookResult = ReturnType<typeof usePartyGetLazyQuery>;
+export type PartyGetQueryResult = Apollo.QueryResult<PartyGetQuery, PartyGetQueryVariables>;
 export const PartySearchAttendersDocument = gql`
     query partySearchAttenders($data: PartySearchAttendersInput!) {
   partySearchAttenders(data: $data) {

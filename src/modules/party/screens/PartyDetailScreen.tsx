@@ -1,21 +1,25 @@
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { Container, StateHandler } from '../../../components';
-import { PartyGetByIdResponse, usePartyGetByIdQuery } from '../../../api';
+import { PartyGetResponse, usePartyGetQuery } from '../../../api';
 import { PartyDetail } from '../components';
 import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
+import { getIdOrField } from '../../../utils';
 
 export const PartyDetailScreen: React.FC = () => {
-  const { params } =
-    useRoute<CoreStackGroupScreenProps<'PartyDetail'>['route']>();
+  const {
+    params: { id, idOrSlug },
+  } = useRoute<CoreStackGroupScreenProps<'PartyDetail'>['route']>();
   const {
     data,
     loading: isLoading,
     error: isError,
     refetch,
     networkStatus,
-  } = usePartyGetByIdQuery({
-    variables: { id: params.id },
+  } = usePartyGetQuery({
+    variables: {
+      data: getIdOrField({ id, str: idOrSlug, field: 'slug' }),
+    },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -28,7 +32,7 @@ export const PartyDetailScreen: React.FC = () => {
       onRefresh={refetch}
     >
       <Container headerPlaceholder noBottomGradient>
-        <PartyDetail party={data?.partyGetById as PartyGetByIdResponse} />
+        <PartyDetail party={data?.partyGet as PartyGetResponse} />
       </Container>
     </StateHandler>
   );

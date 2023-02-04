@@ -23,11 +23,12 @@ query partySearch ($q: String) {
   }
 }
 
-query partyGetById ($id: String!) {
-  partyGetById (id: $id) {
+query partyGet ($data: PartyGetInput!) {
+  partyGet(data: $data) {
     _id
     status
     name    
+    slug
     organizer {
       nickname
     }

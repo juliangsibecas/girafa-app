@@ -7,8 +7,8 @@ import Toast from 'react-native-toast-message';
 import {
   FeatureToggleName,
   PartyAvailability,
-  PartyGetByIdDocument,
-  PartyGetByIdResponse,
+  PartyGetDocument,
+  PartyGetResponse,
   PartyStatus,
   User,
   UserGetDocument,
@@ -34,7 +34,7 @@ import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
 
 type Props = {
-  party: PartyGetByIdResponse;
+  party: PartyGetResponse;
 };
 
 export const PartyDetail: React.FC<Props> = ({ party }) => {
@@ -74,7 +74,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
       const res = await changeAttendingStateMutation({
         variables: { data: { partyId: party._id, state: !isAttender } },
         refetchQueries: [
-          { query: PartyGetByIdDocument, variables: { id: party._id } },
+          { query: PartyGetDocument, variables: { id: party._id } },
           { query: UserGetDocument, variables: { data: { id: userId } } },
         ],
       });
@@ -106,7 +106,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
 
   const share = async () => {
     await Share.share({
-      message: `${party.name} schema://girafa/party/${party._id}`,
+      message: t('party.components.Detail.share', { slug: party.slug }),
     });
   };
 
@@ -215,17 +215,15 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             />
           </TouchableOpacity>
         </Box>
-        {false && (
-          <Box mr={1}>
-            <TouchableOpacity onPress={share} disabled={!canInvite}>
-              <Icon
-                name="share-2"
-                size={3}
-                color={canInvite ? 'primary' : 'disabled'}
-              />
-            </TouchableOpacity>
-          </Box>
-        )}
+        <Box mr={1}>
+          <TouchableOpacity onPress={share} disabled={!canInvite}>
+            <Icon
+              name="share-2"
+              size={3}
+              color={canInvite ? 'primary' : 'disabled'}
+            />
+          </TouchableOpacity>
+        </Box>
       </Box>
       <PartyInvite
         partyId={party._id}
