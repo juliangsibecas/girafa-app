@@ -5,6 +5,7 @@ import {
 
 import { useTheme } from '../../../theme';
 import { UiKeys, useStyle } from '../../../ui';
+import { isIOS } from '../../../utils';
 
 export interface ITextInput
   extends UiKeys,
@@ -33,16 +34,17 @@ export const TextInput: React.FC<ITextInput> = ({
 }) => {
   const { theme } = useTheme();
 
+  const isMultiline = Boolean(lines);
+
   const style = useStyle({
     py: 2,
     px: 2,
     bgColor: 'disabled',
     color: 'text.primary',
     borderRadius: 1,
+    height: lines && isIOS ? lines * 3.1 : undefined,
     ...props,
   });
-
-  const isMultiline = Boolean(lines);
 
   return (
     <>
