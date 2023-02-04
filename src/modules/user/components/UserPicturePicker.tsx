@@ -28,6 +28,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id, pictureId }) => {
           aspect: [9, 16],
           quality: 1,
           allowsMultipleSelection: false,
+          selectionLimit: 1,
         });
 
         if (result.cancelled) {

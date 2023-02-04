@@ -26,6 +26,8 @@ export const ImageInput: React.FC<Props> = ({ value, onChange, onBlur }) => {
           allowsEditing: true,
           aspect: [1, 1],
           quality: 1,
+          allowsMultipleSelection: false,
+          selectionLimit: 1,
         });
 
         if (result.cancelled) {
