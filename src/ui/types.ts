@@ -54,6 +54,7 @@ export type UiKeys = Partial<{
   minHeight: number;
   minWidth: number;
   fullWidth: boolean;
+  aspectRatio: number;
 
   overflow: ViewStyle['overflow'];
 }>;

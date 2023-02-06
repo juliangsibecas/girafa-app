@@ -94,6 +94,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
       ? keys.fontSize + 2
       : baseStyle.lineHeight;
 
+  style.aspectRatio = keys.aspectRatio;
   style.height =
     keys.height === 'screen'
       ? Dimensions.get('screen').height -

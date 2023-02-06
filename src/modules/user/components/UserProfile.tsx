@@ -132,6 +132,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         borderRadius={0}
         style={{ height: '100%' }}
         placeholderSize={Dimensions.get('screen').width / 18}
+        aspectRatio={9 / 16}
       />
       <Box mt={10} px={2} flex={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (

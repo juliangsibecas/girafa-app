@@ -24,26 +24,16 @@ export const PartyCarouselItem: React.FC<Props> = ({ party }) => {
         row
         height={20}
         my={2}
+        ml={2}
         style={{ elevation: 8, maxWidth: Dimensions.get('screen').width * 0.8 }}
       >
-        <Box
-          position="absolute"
-          top={-2}
-          left={-2}
-          width={12}
-          borderRadius={1}
-          overflow="hidden"
-        >
-          <Box
-            style={{
-              transform: [{ translateX: -theme.spacing(6) }],
-            }}
-          >
+        <Box position="absolute" top={-2} left={-4} borderRadius={1}>
+          <Box>
             <PartyAvatar
               id={party._id}
               height={24}
-              minWidth={12}
               placeholderSize={7}
+              aspectRatio={9 / 16}
             />
           </Box>
         </Box>

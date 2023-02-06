@@ -12,8 +12,16 @@ type Props = UiKeys & {
   style?: ImageStyle;
 };
 
-export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
-  const style = useStyle(props) as ImageStyle;
+export const Avatar: React.FC<Props> = ({
+  type,
+  src,
+  aspectRatio,
+  ...props
+}) => {
+  const style = useStyle({
+    ...props,
+    aspectRatio: aspectRatio ?? 1,
+  }) as ImageStyle;
   const placeholderSize = props.placeholderSize ?? 3;
   const height = props.height ?? 5;
   const width = props.width ?? 5;
@@ -25,7 +33,8 @@ export const Avatar: React.FC<Props> = ({ type, src, ...props }) => {
       width={width}
       borderRadius={borderRadius}
       overflow="hidden"
-      style={{ ...style, ...props.style, ...{ aspectRatio: 1 } }}
+      style={{ ...style, ...props.style }}
+      bgColor="primary"
     >
       {src && (
         <ExternalImage

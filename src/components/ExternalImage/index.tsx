@@ -24,7 +24,6 @@ export const ExternalImage: React.FC<Props> = ({ src, ...props }) => {
           style={{
             ...style,
             ...props.style,
-            aspectRatio: 1,
           }}
         >
           <Rect height="100%" width="100%" />
@@ -36,7 +35,6 @@ export const ExternalImage: React.FC<Props> = ({ src, ...props }) => {
         style={{
           ...style,
           ...props.style,
-          aspectRatio: 1,
         }}
       />
     </>
