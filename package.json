@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "author": "Julian Gomez Sibecas",
   "scripts": {
     "postinstall": "patch-package",
