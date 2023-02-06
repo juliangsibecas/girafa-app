@@ -56,6 +56,7 @@ export const UserAttendedPartiesScreen: React.FC = () => {
                 })!
               }
               data={parties}
+              style={{ flex: 1 }}
               renderItem={({ item: party }) => (
                 <Box mb={2}>
                   <PartyRow

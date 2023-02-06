@@ -42,6 +42,7 @@ export const UserFollowingScreen: React.FC = () => {
       </Text>
       <StateHandler isLoading={isLoading} isError={Boolean(error)}>
         <FlatList
+          style={{ flex: 1 }}
           refreshControl={
             RefreshControl({
               isRefreshing: networkStatus === 4,

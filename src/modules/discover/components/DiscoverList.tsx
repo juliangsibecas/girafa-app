@@ -57,6 +57,7 @@ export const DiscoverList: React.FC<Props> = ({
       {isShowingAll || isOnly ? (
         <FlatList
           data={data}
+          style={{ flex: 1 }}
           renderItem={({ item }) => (
             <Box mt={2}>
               {isUser ? (

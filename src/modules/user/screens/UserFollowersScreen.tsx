@@ -44,6 +44,7 @@ export const UserFollowersScreen: React.FC = () => {
             })!
           }
           data={followers}
+          style={{ flex: 1 }}
           renderItem={({ item: user }) => (
             <UserRow
               user={user}

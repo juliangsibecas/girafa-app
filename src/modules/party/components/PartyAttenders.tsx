@@ -63,6 +63,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
       </Box>
       <StateHandler isLoading={isLoading} isError={Boolean(isError)}>
         <FlatList
+          style={{ flex: 1 }}
           refreshControl={
             RefreshControl({
               isRefreshing: networkStatus === 4,

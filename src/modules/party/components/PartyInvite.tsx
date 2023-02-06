@@ -152,7 +152,7 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
             <Box center>
               {users.length ? (
                 <FlatList
-                  style={{ width: '100%' }}
+                  style={{ flex: 1, width: '100%' }}
                   data={users as Array<User>}
                   renderItem={({ item }) => (
                     <PartyInviteItem
