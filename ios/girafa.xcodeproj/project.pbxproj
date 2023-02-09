@@ -261,7 +261,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Girafa" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "girafa" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -466,13 +466,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Girafa/Girafa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -492,7 +492,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ar.com.girafa.app;
 				PRODUCT_NAME = Girafa;
 				PROVISIONING_PROFILE_SPECIFIER = Girafa;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Girafa;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Girafa Development";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -509,12 +509,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Girafa/Girafa.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Girafa/Info.plist;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "";
@@ -530,7 +530,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ar.com.girafa.app;
 				PRODUCT_NAME = Girafa;
 				PROVISIONING_PROFILE_SPECIFIER = Girafa;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Girafa;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Girafa Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -545,12 +545,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = "OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -559,7 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ar.com.girafa.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = OneSignalNotificationServiceExtension;
 				PROVISIONING_PROFILE_SPECIFIER = OneSignal;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = OneSignal;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OneSignal Development";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -688,12 +688,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z8Y8XB988C;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Z8Y8XB988C;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -706,7 +706,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ar.com.girafa.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = OneSignalNotificationServiceExtension;
 				PROVISIONING_PROFILE_SPECIFIER = OneSignal;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = OneSignal;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OneSignal Development";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -733,7 +733,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Girafa" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "girafa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
