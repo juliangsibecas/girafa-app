@@ -18,6 +18,7 @@ import { AuthProvider } from './modules/auth';
 import { Navigation } from './navigation';
 import { useThemeMode } from './theme';
 import { linking } from './navigation';
+import { ChatProvider } from './modules/chat';
 
 const AppComponent = () => {
   const isResourcesLoading = useCachedResources();
@@ -38,8 +39,10 @@ const AppComponent = () => {
             <NavigationContainer linking={linking}>
               <AuthProvider>
                 <NotificationsProvider>
-                  <Navigation />
-                  <Toast position="bottom" />
+                  <ChatProvider>
+                    <Navigation />
+                    <Toast position="bottom" />
+                  </ChatProvider>
                 </NotificationsProvider>
               </AuthProvider>
             </NavigationContainer>

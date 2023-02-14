@@ -35,3 +35,17 @@ export const formatDateTime = (str: string) => {
 
   return date.format('DD/MM');
 };
+
+export const formatChatDate = (str: string) => {
+  const date = moment(str);
+
+  if (isToday(date)) {
+    return date.format('HH:mm');
+  }
+
+  if (isYesterday(date)) {
+    return `Ayer ${date.format('HH:mm')}`;
+  }
+
+  return date.format('DD/MM HH:mm');
+};

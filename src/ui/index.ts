@@ -74,7 +74,7 @@ export const useStyle = (keys: UiKeys, baseStyle: Style = {}) => {
     ? formatColor(theme.palette, keys.borderColor)
     : style.borderColor;
   style.borderRadius = keys.borderRadius
-    ? keys.borderRadius * theme.shape.borderRadiues
+    ? keys.borderRadius * theme.shape.borderRadius
     : undefined;
 
   style.color = keys.color

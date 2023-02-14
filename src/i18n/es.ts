@@ -1,4 +1,5 @@
 import { authTranslationES } from '../modules/auth';
+import { chatTranslationES } from '../modules/chat';
 import { discoverTranslationES } from '../modules/discover';
 import { legalTranslationES } from '../modules/legal';
 import { maintenanceTranslationES } from '../modules/maintenance';
@@ -66,5 +67,6 @@ export const es = {
     settings: settingsTranslationES,
     legal: legalTranslationES,
     maintenance: maintenanceTranslationES,
+    chat: chatTranslationES,
   },
 } as const;
