@@ -25,6 +25,7 @@ import {
   Instagram,
   Eye,
   EyeOff,
+  MessageCircle,
 } from 'react-native-feather';
 import { SvgProps } from 'react-native-svg';
 
@@ -64,6 +65,7 @@ const dict = {
   edit: Edit,
   eye: Eye,
   'eye-off': EyeOff,
+  chat: MessageCircle,
 
   share: Share,
   'share-2': Share2,

@@ -18,11 +18,13 @@ import Toast from 'react-native-toast-message';
 import { useFeatureToggle } from '../modules/featureToggle';
 import { FeatureToggleName } from '../api';
 import { useTranslation } from 'react-i18next';
+import { ChatNavigator, useChats } from '../modules/chat';
 
 type MainBottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Discover: undefined;
   Notifications: undefined;
+  Chats: undefined;
   MyProfile: undefined;
 };
 
@@ -38,6 +40,7 @@ const BottomTab = createBottomTabNavigator<MainBottomTabParamList>();
 export const MainNavigator: React.FC = () => {
   const { t } = useTranslation();
   const { pendingNotificationsCount } = useNotification();
+  const { unreadChatsCount } = useChats();
   const { theme } = useTheme();
   const {
     isEnabled: isUserGetEnabled,
@@ -51,6 +54,10 @@ export const MainNavigator: React.FC = () => {
     isEnabled: isNotificationGetEnabled,
     isLoading: isNotificationGetFeatureFlagLoading,
   } = useFeatureToggle(FeatureToggleName.NotificationGet);
+  const {
+    isEnabled: isChatGetEnabled,
+    isLoading: isChatGetFeatureFlagLoading,
+  } = useFeatureToggle(FeatureToggleName.ChatGet);
 
   const showFeatureFlagToast = () =>
     Toast.show({ type: 'error', text1: t('api.featureToggleDisabled') });
@@ -65,6 +72,8 @@ export const MainNavigator: React.FC = () => {
     !isNotificationGetEnabled || isNotificationGetFeatureFlagLoading;
 
   const isProfileDisabled = !isUserGetEnabled || isUserGetFeatureFlagLoading;
+
+  const isChatDisabled = !isChatGetEnabled || isChatGetFeatureFlagLoading;
 
   return (
     <BottomTab.Navigator
@@ -141,6 +150,40 @@ export const MainNavigator: React.FC = () => {
         listeners={{
           tabPress: (e) => {
             if (isNotificationDisabled) {
+              e.preventDefault();
+              showFeatureFlagToast();
+            }
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name="Chats"
+        component={ChatNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Icon
+              name="chat"
+              size={2.5}
+              color={isChatDisabled ? 'disabled' : color}
+            />
+          ),
+          tabBarBadge: unreadChatsCount > 0 ? unreadChatsCount : undefined,
+          tabBarBadgeStyle: {
+            height: theme.spacing(2),
+            minWidth: theme.spacing(2),
+            borderRadius: theme.spacing(1),
+            fontFamily: FontFamily.BOLD,
+            fontSize: 10,
+            lineHeight: 16,
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.background.main,
+            marginTop: theme.spacing(0.2),
+            paddingHorizontal: 0,
+          },
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (isChatDisabled) {
               e.preventDefault();
               showFeatureFlagToast();
             }

@@ -13,6 +13,7 @@ import {
   PartyDetailStackGroup,
   PartyDetailStackGroupParamList,
 } from '../modules/party/navigator';
+import { useTheme } from '../theme';
 
 export type CoreStackGroupParamList = ProfileStackGroupParamList &
   PartyDetailStackGroupParamList;
@@ -28,9 +29,20 @@ interface ICoreStackGroup {
   Stack: ReturnType<typeof createNativeStackNavigator<any>>;
 }
 
-export const CoreStackGroup: React.FC<ICoreStackGroup> = ({ Stack }) => (
-  <Stack.Group screenOptions={{ headerTransparent: true }}>
-    {ProfileStackGroup({ Stack })}
-    {PartyDetailStackGroup({ Stack })}
-  </Stack.Group>
-);
+export const CoreStackGroup: React.FC<ICoreStackGroup> = ({ Stack }) => {
+  const { theme } = useTheme();
+
+  return (
+    <Stack.Group
+      screenOptions={{
+        headerTransparent: true,
+        contentStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
+      }}
+    >
+      {ProfileStackGroup({ Stack })}
+      {PartyDetailStackGroup({ Stack })}
+    </Stack.Group>
+  );
+};

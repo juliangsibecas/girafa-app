@@ -43,6 +43,9 @@ export const HomeNavigator: React.FC = () => {
         headerStyle: {
           backgroundColor: theme.palette.background.main,
         },
+        contentStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
       }}
     >
       <Stack.Screen

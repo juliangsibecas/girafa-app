@@ -38,6 +38,9 @@ export const NotificationNavigator: React.FC = () => {
         headerTintColor: theme.palette.primary.main,
         headerTransparent: true,
         headerStyle: {},
+        contentStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
       }}
     >
       <Stack.Screen name="List" component={NotificationsScreen} />

@@ -12,7 +12,7 @@ export const theme = (mode: ThemeMode): Theme => {
     text: text(palette),
     spacing: (n) => n * DEFAULT_SPACING,
     shape: {
-      borderRadiues: 8,
+      borderRadius: 8,
     },
   };
 };

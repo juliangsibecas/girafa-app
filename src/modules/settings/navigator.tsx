@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
-import { useTheme } from '../../theme';
 import { SupportScreen } from '../support';
 import { PasswordChangeScreen, UserDeleteScreen } from '../user/screens';
 import { AppearanceScreen, SettingsMenuScreen } from './screens';

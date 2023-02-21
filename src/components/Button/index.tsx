@@ -66,7 +66,7 @@ export const Button: React.FC<IButton> = ({
 
   return (
     <TouchableOpacity
-      style={style}
+      style={[style, props.style]}
       onPress={onPress}
       disabled={isDisabled || isLoading}
     >

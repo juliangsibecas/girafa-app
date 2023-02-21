@@ -35,6 +35,9 @@ export const DiscoverNavigator: React.FC = () => {
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
         headerTransparent: true,
+        contentStyle: {
+          backgroundColor: theme.palette.background.main,
+        },
       }}
     >
       <Stack.Screen name="List" component={DiscoverScreen} />
