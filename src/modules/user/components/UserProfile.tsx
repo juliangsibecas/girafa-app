@@ -38,6 +38,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { t } = useTranslation();
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
+
   const { push } =
     useNavigation<MyProfileStackScreenProps<'Me'>['navigation']>();
 
@@ -110,6 +111,12 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       message: t('user.components.Profile.share', { nickname: user.nickname }),
     });
 
+  const handleChatPress = async () => {
+    push('ProfileChatDirect', {
+      user,
+    });
+  };
+
   const handleInstagramPress = async () => {
     await openUrl(`https://instagram.com/${user.instagramUsername}`);
   };
@@ -153,17 +160,31 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
           </Box>
           <Box row>
             {!!!isMe && (
-              <FeatureToggledButton
-                ft={FeatureToggleName.UserChangeFollowingState}
-                secondary={isFollowing}
-                width={12}
-                height={4}
-                textProps={{ fontSize: 12 }}
-                onPress={changeFollowingState}
-                isLoading={isChangeFollowingStateLoading}
-              >
-                {followButtonText}
-              </FeatureToggledButton>
+              <>
+                <FeatureToggledButton
+                  ft={FeatureToggleName.UserChangeFollowingState}
+                  secondary={isFollowing}
+                  width={12}
+                  height={4}
+                  textProps={{ fontSize: 12 }}
+                  onPress={changeFollowingState}
+                  isLoading={isChangeFollowingStateLoading}
+                >
+                  {followButtonText}
+                </FeatureToggledButton>
+                <FeatureToggledButton
+                  ft={FeatureToggleName.ChatGet}
+                  secondary
+                  width={4}
+                  height={4}
+                  borderWidth={0}
+                  textProps={{ fontSize: 12 }}
+                  ml={1}
+                  onPress={handleChatPress}
+                >
+                  <Icon name="send" color="primary" size={2.5} />
+                </FeatureToggledButton>
+              </>
             )}
             {!!isMyProfile && (
               <>

@@ -63,6 +63,15 @@ query userCheckPartyValidating {
   userCheckPartyValidating
 }
 
+query userFindUsersToChat ($data: UserFindUsersToChat!) {
+  userFindUsersToChat(data: $data) {
+    _id
+    nickname
+    fullName
+    pictureId
+  }
+}
+
 mutation userChangeFollowingState ($data: UserChangeFollowingStateInput!) {
   userChangeFollowingState (data: $data)
 }

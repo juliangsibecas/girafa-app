@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 
 import {
   User,
@@ -14,11 +14,11 @@ import {
   Button,
   Checkbox,
   Icon,
+  SearchInput,
   StateHandler,
   Text,
-  TextInput,
 } from '../../../components';
-import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
+import { useEffectExceptOnMount } from '../../../hooks';
 
 import { FontFamily } from '../../../theme/text/types';
 import { UserAvatar } from '../../user/components';
@@ -88,15 +88,13 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
   const [selectedUsersId, setSelectedUsersId] = useState<
     Record<string, boolean>
   >({});
-  const [search, setSearch] = useState('');
-
-  const debouncedSearch = useDebounce(search);
+  const [searchText, setSearchText] = useState('');
 
   const users = data?.userSearchFollowersToInvite ?? [];
 
   useEffectExceptOnMount(() => {
-    refetch({ data: { partyId, q: debouncedSearch } });
-  }, [debouncedSearch]);
+    refetch({ data: { partyId, q: searchText } });
+  }, [searchText]);
 
   const addUserId = (userId: string) =>
     setSelectedUsersId({ ...selectedUsersId, [userId]: true });
@@ -107,6 +105,9 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
 
     setSelectedUsersId(obj);
   };
+
+  const handleDebounceTextChange = (debouncedText: string) =>
+    setSearchText(debouncedText);
 
   const handleSubmit = async () => {
     try {
@@ -129,59 +130,54 @@ export const PartyInvite: React.FC<Props> = ({ partyId, isOpen, onClose }) => {
   };
 
   return (
-    <BottomModal isOpen={isOpen} onClose={onClose}>
-      <Box style={{ height: Dimensions.get('screen').height * 0.6 }}>
-        <Box>
-          <Box row mb={2} style={{ alignItems: 'baseline' }}>
-            <Text type="h2" flex={1}>
-              {t('party.components.Invite.invite')}
-            </Text>
-            <Text type="secondary">
-              {t('party.components.Invite.onlyFollowersAllowed')}
-            </Text>
-          </Box>
-          <TextInput
-            placeholder={t('general.searchEllipsis')}
-            value={search}
-            onChangeText={(text) => setSearch(text)}
-            mb={4}
-          />
-        </Box>
-        <Box flex={1} center={!Boolean(users.length)}>
-          <StateHandler isLoading={isLoading} isError={Boolean(error)}>
-            <Box center>
-              {users.length ? (
-                <FlatList
-                  style={{ flexGrow: 1, width: '100%' }}
-                  data={users as Array<User>}
-                  renderItem={({ item }) => (
-                    <PartyInviteItem
-                      user={item}
-                      selectedUserIds={selectedUsersId}
-                      add={addUserId}
-                      remove={removeUserId}
-                    />
-                  )}
-                  showsVerticalScrollIndicator={false}
-                />
-              ) : (
-                <Box center>
-                  <Icon name="warning" color="warning" size={5} mb={1} />
-                  <Text>{t('party.components.Invite.emptyText')}</Text>
-                </Box>
-              )}
-            </Box>
-          </StateHandler>
-        </Box>
-        <Button
-          mt={4}
-          isLoading={isSendInviteLoading}
-          onPress={handleSubmit}
-          isDisabled={Object.keys(selectedUsersId).length === 0}
-        >
-          {t('party.components.Invite.sendInvitations')}
-        </Button>
+    <BottomModal isOpen={isOpen} onClose={onClose} height="90%">
+      <Box row mb={2} style={{ alignItems: 'baseline' }}>
+        <Text type="h2" flexGrow={1}>
+          {t('party.components.Invite.invite')}
+        </Text>
+        <Text type="secondary">
+          {t('party.components.Invite.onlyFollowersAllowed')}
+        </Text>
       </Box>
+      <SearchInput
+        hcenter
+        mb={4}
+        onChangeDebouncedText={handleDebounceTextChange}
+      />
+      <Box flexGrow={1} center={!Boolean(users.length)}>
+        <StateHandler isLoading={isLoading} isError={Boolean(error)}>
+          <Box center>
+            {users.length ? (
+              <FlatList
+                style={{ flexGrow: 1, width: '100%' }}
+                data={users as Array<User>}
+                renderItem={({ item }) => (
+                  <PartyInviteItem
+                    user={item}
+                    selectedUserIds={selectedUsersId}
+                    add={addUserId}
+                    remove={removeUserId}
+                  />
+                )}
+                showsVerticalScrollIndicator={false}
+              />
+            ) : (
+              <Box center>
+                <Icon name="warning" color="warning" size={5} mb={1} />
+                <Text>{t('party.components.Invite.emptyText')}</Text>
+              </Box>
+            )}
+          </Box>
+        </StateHandler>
+      </Box>
+      <Button
+        mt={4}
+        isLoading={isSendInviteLoading}
+        onPress={handleSubmit}
+        isDisabled={Object.keys(selectedUsersId).length === 0}
+      >
+        {t('party.components.Invite.sendInvitations')}
+      </Button>
     </BottomModal>
   );
 };

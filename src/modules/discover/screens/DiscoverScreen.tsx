@@ -10,11 +10,11 @@ import {
   Container,
   Icon,
   ListSwitch,
+  SearchInput,
   StateHandler,
   Text,
 } from '../../../components';
-import { FeatureToggleTextInput } from '../../../components/Input/FeatureToggleTextInput';
-import { useDebounce, useEffectExceptOnMount } from '../../../hooks';
+import { useEffectExceptOnMount } from '../../../hooks';
 import { Maybe } from '../../../types';
 import { useFeatureToggle } from '../../featureToggle';
 import { DiscoverList } from '../components';
@@ -34,13 +34,12 @@ export const DiscoverScreen: React.FC = () => {
     isLoading: isPartyGetFeatureToggleLoading,
   } = useFeatureToggle(FeatureToggleName.PartyGet);
   const [searchText, setSearchText] = useState('');
-  const debouncedSearch = useDebounce(searchText);
   const [isCardsListMode, setCardsListMode] = useState(false);
   const [isShowingAll, setShowingAll] = useState<Maybe<'user' | 'party'>>();
   const [isLoading, setLoading] = useState(false);
 
   useEffectExceptOnMount(() => {
-    if (searchText.length > 2) {
+    if (searchText.length > 1) {
       return setLoading(true);
     }
 
@@ -49,29 +48,32 @@ export const DiscoverScreen: React.FC = () => {
 
   useEffectExceptOnMount(() => {
     const search = async () => {
-      if (debouncedSearch.length > 2) {
+      if (searchText.length > 1) {
         await Promise.all([
-          searchParties({ variables: { q: debouncedSearch } }),
-          searchUsers({ variables: { q: debouncedSearch } }),
+          searchParties({ variables: { q: searchText } }),
+          searchUsers({ variables: { q: searchText } }),
         ]);
         setLoading(false);
       }
     };
     search();
-  }, [debouncedSearch]);
+  }, [searchText]);
 
   const users = searchText ? usersData?.userSearch ?? [] : [];
   const parties = searchText ? partiesData?.partySearch ?? [] : [];
+
+  const shouldShowUsers =
+    users.length > 0 && (!isShowingAll || isShowingAll === 'user');
+  const shouldShowParties =
+    parties.length > 0 && (!isShowingAll || isShowingAll === 'party');
 
   const handleShowAll = (status: boolean, value: 'user' | 'party') => {
     setShowingAll(status ? value : undefined);
     setCardsListMode(false);
   };
 
-  const shouldShowUsers =
-    users.length > 0 && (!isShowingAll || isShowingAll === 'user');
-  const shouldShowParties =
-    parties.length > 0 && (!isShowingAll || isShowingAll === 'party');
+  const handleDebouncedTextChange = (debouncedText: string) =>
+    setSearchText(debouncedText);
 
   return (
     <Container headerPlaceholder keyboardDismiss>
@@ -88,21 +90,20 @@ export const DiscoverScreen: React.FC = () => {
         </Box>
       </Box>
       <Box mt={2} mb={4}>
-        <FeatureToggleTextInput
-          placeholder={t('general.searchEllipsis')}
-          value={searchText}
-          onChangeText={(text) => setSearchText(text)}
+        <SearchInput
+          isFt
           isDisabled={!isUserGetEnabled || !isPartyGetEnabled}
           isLoading={
             isUserGetFeatureToggleLoading || isPartyGetFeatureToggleLoading
           }
+          onChangeDebouncedText={handleDebouncedTextChange}
         />
       </Box>
       <StateHandler
         isLoading={isLoading}
         isError={Boolean(partiesError || usersError)}
       >
-        {debouncedSearch.length > 2 && (
+        {searchText.length > 1 && (
           <>
             {shouldShowUsers ? (
               <DiscoverList

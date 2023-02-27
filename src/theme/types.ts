@@ -7,7 +7,7 @@ export type Theme = {
   spacing: (n: number) => number;
 
   shape: {
-    borderRadiues: number;
+    borderRadius: number;
   };
 
   text: Text;

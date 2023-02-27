@@ -8,3 +8,4 @@ export * from './ImageInput';
 export * from './FormikImageInput';
 export * from './FormikCoordinateInput';
 export * from './FormikPasswordInput';
+export * from './SearchInput';

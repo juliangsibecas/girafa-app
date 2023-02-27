@@ -1,0 +1,64 @@
+query chatList {
+  chatList {
+    _id
+    user {
+       _id
+      nickname
+      pictureId
+    }
+    lastMessage {
+      fromId
+      text
+      createdAt
+    }
+  }
+}
+
+query chatGetIdByUserId ($data: ChatGetIdByUserIdInput!) {
+  chatGetIdByUserId (data: $data) 
+}
+
+query chatUserGet ($data: ChatUserGetInput!) {
+  chatUserGet (data: $data) {
+       _id
+      nickname
+      pictureId
+  }
+}
+
+query chatMessagesGet ($data: ChatMessagesGetInput!) {
+  chatMessagesGet (data: $data) {
+    fromId
+    text
+    createdAt
+  }
+}
+
+mutation chatCreate ($data: ChatCreateInput!) {
+  chatCreate (data: $data) {
+    _id
+    user {
+       _id
+      nickname
+      pictureId
+    }
+    lastMessage {
+      fromId
+      text
+      createdAt
+    }
+  }
+}
+
+mutation chatMessageSend ($data: ChatMessageSendInput!) {
+  chatMessageSend (data: $data) 
+}
+
+subscription chatMessageSent ($data: ChatMessageSentInput!){
+  chatMessageSent (data: $data){
+    chatId
+    fromId
+    text 
+    createdAt
+  }
+}

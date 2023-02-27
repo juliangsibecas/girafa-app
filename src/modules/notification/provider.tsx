@@ -1,9 +1,7 @@
-import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OneSignal from 'react-native-onesignal';
 import { useEffect, useState } from 'react';
 import { usePermissions } from 'expo-notifications';
-import { Maybe } from 'yup/lib/types';
 
 import {
   FeatureToggleName,
@@ -13,12 +11,13 @@ import {
 } from '../../api';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
 import { env } from '../../env';
-import { useFeatureToggle } from '../featureToggle';
+import { openUrl } from '../../utils';
+import { Maybe } from '../../types';
 
+import { useFeatureToggle } from '../featureToggle';
 import { useAuth } from '../auth/hooks';
 
 import { NotificationContext } from './context';
-import { openUrl } from '../../utils';
 
 OneSignal.setAppId(env.oneSignalId);
 
@@ -133,6 +132,10 @@ export const NotificationsProvider: React.FC<Props> = ({ children }) => {
         [NotificationType.Follow, NotificationType.Invite].includes(data.type)
       ) {
         addNotification(data);
+      }
+
+      if (data && data.type === NotificationType.Chat) {
+        return notificationReceivedEvent.complete(undefined);
       }
 
       notificationReceivedEvent.complete(notification);

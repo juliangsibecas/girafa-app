@@ -4,36 +4,15 @@ import {
   ApolloLink,
   createHttpLink,
   InMemoryCache,
+  split,
 } from '@apollo/client';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 
 import { env } from '../env';
-
-/* const REFRESH_TOKEN_QUERY = `
-  mutation {
-    signInFromRefreshToken {
-      userId
-      accessToken
-      refreshToken
-    }
-  }
-`; */
-
-const httpLink = createHttpLink({
-  uri: `${env.apiUrl}/graphql`,
-  credentials: 'include',
-});
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+import { createClient } from 'graphql-ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 const tokenLink = setContext(async () => ({
   accessToken: await SecureStore.getItemAsync('accessToken'),
@@ -48,74 +27,52 @@ const authLink = setContext(async (_, { accessToken, headers }) => {
   };
 });
 
-/* const tokenRefreshLink = new TokenRefreshLink<{
-  accessToken: string;
-  refreshToken: string;
-}>({
-  isTokenValidOrUndefined: (operation) => {
-    try {
-      const token: string = operation.getContext().accessToken;
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
-      if (!token) {
-        return true;
-      }
+const httpLink = createHttpLink({
+  uri: `${env.apiUrl}/graphql`,
+  credentials: 'include',
+});
 
-      const decoded = jwtDecode(
-        operation.getContext().accessToken
-      ) as JwtPayload;
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: `${env.apiUrl}/subscriptions`,
+    shouldRetry: () => true,
+    connectionParams: async () => {
+      return {
+        Authorization: `Bearer ${await SecureStore.getItemAsync(
+          'accessToken'
+        )}`,
+      };
+    },
+  })
+);
 
-      return moment().valueOf() < moment.unix(decoded.exp!).valueOf();
-    } catch (e) {
-      console.log(e);
+const links = [tokenLink, authLink, errorLink];
 
-      return false;
-    }
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
   },
-  fetchAccessToken: async () => {
-    try {
-      const res = await fetch(`${env.apiUrl}/graphql`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Refresh: (await SecureStore.getItemAsync('refreshToken'))!,
-        },
-        body: JSON.stringify({
-          query: REFRESH_TOKEN_QUERY,
-        }),
-      });
-
-      return res.json();
-    } catch (e) {
-      console.log(e);
-      return new Response();
-    }
-  },
-  handleResponse: () => (response: SignInFromRefreshTokenMutationResult) => {
-    const accessToken = response.data?.signInFromRefreshToken;
-    return { access_token: accessToken };
-  },
-  handleFetch: async ({ accessToken, refreshToken }, { setContext }) => {
-    await SecureStore.setItemAsync('accessToken', accessToken);
-    await SecureStore.setItemAsync('refreshToken', refreshToken);
-
-    setContext({
-      accessToken,
-    });
-  },
-  handleError: (err) => {
-    console.log(err);
-  },
-}); */
+  ApolloLink.from([...links, wsLink]),
+  ApolloLink.from([...links, httpLink])
+);
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: ApolloLink.from([
-    tokenLink,
-    // tokenRefreshLink,
-    authLink,
-    errorLink,
-    httpLink,
-  ]),
+  link,
 });
 
 export * from './utils';

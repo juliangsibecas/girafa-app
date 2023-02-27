@@ -9,7 +9,10 @@ import { isIOS } from '../../../utils';
 
 export interface ITextInput
   extends UiKeys,
-    Pick<RNTextInputProps, 'onChangeText' | 'onBlur' | 'keyboardType'> {
+    Pick<
+      RNTextInputProps,
+      'autoCapitalize' | 'onChangeText' | 'onFocus' | 'onBlur' | 'keyboardType'
+    > {
   placeholder: string;
   value: string;
   contentType?: RNTextInputProps['textContentType'];
@@ -29,7 +32,9 @@ export const TextInput: React.FC<ITextInput> = ({
   onBlur,
   lines,
   maxLength,
+  autoCapitalize,
   isDisabled,
+  onFocus,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -55,9 +60,12 @@ export const TextInput: React.FC<ITextInput> = ({
         placeholderTextColor={theme.palette.text.secondary}
         style={style}
         placeholder={placeholder}
-        autoCapitalize={contentType === 'name' ? 'words' : 'none'}
+        autoCapitalize={
+          autoCapitalize ?? (contentType === 'name' ? 'words' : 'none')
+        }
         value={value}
         onChangeText={onChangeText}
+        onFocus={onFocus}
         onBlur={onBlur}
         multiline={isMultiline}
         numberOfLines={lines}
