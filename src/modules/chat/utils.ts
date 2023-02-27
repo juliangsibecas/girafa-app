@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import {
-  ChatFindDocument,
+  ChatGetIdByUserIdDocument,
+  ChatListDocument,
   ChatMessagesGetDocument,
   ChatNewMessageResponse,
   ChatPreview,
@@ -8,12 +9,24 @@ import {
 import { client } from '../../apollo';
 
 export const addChatToCache = (chat: ChatPreview) => {
-  const data = client.readQuery({ query: ChatFindDocument });
+  const data = client.readQuery({ query: ChatListDocument });
 
   client.writeQuery({
-    query: ChatFindDocument,
+    query: ChatListDocument,
     data: {
-      chatFind: [chat, ...data.chatFind],
+      chatList: [chat, ...data.chatList],
+    },
+  });
+
+  client.writeQuery({
+    query: ChatGetIdByUserIdDocument,
+    data: {
+      chatGetIdByUserId: chat._id,
+    },
+    variables: {
+      data: {
+        userId: chat.user._id,
+      },
     },
   });
 
@@ -31,7 +44,7 @@ export const addChatToCache = (chat: ChatPreview) => {
 };
 
 export const addMessageToCache = (data: ChatNewMessageResponse) => {
-  const queryRes = client.readQuery({
+  const messegesGetRes = client.readQuery({
     query: ChatMessagesGetDocument,
     variables: { data: { chatId: data.chatId } },
   });
@@ -39,7 +52,7 @@ export const addMessageToCache = (data: ChatNewMessageResponse) => {
   client.writeQuery({
     query: ChatMessagesGetDocument,
     data: {
-      chatMessagesGet: [...queryRes.chatMessagesGet, data],
+      chatMessagesGet: [...messegesGetRes.chatMessagesGet, data],
     },
     variables: {
       data: {
@@ -49,25 +62,32 @@ export const addMessageToCache = (data: ChatNewMessageResponse) => {
   });
 };
 
-export const addLastMessageToCache = (data: ChatNewMessageResponse) => {
+export const addLastMessageToCache = ({
+  chatId,
+  ...message
+}: ChatNewMessageResponse) => {
   client.writeQuery({
     query: gql`
       query writeChat($id: String!) {
         chatList(id: $id) {
           _id
-          lastMessage
+          lastMessage {
+            fromId
+            text
+            createdAt
+          }
         }
       }
     `,
     data: {
       chatList: {
         __typename: 'ChatPreview',
-        _id: data.chatId,
-        lastMessage: data.text,
+        _id: chatId,
+        lastMessage: message,
       },
     },
     variables: {
-      id: data.chatId,
+      id: chatId,
     },
   });
 };

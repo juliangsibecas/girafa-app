@@ -14,6 +14,10 @@ query chatList {
   }
 }
 
+query chatGetIdByUserId ($data: ChatGetIdByUserIdInput!) {
+  chatGetIdByUserId (data: $data) 
+}
+
 query chatUserGet ($data: ChatUserGetInput!) {
   chatUserGet (data: $data) {
        _id

@@ -5,7 +5,7 @@ import { Box, Text } from '../../../components';
 import { FontFamily } from '../../../theme';
 import { formatDateTime } from '../../../utils';
 
-import { UserAvatar } from '../../user';
+import { UserAvatar } from '../../user/components';
 import { ChatPreviewReadable } from '../types';
 
 interface IChatRow {

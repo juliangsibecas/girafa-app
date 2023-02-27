@@ -1,3 +1,2 @@
-export * from './ChatHome';
-export * from './ChatDirect';
-export * from './ChatDirectNew';
+export * from './ChatHomeScreen';
+export * from './ChatDirectScreen';

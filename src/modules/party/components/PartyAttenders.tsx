@@ -26,7 +26,7 @@ export const PartyAttenders: React.FC<Props> = ({ partyId }) => {
     useNavigation<CoreStackGroupScreenProps<'PartyAttenders'>['navigation']>();
   const [search, setSearch] = useState('');
   const [isCardsListMode, setCardsListMode] = useState(true);
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch = useDebounce({ value: search });
   const goToAttender = (id: string) => push('UserProfile', { id });
 
   const {

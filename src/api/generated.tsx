@@ -71,6 +71,10 @@ export type ChatCreateInput = {
   withId: Scalars['String'];
 };
 
+export type ChatGetIdByUserIdInput = {
+  userId: Scalars['String'];
+};
+
 export type ChatMessage = {
   __typename?: 'ChatMessage';
   createdAt: Scalars['DateTime'];
@@ -441,6 +445,7 @@ export type Query = {
   adminUserGetCreatedByDayCount: Array<GroupedCount>;
   adminUserList: AdminUserListResponse;
   appInfoMeetMinVersion: Scalars['Boolean'];
+  chatGetIdByUserId: Scalars['String'];
   chatList: Array<ChatPreview>;
   chatMessagesGet: Array<ChatMessage>;
   chatUserGet: UserPreview;
@@ -470,6 +475,11 @@ export type QueryAdminUserListArgs = {
 
 export type QueryAppInfoMeetMinVersionArgs = {
   version: Scalars['String'];
+};
+
+
+export type QueryChatGetIdByUserIdArgs = {
+  data: ChatGetIdByUserIdInput;
 };
 
 
@@ -697,6 +707,13 @@ export type ChatListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ChatListQuery = { __typename?: 'Query', chatList: Array<{ __typename?: 'ChatPreview', _id: string, user: { __typename?: 'UserPreview', _id: string, nickname: string, pictureId?: string | null }, lastMessage: { __typename?: 'ChatMessage', fromId: string, text: string, createdAt: any } }> };
+
+export type ChatGetIdByUserIdQueryVariables = Exact<{
+  data: ChatGetIdByUserIdInput;
+}>;
+
+
+export type ChatGetIdByUserIdQuery = { __typename?: 'Query', chatGetIdByUserId: string };
 
 export type ChatUserGetQueryVariables = Exact<{
   data: ChatUserGetInput;
@@ -1122,6 +1139,39 @@ export function useChatListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<C
 export type ChatListQueryHookResult = ReturnType<typeof useChatListQuery>;
 export type ChatListLazyQueryHookResult = ReturnType<typeof useChatListLazyQuery>;
 export type ChatListQueryResult = Apollo.QueryResult<ChatListQuery, ChatListQueryVariables>;
+export const ChatGetIdByUserIdDocument = gql`
+    query chatGetIdByUserId($data: ChatGetIdByUserIdInput!) {
+  chatGetIdByUserId(data: $data)
+}
+    `;
+
+/**
+ * __useChatGetIdByUserIdQuery__
+ *
+ * To run a query within a React component, call `useChatGetIdByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChatGetIdByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatGetIdByUserIdQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useChatGetIdByUserIdQuery(baseOptions: Apollo.QueryHookOptions<ChatGetIdByUserIdQuery, ChatGetIdByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChatGetIdByUserIdQuery, ChatGetIdByUserIdQueryVariables>(ChatGetIdByUserIdDocument, options);
+      }
+export function useChatGetIdByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatGetIdByUserIdQuery, ChatGetIdByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChatGetIdByUserIdQuery, ChatGetIdByUserIdQueryVariables>(ChatGetIdByUserIdDocument, options);
+        }
+export type ChatGetIdByUserIdQueryHookResult = ReturnType<typeof useChatGetIdByUserIdQuery>;
+export type ChatGetIdByUserIdLazyQueryHookResult = ReturnType<typeof useChatGetIdByUserIdLazyQuery>;
+export type ChatGetIdByUserIdQueryResult = Apollo.QueryResult<ChatGetIdByUserIdQuery, ChatGetIdByUserIdQueryVariables>;
 export const ChatUserGetDocument = gql`
     query chatUserGet($data: ChatUserGetInput!) {
   chatUserGet(data: $data) {

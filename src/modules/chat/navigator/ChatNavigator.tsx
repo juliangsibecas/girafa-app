@@ -5,14 +5,23 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
-import { ChatDirect, ChatDirectNew, ChatHome } from './screens';
-import { useTheme } from '../../theme';
-import { ChatPreview, UserPreview } from '../../api';
+import { useTheme } from '../../../theme';
+import { ChatPreview, UserPreview } from '../../../api';
 
-export type ChatStackParamList = {
+import { ChatDirectScreen, ChatHomeScreen } from '../screens';
+import {
+  CoreStackGroup,
+  CoreStackGroupParamList,
+} from '../../../navigation/CoreStackGroup';
+
+export type ChatStackParamList = CoreStackGroupParamList & {
   ChatHome: undefined;
-  ChatDirect: { id?: string; chat?: ChatPreview };
-  ChatDirectNew: { user: UserPreview };
+  ChatDirect: {
+    id?: string;
+    chat?: ChatPreview;
+    user?: UserPreview;
+    isFromProfile?: boolean;
+  };
 };
 
 export type ChatStackRouteProp<T extends keyof ChatStackParamList> = RouteProp<
@@ -36,17 +45,15 @@ export const ChatNavigator: React.FC = () => {
         headerBackTitle: '',
         headerShadowVisible: false,
         headerTintColor: theme.palette.primary.main,
-        headerStyle: {
-          backgroundColor: theme.palette.background.main,
-        },
+        headerTransparent: true,
         contentStyle: {
           backgroundColor: theme.palette.background.main,
         },
       }}
     >
-      <Stack.Screen name="ChatHome" component={ChatHome} />
-      <Stack.Screen name="ChatDirect" component={ChatDirect} />
-      <Stack.Screen name="ChatDirectNew" component={ChatDirectNew} />
+      <Stack.Screen name="ChatHome" component={ChatHomeScreen} />
+      <Stack.Screen name="ChatDirect" component={ChatDirectScreen} />
+      {CoreStackGroup({ Stack })}
     </Stack.Navigator>
   );
 };

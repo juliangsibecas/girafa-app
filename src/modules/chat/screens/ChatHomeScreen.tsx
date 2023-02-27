@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 import {
@@ -15,13 +15,13 @@ import {
   Text,
 } from '../../../components';
 import { useEffectExceptOnMount } from '../../../hooks';
-import { UserRow } from '../../user';
+import { UserRow } from '../../user/components';
 import { ChatRow } from '../components';
 import { useChats } from '../hooks';
 import { ChatStackNavigationProp } from '../navigator';
 import { ChatPreviewReadable } from '../types';
 
-export const ChatHome = () => {
+export const ChatHomeScreen = () => {
   const { navigate } = useNavigation<ChatStackNavigationProp>();
   const { t } = useTranslation('translation', { keyPrefix: 'chat' });
   const { chats, isChatsLoading, isChatsError } = useChats();
@@ -50,11 +50,16 @@ export const ChatHome = () => {
         });
 
         if (usersToChatData) {
-          setFilteredUsers(
-            usersToChatData.userFindUsersToChat.filter(
-              ({ _id }) => !chats.findIndex(({ user }) => user._id !== _id)
-            )
-          );
+          if (chats.length) {
+            setFilteredUsers(
+              usersToChatData.userFindUsersToChat.filter(
+                ({ _id }) =>
+                  chats.findIndex(({ user }) => user._id === _id) === -1
+              )
+            );
+          } else {
+            setFilteredUsers(usersToChatData.userFindUsersToChat);
+          }
         }
       } else {
         setFilteredChats(chats);
@@ -64,7 +69,7 @@ export const ChatHome = () => {
     };
 
     filter();
-  }, [searchText]);
+  }, [chats, searchText]);
 
   const handleChangeText = () => {
     setSearching(true);
@@ -79,18 +84,10 @@ export const ChatHome = () => {
   }: {
     chat?: ChatPreview;
     user?: UserPreview;
-  }) => {
-    if (chat) {
-      return navigate('ChatDirect', { chat });
-    }
-
-    if (user) {
-      return navigate('ChatDirectNew', { user });
-    }
-  };
+  }) => navigate('ChatDirect', { chat, user });
 
   return (
-    <Container>
+    <Container headerPlaceholder keyboardDismiss>
       <Text type="h1" mb={2}>
         {t('chats')}
       </Text>
@@ -99,16 +96,18 @@ export const ChatHome = () => {
         onChangeDebouncedText={handleChangeDebouncedText}
       />
       <StateHandler isLoading={isLoading} isError={isError}>
-        <Box mt={2}>
-          <FlatList
-            keyExtractor={(item) => item._id}
-            data={filteredChats}
-            renderItem={({ item }) => (
-              <ChatRow chat={item} onPress={() => goToChat({ chat: item })} />
-            )}
-            showsVerticalScrollIndicator={false}
-          />
-        </Box>
+        {!!filteredChats.length && (
+          <Box mt={2}>
+            <FlatList
+              keyExtractor={(item) => item._id}
+              data={filteredChats}
+              renderItem={({ item }) => (
+                <ChatRow chat={item} onPress={() => goToChat({ chat: item })} />
+              )}
+              showsVerticalScrollIndicator={false}
+            />
+          </Box>
+        )}
         {!!searchText.length && !!filteredUsers.length && (
           <>
             <Text type="h3" mt={2} mb={1}>

@@ -1,11 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useChatListQuery, useChatMessageSentSubscription } from '../../api';
+
+import {
+  useChatListQuery,
+  useChatMessageSentSubscription,
+  useChatUserGetLazyQuery,
+} from '../../api';
 import { useAppStatus, useEffectExceptOnMount } from '../../hooks';
+
 import { useAuth } from '../auth';
 import { ChatContext } from './context';
 import { ChatPreviewReadable } from './types';
 import {
+  addChatToCache,
   addLastMessageToCache,
   addMessageToCache,
   isChatOnCache,
@@ -24,9 +32,10 @@ export const ChatProvider: React.FC<IChatProvider> = ({ children }) => {
     error: chatFindError,
     refetch,
   } = useChatListQuery();
-  const { data: newMessageData } = useChatMessageSentSubscription({
+  const { data: newMessageData, error } = useChatMessageSentSubscription({
     variables: { data: { token: accessToken } },
   });
+  const [getChatUser] = useChatUserGetLazyQuery();
   const [chats, setChats] = useState<Array<ChatPreviewReadable>>([]);
   const [unreadChats, setUnreadChats] = useState<Array<string>>([]);
   const [chatsLastMessageRead, setChatsLastMessageRead] = useState<
@@ -64,7 +73,6 @@ export const ChatProvider: React.FC<IChatProvider> = ({ children }) => {
   }, [chatsLastMessageRead]);
 
   useEffectExceptOnMount(() => {
-    console.log('Foreground', isForeground);
     if (isForeground) {
       refetch();
     }
@@ -72,35 +80,68 @@ export const ChatProvider: React.FC<IChatProvider> = ({ children }) => {
 
   useEffect(() => {
     if (chatFindData?.chatList) {
+      const unreads: Array<string> = [];
+
       setChats(
-        chatFindData.chatList.map((chat) => {
-          const lastRead = chatsLastMessageRead[chat._id];
+        chatFindData.chatList
+          .map((chat) => {
+            const lastRead = chatsLastMessageRead[chat._id];
 
-          if (
-            chat.lastMessage.fromId !== userId &&
-            (!lastRead || lastRead < chat.lastMessage.createdAt)
-          ) {
-            setUnreadChats((unreadChats) => [...unreadChats, chat._id]);
+            if (
+              chat.lastMessage.fromId !== userId &&
+              (!lastRead || lastRead < chat.lastMessage.createdAt)
+            ) {
+              unreads.push(chat._id);
 
-            return { ...chat, isUnread: true };
-          }
+              return { ...chat, isUnread: true };
+            }
 
-          return { ...chat, isUnread: false };
-        })
+            return { ...chat, isUnread: false };
+          })
+          .sort((chatA, chatB) =>
+            moment(chatB.lastMessage.createdAt).diff(
+              moment(chatA.lastMessage.createdAt)
+            )
+          )
       );
+
+      setUnreadChats(unreads);
     }
   }, [chatFindData, chatsLastMessageRead]);
 
-  useEffect(() => {
-    if (newMessageData && newMessageData.chatMessageSent) {
-      const newMessage = newMessageData.chatMessageSent;
+  useEffectExceptOnMount(() => {
+    const handleNewMessage = async () => {
+      if (newMessageData && newMessageData.chatMessageSent) {
+        const newMessage = newMessageData.chatMessageSent;
 
-      if (isChatOnCache(newMessage.chatId)) {
-        addMessageToCache(newMessage);
+        if (isChatOnCache(newMessage.chatId)) {
+          addMessageToCache(newMessage);
+        }
+
+        if (
+          newMessage.fromId !== userId &&
+          chats.findIndex(({ _id }) => newMessage.chatId === _id) === -1
+        ) {
+          const getUserQuery = await getChatUser({
+            variables: { data: { id: newMessage.chatId } },
+          });
+
+          if (getUserQuery.data?.chatUserGet) {
+            addChatToCache({
+              _id: newMessage.chatId,
+              user: getUserQuery.data.chatUserGet,
+              lastMessage: {
+                ...newMessage,
+                __typename: 'ChatMessage',
+              },
+            });
+          }
+        }
+
+        addLastMessageToCache(newMessage);
       }
-
-      addLastMessageToCache(newMessage);
-    }
+    };
+    handleNewMessage();
   }, [newMessageData]);
 
   const updateChatRead = ({

@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
+import { useTheme } from '../theme';
 import {
   ProfileStackGroup,
   ProfileStackGroupParamList,
@@ -12,11 +13,15 @@ import {
 import {
   PartyDetailStackGroup,
   PartyDetailStackGroupParamList,
-} from '../modules/party/navigator';
-import { useTheme } from '../theme';
+} from '../modules/party/navigator/PartyDetailStackGroup';
+import {
+  ChatStackGroup,
+  ChatStackGroupParamList,
+} from '../modules/chat/navigator/ChatStackGroup';
 
 export type CoreStackGroupParamList = ProfileStackGroupParamList &
-  PartyDetailStackGroupParamList;
+  PartyDetailStackGroupParamList &
+  ChatStackGroupParamList;
 
 export type CoreStackGroupRouteProp<T extends keyof CoreStackGroupParamList> =
   RouteProp<CoreStackGroupParamList, T>;
@@ -43,6 +48,7 @@ export const CoreStackGroup: React.FC<ICoreStackGroup> = ({ Stack }) => {
     >
       {ProfileStackGroup({ Stack })}
       {PartyDetailStackGroup({ Stack })}
+      {ChatStackGroup({ Stack })}
     </Stack.Group>
   );
 };

@@ -7,7 +7,7 @@ import { Box } from '../Box';
 type Props = {
   children: ReactNode;
   isOpen: boolean;
-  height: ViewStyle['height'];
+  height?: ViewStyle['height'];
   onClose: () => void;
 };
 

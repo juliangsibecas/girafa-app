@@ -1,13 +1,17 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList } from 'react-native';
+import { Animated, TouchableOpacity, VirtualizedList } from 'react-native';
 
 import { ChatMessage, UserPreview } from '../../../api';
 import { Box, Button, Icon, Text, TextInput } from '../../../components';
+import { useKeyboard } from '../../../hooks';
+import { isAndroid } from '../../../utils';
 
-import { UserAvatar } from '../../user';
+import { UserAvatar } from '../../user/components';
 
 import { useChats } from '../hooks';
+import { ChatStackScreenProps } from '../navigator';
 
 import { ChatBubble } from './ChatBubble';
 
@@ -22,9 +26,18 @@ export const Chat: React.FC<IChat> = ({ id, user, messages, sendMessage }) => {
   const { t } = useTranslation('translation', {
     keyPrefix: 'chat.screens.ChatDirect',
   });
+  const { push } =
+    useNavigation<ChatStackScreenProps<'ChatDirect'>['navigation']>();
+  const { keyboardHeight } = useKeyboard({
+    keyboardWillShow: (evt) =>
+      setTimeout(() => virtualizedListRef.current?.scrollToEnd(), evt.duration),
+  });
   const { updateChatRead } = useChats();
   const [text, setText] = useState('');
-  const flatListRef = useRef<FlatList>(null);
+  const [isSendDisabled, setSendDisabled] = useState(false);
+  const virtualizedListRef = useRef<VirtualizedList<any>>(null);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (id && messages.length) {
@@ -32,28 +45,41 @@ export const Chat: React.FC<IChat> = ({ id, user, messages, sendMessage }) => {
         chatId: id,
         lastMessageDate: messages[messages.length - 1].createdAt,
       });
-
-      setTimeout(() => flatListRef.current?.scrollToEnd(), 50);
     }
   }, [id, messages]);
 
+  const getItem = (data: Array<ChatMessage>, index: number) => {
+    return data[index];
+  };
+  const getCount = () => messages.length;
+
   const handleSend = () => {
+    setSendDisabled(true);
     sendMessage(text);
     setText('');
+    setTimeout(() => setSendDisabled(false), 2000);
+  };
+
+  const handleUserPress = () => push('UserProfile', { id: user._id });
+  const handleAndroidFocus = () => {
+    if (isAndroid) {
+      setTimeout(() => virtualizedListRef.current?.scrollToEnd(), 300);
+    }
   };
 
   return (
-    <>
-      <Box row hcenter px={2}>
-        <UserAvatar id={user.pictureId} />
-        <Text type="h2" ml={2}>
-          {user.nickname}
-        </Text>
-      </Box>
+    <Animated.View style={{ flex: 1, paddingBottom: keyboardHeight }}>
+      <TouchableOpacity onPress={handleUserPress}>
+        <Box row hcenter>
+          <UserAvatar id={user.pictureId} />
+          <Text type="h2" ml={2}>
+            {user.nickname}
+          </Text>
+        </Box>
+      </TouchableOpacity>
       <Box flex={1} py={1}>
-        <FlatList
-          ref={flatListRef}
-          initialScrollIndex={messages.length - 1}
+        <VirtualizedList
+          ref={virtualizedListRef}
           keyExtractor={({ fromId, createdAt }) => `${fromId}-${createdAt}`}
           data={messages}
           renderItem={({ item }) => (
@@ -62,30 +88,33 @@ export const Chat: React.FC<IChat> = ({ id, user, messages, sendMessage }) => {
               message={item}
             />
           )}
-          getItemLayout={(_, index) => ({
-            length: 68,
-            offset: 68 * index,
-            index,
-          })}
+          showsVerticalScrollIndicator={false}
+          getItem={getItem}
+          getItemCount={getCount}
+          onContentSizeChange={() => {
+            virtualizedListRef.current?.scrollToEnd();
+          }}
         />
       </Box>
-      <Box row px={2}>
+      <Box row>
         <Box flex={1} mr={2}>
           <TextInput
             placeholder={t('write')}
             value={text}
             onChangeText={setText}
+            autoCapitalize="sentences"
+            onFocus={handleAndroidFocus}
           />
         </Box>
         <Button
           px={2}
           style={{ height: 'auto' }}
           onPress={handleSend}
-          isDisabled={!text}
+          isDisabled={!text.trim().length || isSendDisabled}
         >
           <Icon name="send" size={3} color="background.main" />
         </Button>
       </Box>
-    </>
+    </Animated.View>
   );
 };

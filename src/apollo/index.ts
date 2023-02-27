@@ -44,7 +44,8 @@ const httpLink = createHttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: `${env.apiUrl}/graphql`,
+    url: `${env.apiUrl}/subscriptions`,
+    shouldRetry: () => true,
     connectionParams: async () => {
       return {
         Authorization: `Bearer ${await SecureStore.getItemAsync(

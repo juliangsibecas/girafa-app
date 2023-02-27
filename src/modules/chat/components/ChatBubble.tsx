@@ -22,15 +22,17 @@ export const ChatBubble: React.FC<IChatBubble> = ({ message }) => {
       row
       my={0.5}
       hcenter
-      style={{ justifyContent: isMy ? 'flex-end' : 'flex-start' }}
+      style={{
+        justifyContent: isMy ? 'flex-end' : 'flex-start',
+      }}
     >
       {!!isMy && renderDatetime()}
       <Box
-        mr={isMy ? 2 : 1}
-        ml={isMy ? 1 : 2}
+        mr={isMy ? 0 : 1}
+        ml={isMy ? 1 : 0}
         p={2}
         bgColor="disabled"
-        style={{ borderRadius: 12 }}
+        style={{ borderRadius: 12, maxWidth: '70%' }}
       >
         <Text>{message.text}</Text>
       </Box>
