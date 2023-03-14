@@ -2,13 +2,12 @@ import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native';
 import { useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Image, Text } from '../../../components';
-
-import { UserAvatar } from './UserAvatar';
 import { Maybe } from '../../../types';
+
 import { UserBanner } from './UserBanner';
-import { useTranslation } from 'react-i18next';
 
 interface Props {
   id: string;

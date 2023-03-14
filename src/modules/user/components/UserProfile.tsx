@@ -121,7 +121,6 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     ? t('user.followBack')
     : t('user.follow');
 
-  console.log(user.bannerId);
   return (
     <Box overflow="hidden" width="screen" flex={1}>
       <UserBanner
