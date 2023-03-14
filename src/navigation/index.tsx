@@ -6,6 +6,8 @@ import { StateHandler } from '../components';
 import { useAuth } from '../modules/auth/hooks';
 import { OnboardingNavigator } from '../modules/onboarding/navigator';
 import { ForceUpdateScreen } from '../modules/maintenance';
+import { NotificationsProvider } from '../modules/notification';
+import { ChatProvider } from '../modules/chat';
 
 import { MainNavigator } from './MainNavigator';
 
@@ -23,7 +25,11 @@ export const Navigation = () => {
       {forceUpdate ? (
         <ForceUpdateScreen />
       ) : isSignedIn ? (
-        <MainNavigator />
+        <NotificationsProvider>
+          <ChatProvider>
+            <MainNavigator />
+          </ChatProvider>
+        </NotificationsProvider>
       ) : (
         <OnboardingNavigator />
       )}

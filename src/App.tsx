@@ -13,12 +13,10 @@ import Toast from 'react-native-toast-message';
 import { useCachedResources } from './hooks';
 import { theme, ThemeMode, ThemeProvider } from './theme';
 import { client } from './apollo';
-import { NotificationsProvider } from './modules/notification';
 import { AuthProvider } from './modules/auth';
 import { Navigation } from './navigation';
 import { useThemeMode } from './theme';
 import { linking } from './navigation';
-import { ChatProvider } from './modules/chat';
 
 const AppComponent = () => {
   const isResourcesLoading = useCachedResources();
@@ -38,12 +36,8 @@ const AppComponent = () => {
           <ThemeProvider theme={theme} mode={themeMode}>
             <NavigationContainer linking={linking}>
               <AuthProvider>
-                <NotificationsProvider>
-                  <ChatProvider>
-                    <Navigation />
-                    <Toast position="bottom" />
-                  </ChatProvider>
-                </NotificationsProvider>
+                <Navigation />
+                <Toast position="bottom" />
               </AuthProvider>
             </NavigationContainer>
           </ThemeProvider>
