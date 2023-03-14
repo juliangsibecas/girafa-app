@@ -13,6 +13,7 @@ query userGet ($data: UserGetInput!) {
     nickname
     fullName
     pictureId
+    bannerId
     instagramUsername
 
     followersCount

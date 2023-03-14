@@ -14,9 +14,9 @@ export const Image: React.FC<Props> = ({ src, ...props }) => {
     <RNImage
       source={typeof src === 'string' ? { uri: src } : src}
       style={{
+        aspectRatio: 1,
         ...style,
         ...props.style,
-        aspectRatio: 1,
       }}
     />
   );

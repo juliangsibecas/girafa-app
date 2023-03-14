@@ -23,13 +23,14 @@ import { useAuth } from '../../auth';
 import { usePictureUpload } from '../../picture';
 
 import { MyProfileStackScreenProps } from '../navigator';
-import { UserPicturePicker } from '../components';
+import { UserBannerPicker, UserPicturePicker } from '../components';
 
 type FormValues = {
-  picture?: string;
+  pictureUri?: string;
+  bannerUri?: string;
   fullName: string;
   nickname: string;
-  instagramUsername: Maybe<string>;
+  instagramUsername?: Maybe<string>;
 };
 
 export const UserEditScreen: React.FC = () => {
@@ -48,10 +49,10 @@ export const UserEditScreen: React.FC = () => {
       },
     ],
   });
-  const { uploadUser } = usePictureUpload();
+  const { uploadUserPicture, uploadUserBanner } = usePictureUpload();
 
   const initialValues: FormValues = {
-    fullName: params.fullname,
+    fullName: params.fullName,
     nickname: params.nickname,
     instagramUsername: params.instagramUsername,
   };
@@ -81,8 +82,18 @@ export const UserEditScreen: React.FC = () => {
   ) => {
     try {
       setLoading(true);
-      if (values.picture) {
-        await uploadUser(values.picture);
+      if (values.pictureUri && values.bannerUri) {
+        await Promise.all([
+          uploadUserPicture(values.pictureUri),
+          uploadUserBanner(values.bannerUri),
+        ]);
+      } else {
+        if (values.pictureUri) {
+          await uploadUserPicture(values.pictureUri);
+        }
+        if (values.bannerUri) {
+          await uploadUserBanner(values.bannerUri);
+        }
       }
 
       const { data } = await edit({
@@ -125,7 +136,15 @@ export const UserEditScreen: React.FC = () => {
         {({ submitForm }) => (
           <>
             <Box flex={1} pt={3} pb={5}>
-              <UserPicturePicker id="picture" pictureId={params.pictureId} />
+              <Box row center>
+                <UserPicturePicker
+                  id="pictureUri"
+                  pictureId={params.pictureId}
+                />
+                <Box ml={2}>
+                  <UserBannerPicker id="bannerUri" bannerId={params.bannerId} />
+                </Box>
+              </Box>
               <Text type="hint" pt={6} pb={0.5} pl={0.5}>
                 {t('general.name')}
               </Text>
