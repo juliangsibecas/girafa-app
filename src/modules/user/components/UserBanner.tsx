@@ -4,7 +4,7 @@ import { Avatar } from '../../../components';
 import { Maybe } from '../../../types';
 import { UiKeys } from '../../../ui';
 
-import { getUserPictureUrl } from '../../picture';
+import { getUserBannerUrl } from '../../picture';
 
 type Props = UiKeys & {
   id?: Maybe<string>;
@@ -12,11 +12,12 @@ type Props = UiKeys & {
   style?: ImageStyle;
 };
 
-export const UserAvatar: React.FC<Props> = ({ id, ...props }) => {
+export const UserBanner: React.FC<Props> = ({ id, ...props }) => {
   return (
     <Avatar
       type="user"
-      src={id ? getUserPictureUrl(id) : undefined}
+      src={id ? getUserBannerUrl(id) : undefined}
+      aspectRatio={9 / 16}
       {...props}
     />
   );

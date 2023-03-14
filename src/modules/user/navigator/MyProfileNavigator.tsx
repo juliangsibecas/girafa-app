@@ -10,20 +10,15 @@ import {
   CoreStackGroupParamList,
 } from '../../../navigation/CoreStackGroup';
 import { useTheme } from '../../../theme';
-import { Maybe } from '../../../types';
 
 import { SettingsNavigator } from '../../settings/navigator';
 
 import { MyProfileScreen, UserEditScreen } from '../screens';
+import { UserGetResponse } from '../../../api';
 
 export type MyProfileStackParamList = CoreStackGroupParamList & {
   Me: undefined;
-  UserEdit: {
-    fullname: string;
-    nickname: string;
-    pictureId?: Maybe<string>;
-    instagramUsername: Maybe<string>;
-  };
+  UserEdit: UserGetResponse;
   Settings: undefined;
 };
 

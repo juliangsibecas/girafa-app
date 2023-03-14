@@ -7,16 +7,17 @@ import { Box, Image, Text } from '../../../components';
 
 import { UserAvatar } from './UserAvatar';
 import { Maybe } from '../../../types';
+import { UserBanner } from './UserBanner';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
   id: string;
-  pictureId?: Maybe<string>;
+  bannerId?: Maybe<string>;
 }
 
-export const UserPicturePicker: React.FC<Props> = ({ id, pictureId }) => {
-  const { handleChange, values } = useFormikContext<Record<string, string>>();
+export const UserBannerPicker: React.FC<Props> = ({ id, bannerId }) => {
   const { t } = useTranslation();
+  const { handleChange, values } = useFormikContext<Record<string, string>>();
 
   const pickImage = async () => {
     try {
@@ -48,17 +49,17 @@ export const UserPicturePicker: React.FC<Props> = ({ id, pictureId }) => {
     <Box center>
       <TouchableOpacity onPress={pickImage}>
         {values[id] ? (
-          <Image src={values[id]} width={15} height={15} />
-        ) : (
-          <UserAvatar
-            id={pictureId}
-            width={15}
+          <Image
+            src={values[id]}
             height={15}
-            placeholderSize={8}
+            borderRadius={2}
+            aspectRatio={9 / 16}
           />
+        ) : (
+          <UserBanner id={bannerId} height={15} placeholderSize={4} />
         )}
       </TouchableOpacity>
-      <Text mt={1}>{t('user.screens.Edit.profile')}</Text>
+      <Text mt={1}>{t('user.screens.Edit.banner')}</Text>
     </Box>
   );
 };

@@ -26,8 +26,8 @@ import { useFeatureToggle } from '../../featureToggle';
 import { MyProfileStackScreenProps } from '../navigator';
 
 import { UserAvatar } from './UserAvatar';
-import { Maybe } from '../../../types';
 import { openUrl } from '../../../utils';
+import { UserBanner } from './UserBanner';
 
 type Props = {
   user: UserGetResponse;
@@ -98,13 +98,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
       push('UserAttendedParties', { id: user._id })
     );
 
-  const handleEditPress = () =>
-    push('UserEdit', {
-      fullname: user.fullName,
-      nickname: user.nickname,
-      instagramUsername: user.instagramUsername as Maybe<string>,
-      pictureId: user.pictureId,
-    });
+  const handleEditPress = () => push('UserEdit', user);
 
   const handleSharePress = () =>
     Share.share({
@@ -127,11 +121,12 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     ? t('user.followBack')
     : t('user.follow');
 
+  console.log(user.bannerId);
   return (
     <Box overflow="hidden" width="screen" flex={1}>
-      <UserAvatar
-        id={user.pictureId}
-        key={user.pictureId}
+      <UserBanner
+        id={user.bannerId}
+        key={user.bannerId}
         width="screen"
         position="absolute"
         top={0}
@@ -139,7 +134,6 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         borderRadius={0}
         style={{ height: '100%' }}
         placeholderSize={Dimensions.get('screen').width / 18}
-        aspectRatio={9 / 16}
       />
       <Box mt={10} px={2} flex={1} style={{ alignItems: 'flex-end' }}>
         {isMyProfile ? (
@@ -147,10 +141,14 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         ) : undefined}
       </Box>
       <Box
+        pt={5}
         p={3}
         bgColor="background"
         style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
       >
+        <Box position="absolute" top={-4} left={3}>
+          <UserAvatar id={user.pictureId} height={8} />
+        </Box>
         <Box row mb={4} hcenter style={{ justifyContent: 'space-between' }}>
           <Box>
             <Text type="h4" fontFamily={FontFamily.BOLD}>

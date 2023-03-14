@@ -1,7 +1,11 @@
 import * as FileSystem from 'expo-file-system';
 import { FileSystemUploadType } from 'expo-file-system';
 import { useAuth } from '../auth/hooks';
-import { getUploadPartyPictureUrl, getUploadUserPictureUrl } from './utils';
+import {
+  getUploadPartyPictureUrl,
+  getUploadUserBannerUrl,
+  getUploadUserPictureUrl,
+} from './utils';
 
 export const usePictureUpload = () => {
   const { accessToken } = useAuth();
@@ -16,10 +20,14 @@ export const usePictureUpload = () => {
       },
     });
 
-  const uploadUser = (uri: string) => upload(getUploadUserPictureUrl(), uri);
+  const uploadUserPicture = (uri: string) =>
+    upload(getUploadUserPictureUrl(), uri);
+
+  const uploadUserBanner = (uri: string) =>
+    upload(getUploadUserBannerUrl(), uri);
 
   const uploadParty = (id: string, uri: string) =>
     upload(getUploadPartyPictureUrl(id), uri);
 
-  return { uploadUser, uploadParty };
+  return { uploadUserPicture, uploadUserBanner, uploadParty };
 };

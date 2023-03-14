@@ -190,6 +190,7 @@ export type GroupedCount = {
 export type Mutation = {
   __typename?: 'Mutation';
   adminSignIn: AuthSignInResponse;
+  adminUserRunOpera: Scalars['Boolean'];
   appInfoChangeMinVersion: Scalars['Boolean'];
   appInfoInitialize: Scalars['Boolean'];
   changePassword: Scalars['Boolean'];
@@ -568,17 +569,17 @@ export type User = {
   _id: Scalars['String'];
   attendedParties: Array<Party>;
   attendedPartiesCount: Scalars['Float'];
+  bannerId?: Maybe<Scalars['String']>;
   bio?: Maybe<Scalars['String']>;
   chats: Array<Chat>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   followers: Array<User>;
-  followersCount: Scalars['Float'];
   following: Array<User>;
-  followingCount: Scalars['Float'];
   fullName: Scalars['String'];
   instagramUsername?: Maybe<Scalars['String']>;
   invites: Array<Party>;
+  isOpera?: Maybe<Scalars['Boolean']>;
   nickname: Scalars['String'];
   notifications: Array<Notification>;
   password?: Maybe<Scalars['String']>;
@@ -625,6 +626,7 @@ export type UserGetResponse = {
   __typename?: 'UserGetResponse';
   _id: Scalars['String'];
   attendedPartiesCount: Scalars['Float'];
+  bannerId?: Maybe<Scalars['String']>;
   followersCount: Scalars['Float'];
   followingCount: Scalars['Float'];
   fullName: Scalars['String'];
@@ -819,7 +821,7 @@ export type UserGetQueryVariables = Exact<{
 }>;
 
 
-export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, pictureId?: string | null, instagramUsername?: string | null, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
+export type UserGetQuery = { __typename?: 'Query', userGet: { __typename?: 'UserGetResponse', _id: string, nickname: string, fullName: string, pictureId?: string | null, bannerId?: string | null, instagramUsername?: string | null, followersCount: number, followingCount: number, attendedPartiesCount: number, isFollowing: boolean, isFollower: boolean } };
 
 export type UserGetFollowingByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1740,6 +1742,7 @@ export const UserGetDocument = gql`
     nickname
     fullName
     pictureId
+    bannerId
     instagramUsername
     followersCount
     followingCount
