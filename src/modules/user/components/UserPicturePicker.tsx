@@ -48,7 +48,7 @@ export const UserPicturePicker: React.FC<Props> = ({ id, pictureId }) => {
     <Box center>
       <TouchableOpacity onPress={pickImage}>
         {values[id] ? (
-          <Image src={values[id]} width={15} height={15} />
+          <Image src={values[id]} width={15} height={15} borderRadius={2} />
         ) : (
           <UserAvatar
             id={pictureId}
