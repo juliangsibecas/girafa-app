@@ -71,7 +71,33 @@ const link = split(
 );
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          userGetFollowingById: {
+            merge: (_ = [], incoming: any[]) => {
+              return incoming;
+            },
+          },
+          userGetFollowersById: {
+            merge: (_ = [], incoming: any[]) => {
+              return incoming;
+            },
+          },
+        },
+      },
+      PartyGetResponse: {
+        fields: {
+          attenders: {
+            merge: (_ = [], incoming: any[]) => {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
   link,
 });
 
