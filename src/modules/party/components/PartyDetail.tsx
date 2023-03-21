@@ -7,11 +7,8 @@ import Toast from 'react-native-toast-message';
 import {
   FeatureToggleName,
   PartyAvailability,
-  PartyGetDocument,
   PartyGetResponse,
   PartyStatus,
-  User,
-  UserGetDocument,
   useUserChangeAttendingStateMutation,
 } from '../../../api';
 import {
@@ -25,10 +22,11 @@ import { CoreStackGroupScreenProps } from '../../../navigation/CoreStackGroup';
 import { FontFamily } from '../../../theme';
 import { formatDate } from '../../../utils';
 
-import { useAuth } from '../../auth/hooks';
 import { useFeatureToggle } from '../../featureToggle';
 import { useUser } from '../../user/hooks';
 import { UserAvatar } from '../../user/components';
+
+import { cacheUpdatePartyAttend } from '../utils';
 
 import { PartyAvatar } from './PartyAvatar';
 import { PartyInvite } from './PartyInvite';
@@ -41,7 +39,6 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
   const { t } = useTranslation();
   const { push } =
     useNavigation<CoreStackGroupScreenProps<'PartyDetail'>['navigation']>();
-  const { userId } = useAuth();
   const { user } = useUser();
   const { isEnabled: isSearchAttendersEnabled } = useFeatureToggle(
     FeatureToggleName.PartySearchAttenders
@@ -54,10 +51,6 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
     changeAttendingStateMutation,
     { loading: isChangeAttendingStateLoading },
   ] = useUserChangeAttendingStateMutation();
-
-  const [isAttender, setIsAttender] = useState(party.isAttender);
-  const [attenders, setAttenders] = useState(party.attenders);
-  const [attendersCount, setAttendersCount] = useState(party.attendersCount);
 
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
 
@@ -72,30 +65,14 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
       if (!user) return;
 
       const res = await changeAttendingStateMutation({
-        variables: { data: { partyId: party._id, state: !isAttender } },
-        refetchQueries: [
-          { query: PartyGetDocument, variables: { id: party._id } },
-          { query: UserGetDocument, variables: { data: { id: userId } } },
-        ],
+        variables: { data: { partyId: party._id, state: !party.isAttender } },
       });
 
       if (res.errors) {
         throw new Error();
       }
 
-      if (res.data?.userChangeAttendingState) {
-        if (!isAttender) {
-          setAttenders((attenders) => [user as unknown as User, ...attenders]);
-          setAttendersCount((attendersCount) => attendersCount + 1);
-        } else {
-          setAttenders((attenders) =>
-            attenders.filter(({ _id }) => _id !== userId)
-          );
-          setAttendersCount((attendersCount) => attendersCount - 1);
-        }
-
-        setIsAttender(!isAttender);
-      }
+      cacheUpdatePartyAttend({ user, party });
     } catch (e) {
       Toast.show({
         type: 'error',
@@ -161,9 +138,9 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
             {t('party.willAttend')}
           </Text>
           <Text fontFamily={FontFamily.SEMIBOLD} ml={1} flex={1}>
-            {attendersCount}
+            {party.attendersCount}
           </Text>
-          {!!(isSearchAttendersEnabled && attendersCount) && (
+          {!!(isSearchAttendersEnabled && party.attendersCount) && (
             <TouchableOpacity
               onPress={() => push('PartyAttenders', { id: party._id })}
             >
@@ -174,7 +151,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           )}
         </Box>
         <Box row mt={0.5}>
-          {attenders.map(({ _id, pictureId }) => (
+          {party.attenders.map(({ _id, pictureId }) => (
             <Box mr={0.5} key={_id}>
               <UserAvatar id={pictureId} />
             </Box>
@@ -185,7 +162,7 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
         <FeatureToggledButton
           ft={FeatureToggleName.UserChangeAttendingState}
           flex={1}
-          secondary={isAttender}
+          secondary={party.isAttender}
           onPress={changeAttendingState}
           isLoading={isChangeAttendingStateLoading}
           isDisabled={party.isOrganizer || party.status === PartyStatus.Expired}
@@ -193,10 +170,10 @@ export const PartyDetail: React.FC<Props> = ({ party }) => {
           {t(
             `party.${
               party.status === PartyStatus.Enabled
-                ? isAttender
+                ? party.isAttender
                   ? 'attending'
                   : 'attend'
-                : isAttender
+                : party.isAttender
                 ? 'attended'
                 : 'notAttended'
             }`

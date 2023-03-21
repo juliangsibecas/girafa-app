@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, Share, TouchableOpacity } from 'react-native';
@@ -18,16 +18,18 @@ import {
   Icon,
   Text,
 } from '../../../components';
-
+import { openUrl } from '../../../utils';
 import { FontFamily } from '../../../theme';
+
 import { useAuth } from '../../auth';
 import { useFeatureToggle } from '../../featureToggle';
 
 import { MyProfileStackScreenProps } from '../navigator';
+import { cacheUpdateUserFollow } from '../utils';
 
 import { UserAvatar } from './UserAvatar';
-import { openUrl } from '../../../utils';
 import { UserBanner } from './UserBanner';
+import { useUser } from '../hooks';
 
 type Props = {
   user: UserGetResponse;
@@ -38,6 +40,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
   const { t } = useTranslation();
   const { onError } = useResponse();
   const { userId: myId } = useAuth();
+  const { user: me } = useUser();
 
   const { push } =
     useNavigation<MyProfileStackScreenProps<'Me'>['navigation']>();
@@ -57,15 +60,14 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     { loading: isChangeFollowingStateLoading },
   ] = useUserChangeFollowingStateMutation();
 
-  const [isFollowing, setFollowing] = useState(user.isFollowing);
-  const [followersCount, setFollowersCount] = useState(user.followersCount);
-
   const isMe = myId === user._id;
 
   const changeFollowingState = async () => {
     try {
       const res = await changeFollowingStateMutation({
-        variables: { data: { followingId: user._id, state: !isFollowing } },
+        variables: {
+          data: { followingId: user._id, state: !user.isFollowing },
+        },
         refetchQueries: [
           { query: UserGetDocument, variables: { data: { id: myId } } },
           { query: UserGetDocument, variables: { data: { id: user._id } } },
@@ -76,11 +78,8 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         throw new Error();
       }
 
-      if (res.data?.userChangeFollowingState) {
-        setFollowersCount(
-          (followersCount) => followersCount + (!isFollowing ? 1 : -1)
-        );
-        setFollowing(!isFollowing);
+      if (res.data?.userChangeFollowingState && me) {
+        cacheUpdateUserFollow({ user, me });
       }
     } catch (e) {
       onError();
@@ -115,7 +114,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
     await openUrl(`https://instagram.com/${user.instagramUsername}`);
   };
 
-  const followButtonText = isFollowing
+  const followButtonText = user.isFollowing
     ? t('user.following')
     : user.isFollower
     ? t('user.followBack')
@@ -160,7 +159,7 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
               <>
                 <FeatureToggledButton
                   ft={FeatureToggleName.UserChangeFollowingState}
-                  secondary={isFollowing}
+                  secondary={user.isFollowing}
                   width={12}
                   height={4}
                   textProps={{ fontSize: 12 }}
@@ -234,11 +233,11 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
             <Text type="hint">{t('user.following')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            disabled={followersCount === 0}
+            disabled={user.followersCount === 0}
             onPress={handleFollowersPress}
           >
             <Text fontFamily={FontFamily.BOLD} textCenter>
-              {followersCount}
+              {user.followersCount}
             </Text>
             <Text type="hint" textCenter>
               {t('user.followers')}
