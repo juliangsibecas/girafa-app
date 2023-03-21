@@ -68,10 +68,6 @@ export const UserProfile: React.FC<Props> = ({ user, isMyProfile }) => {
         variables: {
           data: { followingId: user._id, state: !user.isFollowing },
         },
-        refetchQueries: [
-          { query: UserGetDocument, variables: { data: { id: myId } } },
-          { query: UserGetDocument, variables: { data: { id: user._id } } },
-        ],
       });
 
       if (res.errors) {

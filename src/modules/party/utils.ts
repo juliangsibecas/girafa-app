@@ -1,8 +1,8 @@
 import {
   PartyGetDocument,
   PartyGetResponse,
-  PartyPreview,
   UserGetAttendedPartiesByIdDocument,
+  UserGetAttendedPartiesByIdQueryResult,
   UserGetDocument,
   UserGetResponse,
 } from '../../api';
@@ -63,11 +63,10 @@ export const cacheUpdatePartyAttend = ({
   const userPartiesData = client.readQuery({
     query: UserGetAttendedPartiesByIdDocument,
     variables: { id: user._id },
-  });
+  }) as UserGetAttendedPartiesByIdQueryResult['data'];
 
   if (userPartiesData) {
-    const userParties =
-      userPartiesData.userGetAttendedPartiesById as Array<PartyPreview>;
+    const userParties = userPartiesData.userGetAttendedPartiesById;
 
     client.writeQuery({
       query: UserGetAttendedPartiesByIdDocument,
