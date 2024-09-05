@@ -5,9 +5,10 @@ The product is a social network focused on parties and nightclubs, offering user
 
 Everything was done by me: product design, app, backend, and infrastructure.
 
+<img src="https://github.com/user-attachments/assets/9e59df60-b935-4cd9-aa13-263e347511bb" width="32%" />
 <img src="https://github.com/user-attachments/assets/a6e26d84-fac9-414e-b69b-6bdf54c47182" width="32%" />
 <img src="https://github.com/user-attachments/assets/1bdb53c7-3122-4454-803d-281cbacfff82" width="32%" />
-<img src="https://github.com/user-attachments/assets/9e59df60-b935-4cd9-aa13-263e347511bb" width="32%" />
+
 
 ## Stack
 ### Product Design
